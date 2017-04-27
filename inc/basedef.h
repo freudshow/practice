@@ -40,5 +40,12 @@ typedef struct {
 #define	NELEM(array)	(sizeof(array)/sizeof(array[0]))
 #define	NOT_FOUND	-1
 
+#define SWAP_NUM(a, b)	do{\
+							if((a) ^ (b)) {\
+								(a) = (a)^(b);\
+								(b) = (a)^(b);\
+								(a) = (a)^(b);\
+							}\
+						}while(0)
 
 #endif//__BASEDEF_H__

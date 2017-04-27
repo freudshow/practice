@@ -13,9 +13,11 @@
 #define SMALL_THAN	2
 
 extern void debug(const char* file, const char* func, u32 line, const char *fmt, ...);
-void showArray(int v[], int length);
+extern void showArray(int v[], int length);
+extern void showArrayf(float v[], int length);
 extern int arrayCmp(int a, int b);
 extern int binSearchInt(int elem, int array[], int length);
+extern void xorSwap(int v[], int i, int j);
 extern void swap(int v[], int i, int j);
 extern void quikSort(int v[], int len);
 

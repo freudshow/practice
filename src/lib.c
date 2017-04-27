@@ -42,6 +42,16 @@ void showArray(int v[], int length)
 	fprintf(stderr, "\n");
 }
 
+void showArrayf(float v[], int length)
+{
+	int i;
+
+	for (i = 0; i < length; i++) {
+		fprintf(stderr, "%f\t", v[i]);
+	}
+	fprintf(stderr, "\n");
+}
+
 int arrayCmp(int a, int b)
 {
 	if (a == b)
@@ -87,6 +97,16 @@ int binSearchInt(int elem, int array[], int length)
 	return NOT_FOUND;
 }
 
+void xorSwap(int v[], int i, int j)
+{
+	if(i==j)//because a^a = 0, then xorSwap cannot swap two equal numbers!
+		return;
+
+	v[i] = v[i]^v[j];
+	v[j] = v[i]^v[j];
+	v[i] = v[i]^v[j];
+}
+
 void swap(int v[], int i, int j)
 {
 	int temp;
@@ -103,18 +123,18 @@ void quikSort(int v[], int n)
 		return;
 	fprintf(stderr, "before swap pivot:\n");
 	showArray(v, n);
-	swap(v, 0, (rand()%n));
-	fprintf(stderr, "after swap pivot:\n");
+	xorSwap(v, 0, (rand()%n));
+	DEBUG_OUT("after swap pivot:\n");
 	showArray(v, n);
 	last = 0;
 	for(i=1; i < n; i++)
 		if(v[i] < v[0])
-			swap(v, ++last, i);
-	fprintf(stderr, "after select:\n");
+			xorSwap(v, ++last, i);
+	DEBUG_OUT("after select:\n");
 	showArray(v, n);
 
-	swap(v, 0, last);
-	fprintf(stderr, "after restore pivot:\n");
+	xorSwap(v, 0, last);
+	DEBUG_OUT("after restore pivot:\n");
 	showArray(v, n);
 
 	quikSort(v, last);
