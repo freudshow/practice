@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "list.h"
-
 
 int isEmpty(list L)
 {
@@ -14,30 +14,37 @@ int isLast(position P, list L)
 
 list makeEmpty(list L)
 {
-	position p = NULL;
+	if(L != NULL)
+		deletelist(L);
 
-	while(!isEmpty(L)) {
-		p = L->pNext;
-		L = p->pNext;
-		free(p);
-	}
+	L = malloc(sizeof(node_s));
+	if(L == NULL)
+		FatalError("Out of memory!");
+
+	L->pNext = NULL;
+	return L;
 }
 
 position find(elementType X, list L)
 {
+	position p;
 
+	p = L->pNext;
+	while(p != NULL && p->element != X)
+		p = p->pNext;
+
+	return p;
 }
 
 void delete(elementType X, list L)
 {
-	position P, tmpCell;
+	position p, tmpCell;
 
-	P = findPrevious(X, L);
+	p = findPrevious(X, L);
 
-	if(!isLast(P, L)) {	/* Assumption of header use */
-	                     	 /* X is found; delete it */
-		tmpCell = P->pNext;
-		P->pNext = tmpCell->pNext;  /* Bypass deleted cell */
+	if(!isLast(p, L)) {
+		tmpCell = p->pNext;
+		p->pNext = tmpCell->pNext;
 		free(tmpCell);
 	}
 }
@@ -45,14 +52,14 @@ void delete(elementType X, list L)
 /*
  * If X is not found,
  * then Next field of returned value is NULL
- * Assumes a header
+ * assumes a header
  */
 position findPrevious(elementType X, list L)
 {
     position p;
 
 	p = L;
-	while( (p->pNext != NULL) && (p->pNext->element != X ))
+	while((p->pNext != NULL) && (p->pNext->element != X))
 		p = p->pNext;
 
 	return p;
@@ -60,44 +67,50 @@ position findPrevious(elementType X, list L)
 
 /*
  * insert X after P
- * If X is not found,
- * then Next field of returned value is NULL
- * Assumes a header
+ * header implementation assumed
  */
 void insert(elementType X, list L, position P)
 {
+	position tmpCell;
 
+	tmpCell = malloc(sizeof(node_s));
+	if(tmpCell == NULL)
+		FatalError("out of space!!!");
+
+	tmpCell->element = X;
+	tmpCell->pNext = P->pNext;
+	P->pNext = tmpCell;
 }
 
 void deletelist(list L)
 {
-    position P, Tmp;
+    position p, tmp;
 
-	P = L->pNext;  /* Header assumed */
+	p = L->pNext;  /* Header assumed */
 	L->pNext = NULL;
-	while( P != NULL ) {
-		Tmp = P->pNext;
-		free( P );
-		P = Tmp;
+	while(p != NULL) {
+		tmp = p->pNext;
+		free(p);
+		p = tmp;
     }
 }
 
 position header(list L)
 {
-
+	return L;
 }
 
 position first(list L)
 {
-
+	return L->pNext;
 }
 
 position advance(position P)
 {
-
+	return P->pNext;
 }
 
 elementType retrieve(position P)
 {
-
+	return P->element;
 }

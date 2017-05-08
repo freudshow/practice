@@ -30,7 +30,14 @@ typedef struct {
 #define HIGH_BYTE_OF(dbyte)			((u8)((dbyte)>>8))
 
 #define	HEX_TO_ASCII(x)				((x<=0x09)?(x+0x30):(x+0x37))
-#define ASCII_TO_HEX(c)				((c >='0' && c <='9')?(c-'0'):((c>='A'&&c<='F')?(c-'A'+10):((c>='a'&&c<='f')?(c-'a'+10):0)))
+
+#define ASCII_TO_HEX(c)				((c >='0' && c <='9') ? (c-'0'): (\
+										(c>='A'&&c<='F') ? (c-'A'+10): (\
+												(c>='a'&&c<='f')?(c-'a'+10):0\
+											)\
+										)\
+									)
+
 #define U8_TO_ASCII_H(x)			HEX_TO_ASCII(((x)&0x0F))
 #define U8_TO_ASCII_L(x)			HEX_TO_ASCII(((x)&0x0F))
 #define BIT_N(byte, n)				(((byte)>>(n))&0x01)
@@ -47,5 +54,8 @@ typedef struct {
 								(a) = (a)^(b);\
 							}\
 						}while(0)
+
+#define Error(Str)        FatalError(Str)
+#define FatalError(Str)   fprintf(stderr, "%s\n", Str), exit(1)
 
 #endif//__BASEDEF_H__
