@@ -42,16 +42,6 @@ void showArray(int v[], int length)
 	fprintf(stderr, "\n");
 }
 
-void showArrayf(float v[], int length)
-{
-	int i;
-
-	for (i = 0; i < length; i++) {
-		fprintf(stderr, "%f\t", v[i]);
-	}
-	fprintf(stderr, "\n");
-}
-
 int arrayCmp(int a, int b)
 {
 	if (a == b)
