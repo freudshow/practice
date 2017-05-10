@@ -9,8 +9,20 @@ typedef	char	s8;
 typedef	short	s16;
 typedef	int		s32;
 
+typedef int elementType;
+struct node;
+typedef struct node node_s;
+typedef node_s* ptrToNode;
+typedef ptrToNode list;
+typedef ptrToNode position;
+
 #pragma pack(push)
 #pragma pack(1)
+
+typedef struct node {
+    elementType element;
+    position pNext;
+};
 
 typedef struct {
 	char*	name;
