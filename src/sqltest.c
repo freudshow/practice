@@ -340,12 +340,13 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
   return 0;
 }
 
-int vmain(int argc, char **argv)
+int main(int argc, char **argv)
 {
+	pid_t pid = -1; 
 	char *zErrMsg = NULL;
 
 	char* dropImage = "drop table if exists \"images\"";
-	char* createImage = "create table images(id integer primary key autoincrement, f_oad blob, data blob)";
+	char* createImage = "create table images(id integer primary key autoincrement, f_pid integer, f_oad blob, data blob)";
 
 	char *dropTable = "drop table if exists \"t_meter_info\"";
 	char *createTable = "create table t_meter_info"\
@@ -468,7 +469,7 @@ onRet:
 }
 
 
-int main(int argc, char **argv)
+int vmain(int argc, char **argv)
 {
 	unsigned char u8 = 1;
 
