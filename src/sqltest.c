@@ -9,12 +9,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <signal.h>
 #include <string.h>
 #include <stdarg.h>
 #include <time.h>
 #include <sys/time.h>
 #include <sqlite3.h>
+#include <pthread.h>
 
 #define NO_ERR	0//成功
 #define ERR_1	1//失败
@@ -22,6 +25,7 @@
 #define VACCUM_LOG_FILE	"vacumm.log"
 
 #define DISK_IDLE_SIZE	(4096)
+#define DB_LIMIT_SIZE	(41943040L)
 #define FILE_LINE	__FILE__,__FUNCTION__,__LINE__
 #define DEBUG_TIME_LINE(format, ...)	debugToStderr(FILE_LINE, format, ##__VA_ARGS__)
 #define DEBUG_TO_FILE(format, ...)		debugToFile(VACCUM_LOG_FILE, FILE_LINE, format, ##__VA_ARGS__)
@@ -62,7 +66,7 @@ void debugToFp(FILE *fp, const char* file, const char* func, uint32 line, const 
 		return;
 
 	get_local_time(bufTime, sizeof(bufTime));
-	fprintf(fp, "\n[%s][%s][%s()][%d]: ", bufTime, file, func, line);
+	fprintf(fp, "\n[pid: %d][%s][%s][%s()][%d]: ", getpid(), bufTime, file, func, line);
 	va_start(ap, fmt);
 	vfprintf(fp, fmt, ap);
 	va_end(ap);
@@ -72,22 +76,30 @@ void debugToFp(FILE *fp, const char* file, const char* func, uint32 line, const 
 void debugToStderr(const char* file, const char* func, uint32 line, const char *fmt, ...)
 {
 	va_list ap;
+	char bufTime[20] = { 0 };
 
+	get_local_time(bufTime, sizeof(bufTime));
+	fprintf(stderr, "\n[pid: %d][%s][%s][%s()][%d]: ", getpid(), bufTime, file, func, line);
 	va_start(ap, fmt);
-	debugToFp(stderr, file, func, line, fmt, ap);
+	vfprintf(stderr, fmt, ap);
 	va_end(ap);
+	fprintf(stderr, "\n");
 }
 
 void debugToFile(const char* fname, const char* file, const char* func, uint32 line, const char *fmt,...)
 {
 	va_list ap;
 	FILE *fp = NULL;
+	char bufTime[20] = { 0 };
 
+	get_local_time(bufTime, sizeof(bufTime));
 	fp = fopen(fname, "a+");//内容存入文件
 	if (fp != NULL) {
+		fprintf(fp, "\n[pid: %d][%s][%s][%s()][%d]: ", getpid(), bufTime, file, func, line);
 		va_start(ap, fmt);
-		debugToFp(fp, file, func, line, fmt, ap);
+		vfprintf(fp, fmt, ap);
 		va_end(ap);
+		fprintf(fp, "\n");
 	    fflush(fp);
 		fclose(fp);
 	}
@@ -106,6 +118,7 @@ uint8 close_db(void)
 void exitHandle(int i)
 {
 	close_db();
+	fprintf(stderr, "pid: %d, db closed\n", getpid());
 	exit(0);
 }
 
@@ -132,7 +145,7 @@ int insertImage(sqlite3* db) {
 	int bufSize = 0;
 	FILE *fp = fopen("th.jpg", "rb");
     sqlite3_stmt *pStmt = NULL;
-    char *sql = "INSERT INTO Images(f_oad, Data) VALUES(?, ?)";
+    char *sql = "INSERT INTO Images(f_pid, f_tid, f_oad, Data) VALUES(?, ?, ?, ?)";
     int rc = 0;
     int ret = 0;
 
@@ -200,8 +213,10 @@ int insertImage(sqlite3* db) {
         goto onRet;
     }
 
-    sqlite3_bind_blob(pStmt, 1, buf, bufSize, SQLITE_STATIC);
-    sqlite3_bind_blob(pStmt, 2, buf, bufSize, SQLITE_STATIC);
+	sqlite3_bind_int(pStmt, 1, getpid());
+	sqlite3_bind_int(pStmt, 2, pthread_self());
+    sqlite3_bind_blob(pStmt, 3, buf, bufSize, SQLITE_STATIC);
+    sqlite3_bind_blob(pStmt, 4, buf, bufSize, SQLITE_STATIC);
     rc = sqlite3_step(pStmt);
     if (rc != SQLITE_DONE) {
         printf("execution failed: %s", sqlite3_errmsg(db));
@@ -267,6 +282,21 @@ onRet:
     return ret;
 }
 
+long get_file_size(char* filename)
+{
+	long length = 0;
+	FILE *fp = NULL;
+	fp = fopen(filename, "rb");
+	if (fp != NULL) {
+		fseek(fp, 0, SEEK_END);
+		length = ftell(fp);
+	}
+	if (fp != NULL) {
+		fclose(fp);
+		fp = NULL;
+	}
+	return length;
+}
 
 /*
  * 由于调用vacuum命令释放空间时,
@@ -277,44 +307,28 @@ onRet:
  * 所以系统的现有空闲空间的大小不能比现有的
  * 数据库文件的大小更小.
  */
-uint8 db_too_big()
+uint8 db_too_big(char* dbname)
 {
 	uint8 err = NO_ERR;
-	FILE* fp;
+	long length = get_file_size(dbname);
 
-	char* cmd_disk_idle = "df | grep nand | awk '{print $4}'";//空闲空间
+	DEBUG_TIME_LINE("db_size: %ld", length);
 
-	char result[20];
-	int disk_idle;
-	int db_size = DISK_IDLE_SIZE;
-	if(NULL==(fp=popen(cmd_disk_idle, "r"))) {
-		return ERR_1;
-	}
-	if(fread(result, sizeof(char), sizeof(result), fp)) {
-		disk_idle = atoi(result);
-	} else {
-		return ERR_1;
-	}
-	pclose(fp);
-
-	if(disk_idle<db_size) {//如果系统空闲空间小于现有数据库的大小, 就认为空间比较紧张了
-		return ERR_1;
-	}
-	return err;
+	return ((length>DB_LIMIT_SIZE) ? ERR_1 : NO_ERR);
 }
 
 /*
  * 如果这个仪表的数据表行数超过一定数量
  * 就删除已上传成功的历史数据
  */
-uint8 clean_data()
+uint8 clean_data(char* dbname)
 {
 	char* pErr;
 	uint8 err = NO_ERR;
 	char* delete = "delete from \"images\"";
 
-	if (db_too_big() == ERR_1) {/*check if database is too big*/
-		DEBUG_TO_FILE("db is too big, need to vaccum!");
+	if (db_too_big(dbname) == ERR_1) {/*check if database is too big*/
+		DEBUG_TIME_LINE("db is too big, need to vaccum!");
 		err = sqlite3_exec(g_pDB, delete, NULL, NULL, &pErr);//删除最早一天的数据
 		if(err != SQLITE_OK) {
 			return ERR_1;
@@ -324,7 +338,7 @@ uint8 clean_data()
 		if(err != SQLITE_OK) {
 			return ERR_1;
 		}
-		DEBUG_TO_FILE("vaccum done!");
+		DEBUG_TIME_LINE("vaccum done!");
 	}
 
 	return err;
@@ -332,21 +346,25 @@ uint8 clean_data()
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
-  int i;
-  for(i=0; i<argc; i++){
-    fprintf(stderr ,"%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-  }
-  printf("\n");
+	/*int i;
+	for(i=0; i<argc; i++){
+		fprintf(stderr ,"%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+	}
+	printf("\n");
+	*/
   return 0;
 }
 
 int main(int argc, char **argv)
 {
-	pid_t pid = -1; 
+	pid_t pid;
+	pthread_attr_t thread_attr_1;
+	pthread_t thread_1;
+
 	char *zErrMsg = NULL;
 
 	char* dropImage = "drop table if exists \"images\"";
-	char* createImage = "create table images(id integer primary key autoincrement, f_pid integer, f_oad blob, data blob)";
+	char* createImage = "create table images(id integer primary key autoincrement, f_pid integer, f_tid integer, f_oad blob, data blob)";
 
 	char *dropTable = "drop table if exists \"t_meter_info\"";
 	char *createTable = "create table t_meter_info"\
@@ -378,90 +396,106 @@ int main(int argc, char **argv)
 					"0, "\
 					"'6#管道井'"\
 				")";
-  char* select = "select * from t_meter_info";
-  
-  char* update = "update t_meter_info set f_meter_type='40' where f_id=1";
-  int rc;
+	char* select = "select * from t_meter_info";
 
-  struct sigaction sa = {};
-  setSignal(&sa, exitHandle);
+	char* update = "update t_meter_info set f_meter_type='40' where f_id=1";
+	int rc;
 
-  DEBUG_TIME_LINE("%s\n", sqlite3_libversion());
+	struct sigaction sa = {};
+	setSignal(&sa, exitHandle);
 
-  rc = open_db(argv[1]);
-  if( rc == ERR_1){
-    DEBUG_TIME_LINE("Can't open database: %s\n", sqlite3_errmsg(g_pDB));
-    goto onRet;
-  }
+	DEBUG_TIME_LINE("%s\n", sqlite3_libversion());
 
-  rc = sqlite3_exec(g_pDB, dropImage, NULL, 0, &zErrMsg);
-  if( rc!=SQLITE_OK ){
-		DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-      goto onRet;
-  }
+	pid = fork();
+	if (pid < 0) {
+		perror("fork failed");
+		exit(1);
+	}
 
-  rc = sqlite3_exec(g_pDB, createImage, NULL, 0, &zErrMsg);
-  if( rc!=SQLITE_OK ){
-		DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-      goto onRet;
-  }
-
-  rc = sqlite3_exec(g_pDB, dropTable, callback, 0, &zErrMsg);
-  if( rc!=SQLITE_OK ){
-	DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-	sqlite3_free(zErrMsg);
-	goto onRet;
-  }
-
-  rc = sqlite3_exec(g_pDB, createTable, callback, 0, &zErrMsg);
-  if( rc!=SQLITE_OK ){
-	DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-	sqlite3_free(zErrMsg);
-	goto onRet;
-  }
-
-  while (1) {
-	  DEBUG_TIME_LINE("fuck 0");
-	  DEBUG_TO_FILE("fuck 1");
-	  rc = sqlite3_exec(g_pDB, insert, callback, 0, &zErrMsg);
-	  if( rc!=SQLITE_OK ){
-		DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
+	rc = open_db(argv[1]);
+		if( rc == ERR_1){
+		DEBUG_TIME_LINE("Can't open database: %s\n", sqlite3_errmsg(g_pDB));
 		goto onRet;
-	  }
+	}
 
-	  rc = sqlite3_exec(g_pDB, select, callback, 0, &zErrMsg);
-	  if( rc!=SQLITE_OK ){
-		DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-		goto onRet;
-	  }
+	if (pid == 0) {
+		fprintf(stdout, "This is the child, pid: %d, ppid: %d\n", getpid(), getppid());
+	} else {
+		fprintf(stdout, "This is the parent, pid: %d, childpid: %d\n", getpid(), pid);
 
-	  rc = sqlite3_exec(g_pDB, update, callback, 0, &zErrMsg);
-	  if( rc!=SQLITE_OK ){
-		DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
-		sqlite3_free(zErrMsg);
-		goto onRet;
-	  }
+		rc = sqlite3_exec(g_pDB, dropImage, NULL, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			goto onRet;
+		}
 
-	  rc = insertImage(g_pDB);
-	  if( rc!=0 ){
-		DEBUG_TIME_LINE("read image error\n");
-		goto onRet;
-	  }
+		rc = sqlite3_exec(g_pDB, createImage, NULL, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			goto onRet;
+		}
 
-	  rc = selectImage(g_pDB);
-	  if( rc!=0 ){
-		DEBUG_TIME_LINE("read image error\n");
-		goto onRet;
-	  }
+		rc = sqlite3_exec(g_pDB, dropTable, callback, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			goto onRet;
+		}
 
-	  clean_data();
-	  system("cj stop");
-	  usleep(1000000);
-  }
+		rc = sqlite3_exec(g_pDB, createTable, callback, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			goto onRet;
+		}
+
+	}
+
+	while (1) {
+		rc = sqlite3_exec(g_pDB, insert, callback, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			continue;
+			//goto onRet;
+		}
+
+		rc = sqlite3_exec(g_pDB, select, callback, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			continue;
+			//goto onRet;
+		}
+
+		rc = sqlite3_exec(g_pDB, update, callback, 0, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+			DEBUG_TIME_LINE("SQL error: %s\n", zErrMsg);
+			sqlite3_free(zErrMsg);
+			continue;
+			//goto onRet;
+		}
+
+		rc = insertImage(g_pDB);
+		if( rc!=0 ){
+			DEBUG_TIME_LINE("read image error\n");
+			continue;
+			//goto onRet;
+		}
+
+		rc = selectImage(g_pDB);
+		if( rc!=0 ){
+			DEBUG_TIME_LINE("read image error\n");
+			continue;
+			//goto onRet;
+		}
+
+		clean_data(argv[1]);
+		system("cj stop");
+		usleep(1000000);
+	}
 
 onRet:
   close_db();
