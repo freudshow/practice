@@ -41,22 +41,6 @@ typedef float		float32;
 
 sqlite3 *g_pDB = NULL;
 
-void get_local_time(char* buf, uint32 bufSize)
-{
-	struct tm timeinfo;
-    time_t rawtime;
-	
-	if ((bufSize < 20) || (NULL == buf))
-		return;
-
-    rawtime = time(NULL);
-    localtime_r(&rawtime, &timeinfo);
-
-	sprintf(buf, "%04d-%02d-%02d %02d:%02d:%02d",\
-	(timeinfo.tm_year+1900), timeinfo.tm_mon+1, timeinfo.tm_mday,\
-	timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
-}
-
 void debugToFp(FILE *fp, const char* file, const char* func, uint32 line, const char *fmt, ...)
 {
 	va_list ap;

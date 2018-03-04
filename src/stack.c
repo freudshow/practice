@@ -2,7 +2,7 @@
 
 int isEmpty(Stack S)
 {
-
+	return 0;
 }
 
 int isFull(Stack S)
