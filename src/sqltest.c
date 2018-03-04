@@ -63,7 +63,7 @@ void debugToStderr(const char* file, const char* func, uint32 line, const char *
 	char bufTime[20] = { 0 };
 
 	get_local_time(bufTime, sizeof(bufTime));
-	fprintf(stderr, "\n[pid: %d][%s][%s][%s()][%d]: ", getpid(), bufTime, file, func, line);
+	fprintf(stderr, "\n[pid: %d][tid: %d][%s][%s][%s()][%d]: ", getpid(), pthread_self(), bufTime, file, func, line);
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
@@ -79,7 +79,7 @@ void debugToFile(const char* fname, const char* file, const char* func, uint32 l
 	get_local_time(bufTime, sizeof(bufTime));
 	fp = fopen(fname, "a+");//内容存入文件
 	if (fp != NULL) {
-		fprintf(fp, "\n[pid: %d][%s][%s][%s()][%d]: ", getpid(), bufTime, file, func, line);
+		fprintf(fp, "\n[pid: %d][tid: %d][%s][%s][%s()][%d]: ", getpid(), pthread_self(), bufTime, file, func, line);
 		va_start(ap, fmt);
 		vfprintf(fp, fmt, ap);
 		va_end(ap);
@@ -282,15 +282,6 @@ long get_file_size(char* filename)
 	return length;
 }
 
-/*
- * 由于调用vacuum命令释放空间时,
- * sqlite3要创建一个临时的数据库"vacuum_db",
- * 用来临时交换现有数据库内的文件.
- * 这个临时的数据库文件大小很可能与现有的
- * 数据库文件大小接近.
- * 所以系统的现有空闲空间的大小不能比现有的
- * 数据库文件的大小更小.
- */
 uint8 db_too_big(char* dbname)
 {
 	uint8 err = NO_ERR;
@@ -309,7 +300,7 @@ uint8 clean_data(char* dbname)
 {
 	char* pErr;
 	uint8 err = NO_ERR;
-	char* delete = "delete from \"images\"";
+	char* delete = "delete from images";
 
 	if (db_too_big(dbname) == ERR_1) {/*check if database is too big*/
 		DEBUG_TIME_LINE("db is too big, need to vaccum!");
