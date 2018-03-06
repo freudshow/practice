@@ -6,11 +6,16 @@
 #include "basedef.h"
 
 #define	DEBUG_OUT(format, ...)	debug(FILE_LINE, format, ##__VA_ARGS__)
+#define DEBUG_TIME_LINE DEBUG_OUT
+#define	DEBUG_PRINT(format, ...)	fprintf(stderr, "[%s][%s][%d]"format"\n", , ##__VA_ARGS__)
 
 #define	INIT_STATE	-1
 #define EQUAL_TO	0
 #define GREAT_THAN	1
 #define SMALL_THAN	2
+
+#define TRUE	(0)
+#define FALSE	(-1)
 
 extern void debug(const char* file, const char* func, u32 line, const char *fmt, ...);
 extern void showArray(int v[], int length);
@@ -19,5 +24,7 @@ extern int binSearchInt(int elem, int array[], int length);
 extern void xorSwap(int v[], int i, int j);
 extern void swap(int v[], int i, int j);
 extern void quikSort(int v[], int len);
+extern void readFrm(char *str, u8 *buf, u32 *bufSize);
+extern void printBuf(u8* buf, u32 bufSize);
 
 #endif// __LIB_H__
