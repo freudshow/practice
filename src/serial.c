@@ -172,18 +172,101 @@ int openCom(comConfig_s* config)
 	return fd;
 }
 
-s8 getComConfig(int argc, char* argv[], comConfig_s* pConfig)
-{
-	s8 state;
-	char* p = NULL;
-
-	return TRUE;
-}
-
 void usage()
 {
 	printf("serial \"1,2400,n,8,1\" \"fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16\"\n");
 	printf("or ommit com para: serial \"fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16\"\n");
+}
+
+
+/*
+ * 功能: 获取串口配置.
+ * 格式必须是"串口号,波特率,校验方式,停止位,数据位".
+ * 串口号, 波特率, 停止位, 数据位必须是十进制数字,
+ * 校验方式: e-偶校验, o-奇校验, n-无校验, 其他字符无效.
+ * 必须以','分隔, 其他的分隔符不允许出现.
+ * 波特率取值: {1200, 2400, 4800, 9600, 19200, 38400, 115200}
+ * 比如: "1,2400,e,1,8".
+ * @str: 串口配置字符串, 以'\0'结尾
+ * @pConfig: 串口配置结构体
+ */
+s8 getComConfig(char* str, comConfig_s* pConfig)
+{
+	u8 position[10] = {0};
+	u32 i = 0;
+	u32 baudrate = 0;
+	char* p = NULL;
+
+	if ( NULL == str || NULL == pConfig )
+        return FALSE;
+
+	for(i = 0, p = str;*p != '\0';p++) {
+		if (*p == ',') {//record position of ','
+			position[i] = (p-str);
+			*p = '\0';
+			i++;
+		}
+	}
+
+	if (i != 4) {
+		return FALSE;
+	}
+
+	p = str;
+	pConfig->port = atoi(p);
+
+	p = &str[position[0]+1];
+	baudrate = atoi(p);
+	switch (baudrate) {
+	case 1200:
+		pConfig->baud = baud1200;
+		break;
+	case 2400:
+		pConfig->baud = baud2400;
+		break;
+	case 4800:
+		pConfig->baud = baud4800;
+		break;
+	case 9600:
+		pConfig->baud = baud9600;
+		break;
+	case 19200:
+		pConfig->baud = baud19200;
+		break;
+	case 38400:
+		pConfig->baud = baud38400;
+		break;
+	case 115200:
+		pConfig->baud = baud115200;
+		break;
+	default:
+		pConfig->baud = baud2400;
+		break;
+	}
+
+	p = &str[position[1]+1];
+	switch(*p) {
+	case 'e':
+		pConfig->par = parEven;
+		break;
+	case 'o':
+		pConfig->par = parOdd;
+		break;
+	case 'n':
+		pConfig->par = parNone;
+		break;
+	default:
+		pConfig->baud = parNone;
+		break;
+	}
+
+	p = &str[position[2]+1];
+	pConfig->stopb = atoi(p);
+
+	p = &str[position[3]+1];
+	pConfig->bits = atoi(p);
+
+	return TRUE;
 }
 
 s8 sendBuf(int fd, u8* buf, u32 bufSize)
@@ -218,7 +301,7 @@ int main(int argc, char* argv[])
 	u32 bufSize = 0;
 	int fd = -1;
 
-	config.port = 1;
+	config.port = 2;
 	config.baud = baud2400;
 	config.par = parEven;
 	config.stopb = 1;
@@ -228,9 +311,9 @@ int main(int argc, char* argv[])
 		usage();
 		exit(0);
 	} else if (argc == 3) {
-		if (getComConfig(argc, argv, &config) == FALSE) {
+		if (getComConfig(argv[1], &config) == FALSE) {
 			perror("get com config failed!");
-			exit(1);
+			goto ret;
 		}
 		pFrame = argv[2];
 	} else if (argc == 2) {
@@ -242,14 +325,18 @@ int main(int argc, char* argv[])
 		perror("open failed!");
 		exit(1);
 	}
-
-	bufSize = strlen(pFrame);
+	printf("port: %d, baud: %d, parity: %d, stop: %d, bits: %d\n",
+		  config.port, config.baud, config.par, config.stopb, config.bits);
+	bufSize = sizeof(buf);
 	readFrm(pFrame, buf, &bufSize);
+	DEBUG_OUT("[send]:");
+	printBuf(buf, bufSize);
 	if (sendBuf(fd, buf, bufSize) == FALSE) {
-		exit(1);
+		goto ret;
 	}
-	usleep(50000);
+	sleep(1);
 	readBuf(fd, buf, &bufSize);
+	DEBUG_OUT("[read]:");
 	printBuf(buf, bufSize);
 	//sem_post();
 

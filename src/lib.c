@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
+#include <string.h>
 #include "lib.h"
 
 void get_local_time(char* buf, u32 bufSize)
@@ -19,7 +20,7 @@ void get_local_time(char* buf, u32 bufSize)
 			timeinfo.tm_min, timeinfo.tm_sec);
 }
 
-void debug(const char* file, const char* func, u32 line, const char *fmt, ...)
+void debug(const char* file, const char* func, u32 line, u8 printEnter, const char *fmt, ...)
 {
 	va_list ap;
 	char buf[20] = { 0 };
@@ -29,7 +30,8 @@ void debug(const char* file, const char* func, u32 line, const char *fmt, ...)
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
-	fprintf(stderr, "\n");
+	if(1 == printEnter)
+		fprintf(stderr, "\n");
 }
 
 void showArray(int v[], int length)
@@ -199,8 +201,10 @@ void quikSort(int v[], int n)
 	showArray(v, n);
 	last = 0;
 	for(i=1; i < n; i++)
-		if(v[i] < v[0])
-			SWAP(v[++last], v[i]);
+		if(v[i] < v[0]) {
+			last++;
+			SWAP(v[last], v[i]);
+		}
 	DEBUG_OUT("after select:\n");
 	showArray(v, n);
 
