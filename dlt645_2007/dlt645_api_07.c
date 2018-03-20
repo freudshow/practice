@@ -1,4 +1,4 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "dlt645_api_07.h"
@@ -14,7 +14,7 @@ char g_out_data_07[OUT_BUF_LEN] = {0};
 
 #endif
 
-// Êı¾İÓò³¤¶È
+// æ•°æ®åŸŸé•¿åº¦
 #define D07_DATA_LEN_METER_PROG         50
 #define D07_DATA_LEN_RECD_METER_CLEAR   106
 #define D07_DATA_LEN_RECD_DEAMD_CLEAR     202
@@ -23,7 +23,7 @@ char g_out_data_07[OUT_BUF_LEN] = {0};
 
 /*************************************************
 Function:       d07_str_to_num
-Description:   ½«³¤¶ÈÎªlenµÄstring×ªÎªÊı×Ö×ª³ö
+Description:   å°†é•¿åº¦ä¸ºlençš„stringè½¬ä¸ºæ•°å­—è½¬å‡º
 Calls:          
 Called By:      
 Input:          
@@ -53,19 +53,19 @@ INT32 d07_str_to_num(char* str, INT32 len)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : d07_hex_str_to_long
- ¹¦ÄÜÃèÊö  : ½«³¤¶ÈÎªlenµÄÄÚÈİ£¬µ±×÷Ê®Áù½øÖÆ×Ö·û´®£¬½«Îª³¤ÕûÊı
- ÊäÈë²ÎÊı  : char*str  
+ å‡½ æ•° å  : d07_hex_str_to_long
+ åŠŸèƒ½æè¿°  : å°†é•¿åº¦ä¸ºlençš„å†…å®¹ï¼Œå½“ä½œåå…­è¿›åˆ¶å­—ç¬¦ä¸²ï¼Œå°†ä¸ºé•¿æ•´æ•°
+ è¾“å…¥å‚æ•°  : char*str  
              INT32 len   
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 long d07_hex_str_to_long(char*str, INT32 len)
@@ -154,7 +154,7 @@ void str2bcd(char *str,UINT8 *BCD,INT32 *BCD_length)
 
 /*************************************************
 Function:       get_d07_ruler_id
-Description:    Í¨¹ı¹æÔ¼ÀàĞÍ»ñµÃ¶ÔÓ¦¹æÔ¼ID
+Description:    é€šè¿‡è§„çº¦ç±»å‹è·å¾—å¯¹åº”è§„çº¦ID
 
 Author:         liming 
 
@@ -163,10 +163,10 @@ Called By:
 Input:           E_D07_RULER_TYPE type,
                  S_D07_RULER_PARA para,
                 
-Output:          UINT32 rulerID ¹æÔ¼ID
-Return:         ÕıÈ··µ»Ø 0 ÆäËüÎª´íÎóÀàĞÍ
+Output:          UINT32 rulerID è§„çº¦ID
+Return:         æ­£ç¡®è¿”å› 0 å…¶å®ƒä¸ºé”™è¯¯ç±»å‹
 
-Others:         ÖØÒªº¯Êı£¬¹æÔ¼½âÎöºËĞÄº¯Êı
+Others:         é‡è¦å‡½æ•°ï¼Œè§„çº¦è§£ææ ¸å¿ƒå‡½æ•°
   
 *************************************************/
 INT32 get_d07_ruler_id(E_D07_RULER_TYPE type,
@@ -181,17 +181,17 @@ INT32 get_d07_ruler_id(E_D07_RULER_TYPE type,
 
 /*************************************************
 Function:       pack_d07_frame_by_data
-Description:    ÄÚ²¿º¯Êı£¬½öÍê³É½á¹¹ÌåµÄÌî³ä
+Description:    å†…éƒ¨å‡½æ•°ï¼Œä»…å®Œæˆç»“æ„ä½“çš„å¡«å……
 
 Author:         liming 
 
 Calls:          
 Called By:      
-Input:          S_D07_PACK_FRAME *inPara ÓÃÓÚ·âÖ¡Êı¾İ
+Input:          S_D07_PACK_FRAME *inPara ç”¨äºå°å¸§æ•°æ®
                 
-Output:         char *outBuffer ·â×°ºóµÄÖ¡buffer
-                INT32  *outLength ¸ÃÖ¡×Ü³¤
-Return:         ÕıÈ··µ»Ø0
+Output:         char *outBuffer å°è£…åçš„å¸§buffer
+                INT32  *outLength è¯¥å¸§æ€»é•¿
+Return:         æ­£ç¡®è¿”å›0
 
 Others:         
   
@@ -199,7 +199,7 @@ Others:
 INT32 pack_d07_frame_by_data(S_D07_PACK_FRAME *inPara, char *outBuffer, INT32 *outLength)
 {
     INT32 i;
-    INT32 len = 0; /* ¼ÆËã°üµÄ×Ü×Ö½Ú³¤ */
+    INT32 len = 0; /* è®¡ç®—åŒ…çš„æ€»å­—èŠ‚é•¿ */
     UINT8 ucCheckSum = 0;
     UINT8 ucDi0,ucDi1,ucDi2,ucDi3;
     UINT8 aucAddrTmp[6]; 
@@ -208,7 +208,7 @@ INT32 pack_d07_frame_by_data(S_D07_PACK_FRAME *inPara, char *outBuffer, INT32 *o
     {
         return E_D07_ERRO_NULL;
     }
-    // ×¼±¸Êı¾İ 
+    // å‡†å¤‡æ•°æ® 
     ucDi0 = inPara->ruler_id & 0xFF;
     ucDi1 = (inPara->ruler_id >> 8) & 0xFF;
     ucDi2 = (inPara->ruler_id >> 16) & 0xFF;
@@ -216,52 +216,52 @@ INT32 pack_d07_frame_by_data(S_D07_PACK_FRAME *inPara, char *outBuffer, INT32 *o
 
     d07_str2bcd(inPara->address, aucAddrTmp, 6);
 
-    /* ¿ªÊ¼·âÖ¡ */
-    // 1 Ö¡ÆğÊ¼·û
+    /* å¼€å§‹å°å¸§ */
+    // 1 å¸§èµ·å§‹ç¬¦
     outBuffer[len++] = 0x68; 
 
-    // 2 µØÖ·Óò 
+    // 2 åœ°å€åŸŸ 
     for(i = 0; i < 6; i++)
     {
         outBuffer[len++] = aucAddrTmp[i];
     }
 
-    // 3 Ö¡ÆğÊ¼·û
+    // 3 å¸§èµ·å§‹ç¬¦
     outBuffer[len++] = 0x68; 
 
-    // 4 ¿ØÖÆÂë
+    // 4 æ§åˆ¶ç 
     outBuffer[len++] = inPara->ctrl_code; 
 
-    // 5 Êı¾İÓò×Ö½ÚÊı
+    // 5 æ•°æ®åŸŸå­—èŠ‚æ•°
     outBuffer[len++] = inPara->data_len;
     //printf("len = %d\n", inPara->data_len);
 
-    // 6 ¹æÔ¼ID  - ÒÔÏÂÊı¾İÓò Öğ×Ö½Ú¼Ó0x33
+    // 6 è§„çº¦ID  - ä»¥ä¸‹æ•°æ®åŸŸ é€å­—èŠ‚åŠ 0x33
     outBuffer[len++] = ucDi0 + 0x33;
     outBuffer[len++] = ucDi1 + 0x33;
     outBuffer[len++] = ucDi2 + 0x33;
     outBuffer[len++] = ucDi3 + 0x33;
 
   
-    // 7 ÆäËüÊı¾İ
+    // 7 å…¶å®ƒæ•°æ®
     for(i = 0; i < inPara->data_len - 4; i++)
     {
        outBuffer[len++] = inPara->data[i] + 0x33;
     }
 
-    // 8 ¼ÆÊı¼ìÑéºÍ
+    // 8 è®¡æ•°æ£€éªŒå’Œ
     for(i = 0; i < len; i++)
     {
         ucCheckSum += outBuffer[i];
     }
 
-    // 9 ¼ìÑéºÍ
+    // 9 æ£€éªŒå’Œ
     outBuffer[len++] = ucCheckSum;
 
-    // 10 ½áÊø·û
+    // 10 ç»“æŸç¬¦
     outBuffer[len++] = 0x16;
 
-    /* Êä³ö²ÎÊı */
+    /* è¾“å‡ºå‚æ•° */
     *outLength = len;
 
     return E_D07_OK;
@@ -271,7 +271,7 @@ INT32 pack_d07_frame_by_data(S_D07_PACK_FRAME *inPara, char *outBuffer, INT32 *o
 
 /*************************************************
 Function:       trans_d07ctrl_char2struct
-Description:    ½âÎö½«´ú±íËüµÄ×Ö½ÚÖµ×ª»¯¿ØÖÆÂë½á¹¹Êä³ö
+Description:    è§£æå°†ä»£è¡¨å®ƒçš„å­—èŠ‚å€¼è½¬åŒ–æ§åˆ¶ç ç»“æ„è¾“å‡º
                 
 Author:         liming 
 
@@ -282,7 +282,7 @@ Input:          S_D07_CTRL_CODE *inStruct
 Output:         UINT8 *outChar
 Return:      
 
-Others:        ·´×ª»» trans_d07ctrl_struct2char
+Others:        åè½¬æ¢ trans_d07ctrl_struct2char
   
 *************************************************/
 eD07Err trans_d07ctrl_char2struct(UINT8 inChar,  S_D07_CTRL_CODE *outStruct)
@@ -393,7 +393,7 @@ eD07Err trans_d07ctrl_char2struct(UINT8 inChar,  S_D07_CTRL_CODE *outStruct)
 
 /*************************************************
 Function:       trans_d07ctrl_struct2char
-Description:    ½âÎö¿ØÖÆÂë½á¹¹ ½«´úÂëËüµÄ×Ö½ÚÖµÊä³ö
+Description:    è§£ææ§åˆ¶ç ç»“æ„ å°†ä»£ç å®ƒçš„å­—èŠ‚å€¼è¾“å‡º
                 
 Author:         liming 
 
@@ -404,7 +404,7 @@ Input:          S_D07_CTRL_CODE *inStruct
 Output:         UINT8 *outChar
 Return:      
 
-Others:        ·´×ª»» trans_d07ctrl_char2struct
+Others:        åè½¬æ¢ trans_d07ctrl_char2struct
   
 *************************************************/
 eD07Err trans_d07ctrl_struct2char(UINT8 *outChar, S_D07_CTRL_CODE *inStruct)
@@ -435,26 +435,26 @@ eD07Err trans_d07ctrl_struct2char(UINT8 *outChar, S_D07_CTRL_CODE *inStruct)
 
 /*************************************************
 Function:       unpack_d07_frame
-Description:    ½âÎöDLT645 2007Ö¡¹¦ÄÜº¯Êı
+Description:    è§£æDLT645 2007å¸§åŠŸèƒ½å‡½æ•°
 
 Author:         liming 
 
 Calls:          
 Called By:      
-Input:          inpBuffer      ´«Èë°üÓĞÖ¡bufferÖ¸Õë
-                inBufferLength ¸Ãbuffer³¤¶È
+Input:          inpBuffer      ä¼ å…¥åŒ…æœ‰å¸§bufferæŒ‡é’ˆ
+                inBufferLength è¯¥bufferé•¿åº¦
                 
-Output:         outpFrame ¸ÃÖ¡µÄ¸÷ÀàÏêÏ¸ĞÅÏ¢
+Output:         outpFrame è¯¥å¸§çš„å„ç±»è¯¦ç»†ä¿¡æ¯
 
-Return:         ÕıÈ··µ»Ø0
+Return:         æ­£ç¡®è¿”å›0
 
-Others:         ÖØÒªµÄ¹¦ÄÜº¯Êı
+Others:         é‡è¦çš„åŠŸèƒ½å‡½æ•°
   
 *************************************************/
 INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outpFrame)
 {
 
-    INT32 nNumber0xFE = 0;                     /* Ç°µ¼×Ö·ûµÄ¸öÊı */
+    INT32 nNumber0xFE = 0;                     /* å‰å¯¼å­—ç¬¦çš„ä¸ªæ•° */
     INT32 i = 0;
     INT32 pos = 0;
     INT32 nCheckSumPosStart, nCheckSumPos, nEndPos;
@@ -466,11 +466,11 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
     
     UINT8 *buffer = (UINT8 *)inpBuffer;
 
-    char addr_bcd[6] = {0};                  //µØÖ·ĞÅÏ¢(BCDĞÎÊ½)
-    char addr_str[D07_ADDR_LEN+1] = {0};         //µØÖ·ĞÅÏ¢(stringĞÎÊ½)
+    char addr_bcd[6] = {0};                  //åœ°å€ä¿¡æ¯(BCDå½¢å¼)
+    char addr_str[D07_ADDR_LEN+1] = {0};         //åœ°å€ä¿¡æ¯(stringå½¢å¼)
     UINT8 aucDataTmp[D07_DATA_MAX];
     S_D07_RULER_INFO stRulerInfor = {0};
-    F_D07_RULER_TRANS pTransFunc;    /* ½âÎöº¯ÊıÖ¸Õë */
+    F_D07_RULER_TRANS pTransFunc;    /* è§£æå‡½æ•°æŒ‡é’ˆ */
 
     if(NULL == inpBuffer || NULL == outpFrame)
     {
@@ -493,13 +493,13 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
     
     nCheckSumPosStart = pos;
 
-    // ¼ì²éÇ°µ¼×Ö·û 0x68
+    // æ£€æŸ¥å‰å¯¼å­—ç¬¦ 0x68
     if(0x68 != buffer[pos] || 0x68 != buffer[pos+7])
     {
         return E_D07_ERRO_FRAME_0x68;
     }
 
-    //µØÖ·
+    //åœ°å€
     pos++;
     for(i = 0; i < 6; i++)
     {
@@ -508,19 +508,19 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
 
     pos++;
 
-    //µØÖ·
+    //åœ°å€
     d07_bcd2str(addr_bcd, addr_str, 6);
-    //¿ØÖÆÂë
+    //æ§åˆ¶ç 
     ucCtrlCode = buffer[pos++];
     //printf("\nCtrlCode = 0x%02X\n", ucCtrlCode);
-    //×ª»»¿ØÖÆÂë
+    //è½¬æ¢æ§åˆ¶ç 
     ret =  trans_d07ctrl_char2struct(ucCtrlCode, &(outpFrame->ctrl_s));
     if(E_D07_OK != ret)
     {
         return ret;
     }
 
-    //Êı¾İÓò³¤¶È
+    //æ•°æ®åŸŸé•¿åº¦
     ucDataLen = buffer[pos++];
     nCheckSumPos = pos + ucDataLen;
     nEndPos = nCheckSumPos+1;
@@ -529,7 +529,7 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
     {
         aucDataTmp[i] = (buffer[pos++] - 0x33); 
     }
-    //²é¼ìchecksum
+    //æŸ¥æ£€checksum
     for(i = nCheckSumPosStart; i < nCheckSumPos; i++)
     {
         ucCheckSum +=  buffer[i];
@@ -542,37 +542,37 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
         return E_D07_ERRO_FRAME_CHECK_SUM;
     }
 
-    //½áÊø·û
+    //ç»“æŸç¬¦
     if(0x16 != buffer[nEndPos])
     {
         return E_D07_ERRO_FRAME_END_0x16;
     }
 
 
-    //µØÖ·
+    //åœ°å€
     for(i = 0; i < D07_ADDR_LEN; i++)
     {
         outpFrame->address[i] = addr_str[i];
         //printf("%d - %c \n",i, addr_str[i]);
     }
 
-    // Õı³£µÄ±¨ÎÄ
+    // æ­£å¸¸çš„æŠ¥æ–‡
     
     if(E_D07_CTRL_SR_OK == outpFrame->ctrl_s.reply)
     {    
-        // Ô­Êı¾İ 
+        // åŸæ•°æ® 
         for(i = 4; i < ucDataLen; i++)
         {
             outpFrame->data_pack[i-4] = aucDataTmp[i];
         }
 
-        // ¹æÔ¼ID
+        // è§„çº¦ID
         ulRulerID = ((aucDataTmp[0] & 0xFF) | 
                     ((aucDataTmp[1] << 8) & 0xFF00) |
                     ((aucDataTmp[2] << 16) & 0xFF0000) |
                     ((aucDataTmp[3] << 24) & 0xFF000000));
 
-        // Í¨¹ıID»ñÈ¡ÏêÏ¸ĞÅÏ¢    
+        // é€šè¿‡IDè·å–è¯¦ç»†ä¿¡æ¯    
         ret = get_d07_ruler_info(ulRulerID, &stRulerInfor);
 
         if(E_D07_OK != ret)
@@ -614,7 +614,7 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
         {
             outpFrame->data_pack[i] = aucDataTmp[i];
         }
-        // Òì³£±¨ÎÄ
+        // å¼‚å¸¸æŠ¥æ–‡
         outpFrame->data_len  = ucDataLen;
         outpFrame->flag    = E_D07_UNPD_FLG_ERROR_OK;        
         ret = trans_d07_data_err(E_D07_TRANS_F2U, 
@@ -633,7 +633,7 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
     
     }
     
-    /* ·â×°Êä³ö×îºóĞÅÏ¢ */
+    /* å°è£…è¾“å‡ºæœ€åä¿¡æ¯ */
     outpFrame->lead_num  = nNumber0xFE;
     outpFrame->ctrl_c      = ucCtrlCode;
     outpFrame->ruler_id  = ulRulerID;
@@ -647,26 +647,26 @@ INT32 unpack_d07_frame(void *inpBuffer, INT32 inBufferLength, S_D07_UNPACK *outp
 
 /*************************************************
 Function:       get_d07_ruler_info
-Description:    Í¨¹ı¹æÔ¼ID»ñµÃ¶ÔÓ¦¹æÔ¼µÄÏêÏ¸ĞÅÏ¢:
+Description:    é€šè¿‡è§„çº¦IDè·å¾—å¯¹åº”è§„çº¦çš„è¯¦ç»†ä¿¡æ¯:
 
-                (1)¹æÔ¼µÄÀàĞÍ¼°¶îÍâÊı¾İ
-                (2)¶ÔÓ¦Êı¾İ¸ñÊ½ÀàĞÍ
-                (3)Êı¾İÓò³¤¶È
-                (4)Êı¾İÓò¸÷Êı¾İµ¥Î»
-                (5)¹æÔ¼µÄ¿É¶ÁĞ´ÊôĞÔ
-                (6)¸Ã¹æÔ¼µÄÊı¾İÏîÃû³Æ
-                (7)ÊµÏÖ¶Ô¸ÃÌõ¹æÔ¼½âÎöºÍ·â×°º¯ÊıÖ¸Õë
+                (1)è§„çº¦çš„ç±»å‹åŠé¢å¤–æ•°æ®
+                (2)å¯¹åº”æ•°æ®æ ¼å¼ç±»å‹
+                (3)æ•°æ®åŸŸé•¿åº¦
+                (4)æ•°æ®åŸŸå„æ•°æ®å•ä½
+                (5)è§„çº¦çš„å¯è¯»å†™å±æ€§
+                (6)è¯¥è§„çº¦çš„æ•°æ®é¡¹åç§°
+                (7)å®ç°å¯¹è¯¥æ¡è§„çº¦è§£æå’Œå°è£…å‡½æ•°æŒ‡é’ˆ
 
 Author:         liming 
 
 Calls:          
 Called By:      
-Input:          UINT32 rulerID ¹æÔ¼ID
+Input:          UINT32 rulerID è§„çº¦ID
                 
 Output:         S_D07_RULER_INFO *outRulerInfo
-Return:         ÕıÈ··µ»Ø 0 ÆäËüÎª´íÎóÀàĞÍ
+Return:         æ­£ç¡®è¿”å› 0 å…¶å®ƒä¸ºé”™è¯¯ç±»å‹
 
-Others:         ÖØÒªº¯Êı£¬¹æÔ¼½âÎöºËĞÄº¯Êı
+Others:         é‡è¦å‡½æ•°ï¼Œè§„çº¦è§£ææ ¸å¿ƒå‡½æ•°
   
 *************************************************/
 INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
@@ -676,13 +676,13 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
     UINT8 ucDi1 = 0;
     UINT8 ucDi0 = 0;
 
-    E_D07_RULER_TYPE     type   = E_D07_RULER_TYPE_UNKNOWN;   // ¹æÔ¼ÀàĞÍ
-    E_D07_RULER_RDWR     rdwr   = E_D07_RDWR_READ_ONLY;       // ¹æÔ¼Êı¾İµÄ¶ÁĞ´ÊôĞÔ
-    E_D07_RULER_FORMAT   format = E_D07_FMT_UNKOWN;           // ¹æÔ¼Êı¾İµÄ¸ñÊ½
-    F_D07_RULER_TRANS    func   = NULL;                       // Êı¾İÓò×ª»»º¯ÊıÖ¸Õë
-    S_D07_RULER_PARA     para   = {0};                        // ¹æÔ¼ÀàĞÍµÄ¶îÍâÊı¾İ
-    INT32                len    = 0;                          // Êı¾İÓò×Ö½Ú³¤¶È 
-    char                 name[NAME_LEN]   = {0};              // ¸ÃÌõ¹æÔ¼Êı¾İÏîÃû³Æ
+    E_D07_RULER_TYPE     type   = E_D07_RULER_TYPE_UNKNOWN;   // è§„çº¦ç±»å‹
+    E_D07_RULER_RDWR     rdwr   = E_D07_RDWR_READ_ONLY;       // è§„çº¦æ•°æ®çš„è¯»å†™å±æ€§
+    E_D07_RULER_FORMAT   format = E_D07_FMT_UNKOWN;           // è§„çº¦æ•°æ®çš„æ ¼å¼
+    F_D07_RULER_TRANS    func   = NULL;                       // æ•°æ®åŸŸè½¬æ¢å‡½æ•°æŒ‡é’ˆ
+    S_D07_RULER_PARA     para   = {0};                        // è§„çº¦ç±»å‹çš„é¢å¤–æ•°æ®
+    INT32                len    = 0;                          // æ•°æ®åŸŸå­—èŠ‚é•¿åº¦ 
+    char                 name[NAME_LEN]   = {0};              // è¯¥æ¡è§„çº¦æ•°æ®é¡¹åç§°
     char                 name_1[NAME_LEN] = {0};
     char strPayOff[32] = {0};
 
@@ -707,18 +707,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                 return E_D07_ERRO_UNKOWN_ID;
             }
             
-            // ·â×°½áËãÈÕ×Ö·û´®    
+            // å°è£…ç»“ç®—æ—¥å­—ç¬¦ä¸²    
             if(ucDi0 == 0)
             {
-                sprintf(strPayOff, "%s", "(µ±Ç°)");        
+                sprintf(strPayOff, "%s", "(å½“å‰)");        
             }
             else
             {
-                sprintf(strPayOff,"(ÉÏ%d½áËãÈÕ)", ucDi0);
+                sprintf(strPayOff,"(ä¸Š%dç»“ç®—æ—¥)", ucDi0);
             }
             
-            /* ¶ÔÓÚ±í A.1 ÏàÍ¬µÄÊı¾İÊôĞÔ */
-            para.payoff = (E_D07_PARA_PAYOFF)(ucDi0 + 1); /* ½áËãÈÕ */
+            /* å¯¹äºè¡¨ A.1 ç›¸åŒçš„æ•°æ®å±æ€§ */
+            para.payoff = (E_D07_PARA_PAYOFF)(ucDi0 + 1); /* ç»“ç®—æ—¥ */
             para.rate    = E_D07_RATE_NULL;
             para.harm    = E_D07_HARM_NULL;
             para.last    = E_D07_LAST_NULL;
@@ -734,18 +734,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][00]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_HAVE_POWER_TOTAL;
-                        sprintf(name_1, "×éºÏÓĞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç»„åˆæœ‰åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][00]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_HAVE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "×éºÏÓĞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç»„åˆæœ‰åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][00]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_COMB_HAVE_POWER_BLOCK;
-                        sprintf(name_1, "×éºÏÓĞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç»„åˆæœ‰åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][00]{(!(0-3F,FF))}[*]
                     {
@@ -760,18 +760,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][01]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_HAVE_POWER_TOTAL;
-                        sprintf(name_1, "ÕıÏòÓĞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "æ­£å‘æœ‰åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][01]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_HAVE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "ÕıÏòÓĞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "æ­£å‘æœ‰åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][01]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_FORTH_HAVE_POWER_BLOCK;
-                        sprintf(name_1, "ÕıÏòÓĞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "æ­£å‘æœ‰åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][01]{(!(0-3F,FF))}[*]
                     {
@@ -786,18 +786,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][02]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_HAVE_POWER_TOTAL;
-                        sprintf(name_1, "·´ÏòÓĞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "åå‘æœ‰åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][02]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_HAVE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "·´ÏòÓĞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "åå‘æœ‰åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][02]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_BACK_HAVE_POWER_BLOCK;
-                        sprintf(name_1, "·´ÏòÓĞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "åå‘æœ‰åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][02]{(!(0-3F,FF))}[*]
                     {
@@ -811,18 +811,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][03]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_1_POWER_TOTAL;
-                        sprintf(name_1, "×éºÏÎŞ¹¦1×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ1æ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[03][00]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_1_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "×éºÏÎŞ¹¦1·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ1è´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][03]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_COMB_NONE_1_POWER_BLOCK;
-                        sprintf(name_1, "×éºÏÎŞ¹¦1µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ1ç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][03]{(!(0-3F,FF))}[*]
                     {
@@ -837,18 +837,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][04]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_2_POWER_TOTAL;
-                        sprintf(name_1, "×éºÏÎŞ¹¦2×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ2æ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[04][00]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_2_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "×éºÏÎŞ¹¦2·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ2è´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][04]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_COMB_NONE_2_POWER_BLOCK;
-                        sprintf(name_1, "×éºÏÎŞ¹¦2µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ2ç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][04]{(!(0-3F,FF))}[*]
                     {
@@ -863,18 +863,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][05]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_1_NONE_POWER_TOTAL;
-                        sprintf(name_1, "µÚÒ»ÏóÏŞÎŞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç¬¬ä¸€è±¡é™æ— åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][05]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_1_NONE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚÒ»ÏóÏŞÎŞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç¬¬ä¸€è±¡é™æ— åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][05]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_1_NONE_POWER_BLOCK;
-                        sprintf(name_1, "µÚÒ»ÏóÏŞÎŞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][05]{(!(0-3F,FF))}[*]
                     {
@@ -889,18 +889,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][06]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_2_NONE_POWER_TOTAL;
-                        sprintf(name_1, "µÚ¶şÏóÏŞÎŞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç¬¬äºŒè±¡é™æ— åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][06]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_2_NONE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚ¶şÏóÏŞÎŞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç¬¬äºŒè±¡é™æ— åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][06]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_2_NONE_POWER_BLOCK;
-                        sprintf(name_1, "µÚ¶şÏóÏŞÎŞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][06]{(!(0-3F,FF))}[*]
                     {
@@ -915,18 +915,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][07]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_3_NONE_POWER_TOTAL;
-                        sprintf(name_1, "µÚÈıÏóÏŞÎŞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç¬¬ä¸‰è±¡é™æ— åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][07]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_3_NONE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚÈıÏóÏŞÎŞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç¬¬ä¸‰è±¡é™æ— åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][07]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_3_NONE_POWER_BLOCK;
-                        sprintf(name_1, "µÚÈıÏóÏŞÎŞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][07]{(!(0-3F,FF))}[*]
                     {
@@ -941,18 +941,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][08]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_4_NONE_POWER_TOTAL;
-                        sprintf(name_1, "µÚËÄÏóÏŞÎŞ¹¦×ÜµçÄÜ");                        
+                        sprintf(name_1, "ç¬¬å››è±¡é™æ— åŠŸæ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][08]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_4_NONE_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚËÄÏóÏŞÎŞ¹¦·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "ç¬¬å››è±¡é™æ— åŠŸè´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][08]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_4_NONE_POWER_BLOCK;
-                        sprintf(name_1, "µÚËÄÏóÏŞÎŞ¹¦µçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][08]{(!(0-3F,FF))}[*]
                     {
@@ -967,18 +967,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][09]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_APPARENT_POWER_TOTAL;
-                        sprintf(name_1, "ÕıÏòÊÓÔÚ×ÜµçÄÜ");                        
+                        sprintf(name_1, "æ­£å‘è§†åœ¨æ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][09]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_APPARENT_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "ÕıÏòÊÓÔÚ·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "æ­£å‘è§†åœ¨è´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][09]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_FORTH_APPARENT_POWER_BLOCK;
-                        sprintf(name_1, "ÕıÏòÊÓÔÚµçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "æ­£å‘è§†åœ¨ç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][09]{(!(0-3F,FF))}[*]
                     {
@@ -993,18 +993,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[00][0A]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_APPARENT_POWER_TOTAL;
-                        sprintf(name_1, "·´ÏòÊÓÔÚ×ÜµçÄÜ");                        
+                        sprintf(name_1, "åå‘è§†åœ¨æ€»ç”µèƒ½");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[00][0A]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_APPARENT_POWER_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "·´ÏòÊÓÔÚ·ÑÂÊ%dµçÄÜ", ucDi1);    
+                        sprintf(name_1, "åå‘è§†åœ¨è´¹ç‡%dç”µèƒ½", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[00][0A]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_BACK_APPARENT_POWER_BLOCK;
-                        sprintf(name_1, "·´ÏòÊÓÔÚµçÄÜÊı¾İ¿é");    
+                        sprintf(name_1, "åå‘è§†åœ¨ç”µèƒ½æ•°æ®å—");    
                     }
                     else    //[00][0A]{(!(0-3F,FF))}[*]
                     {
@@ -1024,405 +1024,405 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                 case 0x80:// [00][80][00][*]
                 {
                     type = E_D07_RULER_TYPE_ASSO_POWER_TOTAL;
-                    sprintf(name_1, "¹ØÁª×ÜµçÄÜ");    
+                    sprintf(name_1, "å…³è”æ€»ç”µèƒ½");    
                 }
                 break;
 
                 case 0x81:// [00][81][00][*]
                 {
                     type = E_D07_RULER_TYPE_FORTH_FUND_HAVE_POWER_TOTAL;
-                    sprintf(name_1, "ÕıÏòÓĞ¹¦»ù²¨×ÜµçÄÜ");    
+                    sprintf(name_1, "æ­£å‘æœ‰åŠŸåŸºæ³¢æ€»ç”µèƒ½");    
                 }
                 break;
 
                 case 0x82:// [00][82][00][*]
                 {
                     type = E_D07_RULER_TYPE_BACK_FUND_HAVE_POWER_TOTAL;
-                    sprintf(name_1, "·´ÏòÓĞ¹¦»ù²¨×ÜµçÄÜ");    
+                    sprintf(name_1, "åå‘æœ‰åŠŸåŸºæ³¢æ€»ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x83:// [00][83][00][*]
                 {
                     type = E_D07_RULER_TYPE_FORTH_HARM_HAVE_POWER_TOTAL;
-                    sprintf(name_1, "ÕıÏòÓĞ¹¦Ğ³²¨×ÜµçÄÜ");    
+                    sprintf(name_1, "æ­£å‘æœ‰åŠŸè°æ³¢æ€»ç”µèƒ½");    
                 }
                 break;
 
                 case 0x84:// [00][84][00][*]
                 {
                     type = E_D07_RULER_TYPE_BACK_HARM_HAVE_POWER_TOTAL;
-                    sprintf(name_1, "·´ÏòÓĞ¹¦Ğ³²¨×ÜµçÄÜ");    
+                    sprintf(name_1, "åå‘æœ‰åŠŸè°æ³¢æ€»ç”µèƒ½");    
                 }
                 break;
 
                 case 0x85:// [00][85][00][*]
                 {
                     type = E_D07_RULER_TYPE_COPR_LOSS_HAVE_POWER_COMP_TOTAL;
-                    sprintf(name_1, "Í­ËğÓĞ¹¦×ÜµçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "é“œæŸæœ‰åŠŸæ€»ç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
 
                 case 0x86:// [00][86][00][*]
                 {
                     type = E_D07_RULER_TYPE_CORE_LOSS_HAVE_POWER_COMP_TOTAL;
-                    sprintf(name_1, "ÌúËğÓĞ¹¦×ÜµçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "é“æŸæœ‰åŠŸæ€»ç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
 
                 case 0x15:// [00][15][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_FORTH_HAVE_POWER;
-                    sprintf(name_1, "AÏàÕıÏòÓĞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Aç›¸æ­£å‘æœ‰åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x16:// [00][16][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_BACK_HAVE_POWER;
-                    sprintf(name_1, "AÏà·´ÏòÓĞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Aç›¸åå‘æœ‰åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x17:// [00][17][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_COMB_NONE_1_POWER;
-                    sprintf(name_1, "AÏà×éºÏÎŞ¹¦1µçÄÜ");    
+                    sprintf(name_1, "Aç›¸ç»„åˆæ— åŠŸ1ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x18:// [00][18][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_COMB_NONE_2_POWER;
-                    sprintf(name_1, "AÏà×éºÏÎŞ¹¦2µçÄÜ");    
+                    sprintf(name_1, "Aç›¸ç»„åˆæ— åŠŸ2ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x19:// [00][19][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_1_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚÒ»ÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Aç›¸ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x1A:// [00][1A][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_2_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚ¶şÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Aç›¸ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x1B:// [00][1B][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_3_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚÈıÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Aç›¸ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x1C:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_4_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚËÄÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Aç›¸ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
 
                 case 0x1D:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_FORTH_APPARENT_POWER;
-                    sprintf(name_1, "AÏàÕıÏòÊÓÔÚµçÄÜ");    
+                    sprintf(name_1, "Aç›¸æ­£å‘è§†åœ¨ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x1E:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_BACK_APPARENT_POWER;
-                    sprintf(name_1, "AÏà·´ÏòÊÓÔÚµçÄÜ");    
+                    sprintf(name_1, "Aç›¸åå‘è§†åœ¨ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x94:// [00][94][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_ASSO_POWER;
-                    sprintf(name_1, "AÏà¹ØÁªµçÄÜ");    
+                    sprintf(name_1, "Aç›¸å…³è”ç”µèƒ½");    
                 }
                 break;
 
                 case 0x95:// [00][95][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_FORTH_FUND_HAVE_POWER;
-                    sprintf(name_1, "AÏàÕıÏòÓĞ¹¦»ù²¨µçÄÜ");    
+                    sprintf(name_1, "Aç›¸æ­£å‘æœ‰åŠŸåŸºæ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0x96:// [00][96][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_BACK_FUND_HAVE_POWER;
-                    sprintf(name_1, "AÏà·´ÏòÓĞ¹¦»ù²¨µçÄÜ");    
+                    sprintf(name_1, "Aç›¸åå‘æœ‰åŠŸåŸºæ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0x97:// [00][07][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_FORTH_HARM_HAVE_POWER;
-                    sprintf(name_1, "AÏàÕıÏòÓĞ¹¦Ğ³²¨µçÄÜ");    
+                    sprintf(name_1, "Aç›¸æ­£å‘æœ‰åŠŸè°æ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0x98:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_BACK_HARM_HAVE_POWER;
-                    sprintf(name_1, "AÏà·´ÏòÓĞ¹¦Ğ³²¨µçÄÜ");    
+                    sprintf(name_1, "Aç›¸åå‘æœ‰åŠŸè°æ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0x99:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_COPR_LOSS_HAVE_POWER_COMP;
-                    sprintf(name_1, "AÏàÍ­ËğÓĞ¹¦µçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "Aç›¸é“œæŸæœ‰åŠŸç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
 
                 case 0x9A:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_CORE_LOSS_HAVE_POWER_COMP;
-                    sprintf(name_1, "AÏàÌúËğÓĞ¹¦µçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "Aç›¸é“æŸæœ‰åŠŸç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
                 
                 case 0x29:// [00][29][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_FORTH_HAVE_POWER;
-                    sprintf(name_1, "BÏàÕıÏòÓĞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Bç›¸æ­£å‘æœ‰åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x2A:// [00][2A][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_BACK_HAVE_POWER;
-                    sprintf(name_1, "BÏà·´ÏòÓĞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Bç›¸åå‘æœ‰åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x2B:// [00][2B][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_COMB_NONE_1_POWER;
-                    sprintf(name_1, "BÏà×éºÏÎŞ¹¦1µçÄÜ");    
+                    sprintf(name_1, "Bç›¸ç»„åˆæ— åŠŸ1ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x2C:// [00][2C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_COMB_NONE_2_POWER;
-                    sprintf(name_1, "BÏà×éºÏÎŞ¹¦2µçÄÜ");    
+                    sprintf(name_1, "Bç›¸ç»„åˆæ— åŠŸ2ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x2D:// [00][2D][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_1_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚÒ»ÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Bç›¸ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x2E:// [00][2E][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_2_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚ¶şÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Bç›¸ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x2F:// [00][2F][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_3_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚÈıÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Bç›¸ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x30:// [00][30][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_4_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚËÄÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Bç›¸ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
 
                 case 0x31:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_FORTH_APPARENT_POWER;
-                    sprintf(name_1, "BÏàÕıÏòÊÓÔÚµçÄÜ");    
+                    sprintf(name_1, "Bç›¸æ­£å‘è§†åœ¨ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x32:// [00][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_BACK_APPARENT_POWER;
-                    sprintf(name_1, "BÏà·´ÏòÊÓÔÚµçÄÜ");    
+                    sprintf(name_1, "Bç›¸åå‘è§†åœ¨ç”µèƒ½");    
                 }
                 break;
                 
                 case 0xA8:// [00][A8][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_ASSO_POWER;
-                    sprintf(name_1, "BÏà¹ØÁªµçÄÜ");    
+                    sprintf(name_1, "Bç›¸å…³è”ç”µèƒ½");    
                 }
                 break;
 
                 case 0xA9:// [00][A9][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_FORTH_FUND_HAVE_POWER;
-                    sprintf(name_1, "BÏàÕıÏòÓĞ¹¦»ù²¨µçÄÜ");    
+                    sprintf(name_1, "Bç›¸æ­£å‘æœ‰åŠŸåŸºæ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xAA:// [00][96][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_BACK_FUND_HAVE_POWER;
-                    sprintf(name_1, "BÏà·´ÏòÓĞ¹¦»ù²¨µçÄÜ");    
+                    sprintf(name_1, "Bç›¸åå‘æœ‰åŠŸåŸºæ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xAB:// [00][07][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_FORTH_HARM_HAVE_POWER;
-                    sprintf(name_1, "BÏàÕıÏòÓĞ¹¦Ğ³²¨µçÄÜ");    
+                    sprintf(name_1, "Bç›¸æ­£å‘æœ‰åŠŸè°æ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xAC:// [00][AC][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_BACK_HARM_HAVE_POWER;
-                    sprintf(name_1, "BÏà·´ÏòÓĞ¹¦Ğ³²¨µçÄÜ");    
+                    sprintf(name_1, "Bç›¸åå‘æœ‰åŠŸè°æ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xAD:// [00][AD][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_COPR_LOSS_HAVE_POWER_COMP;
-                    sprintf(name_1, "BÏàÍ­ËğÓĞ¹¦µçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "Bç›¸é“œæŸæœ‰åŠŸç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
 
                 case 0xAE:// [00][AE][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_CORE_LOSS_HAVE_POWER_COMP;
-                    sprintf(name_1, "BÏàÌúËğÓĞ¹¦µçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "Bç›¸é“æŸæœ‰åŠŸç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
                 case 0x3D:// [00][3D][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_FORTH_HAVE_POWER;
-                    sprintf(name_1, "CÏàÕıÏòÓĞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Cç›¸æ­£å‘æœ‰åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x3E:// [00][3E][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_BACK_HAVE_POWER;
-                    sprintf(name_1, "CÏà·´ÏòÓĞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Cç›¸åå‘æœ‰åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x3F:// [00][3F][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_COMB_NONE_1_POWER;
-                    sprintf(name_1, "CÏà×éºÏÎŞ¹¦1µçÄÜ");    
+                    sprintf(name_1, "Cç›¸ç»„åˆæ— åŠŸ1ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x40:// [00][40][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_COMB_NONE_2_POWER;
-                    sprintf(name_1, "CÏà×éºÏÎŞ¹¦2µçÄÜ");    
+                    sprintf(name_1, "Cç›¸ç»„åˆæ— åŠŸ2ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x41:// [00][41][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_1_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚÒ»ÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Cç›¸ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x42:// [00][42][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_2_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚ¶şÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Cç›¸ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x43:// [00][43][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_3_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚÈıÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Cç›¸ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
                 
                 case 0x44:// [00][44][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_4_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚËÄÏóÏŞÎŞ¹¦µçÄÜ");    
+                    sprintf(name_1, "Cç›¸ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½");    
                 }
                 break;
 
                 case 0x45:// [00][45][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_FORTH_APPARENT_POWER;
-                    sprintf(name_1, "CÏàÕıÏòÊÓÔÚµçÄÜ");    
+                    sprintf(name_1, "Cç›¸æ­£å‘è§†åœ¨ç”µèƒ½");    
                 }
                 break;
                 
                 case 0x46:// [00][46][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_BACK_APPARENT_POWER;
-                    sprintf(name_1, "CÏà·´ÏòÊÓÔÚµçÄÜ");    
+                    sprintf(name_1, "Cç›¸åå‘è§†åœ¨ç”µèƒ½");    
                 }
                 break;
                 
                 case 0xBC:// [00][BC][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_ASSO_POWER;
-                    sprintf(name_1, "CÏà¹ØÁªµçÄÜ");    
+                    sprintf(name_1, "Cç›¸å…³è”ç”µèƒ½");    
                 }
                 break;
 
                 case 0xBD:// [00][BD][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_FORTH_FUND_HAVE_POWER;
-                    sprintf(name_1, "CÏàÕıÏòÓĞ¹¦»ù²¨µçÄÜ");    
+                    sprintf(name_1, "Cç›¸æ­£å‘æœ‰åŠŸåŸºæ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xBE:// [00][BE][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_BACK_FUND_HAVE_POWER;
-                    sprintf(name_1, "CÏà·´ÏòÓĞ¹¦»ù²¨µçÄÜ");    
+                    sprintf(name_1, "Cç›¸åå‘æœ‰åŠŸåŸºæ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xBF:// [00][BF][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_FORTH_HARM_HAVE_POWER;
-                    sprintf(name_1, "CÏàÕıÏòÓĞ¹¦Ğ³²¨µçÄÜ");    
+                    sprintf(name_1, "Cç›¸æ­£å‘æœ‰åŠŸè°æ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xC0:// [00][C0][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_BACK_HARM_HAVE_POWER;
-                    sprintf(name_1, "CÏà·´ÏòÓĞ¹¦Ğ³²¨µçÄÜ");    
+                    sprintf(name_1, "Cç›¸åå‘æœ‰åŠŸè°æ³¢ç”µèƒ½");    
                 }
                 break;
 
                 case 0xC1:// [00][C1][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_COPR_LOSS_HAVE_POWER_COMP;
-                    sprintf(name_1, "CÏàÍ­ËğÓĞ¹¦µçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "Cç›¸é“œæŸæœ‰åŠŸç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
 
                 case 0xC2:// [00][C2][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_CORE_LOSS_HAVE_POWER_COMP;
-                    sprintf(name_1, "CÏàÌúËğÓĞ¹¦µçÄÜ²¹³¥Á¿");    
+                    sprintf(name_1, "Cç›¸é“æŸæœ‰åŠŸç”µèƒ½è¡¥å¿é‡");    
                 }
                 break;
                 
@@ -1443,18 +1443,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
 
             
             
-            // ·â×°½áËãÈÕ×Ö·û´®    
+            // å°è£…ç»“ç®—æ—¥å­—ç¬¦ä¸²    
             if(ucDi0 == 0)
             {
-                sprintf(strPayOff, "%s", "(µ±Ç°)");        
+                sprintf(strPayOff, "%s", "(å½“å‰)");        
             }
             else
             {
-                sprintf(strPayOff,"(ÉÏ%d½áËãÈÕ)", ucDi0);
+                sprintf(strPayOff,"(ä¸Š%dç»“ç®—æ—¥)", ucDi0);
             }
             
-            /* ¶ÔÓÚ±í A.2 ÏàÍ¬µÄÊı¾İÊôĞÔ */
-            para.payoff = (E_D07_PARA_PAYOFF)(ucDi0 + 1); /* ½áËãÈÕ */
+            /* å¯¹äºè¡¨ A.2 ç›¸åŒçš„æ•°æ®å±æ€§ */
+            para.payoff = (E_D07_PARA_PAYOFF)(ucDi0 + 1); /* ç»“ç®—æ—¥ */
             para.rate    = E_D07_RATE_NULL;
             rdwr         = E_D07_RDWR_READ_ONLY;
             format         = E_D07_FMT_XX_XXXX_YYMMDDhhmm;
@@ -1469,18 +1469,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][01]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_HAVE_DEMAND_TOTAL;
-                        sprintf(name_1, "ÕıÏòÓĞ¹¦×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "æ­£å‘æœ‰åŠŸæ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][01]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_HAVE_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "ÕıÏòÓĞ¹¦·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "æ­£å‘æœ‰åŠŸè´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][01]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_FORTH_HAVE_DEMAND_BLOCK;
-                        sprintf(name_1, "ÕıÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][01]{(!(0-3F,FF))}[*]
                     {
@@ -1495,18 +1495,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][02]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_HAVE_DEMAND_TOTAL;
-                        sprintf(name_1, "·´ÏòÓĞ¹¦×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "åå‘æœ‰åŠŸæ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][02]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_HAVE_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "·´ÏòÓĞ¹¦·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "åå‘æœ‰åŠŸè´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][02]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_BACK_HAVE_DEMAND_BLOCK;
-                        sprintf(name_1, "·´ÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "åå‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][02]{(!(0-3F,FF))}[*]
                     {
@@ -1520,18 +1520,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][03]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_1_DEMAND_TOTAL;
-                        sprintf(name_1, "×éºÏÎŞ¹¦1×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ1æ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[03][00]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_1_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "×éºÏÎŞ¹¦1·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ1è´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][03]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_COMB_NONE_1_DEMAND_BLOCK;
-                        sprintf(name_1, "×éºÏÎŞ¹¦1×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ1æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][03]{(!(0-3F,FF))}[*]
                     {
@@ -1546,18 +1546,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][04]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_2_DEMAND_TOTAL;
-                        sprintf(name_1, "×éºÏÎŞ¹¦2×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ2æ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[04][00]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_COMB_NONE_2_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "×éºÏÎŞ¹¦2·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ2è´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][04]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_COMB_NONE_2_DEMAND_BLOCK;
-                        sprintf(name_1, "×éºÏÎŞ¹¦2×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "ç»„åˆæ— åŠŸ2æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][04]{(!(0-3F,FF))}[*]
                     {
@@ -1572,18 +1572,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][05]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_1_NONE_DEMAND_TOTAL;
-                        sprintf(name_1, "µÚÒ»ÏóÏŞÎŞ¹¦×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "ç¬¬ä¸€è±¡é™æ— åŠŸæ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][05]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_1_NONE_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚÒ»ÏóÏŞÎŞ¹¦·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "ç¬¬ä¸€è±¡é™æ— åŠŸè´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][05]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_1_NONE_DEMAND_BLOCK;
-                        sprintf(name_1, "µÚÒ»ÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬ä¸€è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][05]{(!(0-3F,FF))}[*]
                     {
@@ -1598,18 +1598,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][06]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_2_NONE_DEMAND_TOTAL;
-                        sprintf(name_1, "µÚ¶şÏóÏŞÎŞ¹¦×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "ç¬¬äºŒè±¡é™æ— åŠŸæ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][06]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_2_NONE_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚ¶şÏóÏŞÎŞ¹¦·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "ç¬¬äºŒè±¡é™æ— åŠŸè´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][06]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_2_NONE_DEMAND_BLOCK;
-                        sprintf(name_1, "µÚ¶şÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬äºŒè±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][06]{(!(0-3F,FF))}[*]
                     {
@@ -1624,18 +1624,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][07]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_3_NONE_DEMAND_TOTAL;
-                        sprintf(name_1, "µÚÈıÏóÏŞÎŞ¹¦×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "ç¬¬ä¸‰è±¡é™æ— åŠŸæ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][07]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_3_NONE_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚÈıÏóÏŞÎŞ¹¦·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "ç¬¬ä¸‰è±¡é™æ— åŠŸè´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][07]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_3_NONE_DEMAND_BLOCK;
-                        sprintf(name_1, "µÚÈıÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬ä¸‰è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][07]{(!(0-3F,FF))}[*]
                     {
@@ -1650,18 +1650,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][08]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_4_NONE_DEMAND_TOTAL;
-                        sprintf(name_1, "µÚËÄÏóÏŞÎŞ¹¦×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "ç¬¬å››è±¡é™æ— åŠŸæ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][08]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_QUAD_4_NONE_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "µÚËÄÏóÏŞÎŞ¹¦·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "ç¬¬å››è±¡é™æ— åŠŸè´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][08]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_QUAD_4_NONE_DEMAND_BLOCK;
-                        sprintf(name_1, "µÚËÄÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "ç¬¬å››è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][08]{(!(0-3F,FF))}[*]
                     {
@@ -1676,18 +1676,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][09]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_APPARENT_DEMAND_TOTAL;
-                        sprintf(name_1, "ÕıÏòÊÓÔÚ×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "æ­£å‘è§†åœ¨æ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][09]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_FORTH_APPARENT_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "ÕıÏòÊÓÔÚ·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "æ­£å‘è§†åœ¨è´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][09]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_FORTH_APPARENT_DEMAND_BLOCK;
-                        sprintf(name_1, "ÕıÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "æ­£å‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][09]{(!(0-3F,FF))}[*]
                     {
@@ -1702,18 +1702,18 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     if(0 == ucDi1)//[01][0A]{00}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_APPARENT_DEMAND_TOTAL;
-                        sprintf(name_1, "·´ÏòÊÓÔÚ×Ü×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");                        
+                        sprintf(name_1, "åå‘è§†åœ¨æ€»æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");                        
                     }
                     else if(ucDi1 >= 0x01 && ucDi1 <= 0x3F) //[01][0A]{(1~3F)}[*]
                     {
                         type = E_D07_RULER_TYPE_BACK_APPARENT_DEMAND_RATE;
                         para.rate    = (E_D07_PARA_RATE)ucDi1;
-                        sprintf(name_1, "·´ÏòÊÓÔÚ·ÑÂÊ%d×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä", ucDi1);    
+                        sprintf(name_1, "åå‘è§†åœ¨è´¹ç‡%dæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´", ucDi1);    
                     }
                     else if(0xFF == ucDi1) //[01][0A]{FF}[*]
                     {                        
                         type = E_D07_RULER_TYPE_BACK_APPARENT_DEMAND_BLOCK;
-                        sprintf(name_1, "·´ÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼äÊı¾İ¿é");    
+                        sprintf(name_1, "åå‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´æ•°æ®å—");    
                     }
                     else    //[01][0A]{(!(0-3F,FF))}[*]
                     {
@@ -1733,210 +1733,210 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                 case 0x15:// [01][15][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_FORTH_HAVE_POWER;
-                    sprintf(name_1, "AÏàÕıÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x16:// [01][16][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_BACK_HAVE_POWER;
-                    sprintf(name_1, "AÏà·´ÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸åå‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x17:// [01][17][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_COMB_NONE_1_POWER;
-                    sprintf(name_1, "AÏà×éºÏÎŞ¹¦1×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸ç»„åˆæ— åŠŸ1æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x18:// [01][18][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_COMB_NONE_2_POWER;
-                    sprintf(name_1, "AÏà×éºÏÎŞ¹¦2×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸ç»„åˆæ— åŠŸ2æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x19:// [01][19][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_1_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚÒ»ÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸ç¬¬ä¸€è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x1A:// [01][1A][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_2_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚ¶şÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸ç¬¬äºŒè±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x1B:// [01][1B][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_3_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚÈıÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸ç¬¬ä¸‰è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x1C:// [01][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_QUAD_4_NONE_POWER;
-                    sprintf(name_1, "AÏàµÚËÄÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸ç¬¬å››è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
 
                 case 0x1D:// [01][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_FORTH_APPARENT_POWER;
-                    sprintf(name_1, "AÏàÕıÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸æ­£å‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x1E:// [01][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_A_BACK_APPARENT_POWER;
-                    sprintf(name_1, "AÏà·´ÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Aç›¸åå‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
 
                 case 0x29:// [01][29][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_FORTH_HAVE_POWER;
-                    sprintf(name_1, "BÏàÕıÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x2A:// [01][2A][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_BACK_HAVE_POWER;
-                    sprintf(name_1, "BÏà·´ÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸åå‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x2B:// [01][2B][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_COMB_NONE_1_POWER;
-                    sprintf(name_1, "BÏà×éºÏÎŞ¹¦1×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸ç»„åˆæ— åŠŸ1æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x2C:// [01][2C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_COMB_NONE_2_POWER;
-                    sprintf(name_1, "BÏà×éºÏÎŞ¹¦2×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸ç»„åˆæ— åŠŸ2æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x2D:// [01][2D][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_1_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚÒ»ÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸ç¬¬ä¸€è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x2E:// [01][2E][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_2_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚ¶şÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸ç¬¬äºŒè±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x2F:// [01][2F][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_3_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚÈıÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸ç¬¬ä¸‰è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x30:// [01][30][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_QUAD_4_NONE_POWER;
-                    sprintf(name_1, "BÏàµÚËÄÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸ç¬¬å››è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
 
                 case 0x31:// [01][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_FORTH_APPARENT_POWER;
-                    sprintf(name_1, "BÏàÕıÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸æ­£å‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x32:// [01][1C][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_B_BACK_APPARENT_POWER;
-                    sprintf(name_1, "BÏà·´ÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Bç›¸åå‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x3D:// [01][3D][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_FORTH_HAVE_POWER;
-                    sprintf(name_1, "CÏàÕıÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x3E:// [01][3E][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_BACK_HAVE_POWER;
-                    sprintf(name_1, "CÏà·´ÏòÓĞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸åå‘æœ‰åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x3F:// [01][3F][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_COMB_NONE_1_POWER;
-                    sprintf(name_1, "CÏà×éºÏÎŞ¹¦1×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸ç»„åˆæ— åŠŸ1æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x40:// [01][40][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_COMB_NONE_2_POWER;
-                    sprintf(name_1, "CÏà×éºÏÎŞ¹¦2×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸ç»„åˆæ— åŠŸ2æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x41:// [01][41][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_1_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚÒ»ÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸ç¬¬ä¸€è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x42:// [01][42][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_2_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚ¶şÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸ç¬¬äºŒè±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x43:// [01][43][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_3_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚÈıÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸ç¬¬ä¸‰è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x44:// [01][44][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_QUAD_4_NONE_POWER;
-                    sprintf(name_1, "CÏàµÚËÄÏóÏŞÎŞ¹¦×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸ç¬¬å››è±¡é™æ— åŠŸæœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
 
                 case 0x45:// [01][45][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_FORTH_APPARENT_POWER;
-                    sprintf(name_1, "CÏàÕıÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸æ­£å‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
                 case 0x46:// [01][46][00][*]
                 {
                     type = E_D07_RULER_TYPE_PHASE_C_BACK_APPARENT_POWER;
-                    sprintf(name_1, "CÏà·´ÏòÊÓÔÚ×î´óĞèÁ¿¼°·¢ÉúÊ±¼ä");    
+                    sprintf(name_1, "Cç›¸åå‘è§†åœ¨æœ€å¤§éœ€é‡åŠå‘ç”Ÿæ—¶é—´");    
                 }
                 break;
                 
@@ -1945,15 +1945,15 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                     return E_D07_ERRO_UNKOWN_ID;
             }
 
-            // ºÏ³É×îºóµÄÃû×Ö
+            // åˆæˆæœ€åçš„åå­—
             //sprintf(name, "%s%s", strPayOff, name_1);
         }
         break;
 
         case 2: //{02}[*][*][*]
         {
-            /* ¶ÔÓÚ±í A.3 ÏàÍ¬µÄÊı¾İÊôĞÔ */
-            para.payoff = E_D07_PAYOFF_NULL; /* ½áËãÈÕ */
+            /* å¯¹äºè¡¨ A.3 ç›¸åŒçš„æ•°æ®å±æ€§ */
+            para.payoff = E_D07_PAYOFF_NULL; /* ç»“ç®—æ—¥ */
             para.rate    = E_D07_RATE_NULL;
             para.harm    = E_D07_HARM_NULL;
             para.last    = E_D07_LAST_NULL;
@@ -1979,7 +1979,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "AÏàµçÑ¹");    
+                            sprintf(name_1, "Aç›¸ç”µå‹");    
                         }
                         break;
 
@@ -1989,7 +1989,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "BÏàµçÑ¹");                                
+                            sprintf(name_1, "Bç›¸ç”µå‹");                                
                         }
                         break;
 
@@ -1999,7 +1999,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "CÏàµçÑ¹");                                
+                            sprintf(name_1, "Cç›¸ç”µå‹");                                
                         }
                         break;
 
@@ -2009,7 +2009,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "µçÑ¹Êı¾İ¿é");                                    
+                            sprintf(name_1, "ç”µå‹æ•°æ®å—");                                    
                         }
                         break;
 
@@ -2034,7 +2034,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XXX_XXX;                    
                             func     = trans_d07_data_XXX_XXX;
-                            sprintf(name_1, "AÏàµçÁ÷");                                
+                            sprintf(name_1, "Aç›¸ç”µæµ");                                
                         }
                         break;
 
@@ -2044,7 +2044,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XXX_XXX;                    
                             func     = trans_d07_data_XXX_XXX;
-                            sprintf(name_1, "BÏàµçÁ÷");                                                            
+                            sprintf(name_1, "Bç›¸ç”µæµ");                                                            
                         }
                         break;
 
@@ -2054,7 +2054,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XXX_XXX;                    
                             func     = trans_d07_data_XXX_XXX;
-                            sprintf(name_1, "CÏàµçÁ÷");                                                            
+                            sprintf(name_1, "Cç›¸ç”µæµ");                                                            
                         }
                         break;
 
@@ -2064,7 +2064,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XXX_XXX;                    
                             func     = trans_d07_data_XXX_XXX;
-                            sprintf(name_1, "µçÁ÷Êı¾İ¿é");                                                            
+                            sprintf(name_1, "ç”µæµæ•°æ®å—");                                                            
                         }
                         break;
 
@@ -2084,7 +2084,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±×ÜÓĞ¹¦¹¦ÂÊ");                            
+                            sprintf(name_1, "ç¬æ—¶æ€»æœ‰åŠŸåŠŸç‡");                            
                         }
                         break;
 
@@ -2094,7 +2094,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÓĞ¹¦¹¦ÂÊ");                            
+                            sprintf(name_1, "ç¬æ—¶Aç›¸æœ‰åŠŸåŠŸç‡");                            
                         }
                         break;
 
@@ -2104,7 +2104,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±BÏàÓĞ¹¦¹¦ÂÊ");    
+                            sprintf(name_1, "ç¬æ—¶Bç›¸æœ‰åŠŸåŠŸç‡");    
                         }
                         break;
 
@@ -2114,7 +2114,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±CÏàÓĞ¹¦¹¦ÂÊ");                                
+                            sprintf(name_1, "ç¬æ—¶Cç›¸æœ‰åŠŸåŠŸç‡");                                
                         }
                         break;
 
@@ -2124,7 +2124,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±ÓĞ¹¦¹¦ÂÊÊı¾İ¿é");                                
+                            sprintf(name_1, "ç¬æ—¶æœ‰åŠŸåŠŸç‡æ•°æ®å—");                                
                         }
                         break;
 
@@ -2144,7 +2144,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±×ÜÎŞ¹¦¹¦ÂÊ");    
+                            sprintf(name_1, "ç¬æ—¶æ€»æ— åŠŸåŠŸç‡");    
                         }
                         break;
                         
@@ -2154,7 +2154,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÎŞ¹¦¹¦ÂÊ");                                
+                            sprintf(name_1, "ç¬æ—¶Aç›¸æ— åŠŸåŠŸç‡");                                
                         }
                         break;
 
@@ -2164,7 +2164,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÎŞ¹¦¹¦ÂÊ");                                                            
+                            sprintf(name_1, "ç¬æ—¶Aç›¸æ— åŠŸåŠŸç‡");                                                            
                         }
                         break;
 
@@ -2174,7 +2174,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÎŞ¹¦¹¦ÂÊ");                                
+                            sprintf(name_1, "ç¬æ—¶Aç›¸æ— åŠŸåŠŸç‡");                                
                         }
                         break;
 
@@ -2184,7 +2184,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±ÎŞ¹¦¹¦ÂÊÊı¾İ¿é");                                
+                            sprintf(name_1, "ç¬æ—¶æ— åŠŸåŠŸç‡æ•°æ®å—");                                
                         }
                         break;
 
@@ -2204,7 +2204,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±×ÜÊÓÔÚ¹¦ÂÊ");    
+                            sprintf(name_1, "ç¬æ—¶æ€»è§†åœ¨åŠŸç‡");    
                         }
                         break;
                         
@@ -2214,7 +2214,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÊÓÔÚ¹¦ÂÊ");                                
+                            sprintf(name_1, "ç¬æ—¶Aç›¸è§†åœ¨åŠŸç‡");                                
                         }
                         break;
 
@@ -2224,7 +2224,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÊÓÔÚ¹¦ÂÊ");                                                            
+                            sprintf(name_1, "ç¬æ—¶Aç›¸è§†åœ¨åŠŸç‡");                                                            
                         }
                         break;
 
@@ -2234,7 +2234,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±AÏàÊÓÔÚ¹¦ÂÊ");                                
+                            sprintf(name_1, "ç¬æ—¶Aç›¸è§†åœ¨åŠŸç‡");                                
                         }
                         break;
 
@@ -2244,7 +2244,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XX_XXXX;                    
                             func     = trans_d07_data_XX_XXXX;
-                            sprintf(name_1, "Ë²Ê±ÊÓÔÚ¹¦ÂÊÊı¾İ¿é");                                
+                            sprintf(name_1, "ç¬æ—¶è§†åœ¨åŠŸç‡æ•°æ®å—");                                
                         }
                         break;
 
@@ -2264,7 +2264,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_X_XXX;                    
                             func     = trans_d07_data_X_XXX;
-                            sprintf(name_1, "×Ü¹¦ÂÊÒòÊı");                                
+                            sprintf(name_1, "æ€»åŠŸç‡å› æ•°");                                
                         }
                         break;
 
@@ -2274,7 +2274,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_X_XXX;                    
                             func     = trans_d07_data_X_XXX;
-                            sprintf(name_1, "AÏà¹¦ÂÊÒòÊı");                                
+                            sprintf(name_1, "Aç›¸åŠŸç‡å› æ•°");                                
                         }
                         break;
 
@@ -2284,7 +2284,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_X_XXX;                    
                             func     = trans_d07_data_X_XXX;
-                            sprintf(name_1, "BÏà¹¦ÂÊÒòÊı");                                
+                            sprintf(name_1, "Bç›¸åŠŸç‡å› æ•°");                                
                         }
                         break;
 
@@ -2294,7 +2294,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_X_XXX;                    
                             func     = trans_d07_data_X_XXX;
-                            sprintf(name_1, "CÏà¹¦ÂÊÒòÊı");                                
+                            sprintf(name_1, "Cç›¸åŠŸç‡å› æ•°");                                
                         }
                         break;
 
@@ -2304,7 +2304,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_X_XXX;                    
                             func     = trans_d07_data_X_XXX;
-                            sprintf(name_1, "×Ü¹¦ÂÊÒòÊı");                                
+                            sprintf(name_1, "æ€»åŠŸç‡å› æ•°");                                
                         }
                         break;
 
@@ -2329,7 +2329,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "AÏàÏà½Ç");                            
+                            sprintf(name_1, "Aç›¸ç›¸è§’");                            
                         }
                         break;
 
@@ -2339,7 +2339,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "BÏàÏà½Ç");                                
+                            sprintf(name_1, "Bç›¸ç›¸è§’");                                
                         }
                         break;
 
@@ -2349,7 +2349,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "CÏàÏà½Ç");                                
+                            sprintf(name_1, "Cç›¸ç›¸è§’");                                
                         }
                         break;
 
@@ -2359,7 +2359,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XXX_X;                    
                             func     = trans_d07_data_XXX_X;
-                            sprintf(name_1, "Ïà½ÇÊı¾İ¿é");                                
+                            sprintf(name_1, "ç›¸è§’æ•°æ®å—");                                
                         }
                         break;
 
@@ -2384,7 +2384,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "AÏàµçÑ¹²¨ĞÎÊ§Õæ¶È");                                
+                            sprintf(name_1, "Aç›¸ç”µå‹æ³¢å½¢å¤±çœŸåº¦");                                
                         }
                         break;
 
@@ -2394,7 +2394,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "BÏàµçÑ¹²¨ĞÎÊ§Õæ¶È");                                
+                            sprintf(name_1, "Bç›¸ç”µå‹æ³¢å½¢å¤±çœŸåº¦");                                
                         }
                         break;
 
@@ -2404,7 +2404,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "CÏàµçÑ¹²¨ĞÎÊ§Õæ¶È");                                
+                            sprintf(name_1, "Cç›¸ç”µå‹æ³¢å½¢å¤±çœŸåº¦");                                
                         }
                         break;
 
@@ -2414,7 +2414,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "µçÑ¹²¨ĞÎÊ§Õæ¶ÈÊı¾İ¿é");                                
+                            sprintf(name_1, "ç”µå‹æ³¢å½¢å¤±çœŸåº¦æ•°æ®å—");                                
                         }
                         break;
 
@@ -2439,7 +2439,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "AÏàµçÁ÷²¨ĞÎÊ§Õæ¶È");                                
+                            sprintf(name_1, "Aç›¸ç”µæµæ³¢å½¢å¤±çœŸåº¦");                                
                         }
                         break;
 
@@ -2449,7 +2449,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "BÏàµçÁ÷²¨ĞÎÊ§Õæ¶È");                                
+                            sprintf(name_1, "Bç›¸ç”µæµæ³¢å½¢å¤±çœŸåº¦");                                
                         }
                         break;
 
@@ -2459,7 +2459,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "CÏàµçÁ÷²¨ĞÎÊ§Õæ¶È");                                
+                            sprintf(name_1, "Cç›¸ç”µæµæ³¢å½¢å¤±çœŸåº¦");                                
                         }
                         break;
 
@@ -2469,7 +2469,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 2;
                             format     = E_D07_FMT_XX_XX;                    
                             func     = trans_d07_data_XX_XX;
-                            sprintf(name_1, "µçÁ÷²¨ĞÎÊ§Õæ¶ÈÊı¾İ¿é");                                
+                            sprintf(name_1, "ç”µæµæ³¢å½¢å¤±çœŸåº¦æ•°æ®å—");                                
                         }
                         break;
 
@@ -2493,7 +2493,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
                                 para.harm    = (E_D07_PARA_HARM)ucDi0;
-                                sprintf(name_1, "AÏàµçÑ¹%d´ÎĞ³²¨º¬Á¿", ucDi0);    
+                                sprintf(name_1, "Aç›¸ç”µå‹%dæ¬¡è°æ³¢å«é‡", ucDi0);    
                             }
                             else if(0xFF == ucDi0) // [02][0A][01]{FF}
                             {
@@ -2501,7 +2501,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "AÏàµçÑ¹´ÎĞ³²¨º¬Á¿Êı¾İ¿é");    
+                                sprintf(name_1, "Aç›¸ç”µå‹æ¬¡è°æ³¢å«é‡æ•°æ®å—");    
                             }
                             else // [02][0A][01]{!(FF,1~15)}
                             {
@@ -2519,7 +2519,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
                                 para.harm    = (E_D07_PARA_HARM)ucDi0;
-                                sprintf(name_1, "BÏàµçÑ¹%d´ÎĞ³²¨º¬Á¿", ucDi0);    
+                                sprintf(name_1, "Bç›¸ç”µå‹%dæ¬¡è°æ³¢å«é‡", ucDi0);    
                             }
                             else if(0xFF == ucDi0) // [02][0A][02]{FF}
                             {
@@ -2527,7 +2527,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "BÏàµçÑ¹´ÎĞ³²¨º¬Á¿Êı¾İ¿é");    
+                                sprintf(name_1, "Bç›¸ç”µå‹æ¬¡è°æ³¢å«é‡æ•°æ®å—");    
                             }
                             else // [02][0A][02]{!(FF,1~15)}
                             {
@@ -2545,7 +2545,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
                                 para.harm    = (E_D07_PARA_HARM)ucDi0;
-                                sprintf(name_1, "CÏàµçÑ¹%d´ÎĞ³²¨º¬Á¿", ucDi0);    
+                                sprintf(name_1, "Cç›¸ç”µå‹%dæ¬¡è°æ³¢å«é‡", ucDi0);    
                             }
                             else if(0xFF == ucDi0) // [02][0A][03]{FF}
                             {
@@ -2553,7 +2553,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "CÏàµçÑ¹´ÎĞ³²¨º¬Á¿Êı¾İ¿é");    
+                                sprintf(name_1, "Cç›¸ç”µå‹æ¬¡è°æ³¢å«é‡æ•°æ®å—");    
                             }
                             else // [02][0A][03]{!(FF,1~15)}
                             {
@@ -2583,7 +2583,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
                                 para.harm    = (E_D07_PARA_HARM)ucDi0;
-                                sprintf(name_1, "AÏàµçÁ÷%d´ÎĞ³²¨º¬Á¿", ucDi0);    
+                                sprintf(name_1, "Aç›¸ç”µæµ%dæ¬¡è°æ³¢å«é‡", ucDi0);    
                             }
                             else if(0xFF == ucDi0) // [02][0B][01]{FF}
                             {
@@ -2591,7 +2591,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "AÏàµçÁ÷´ÎĞ³²¨º¬Á¿Êı¾İ¿é");    
+                                sprintf(name_1, "Aç›¸ç”µæµæ¬¡è°æ³¢å«é‡æ•°æ®å—");    
                             }
                             else // [02][0B][01]{!(FF,1~15)}
                             {
@@ -2609,7 +2609,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
                                 para.harm    = (E_D07_PARA_HARM)ucDi0;
-                                sprintf(name_1, "BÏàµçÁ÷%d´ÎĞ³²¨º¬Á¿", ucDi0);    
+                                sprintf(name_1, "Bç›¸ç”µæµ%dæ¬¡è°æ³¢å«é‡", ucDi0);    
                             }
                             else if(0xFF == ucDi0) // [02][0B][02]{FF}
                             {
@@ -2617,7 +2617,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "BÏàµçÁ÷´ÎĞ³²¨º¬Á¿Êı¾İ¿é");    
+                                sprintf(name_1, "Bç›¸ç”µæµæ¬¡è°æ³¢å«é‡æ•°æ®å—");    
                             }
                             else // [02][0B][02]{!(FF,1~15)}
                             {
@@ -2635,7 +2635,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
                                 para.harm    = (E_D07_PARA_HARM)ucDi0;
-                                sprintf(name_1, "CÏàµçÁ÷%d´ÎĞ³²¨º¬Á¿", ucDi0);    
+                                sprintf(name_1, "Cç›¸ç”µæµ%dæ¬¡è°æ³¢å«é‡", ucDi0);    
                             }
                             else if(0xFF == ucDi0) // [02][0B][03]{FF}
                             {
@@ -2643,7 +2643,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "CÏàµçÁ÷´ÎĞ³²¨º¬Á¿Êı¾İ¿é");    
+                                sprintf(name_1, "Cç›¸ç”µæµæ¬¡è°æ³¢å«é‡æ•°æ®å—");    
                             }
                             else // [02][0B][03]{!(FF,1~15)}
                             {
@@ -2670,7 +2670,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXX_XXX;                    
                                 func     = trans_d07_data_XXX_XXX;
-                                sprintf(name_1, "ÁãÏßµçÁ÷");    
+                                sprintf(name_1, "é›¶çº¿ç”µæµ");    
                             }
                             break;
                             
@@ -2680,7 +2680,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "µçÍøÆµÂÊ");    
+                                sprintf(name_1, "ç”µç½‘é¢‘ç‡");    
                             }
                             break;
 
@@ -2690,7 +2690,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XX_XXXX;                    
                                 func     = trans_d07_data_XX_XXXX;
-                                sprintf(name_1, "Ò»·ÖÖÓÓĞ¹¦×ÜÆ½¾ù¹¦ÂÊ");    
+                                sprintf(name_1, "ä¸€åˆ†é’Ÿæœ‰åŠŸæ€»å¹³å‡åŠŸç‡");    
                             }
                             break;
 
@@ -2700,7 +2700,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XX_XXXX;                    
                                 func     = trans_d07_data_XX_XXXX;
-                                sprintf(name_1, "µ±Ç°ÓĞ¹¦ĞèÁ¿");    
+                                sprintf(name_1, "å½“å‰æœ‰åŠŸéœ€é‡");    
                             }
                             break;
 
@@ -2710,7 +2710,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XX_XXXX;                    
                                 func     = trans_d07_data_XX_XXXX;
-                                sprintf(name_1, "µ±Ç°ÎŞ¹¦ĞèÁ¿");    
+                                sprintf(name_1, "å½“å‰æ— åŠŸéœ€é‡");    
                             }
                             break;
 
@@ -2720,7 +2720,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XX_XXXX;                    
                                 func     = trans_d07_data_XX_XXXX;
-                                sprintf(name_1, "µ±Ç°ÊÓÔÚĞèÁ¿");    
+                                sprintf(name_1, "å½“å‰è§†åœ¨éœ€é‡");    
                             }
                             break;
 
@@ -2730,7 +2730,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XXX_X;                    
                                 func     = trans_d07_data_X_XXX;
-                                sprintf(name_1, "±íÄÚÎÂ¶È");    
+                                sprintf(name_1, "è¡¨å†…æ¸©åº¦");    
                             }
                             break;
 
@@ -2740,7 +2740,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "Ê±ÖÓµç³ØµçÑ¹(ÄÚ²¿)");
+                                sprintf(name_1, "æ—¶é’Ÿç”µæ± ç”µå‹(å†…éƒ¨)");
                             }
                             break;
 
@@ -2750,7 +2750,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;                    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "Í£µç³­±íµç³ØµçÑ¹(Íâ²¿)");
+                                sprintf(name_1, "åœç”µæŠ„è¡¨ç”µæ± ç”µå‹(å¤–éƒ¨)");
                             }
                             break;
 
@@ -2760,7 +2760,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 4;
                                 format     = E_D07_FMT_XXXXXXXX;                    
                                 func     = trans_d07_data_XXXXXXXX;
-                                sprintf(name_1, "Í£µç³­±íµç³ØµçÑ¹(Íâ²¿)");
+                                sprintf(name_1, "åœç”µæŠ„è¡¨ç”µæ± ç”µå‹(å¤–éƒ¨)");
                             }
                             break;
                             
@@ -2783,11 +2783,11 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
         }
         break;
 
-        /* ¶ÔÓ¦±íA.4 ÊÂ¼ş¼ÇÂ¼Êı¾İ±êÊ¶±àÂë±í */
+        /* å¯¹åº”è¡¨A.4 äº‹ä»¶è®°å½•æ•°æ®æ ‡è¯†ç¼–ç è¡¨ */
         case 3: //{03}[*][*][*]
         {
-            /* ¶Ô±íA.4 ÏàÍ¬Êı¾İµÄ³õÊ¼»¯ */
-            para.payoff = E_D07_PAYOFF_NULL; /* ½áËãÈÕ */
+            /* å¯¹è¡¨A.4 ç›¸åŒæ•°æ®çš„åˆå§‹åŒ– */
+            para.payoff = E_D07_PAYOFF_NULL; /* ç»“ç®—æ—¥ */
             para.rate    = E_D07_RATE_NULL;
             para.harm    = E_D07_HARM_NULL;
             para.last    = E_D07_LAST_NULL;
@@ -2810,7 +2810,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 18;
                                 format     = E_D07_FMT_XXXXXX_6;                    
                                 func     = trans_d07_data_XXXXXX_6;
-                                sprintf(name_1, "ABCÏàÊ§Ñ¹´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                                sprintf(name_1, "ABCç›¸å¤±å‹æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                             }
                             else         // [03][01][00]{!(00)}
                             {
@@ -2828,7 +2828,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)AÏàÊ§Ñ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸å¤±å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][01][01]{!(1~A)}
                             {
@@ -2847,7 +2847,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)BÏàÊ§Ñ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸å¤±å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][01][02]{!(1~A)}
                             {
@@ -2866,7 +2866,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)CÏàÊ§Ñ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸å¤±å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][01][03]{!(1~A)}
                             {
@@ -2894,7 +2894,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 18;
                                 format     = E_D07_FMT_XXXXXX_6;                    
                                 func     = trans_d07_data_XXXXXX_6;
-                                sprintf(name_1, "ABCÏàÇ·Ñ¹´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                                sprintf(name_1, "ABCç›¸æ¬ å‹æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                             }
                             else         // [03][02][00]{!(00)}
                             {
@@ -2912,7 +2912,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)AÏàÇ·Ñ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸æ¬ å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][02][01]{!(1~A)}
                             {
@@ -2931,7 +2931,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)BÏàÇ·Ñ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸æ¬ å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][02][02]{!(1~A)}
                             {
@@ -2950,7 +2950,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)CÏàÇ·Ñ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸æ¬ å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][02][03]{!(1~A)}
                             {
@@ -2977,7 +2977,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 18;
                                 format     = E_D07_FMT_XXXXXX_6;                    
                                 func     = trans_d07_data_XXXXXX_6;
-                                sprintf(name_1, "ABCÏà¹ıÑ¹´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                                sprintf(name_1, "ABCç›¸è¿‡å‹æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                             }
                             else         // [03][03][00]{!(00)}
                             {
@@ -2995,7 +2995,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)AÏà¹ıÑ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸è¿‡å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][03][01]{!(1~A)}
                             {
@@ -3014,7 +3014,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)BÏà¹ıÑ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸è¿‡å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][03][02]{!(1~A)}
                             {
@@ -3033,7 +3033,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)CÏà¹ıÑ¹¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸è¿‡å‹è®°å½•", ucDi0);
                             }
                             else                            // [03][03][03]{!(1~A)}
                             {
@@ -3062,7 +3062,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 18;
                                 format     = E_D07_FMT_XXXXXX_6;                    
                                 func     = trans_d07_data_XXXXXX_6;
-                                sprintf(name_1, "ABCÏà¶ÏÏà´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                                sprintf(name_1, "ABCç›¸æ–­ç›¸æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                             }
                             else         // [03][04][00]{!(00)}
                             {
@@ -3080,7 +3080,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)AÏà¶ÏÏà¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸æ–­ç›¸è®°å½•", ucDi0);
                             }
                             else                            // [03][04][01]{!(1~A)}
                             {
@@ -3098,7 +3098,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)BÏà¶ÏÏà¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸æ–­ç›¸è®°å½•", ucDi0);
                             }
                             else                            // [03][04][02]{!(1~A)}
                             {
@@ -3117,7 +3117,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_LOSS_LESS_VOLT;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_loss_less_volt;
-                                sprintf(name_1, "(ÉÏ%d´Î)CÏà¶ÏÏà¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸æ–­ç›¸è®°å½•", ucDi0);
                             }
                             else                            // [03][04][03]{!(1~A)}
                             {
@@ -3142,7 +3142,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "È«Ê§Ñ¹´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "å…¨å¤±å‹æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0xA) // [03][05][00]{(1~A)}
                         {
@@ -3151,7 +3151,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_YYMMDDhhmmss_XXX_XXX_YYMMDDhhmmss;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_YYMMDDhhmmss_XXX_XXX_YYMMDDhhmmss;
-                            sprintf(name_1, "(ÉÏ%d´Î)È«Ê§Ñ¹·¢ÉúÊ±¿Ì£¬µçÁ÷Öµ£¬½áÊøÊ±¿Ì",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)å…¨å¤±å‹å‘ç”Ÿæ—¶åˆ»ï¼Œç”µæµå€¼ï¼Œç»“æŸæ—¶åˆ»",ucDi0);
                         }
                         else         // [03][05][00]{!(1~A)}
                         {
@@ -3176,7 +3176,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "¸¨ÖúµçÔ´Ê§µç·¢Éú´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "è¾…åŠ©ç”µæºå¤±ç”µå‘ç”Ÿæ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0xA) // [03][06][00]{(1~A)}
                         {
@@ -3185,7 +3185,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_YYMMDDhhmmss;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_YYMMDDhhmmss;
-                            sprintf(name_1, "(ÉÏ%d´Î)¸¨ÖúµçÔ´Ê§µç·¢ÉúÊ±¿Ì£¬½áÊøÊ±¿Ì",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)è¾…åŠ©ç”µæºå¤±ç”µå‘ç”Ÿæ—¶åˆ»ï¼Œç»“æŸæ—¶åˆ»",ucDi0);
                         }
                         else         // [03][06][00]{!(1~A)}
                         {
@@ -3210,7 +3210,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "µçÑ¹ÄæÏàĞò×Ü´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ç”µå‹é€†ç›¸åºæ€»æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0xA) // [03][07][00]{(1~A)}
                         {
@@ -3219,7 +3219,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_ANTI_PHASE;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)µçÑ¹ÄæÏàĞò¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)ç”µå‹é€†ç›¸åºè®°å½•",ucDi0);
                         }
                         else         // [03][07][00]{!(1~A)}
                         {
@@ -3245,7 +3245,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "µçÁ÷ÄæÏàĞò×Ü´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ç”µæµé€†ç›¸åºæ€»æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0xA) // [03][08][00]{(1~A)}
                         {
@@ -3254,7 +3254,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_ANTI_PHASE;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)µçÁ÷ÄæÏàĞò¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)ç”µæµé€†ç›¸åºè®°å½•",ucDi0);
                         }
                         else         // [03][08][00]{!(1~A)}
                         {
@@ -3280,7 +3280,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "µçÑ¹²»Æ½ºâ×Ü´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ç”µå‹ä¸å¹³è¡¡æ€»æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0xA) // [03][09][00]{(1~A)}
                         {
@@ -3289,7 +3289,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_UN_BALANCE;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_un_balance;
-                            sprintf(name_1, "(ÉÏ%d´Î)µçÑ¹²»Æ½ºâ¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)ç”µå‹ä¸å¹³è¡¡è®°å½•",ucDi0);
                         }
                         else         // [03][09][00]{!(1~A)}
                         {
@@ -3316,7 +3316,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "µçÁ÷²»Æ½ºâ×Ü´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ç”µæµä¸å¹³è¡¡æ€»æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0xA) // [03][0A][00]{(1~A)}
                         {
@@ -3325,7 +3325,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_UN_BALANCE;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_un_balance;
-                            sprintf(name_1, "(ÉÏ%d´Î)µçÁ÷²»Æ½ºâ¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)ç”µæµä¸å¹³è¡¡è®°å½•",ucDi0);
                         }
                         else         // [03][0A][00]{!(1~A)}
                         {
@@ -3350,7 +3350,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "ABCÏàÊ§Á÷´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ABCç›¸å¤±æµæ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else         // [03][0B][00]{!(0)}
                         {
@@ -3367,7 +3367,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)AÏàÊ§Á÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸å¤±æµè®°å½•",ucDi0);
                         }
                     }
                     else if(2 == ucDi1)
@@ -3379,7 +3379,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)BÏàÊ§Á÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸å¤±æµè®°å½•",ucDi0);
                         }
                     }
                     else if(3 == ucDi1)
@@ -3391,7 +3391,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)CÏàÊ§Á÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸å¤±æµè®°å½•",ucDi0);
                         }
                     }
                     else          // [03][0B]{!(0~3)}[*]
@@ -3410,7 +3410,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "ABCÏà¹ıÁ÷´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ABCç›¸è¿‡æµæ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else         // [03][0C][00]{!(0)}
                         {
@@ -3427,7 +3427,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)AÏà¹ıÁ÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸è¿‡æµè®°å½•",ucDi0);
                         }
                     }
                     else if(2 == ucDi1)
@@ -3439,7 +3439,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)BÏà¹ıÁ÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸è¿‡æµè®°å½•",ucDi0);
                         }
                     }
                     else if(3 == ucDi1)
@@ -3451,7 +3451,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)CÏà¹ıÁ÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸è¿‡æµè®°å½•",ucDi0);
                         }
                     }
                     else          // [03][0C]{!(0~3)}[*]
@@ -3471,7 +3471,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "ABCÏà¶ÏÁ÷´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ABCç›¸æ–­æµæ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else         // [03][0D][00]{!(0)}
                         {
@@ -3488,7 +3488,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)AÏà¶ÏÁ÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸æ–­æµè®°å½•",ucDi0);
                         }
                     }
                     else if(2 == ucDi1)
@@ -3500,7 +3500,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)BÏà¶ÏÁ÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸æ–­æµè®°å½•",ucDi0);
                         }
                     }
                     else if(3 == ucDi1)
@@ -3512,7 +3512,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)CÏà¶ÏÁ÷¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸æ–­æµè®°å½•",ucDi0);
                         }
                     }
                     else          // [03][0D]{!(0~3)}[*]
@@ -3531,7 +3531,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "ABCÏà³±Á÷·´Ïò´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ABCç›¸æ½®æµåå‘æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else         // [03][0E][00]{!(0)}
                         {
@@ -3548,7 +3548,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_less_more_loss_elec;
-                            sprintf(name_1, "(ÉÏ%d´Î)AÏà³±Á÷·´Ïò¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸æ½®æµåå‘è®°å½•",ucDi0);
                         }
                     }
                     else if(2 == ucDi1)
@@ -3560,7 +3560,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)BÏà³±Á÷·´Ïò¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸æ½®æµåå‘è®°å½•",ucDi0);
                         }
                     }
                     else if(3 == ucDi1)
@@ -3572,7 +3572,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)CÏà³±Á÷·´Ïò¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸æ½®æµåå‘è®°å½•",ucDi0);
                         }
                     }
                     else          // [03][0E]{!(0~3)}[*]
@@ -3593,7 +3593,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 6;
                             format     = E_D07_FMT_XXXXXX_2;    
                             func     = trans_d07_data_XXXXXX_2;
-                            sprintf(name_1, "ABCÏà¹ıÔØ´ÎÊı£¬×ÜÀÛ¼ÆÊ±¼ä");
+                            sprintf(name_1, "ABCç›¸è¿‡è½½æ¬¡æ•°ï¼Œæ€»ç´¯è®¡æ—¶é—´");
                         }
                         else         // [03][0F][00]{!(0)}
                         {
@@ -3610,7 +3610,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)AÏà¹ıÔØ¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Aç›¸è¿‡è½½è®°å½•",ucDi0);
                         }
                     }
                     else if(2 == ucDi1)
@@ -3622,7 +3622,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)BÏà¹ıÔØ¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Bç›¸è¿‡è½½è®°å½•",ucDi0);
                         }
                     }
                     else if(3 == ucDi1)
@@ -3634,7 +3634,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_RECD_LESS_MORE_LOSS_ELEC;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_recd_anti_phase;
-                            sprintf(name_1, "(ÉÏ%d´Î)CÏà¹ıÔØ¼ÇÂ¼",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)Cç›¸è¿‡è½½è®°å½•",ucDi0);
                         }
                     }
                     else          // [03][0F]{!(0~3)}[*]
@@ -3651,17 +3651,17 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         return E_D07_ERRO_UNKOWN_ID;
                     }
                     
-                    // ·â×°½áËãÈÕ×Ö·û´®    
+                    // å°è£…ç»“ç®—æ—¥å­—ç¬¦ä¸²    
                     if(ucDi0 == 0)
                     {
-                        sprintf(strPayOff, "%s", "(µ±Ç°)");        
+                        sprintf(strPayOff, "%s", "(å½“å‰)");        
                     }
                     else
                     {
-                        sprintf(strPayOff,"(ÉÏ%d½áËãÈÕ)", ucDi0);
+                        sprintf(strPayOff,"(ä¸Š%dç»“ç®—æ—¥)", ucDi0);
                     }
                     
-                    para.payoff = (E_D07_PARA_PAYOFF)(ucDi0 + 1); /* ½áËãÈÕ */
+                    para.payoff = (E_D07_PARA_PAYOFF)(ucDi0 + 1); /* ç»“ç®—æ—¥ */
                     len        = 27;
                     format     = E_D07_FMT_RECD_VOLT_PASS_PERCENT;    
                     func     = trans_d07_data_recd_volt_pass_percent;
@@ -3671,28 +3671,28 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         case 0: // [03]{10}{00}[*]
                         {
                             type     = E_D07_RULER_TYPE_VOLT_PASS_PERCENT_M;
-                            sprintf(name_1, "µçÑ¹ºÏ¸ñÂÊÍ³¼ÆÊı¾İ");
+                            sprintf(name_1, "ç”µå‹åˆæ ¼ç‡ç»Ÿè®¡æ•°æ®");
                         }
                         break;
                         
                         case 1:// [03]{10}{01}[*]
                         {
                             type     = E_D07_RULER_TYPE_PHASE_A_VOLT_PASS_PERCENT_M;
-                            sprintf(name_1, "AÏàµçÑ¹ºÏ¸ñÂÊÍ³¼ÆÊı¾İ");
+                            sprintf(name_1, "Aç›¸ç”µå‹åˆæ ¼ç‡ç»Ÿè®¡æ•°æ®");
                         }
                         break;
                         
                         case 2:// [03]{10}{02}[*]
                         {
                             type     = E_D07_RULER_TYPE_PHASE_B_VOLT_PASS_PERCENT_M;
-                            sprintf(name_1, "CÏàµçÑ¹ºÏ¸ñÂÊÍ³¼ÆÊı¾İ");
+                            sprintf(name_1, "Cç›¸ç”µå‹åˆæ ¼ç‡ç»Ÿè®¡æ•°æ®");
                         }
                         break;
                         
                         case 3:// [03]{10}{03}[*]
                         {
                             type     = E_D07_RULER_TYPE_PHASE_C_VOLT_PASS_PERCENT_M;
-                            sprintf(name_1, "CÏàµçÑ¹ºÏ¸ñÂÊÍ³¼ÆÊı¾İ");
+                            sprintf(name_1, "Cç›¸ç”µå‹åˆæ ¼ç‡ç»Ÿè®¡æ•°æ®");
                         }
                         break;
 
@@ -3716,7 +3716,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3;
                             format     = E_D07_FMT_XXXXXX;    
                             func     = trans_d07_data_XXXXXX;
-                            sprintf(name_1, "µôµç×Ü´ÎÊı");
+                            sprintf(name_1, "æ‰ç”µæ€»æ¬¡æ•°");
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 0x0A) // [03][11][00]{(1~A)}
                         {
@@ -3725,7 +3725,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             format     = E_D07_FMT_YYMMDDhhmmss_2;    
                             para.last = (E_D07_PARA_LAST)ucDi0;
                             func     = trans_d07_data_YYMMDDhhmmss_2;
-                            sprintf(name_1, "(ÉÏ%d´Î)µôµç·¢ÉúÊ±¿Ì, ½áÊøÊ±¿Ì",ucDi0);
+                            sprintf(name_1, "(ä¸Š%dæ¬¡)æ‰ç”µå‘ç”Ÿæ—¶åˆ», ç»“æŸæ—¶åˆ»",ucDi0);
                         }
                         else // [03][11][00]{!(0~A)}
                         {
@@ -3745,7 +3745,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 12;
                                 format     = E_D07_FMT_XXXXXX_6;    
                                 func     = trans_d07_data_XXXXXX_6;
-                                sprintf(name_1, "ĞèÁ¿³¬ÏŞ×Ü´ÎÊı¼ÇÂ¼");
+                                sprintf(name_1, "éœ€é‡è¶…é™æ€»æ¬¡æ•°è®°å½•");
                             }
                             else // [03][12][00]{!(00)}
                             {
@@ -3763,7 +3763,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;
-                                sprintf(name_1, "(ÉÏ%d´Î)ÕıÏòÓĞ¹¦ĞèÁ¿³¬ÏŞ¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æ­£å‘æœ‰åŠŸéœ€é‡è¶…é™è®°å½•",ucDi0);
                             }
                             else    // [03][12][01]{!(1~A)}
                             {
@@ -3781,7 +3781,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;
-                                sprintf(name_1, "(ÉÏ%d´Î)·´ÏòÓĞ¹¦ĞèÁ¿³¬ÏŞ¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)åå‘æœ‰åŠŸéœ€é‡è¶…é™è®°å½•",ucDi0);
                             }
                             else    // [03][12][02]{!(1~A)}
                             {
@@ -3799,7 +3799,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;
-                                sprintf(name_1, "(ÉÏ%d´Î)µÚ1ÏóÏŞÎŞ¹¦ĞèÁ¿³¬ÏŞ¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç¬¬1è±¡é™æ— åŠŸéœ€é‡è¶…é™è®°å½•",ucDi0);
                             }
                             else    // [03][12][03]{!(1~A)}
                             {
@@ -3817,7 +3817,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;
-                                sprintf(name_1, "(ÉÏ%d´Î)µÚ2ÏóÏŞÎŞ¹¦ĞèÁ¿³¬ÏŞ¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç¬¬2è±¡é™æ— åŠŸéœ€é‡è¶…é™è®°å½•",ucDi0);
                             }
                             else    // [03][12][04]{!(1~A)}
                             {
@@ -3835,7 +3835,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;
-                                sprintf(name_1, "(ÉÏ%d´Î)µÚ3ÏóÏŞÎŞ¹¦ĞèÁ¿³¬ÏŞ¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç¬¬3è±¡é™æ— åŠŸéœ€é‡è¶…é™è®°å½•",ucDi0);
                             }
                             else    // [03][12][05]{!(1~A)}
                             {
@@ -3853,7 +3853,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm;
-                                sprintf(name_1, "(ÉÏ%d´Î)µÚ4ÏóÏŞÎŞ¹¦ĞèÁ¿³¬ÏŞ¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç¬¬4è±¡é™æ— åŠŸéœ€é‡è¶…é™è®°å½•",ucDi0);
                             }
                             else    // [03][12][06]{!(1~A)}
                             {
@@ -3880,7 +3880,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][00]{(1~A)}
                             {
@@ -3889,7 +3889,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_METER_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_meter_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)±à³Ì¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç¼–ç¨‹è®°å½•",ucDi0);
                             }
                             else    // [03][30][00]{!(1~A)}
                             {
@@ -3906,7 +3906,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "µç±íÇåÁã×Ü´ÎÊı");
+                                sprintf(name_1, "ç”µè¡¨æ¸…é›¶æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][01]{(1~A)}
                             {
@@ -3915,7 +3915,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_METER_CLEAR;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_meter_clear;
-                                sprintf(name_1, "(ÉÏ%d´Î)µç±íÇåÁã¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç”µè¡¨æ¸…é›¶è®°å½•",ucDi0);
                             }
                             else    // [03][30][01]{!(1~A)}
                             {
@@ -3933,7 +3933,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "ĞèÁ¿ÇåÁã×Ü´ÎÊı");
+                                sprintf(name_1, "éœ€é‡æ¸…é›¶æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][02]{(1~A)}
                             {
@@ -3942,7 +3942,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_DEAMD_CLEAR;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_demand_clear;
-                                sprintf(name_1, "(ÉÏ%d´Î)ĞèÁ¿ÇåÁã¼ÇÂ¼",ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)éœ€é‡æ¸…é›¶è®°å½•",ucDi0);
                             }
                             else    // [03][30][02]{!(1~A)}
                             {
@@ -3960,7 +3960,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "ÊÂ¼şÇåÁã×Ü´ÎÊı");
+                                sprintf(name_1, "äº‹ä»¶æ¸…é›¶æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][03]{(1~A)}
                             {
@@ -3969,7 +3969,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_EVENT_CLEAR;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_event_clear;
-                                sprintf(name_1, "(ÉÏ%d´Î)ÊÂ¼şÇåÁã¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)äº‹ä»¶æ¸…é›¶è®°å½•", ucDi0);
                             }
                             else    // [03][30][03]{!(1~A)}
                             {
@@ -3986,7 +3986,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "Ğ£Ê±×Ü´ÎÊı");
+                                sprintf(name_1, "æ ¡æ—¶æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][04]{(1~A)}
                             {
@@ -3995,7 +3995,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_ADJUST_TIME;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_adjust_time;
-                                sprintf(name_1, "(ÉÏ%d´Î)Ğ£Ê±¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æ ¡æ—¶è®°å½•", ucDi0);
                             }
                             else    // [03][30][04]{!(1~A)}
                             {
@@ -4012,7 +4012,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "Ê±¶Î±í±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "æ—¶æ®µè¡¨ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][05]{(1~A)}
                             {
@@ -4021,7 +4021,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_PART_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_part_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)Ê±¶Î±í±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æ—¶æ®µè¡¨ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][05]{!(1~A)}
                             {
@@ -4039,7 +4039,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "Ê±Çø±í±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "æ—¶åŒºè¡¨ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][06]{(1~A)}
                             {
@@ -4048,7 +4048,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_ZONE_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_zone_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)Ê±Çø±í±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æ—¶åŒºè¡¨ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][06]{!(1~A)}
                             {
@@ -4066,7 +4066,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "ÖÜĞİÈÕ±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "å‘¨ä¼‘æ—¥ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][07]{(1~A)}
                             {
@@ -4075,7 +4075,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_WEEKDAY_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_weekday_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)ÖÜĞİÈÕ±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)å‘¨ä¼‘æ—¥ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][07]{!(1~A)}
                             {
@@ -4091,7 +4091,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "½Ú¼ÙÈÕ±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "èŠ‚å‡æ—¥ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][08]{(1~A)}
                             {
@@ -4100,7 +4100,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_HOLIDAY_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_holiday_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)½Ú¼ÙÈÕ±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)èŠ‚å‡æ—¥ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][08]{!(1~A)}
                             {
@@ -4117,7 +4117,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "ÓĞ¹¦×éºÏ·½Ê½±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "æœ‰åŠŸç»„åˆæ–¹å¼ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][09]{(1~A)}
                             {
@@ -4126,7 +4126,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_POWER_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_power_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)ÓĞ¹¦×éºÏ·½Ê½±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æœ‰åŠŸç»„åˆæ–¹å¼ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][09]{!(1~A)}
                             {
@@ -4143,7 +4143,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "ÎŞ¹¦×éºÏ·½Ê½1±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "æ— åŠŸç»„åˆæ–¹å¼1ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][0A]{(1~A)}
                             {
@@ -4152,7 +4152,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_POWER_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_power_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)ÎŞ¹¦×éºÏ·½Ê½1±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æ— åŠŸç»„åˆæ–¹å¼1ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][0A]{!(1~A)}
                             {
@@ -4169,7 +4169,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "ÎŞ¹¦×éºÏ·½Ê½2±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "æ— åŠŸç»„åˆæ–¹å¼2ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][0B]{(1~A)}
                             {
@@ -4178,7 +4178,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_POWER_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_power_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)ÎŞ¹¦×éºÏ·½Ê½2±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)æ— åŠŸç»„åˆæ–¹å¼2ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][0B]{!(1~A)}
                             {
@@ -4195,7 +4195,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "½áËãÈÕ±à³Ì×Ü´ÎÊı");
+                                sprintf(name_1, "ç»“ç®—æ—¥ç¼–ç¨‹æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][0C]{(1~A)}
                             {
@@ -4204,7 +4204,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_PAYOFF_PROG;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_payoff_prog;
-                                sprintf(name_1, "(ÉÏ%d´Î)½áËãÈÕ±à³Ì¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)ç»“ç®—æ—¥ç¼–ç¨‹è®°å½•", ucDi0);
                             }
                             else    // [03][30][0C]{!(1~A)}
                             {
@@ -4221,7 +4221,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "¿ª±í¸Ç×Ü´ÎÊı");
+                                sprintf(name_1, "å¼€è¡¨ç›–æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][0D]{(1~A)}
                             {
@@ -4230,7 +4230,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_OPEN_METER_CAP;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_open_meter_cap;
-                                sprintf(name_1, "(ÉÏ%d´Î)¿ª±í¸Ç¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)å¼€è¡¨ç›–è®°å½•", ucDi0);
                             }
                             else    // [03][30][0D]{!(1~A)}
                             {
@@ -4248,7 +4248,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 3;
                                 format     = E_D07_FMT_XXXXXX;    
                                 func     = trans_d07_data_XXXXXX;
-                                sprintf(name_1, "¿ª¶ËÅ¥ºĞ×Ü´ÎÊı");
+                                sprintf(name_1, "å¼€ç«¯é’®ç›’æ€»æ¬¡æ•°");
                             }
                             else if(ucDi0 >= 1 && ucDi0 <= 0x0A)// [03][30][0E]{(1~A)}
                             {
@@ -4257,7 +4257,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 format     = E_D07_FMT_RECD_OPEN_BTN_BOX;    
                                 para.last = (E_D07_PARA_LAST)ucDi0;
                                 func     = trans_d07_data_recd_open_btn_box;
-                                sprintf(name_1, "(ÉÏ%d´Î)¿ª¶ËÅ¥ºĞ¼ÇÂ¼", ucDi0);
+                                sprintf(name_1, "(ä¸Š%dæ¬¡)å¼€ç«¯é’®ç›’è®°å½•", ucDi0);
                             }
                             else    // [03][30][0E]{!(1~A)}
                             {
@@ -4280,11 +4280,11 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
         break;
 
 
-        /* ¶ÔÓ¦±íA.5²Î±äÁ¿Êı¾İ±êÊ¶±àÂë±í */
+        /* å¯¹åº”è¡¨A.5å‚å˜é‡æ•°æ®æ ‡è¯†ç¼–ç è¡¨ */
         case 4: //{04}[*][*][*]
         {
-            /* ¶Ô±íA.5 ÏàÍ¬Êı¾İµÄ³õÊ¼»¯ */
-            para.payoff = E_D07_PAYOFF_NULL; /* ½áËãÈÕ */
+            /* å¯¹è¡¨A.5 ç›¸åŒæ•°æ®çš„åˆå§‹åŒ– */
+            para.payoff = E_D07_PAYOFF_NULL; /* ç»“ç®—æ—¥ */
             para.rate    = E_D07_RATE_NULL;
             para.harm    = E_D07_HARM_NULL;
             para.last    = E_D07_LAST_NULL;
@@ -4309,7 +4309,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 4;
                                     format     = E_D07_FMT_YYMMDDWW;    
                                     func     = trans_d07_data_YYMMDDWW;
-                                    sprintf(name_1, "ÈÕÆÚ¼°ĞÇÆÚ£¨ÆäÖĞ0´ú±íĞÇÆÚÌì)");
+                                    sprintf(name_1, "æ—¥æœŸåŠæ˜ŸæœŸï¼ˆå…¶ä¸­0ä»£è¡¨æ˜ŸæœŸå¤©)");
                                 }
                                 break;
 
@@ -4319,7 +4319,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 3;
                                     format     = E_D07_FMT_hhmmss;    
                                     func     = trans_d07_data_hhmmss;
-                                    sprintf(name_1, "Ê±¼ä");
+                                    sprintf(name_1, "æ—¶é—´");
                                 }
                                 break;
 
@@ -4329,7 +4329,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "×î´óĞèÁ¿ÖÜÆÚ");
+                                    sprintf(name_1, "æœ€å¤§éœ€é‡å‘¨æœŸ");
                                 }
                                 break;
                                 case 4: // [04][00][01]{04}
@@ -4338,7 +4338,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "»¬²îÊ±¼ä");
+                                    sprintf(name_1, "æ»‘å·®æ—¶é—´");
                                 }
                                 break;
                                 case 5: // [04][00][01]{05}
@@ -4347,7 +4347,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_XXXX;    
                                     func     = trans_d07_data_XXXX;
-                                    sprintf(name_1, "»¬²îÊ±¼ä");
+                                    sprintf(name_1, "æ»‘å·®æ—¶é—´");
                                 }
                                 break;
                                 
@@ -4357,7 +4357,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 5;
                                     format     = E_D07_FMT_YYMMDDhhmm;    
                                     func     = trans_d07_data_YYMMDDhhmm;
-                                    sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»Ê±¼ä");
+                                    sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢æ—¶é—´");
                                 }
                                 break;
                                 
@@ -4367,7 +4367,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 5;
                                     format     = E_D07_FMT_YYMMDDhhmm;    
                                     func     = trans_d07_data_YYMMDDhhmm;
-                                    sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»Ê±¼ä");
+                                    sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢æ—¶é—´");
 
                                 }
                                 break;
@@ -4388,7 +4388,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÄêÊ±ÇøÊıp(p <= 14)");
+                                    sprintf(name_1, "å¹´æ—¶åŒºæ•°p(p <= 14)");
                                 }
                                 break;
 
@@ -4398,7 +4398,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÈÕÊ±¶Î±íÊı q <= 8");
+                                    sprintf(name_1, "æ—¥æ—¶æ®µè¡¨æ•° q <= 8");
                                 }
                                 break;
                                 
@@ -4408,7 +4408,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÈÕÊ±¶ÎÊı(Ã¿ÈÕÇĞ»»Êı)m <=14");
+                                    sprintf(name_1, "æ—¥æ—¶æ®µæ•°(æ¯æ—¥åˆ‡æ¢æ•°)m <=14");
                                 }
                                 break;
 
@@ -4418,7 +4418,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "·ÑÂÊÊı k <= 63");
+                                    sprintf(name_1, "è´¹ç‡æ•° k <= 63");
                                 }
                                 break;
 
@@ -4428,7 +4428,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_NNNN;    
                                     func     = trans_d07_data_NNNN;
-                                    sprintf(name_1, "ÄêÊ±ÇøÊıp(p <= 14)");
+                                    sprintf(name_1, "å¹´æ—¶åŒºæ•°p(p <= 14)");
                                 }
                                 break;
                                 
@@ -4438,7 +4438,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "Ğ³²¨·ÖÎö´ÎÊı");
+                                    sprintf(name_1, "è°æ³¢åˆ†ææ¬¡æ•°");
                                 }
                                 break;
                                 
@@ -4458,7 +4458,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "×Ô¶¯Ñ­»·ÏÔÊ¾ÆÁÊı");
+                                    sprintf(name_1, "è‡ªåŠ¨å¾ªç¯æ˜¾ç¤ºå±æ•°");
                                 }
                                 break;
                                 
@@ -4468,7 +4468,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "Ã¿ÆÁÏÔÊ¾Ê±¼ä");
+                                    sprintf(name_1, "æ¯å±æ˜¾ç¤ºæ—¶é—´");
                                 }
                                 break;
                                 
@@ -4478,7 +4478,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÏÔÊ¾µçÄÜĞ¡ÊıÎ»Êı");
+                                    sprintf(name_1, "æ˜¾ç¤ºç”µèƒ½å°æ•°ä½æ•°");
                                 }
                                 break;
                                 
@@ -4488,7 +4488,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÏÔÊ¾×î´óĞèÁ¿Ğ¡ÊıÎ»Êı");
+                                    sprintf(name_1, "æ˜¾ç¤ºæœ€å¤§éœ€é‡å°æ•°ä½æ•°");
                                 }
                                 break;
                                 case 5: // [04][00][03]{05}
@@ -4497,7 +4497,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "°´¼üÑ­»·ÏÔÊ¾ÆÁÊı");
+                                    sprintf(name_1, "æŒ‰é”®å¾ªç¯æ˜¾ç¤ºå±æ•°");
                                 }
                                 break;
                                 
@@ -4518,7 +4518,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 6;
                                     format     = E_D07_FMT_NN_6;    
                                     func     = trans_d07_data_NN_6;
-                                    sprintf(name_1, "°´¼üÑ­»·ÏÔÊ¾ÆÁÊı");
+                                    sprintf(name_1, "æŒ‰é”®å¾ªç¯æ˜¾ç¤ºå±æ•°");
                                 }
                                 break;
                                 
@@ -4528,7 +4528,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 6;
                                     format     = E_D07_FMT_NN_6;    
                                     func     = trans_d07_data_NN_6;
-                                    sprintf(name_1, "±íºÅ");
+                                    sprintf(name_1, "è¡¨å·");
                                 }
                                 break;
                                 
@@ -4538,7 +4538,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 32;
                                     format     = E_D07_FMT_NN_32;    
                                     func     = trans_d07_data_NN_32;
-                                    sprintf(name_1, "×Ê²ú¹ÜÀí±àÂë");
+                                    sprintf(name_1, "èµ„äº§ç®¡ç†ç¼–ç ");
                                 }
                                 break;
                                 
@@ -4548,7 +4548,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 6;
                                     format     = E_D07_FMT_XX_6;    
                                     func     = trans_d07_data_XX_6;
-                                    sprintf(name_1, "¶î¶¨µçÑ¹");
+                                    sprintf(name_1, "é¢å®šç”µå‹");
                                 }
                                 break;
                                 
@@ -4558,7 +4558,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 6;
                                     format     = E_D07_FMT_XX_6;    
                                     func     = trans_d07_data_XX_6;
-                                    sprintf(name_1, "¶î¶¨µçÁ÷");
+                                    sprintf(name_1, "é¢å®šç”µæµ");
                                     
                                 }
                                 break;
@@ -4569,7 +4569,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 6;
                                     format     = E_D07_FMT_XX_6;    
                                     func     = trans_d07_data_XX_6;
-                                    sprintf(name_1, "×î´óµçÁ÷");
+                                    sprintf(name_1, "æœ€å¤§ç”µæµ");
                                 }
                                 break;
                                 
@@ -4579,7 +4579,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 4;
                                     format     = E_D07_FMT_XX_4;    
                                     func     = trans_d07_data_XX_4;
-                                    sprintf(name_1, "ÓĞ¹¦×¼È·¶ÈµÈ¼¶");
+                                    sprintf(name_1, "æœ‰åŠŸå‡†ç¡®åº¦ç­‰çº§");
                                 }
                                 break;
                                 
@@ -4589,7 +4589,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 4;
                                     format     = E_D07_FMT_XX_4;    
                                     func     = trans_d07_data_XX_4;
-                                    sprintf(name_1, "ÎŞ¹¦×¼È·¶ÈµÈ¼¶");
+                                    sprintf(name_1, "æ— åŠŸå‡†ç¡®åº¦ç­‰çº§");
                                 }
                                 break;
                                 
@@ -4599,7 +4599,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 3;
                                     format     = E_D07_FMT_XX_3;    
                                     func     = trans_d07_data_XX_3;
-                                    sprintf(name_1, "µç±íÓĞ¹¦³£Êı");
+                                    sprintf(name_1, "ç”µè¡¨æœ‰åŠŸå¸¸æ•°");
                                 }
                                 break;
                                 
@@ -4609,7 +4609,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 3;
                                     format     = E_D07_FMT_XX_3;    
                                     func     = trans_d07_data_XX_3;
-                                    sprintf(name_1, "µç±íÎŞ¹¦³£Êı");
+                                    sprintf(name_1, "ç”µè¡¨æ— åŠŸå¸¸æ•°");
                                 }
                                 break;
                                 
@@ -4619,7 +4619,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 10;
                                     format     = E_D07_FMT_XX_10;    
                                     func     = trans_d07_data_XX_10;
-                                    sprintf(name_1, "µç±íĞÍºÅ");
+                                    sprintf(name_1, "ç”µè¡¨å‹å·");
                                 }
                                 break;
                                 
@@ -4629,7 +4629,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 10;
                                     format     = E_D07_FMT_XX_10;    
                                     func     = trans_d07_data_XX_10;
-                                    sprintf(name_1, "Éú²úÈÕÆÚ");
+                                    sprintf(name_1, "ç”Ÿäº§æ—¥æœŸ");
                                 }
                                 break;
                                 
@@ -4639,7 +4639,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 16;
                                     format     = E_D07_FMT_XX_16;    
                                     func     = trans_d07_data_XX_16;
-                                    sprintf(name_1, "Éú²úÈÕÆÚ");
+                                    sprintf(name_1, "ç”Ÿäº§æ—¥æœŸ");
                                 }
                                 break;
                                 
@@ -4658,7 +4658,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 16;
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "µç±íÔËĞĞ×´Ì¬×ÖÊı¾İ¿é");
+                                sprintf(name_1, "ç”µè¡¨è¿è¡ŒçŠ¶æ€å­—æ•°æ®å—");
                             }
                             else if(ucDi0 >=1 && ucDi0 <= 7) // [04][00][05]{(1~7)}
                             {
@@ -4667,7 +4667,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_XX_XX;    
                                 func     = trans_d07_data_XX_XX;
-                                sprintf(name_1, "µç±íÔËĞĞ×´Ì¬×Ö %d", ucDi0);
+                                sprintf(name_1, "ç”µè¡¨è¿è¡ŒçŠ¶æ€å­— %d", ucDi0);
                             }
                             else    // [04][00][05]{!(FF,1~7)}
                             {
@@ -4686,7 +4686,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÓĞ¹¦×éºÏ·½Ê½ÌØÕ÷×Ö");
+                                    sprintf(name_1, "æœ‰åŠŸç»„åˆæ–¹å¼ç‰¹å¾å­—");
                                 }
                                 break;
 
@@ -4696,7 +4696,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÎŞ¹¦×éºÏ·½Ê½1ÌØÕ÷×Ö");
+                                    sprintf(name_1, "æ— åŠŸç»„åˆæ–¹å¼1ç‰¹å¾å­—");
                                 }
                                 break;
 
@@ -4706,7 +4706,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "ÎŞ¹¦×éºÏ·½Ê½2ÌØÕ÷×Ö");
+                                    sprintf(name_1, "æ— åŠŸç»„åˆæ–¹å¼2ç‰¹å¾å­—");
                                 }
                                 break;
                                 
@@ -4726,7 +4726,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "µ÷ÖÆĞÍºìÍâ¹â¿ÚÍ¨ĞÅËÙÂÊÌØÕ÷×Ö");
+                                    sprintf(name_1, "è°ƒåˆ¶å‹çº¢å¤–å…‰å£é€šä¿¡é€Ÿç‡ç‰¹å¾å­—");
                                 }
                                 break;
 
@@ -4736,7 +4736,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "½Ó´¥Ê½ºìÍâ¹â¿ÚÍ¨ĞÅËÙÂÊÌØÕ÷×Ö");
+                                    sprintf(name_1, "æ¥è§¦å¼çº¢å¤–å…‰å£é€šä¿¡é€Ÿç‡ç‰¹å¾å­—");
                                 }
                                 break;
 
@@ -4746,7 +4746,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "Í¨ĞÅ¿Ú 1 Í¨ĞÅËÙÂÊÌØÕ÷×Ö");
+                                    sprintf(name_1, "é€šä¿¡å£ 1 é€šä¿¡é€Ÿç‡ç‰¹å¾å­—");
                                 }
                                 break;
 
@@ -4756,7 +4756,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "Í¨ĞÅ¿Ú 2 Í¨ĞÅËÙÂÊÌØÕ÷×Ö");
+                                    sprintf(name_1, "é€šä¿¡å£ 2 é€šä¿¡é€Ÿç‡ç‰¹å¾å­—");
                                 }
                                 break;
 
@@ -4766,7 +4766,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 1;
                                     format     = E_D07_FMT_NN;    
                                     func     = trans_d07_data_NN;
-                                    sprintf(name_1, "Í¨ĞÅ¿Ú 3 Í¨ĞÅËÙÂÊÌØÕ÷×Ö");
+                                    sprintf(name_1, "é€šä¿¡å£ 3 é€šä¿¡é€Ÿç‡ç‰¹å¾å­—");
                                 }
                                 break;
                                 default:// [04][00][07]{!(1~3)}
@@ -4783,7 +4783,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 1;
                                 format     = E_D07_FMT_NN;    
                                 func     = trans_d07_data_NN;
-                                sprintf(name_1, "ÖÜĞİÈÕÌØÕ÷×Ö");
+                                sprintf(name_1, "å‘¨ä¼‘æ—¥ç‰¹å¾å­—");
                             }
                             else if(2 == ucDi0)// [04][00][08]{02}
                             {
@@ -4791,7 +4791,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 1;
                                 format     = E_D07_FMT_NN;    
                                 func     = trans_d07_data_NN;
-                                sprintf(name_1, "ÖÜĞİÈÕ²ÉÓÃµÄÈÕÊ±¶Î±íºÅ");
+                                sprintf(name_1, "å‘¨ä¼‘æ—¥é‡‡ç”¨çš„æ—¥æ—¶æ®µè¡¨å·");
                             }
                             else// [04][00][08]{!(1~2)}
                             {
@@ -4808,7 +4808,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 1;
                                 format     = E_D07_FMT_NN;    
                                 func     = trans_d07_data_NN;
-                                sprintf(name_1, "ÖÜĞİÈÕÌØÕ÷×Ö");
+                                sprintf(name_1, "å‘¨ä¼‘æ—¥ç‰¹å¾å­—");
                             }
                             else if(2 == ucDi0)// [04][00][08]{02}
                             {
@@ -4816,7 +4816,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 1;
                                 format     = E_D07_FMT_NN;    
                                 func     = trans_d07_data_NN;
-                                sprintf(name_1, "ÖÜĞİÈÕ²ÉÓÃµÄÈÕÊ±¶Î±íºÅ");
+                                sprintf(name_1, "å‘¨ä¼‘æ—¥é‡‡ç”¨çš„æ—¥æ—¶æ®µè¡¨å·");
                             }
                             else// [04][00][08]{!(1~2)}
                             {
@@ -4833,7 +4833,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 4;
                                 format     = E_D07_FMT_MMDDhhmm;    
                                 func     = trans_d07_data_MMDDhhmm;
-                                sprintf(name_1, "¸ººÉ¼ÇÂ¼ÆğÊ¼Ê±¼ä");
+                                sprintf(name_1, "è´Ÿè·è®°å½•èµ·å§‹æ—¶é—´");
                             }
                             else if (ucDi0 >= 2 && ucDi0 <= 7) // [04][00][0A]{(2~7)}
                             {
@@ -4841,7 +4841,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_NNNN;    
                                 func     = trans_d07_data_NNNN;
-                                sprintf(name_1, "µÚ %d Àà¸ººÉ¼ÇÂ¼¼ä¸ôÊ±¼ä", ucDi0 - 1);
+                                sprintf(name_1, "ç¬¬ %d ç±»è´Ÿè·è®°å½•é—´éš”æ—¶é—´", ucDi0 - 1);
                             }
                             else// [04][00][0A]{!(1~7)}
                             {
@@ -4858,7 +4858,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_DDhh;    
                                 func     = trans_d07_data_DDhh;
-                                sprintf(name_1, "Ã¿ÔÂµÚ 1 ½áËãÈÕ");
+                                sprintf(name_1, "æ¯æœˆç¬¬ 1 ç»“ç®—æ—¥");
                             }
                             else if(2 == ucDi0) // [04][00][0B]{02}
                             {
@@ -4866,7 +4866,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_DDhh;    
                                 func     = trans_d07_data_DDhh;
-                                sprintf(name_1, "Ã¿ÔÂµÚ 2 ½áËãÈÕ");
+                                sprintf(name_1, "æ¯æœˆç¬¬ 2 ç»“ç®—æ—¥");
                             }
                             else if(3 == ucDi0)// [04][00][0B]{03}
                             {
@@ -4874,7 +4874,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 2;
                                 format     = E_D07_FMT_DDhh;    
                                 func     = trans_d07_data_DDhh;
-                                sprintf(name_1, "Ã¿ÔÂµÚ 3 ½áËãÈÕ");
+                                sprintf(name_1, "æ¯æœˆç¬¬ 3 ç»“ç®—æ—¥");
                             }
                             else// [04][00][0B]{!(1~3)}
                             {
@@ -4891,7 +4891,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 4;
                                 format     = E_D07_FMT_NN_4;    
                                 func     = trans_d07_data_NN_4;
-                                sprintf(name_1, "%d ¼¶ÃÜÂë", ucDi0 -1);
+                                sprintf(name_1, "%d çº§å¯†ç ", ucDi0 -1);
                             }
                             else// [04][00][0C]{!(1~A)}
                             {
@@ -4910,7 +4910,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "AÏàµçµ¼ÏµÊı");
+                                    sprintf(name_1, "Aç›¸ç”µå¯¼ç³»æ•°");
                                 }
                                 break;
                                 case 2:// [04][00][0D]{02}
@@ -4919,7 +4919,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "AÏàµçÄÉÏµÊı");
+                                    sprintf(name_1, "Aç›¸ç”µçº³ç³»æ•°");
                                     
                                 }
                                 break;
@@ -4929,7 +4929,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "AÏàµç×èÏµÊı");
+                                    sprintf(name_1, "Aç›¸ç”µé˜»ç³»æ•°");
                                 }
                                 break;
                                 case 4:// [04][00][0D]{04}
@@ -4938,7 +4938,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "AÏàµç¿¹ÏµÊı");
+                                    sprintf(name_1, "Aç›¸ç”µæŠ—ç³»æ•°");
                                 }
                                 break;
                                 case 5:// [04][00][0D]{05}
@@ -4947,7 +4947,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "BÏàµçµ¼ÏµÊı");
+                                    sprintf(name_1, "Bç›¸ç”µå¯¼ç³»æ•°");
                                 }
                                 break;
                                 
@@ -4957,7 +4957,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "BÏàµçÄÉÏµÊı");
+                                    sprintf(name_1, "Bç›¸ç”µçº³ç³»æ•°");
                                 }
                                 break;
                                 case 7:// [04][00][0D]{07}
@@ -4966,7 +4966,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "BÏàµç×èÏµÊı");
+                                    sprintf(name_1, "Bç›¸ç”µé˜»ç³»æ•°");
                                 }
                                 break;
                                 case 8:// [04][00][0D]{08}
@@ -4975,7 +4975,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "BÏàµç¿¹ÏµÊı");
+                                    sprintf(name_1, "Bç›¸ç”µæŠ—ç³»æ•°");
                                 }
                                 break;
                                 case 9:// [04][00][0D]{09}
@@ -4984,7 +4984,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "CÏàµçµ¼ÏµÊı");
+                                    sprintf(name_1, "Cç›¸ç”µå¯¼ç³»æ•°");
                                 }
                                 break;
                                 case 0xA:// [04][00][0D]{0A}
@@ -4993,7 +4993,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "CÏàµçÄÉÏµÊı");
+                                    sprintf(name_1, "Cç›¸ç”µçº³ç³»æ•°");
                                 }
                                 break;
                                 case 0xB:// [04][00][0D]{0B}
@@ -5002,7 +5002,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "CÏàµç×èÏµÊı");
+                                    sprintf(name_1, "Cç›¸ç”µé˜»ç³»æ•°");
                                 }
                                 break;
                                 case 0xC:// [04][00][0D]{0C}
@@ -5011,7 +5011,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_N_NNN;    
                                     func     = trans_d07_data_N_NNN;
-                                    sprintf(name_1, "CÏàµç¿¹ÏµÊı");
+                                    sprintf(name_1, "Cç›¸ç”µæŠ—ç³»æ•°");
                                 }
                                 break;
                                 
@@ -5032,7 +5032,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 3;
                                     format     = E_D07_FMT_NN_NNNN;    
                                     func     = trans_d07_data_NN_NNNN;
-                                    sprintf(name_1, "ÕıÏòÓĞ¹¦¹¦ÂÊÉÏÏŞÖµ");
+                                    sprintf(name_1, "æ­£å‘æœ‰åŠŸåŠŸç‡ä¸Šé™å€¼");
                                 }
                                 break;
                                 
@@ -5042,7 +5042,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 3;
                                     format     = E_D07_FMT_NN_NNNN;    
                                     func     = trans_d07_data_NN_NNNN;
-                                    sprintf(name_1, "·´ÏòÓĞ¹¦¹¦ÂÊÉÏÏŞÖµ");
+                                    sprintf(name_1, "åå‘æœ‰åŠŸåŠŸç‡ä¸Šé™å€¼");
                                 }
                                 break;
                                 
@@ -5052,7 +5052,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_NNN_N;    
                                     func     = trans_d07_data_NNN_N;
-                                    sprintf(name_1, "µçÑ¹ÉÏÏŞÖµ");
+                                    sprintf(name_1, "ç”µå‹ä¸Šé™å€¼");
                                 }
                                 break;
 
@@ -5062,7 +5062,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                     len        = 2;
                                     format     = E_D07_FMT_NNN_N;    
                                     func     = trans_d07_data_NNN_N;
-                                    sprintf(name_1, "µçÑ¹ÏÂÏŞÖµ");
+                                    sprintf(name_1, "ç”µå‹ä¸‹é™å€¼");
                                 }
                                 break;
                                 
@@ -5089,7 +5089,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3*14;
                             format     = E_D07_FMT_MMDDNN_14;    
                             func     = trans_d07_data_MMDDNN_14;
-                            sprintf(name_1, "µÚÒ»Ì×Ê±Çø±íÊı¾İ");
+                            sprintf(name_1, "ç¬¬ä¸€å¥—æ—¶åŒºè¡¨æ•°æ®");
                                 
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 8)// [04][01][00]{(1~8)}
@@ -5098,7 +5098,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3*14;
                             format     = E_D07_FMT_hhmmNN_14;    
                             func     = trans_d07_data_hhmmNN_14;
-                            sprintf(name_1, "µÚÒ»Ì×µÚ%dÈÕÊ±¶Î±íÊı¾İ", ucDi0);
+                            sprintf(name_1, "ç¬¬ä¸€å¥—ç¬¬%dæ—¥æ—¶æ®µè¡¨æ•°æ®", ucDi0);
                         }
                         else// [04][01][00]{!(0~8)}
                         {    
@@ -5123,7 +5123,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3*14;
                             format     = E_D07_FMT_MMDDNN_14;    
                             func     = trans_d07_data_MMDDNN_14;
-                            sprintf(name_1, "µÚ¶şÌ×Ê±Çø±íÊı¾İ");
+                            sprintf(name_1, "ç¬¬äºŒå¥—æ—¶åŒºè¡¨æ•°æ®");
                                 
                         }
                         else if(ucDi0 >= 1 && ucDi0 <= 8)// [04][02][00]{(1~8)}
@@ -5132,7 +5132,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3*14;
                             format     = E_D07_FMT_hhmmNN_14;    
                             func     = trans_d07_data_hhmmNN_14;
-                            sprintf(name_1, "µÚ¶şÌ×µÚ%dÈÕÊ±¶Î±íÊı¾İ", ucDi0);
+                            sprintf(name_1, "ç¬¬äºŒå¥—ç¬¬%dæ—¥æ—¶æ®µè¡¨æ•°æ®", ucDi0);
                         }
                         else// [04][02][00]{!(0~8)}
                         {    
@@ -5156,7 +5156,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 3*14;
                             format     = E_D07_FMT_YYMMDDNN;    
                             func     = trans_d07_data_YYMMDDNN;
-                            sprintf(name_1, "µÚ%d¹«¹²¼ÙÈÕÈÕÆÚ¼°ÈÕÊ±¶Î±íºÅ", ucDi0);
+                            sprintf(name_1, "ç¬¬%då…¬å…±å‡æ—¥æ—¥æœŸåŠæ—¥æ—¶æ®µè¡¨å·", ucDi0);
                         }
                         else // [04][03][00]{!(1-FE)}
                         {
@@ -5180,7 +5180,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4;
                             format     = E_D07_FMT_NN_4;    
                             func     = trans_d07_data_YYMMDDNN;
-                            sprintf(name_1, "×Ô¶¯Ñ­»·ÏÔÊ¾µÚ%dÆÁÏÔÊ¾Êı¾İÏî", ucDi0);
+                            sprintf(name_1, "è‡ªåŠ¨å¾ªç¯æ˜¾ç¤ºç¬¬%då±æ˜¾ç¤ºæ•°æ®é¡¹", ucDi0);
                         }
                         else // [04][04][01]{!(1-FE)}
                         {
@@ -5196,7 +5196,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4;
                             format     = E_D07_FMT_NN_4;    
                             func     = trans_d07_data_YYMMDDNN;
-                            sprintf(name_1, "°´¼üÑ­»·ÏÔÊ¾µÚ%dÆÁÏÔÊ¾Êı¾İÏî", ucDi0);
+                            sprintf(name_1, "æŒ‰é”®å¾ªç¯æ˜¾ç¤ºç¬¬%då±æ˜¾ç¤ºæ•°æ®é¡¹", ucDi0);
                         }
                         else // [04][04][02]{!(1-FE)}
                         {
@@ -5222,7 +5222,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 32;
                                 format     = E_D07_FMT_NN_32;    
                                 func     = trans_d07_data_NN_32;
-                                sprintf(name_1, "³§¼ÒÈí¼ş°æ±¾ºÅ");
+                                sprintf(name_1, "å‚å®¶è½¯ä»¶ç‰ˆæœ¬å·");
                             }
                             break;
 
@@ -5232,7 +5232,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 32;
                                 format     = E_D07_FMT_NN_32;    
                                 func     = trans_d07_data_NN_32;
-                                sprintf(name_1, "³§¼ÒÓ²¼ş°æ±¾ºÅ");
+                                sprintf(name_1, "å‚å®¶ç¡¬ä»¶ç‰ˆæœ¬å·");
                             }
                             break;
                             
@@ -5242,7 +5242,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                                 len        = 32;
                                 format     = E_D07_FMT_NN_32;    
                                 func     = trans_d07_data_NN_32;
-                                sprintf(name_1, "³§¼Ò±àºÅ");
+                                sprintf(name_1, "å‚å®¶ç¼–å·");
                             }
                             break;
 
@@ -5264,7 +5264,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
         }
         break;
 
-        /* ±íA.6 ¶³½áÊı¾İ±êÊ¶±àÂë±í */
+        /* è¡¨A.6 å†»ç»“æ•°æ®æ ‡è¯†ç¼–ç è¡¨ */
         case 5: //{05}[*][*][*]
         {
             if(ucDi0 > 0xC || 0 == ucDi0) // [05][*][*]{!(0x00~0x0C)}
@@ -5273,10 +5273,10 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
             }
             else
             {
-                sprintf(strPayOff,"(ÉÏ%d´Î)", ucDi0);
+                sprintf(strPayOff,"(ä¸Š%dæ¬¡)", ucDi0);
             }
                         
-            /* ¶ÔÓÚ±í A.6 ÏàÍ¬µÄÊı¾İÊôĞÔ */
+            /* å¯¹äºè¡¨ A.6 ç›¸åŒçš„æ•°æ®å±æ€§ */
             para.payoff = E_D07_PAYOFF_NULL;
             para.rate    = E_D07_RATE_NULL;
             para.harm    = E_D07_HARM_NULL;
@@ -5298,7 +5298,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 5;
                             format     = E_D07_FMT_YYMMDDhhmm;    
                             func     = trans_d07_data_YYMMDDhhmm;
-                            sprintf(name_1, "¶¨Ê±¶³½áÊ±¼ä");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“æ—¶é—´");
                         }
                         break;
                         
@@ -5308,7 +5308,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½áÕıÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“æ­£å‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5318,7 +5318,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½á·´ÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“åå‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 3: //[05][00]{03}[*]
@@ -5327,7 +5327,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½á×éºÏÎŞ¹¦1µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“ç»„åˆæ— åŠŸ1ç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5337,7 +5337,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½á×éºÏÎŞ¹¦2µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“ç»„åˆæ— åŠŸ2ç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 5: //[05][00]{05}[*]
@@ -5346,7 +5346,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½áµÚÒ»ÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5356,7 +5356,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½áµÚ¶şÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5366,7 +5366,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½áµÚÈıÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5376,7 +5376,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "¶¨Ê±¶³½áµÚËÄÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5386,7 +5386,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "¶¨Ê±¶³½áÕıÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
                         
@@ -5396,7 +5396,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "¶¨Ê±¶³½á·´ÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“åå‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
 
@@ -5406,7 +5406,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*3;
                             format     = E_D07_FMT_XX_XXXX_8;    
                             func     = trans_d07_data_XX_XXXX_8;
-                            sprintf(name_1, "¶¨Ê±¶³½á±äÁ¿Êı¾İ");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“å˜é‡æ•°æ®");
                         }
                         break;
 
@@ -5416,7 +5416,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 0;
                             format     = E_D07_FMT_UNKOWN;    
                             func     = NULL;
-                            sprintf(name_1, "¶¨Ê±¶³½áÊı¾İ¿é");
+                            sprintf(name_1, "å®šæ—¶å†»ç»“æ•°æ®å—");
                         }
                         break;
                         
@@ -5441,7 +5441,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 5;
                             format     = E_D07_FMT_YYMMDDhhmm;    
                             func     = trans_d07_data_YYMMDDhhmm;
-                            sprintf(name_1, "Ë²Ê±¶³½áÊ±¼ä");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“æ—¶é—´");
                         }
                         break;
                         
@@ -5451,7 +5451,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½áÕıÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“æ­£å‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5461,7 +5461,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½á·´ÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“åå‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 3: //[05][01]{03}[*]
@@ -5470,7 +5470,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½á×éºÏÎŞ¹¦1µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“ç»„åˆæ— åŠŸ1ç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5480,7 +5480,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½á×éºÏÎŞ¹¦2µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“ç»„åˆæ— åŠŸ2ç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 5: //[05][01]{05}[*]
@@ -5489,7 +5489,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½áµÚÒ»ÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5499,7 +5499,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½áµÚ¶şÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5509,7 +5509,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½áµÚÈıÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5519,7 +5519,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Ë²Ê±¶³½áµÚËÄÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5529,7 +5529,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "Ë²Ê±¶³½áÕıÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
                         
@@ -5539,7 +5539,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "Ë²Ê±¶³½á·´ÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“åå‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
 
@@ -5549,7 +5549,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*3;
                             format     = E_D07_FMT_XX_XXXX_8;    
                             func     = trans_d07_data_XX_XXXX_8;
-                            sprintf(name_1, "Ë²Ê±¶³½á±äÁ¿Êı¾İ");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“å˜é‡æ•°æ®");
                         }
                         break;
 
@@ -5559,7 +5559,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 0;
                             format     = E_D07_FMT_UNKOWN;    
                             func     = NULL;
-                            sprintf(name_1, "Ë²Ê±¶³½áÊı¾İ¿é");
+                            sprintf(name_1, "ç¬æ—¶å†»ç»“æ•°æ®å—");
                         }
                         break;
                         
@@ -5583,7 +5583,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 5;
                             format     = E_D07_FMT_YYMMDDhhmm;    
                             func     = trans_d07_data_YYMMDDhhmm;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»Ê±¼ä");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢æ—¶é—´");
                         }
                         break;
                         
@@ -5593,7 +5593,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»ÕıÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢æ­£å‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5603,7 +5603,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»·´ÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢åå‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 3: //[05][02]{03}[*]
@@ -5612,7 +5612,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»×éºÏÎŞ¹¦1µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢ç»„åˆæ— åŠŸ1ç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5622,7 +5622,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»×éºÏÎŞ¹¦2µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢ç»„åˆæ— åŠŸ2ç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 5: //[05][02]{05}[*]
@@ -5631,7 +5631,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»µÚÒ»ÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5641,7 +5641,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»µÚ¶şÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5651,7 +5651,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»µÚÈıÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5661,7 +5661,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»µÚËÄÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5671,7 +5671,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»ÕıÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
                         
@@ -5681,7 +5681,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»·´ÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢åå‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
 
@@ -5691,7 +5691,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*3;
                             format     = E_D07_FMT_XX_XXXX_8;    
                             func     = trans_d07_data_XX_XXXX_8;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»±äÁ¿Êı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢å˜é‡æ•°æ®");
                         }
                         break;
 
@@ -5701,7 +5701,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 0;
                             format     = E_D07_FMT_UNKOWN;    
                             func     = NULL;
-                            sprintf(name_1, "Á½Ì×Ê±Çø±íÇĞ»»Êı¾İ¿é");
+                            sprintf(name_1, "ä¸¤å¥—æ—¶åŒºè¡¨åˆ‡æ¢æ•°æ®å—");
                         }
                         break;
                         
@@ -5725,7 +5725,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 5;
                             format     = E_D07_FMT_YYMMDDhhmm;    
                             func     = trans_d07_data_YYMMDDhhmm;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»Ê±¼ä");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢æ—¶é—´");
                         }
                         break;
                         
@@ -5735,7 +5735,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»ÕıÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢æ­£å‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5745,7 +5745,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»·´ÏòÓĞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢åå‘æœ‰åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 3: //[05][03]{03}[*]
@@ -5754,7 +5754,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»×éºÏÎŞ¹¦1µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢ç»„åˆæ— åŠŸ1ç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5764,7 +5764,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»×éºÏÎŞ¹¦2µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢ç»„åˆæ— åŠŸ2ç”µèƒ½æ•°æ®");
                         }
                         break;
                         case 5: //[05][03]{05}[*]
@@ -5773,7 +5773,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»µÚÒ»ÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢ç¬¬ä¸€è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5783,7 +5783,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»µÚ¶şÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢ç¬¬äºŒè±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5793,7 +5793,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»µÚÈıÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢ç¬¬ä¸‰è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5803,7 +5803,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 4*64;
                             format     = E_D07_FMT_XXXXXX_XX;    
                             func     = trans_d07_data_XXXXXX_XX;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»µÚËÄÏóÏŞÎŞ¹¦µçÄÜÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢ç¬¬å››è±¡é™æ— åŠŸç”µèƒ½æ•°æ®");
                         }
                         break;
 
@@ -5813,7 +5813,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»ÕıÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢æ­£å‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
                         
@@ -5823,7 +5823,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*64;
                             format     = E_D07_FMT_XX_XXXX_YYMMDDhhmm;    
                             func     = trans_d07_data_XX_XXXX_YYMMDDhhmm;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»·´ÏòÓĞ¹¦×î´óĞèÁ¿Êı¾İ¼°·¢ÉúÊ±¼äÊı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢åå‘æœ‰åŠŸæœ€å¤§éœ€é‡æ•°æ®åŠå‘ç”Ÿæ—¶é—´æ•°æ®");
                         }
                         break;
 
@@ -5833,7 +5833,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 8*3;
                             format     = E_D07_FMT_XX_XXXX_8;    
                             func     = trans_d07_data_XX_XXXX_8;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»±äÁ¿Êı¾İ");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢å˜é‡æ•°æ®");
                         }
                         break;
 
@@ -5843,7 +5843,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                             len        = 0;
                             format     = E_D07_FMT_UNKOWN;    
                             func     = NULL;
-                            sprintf(name_1, "Á½Ì×ÈÕÊ±¶Î±íÇĞ»»Êı¾İ¿é");
+                            sprintf(name_1, "ä¸¤å¥—æ—¥æ—¶æ®µè¡¨åˆ‡æ¢æ•°æ®å—");
                         }
                         break;
                         
@@ -5860,7 +5860,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
         break;
 
 
-        /* ±í A.7¸ººÉ¼ÇÂ¼Êı¾İ±êÊ¶±àÂë±í */
+        /* è¡¨ A.7è´Ÿè·è®°å½•æ•°æ®æ ‡è¯†ç¼–ç è¡¨ */
         case 6: //{06}[*][*][*]
         {
             if(0 != ucDi1 || ucDi2 > 6 || ucDi0 > 2)
@@ -5868,7 +5868,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                 return E_D07_ERRO_UNKOWN_ID;
             }
 
-            /* ±í A.7 */
+            /* è¡¨ A.7 */
             para.payoff = E_D07_PAYOFF_NULL;
             para.rate    = E_D07_RATE_NULL;
             para.harm    = E_D07_HARM_NULL;
@@ -5888,7 +5888,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         len        = 1;
                         format     = E_D07_FMT_NN;    
                         func     = trans_d07_data_NN;
-                        sprintf(name_1, "¸ø¶¨Ê±¼ä¼ÇÂ¼¿é");    
+                        sprintf(name_1, "ç»™å®šæ—¶é—´è®°å½•å—");    
                     }
                     break;
 
@@ -5898,7 +5898,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         len        = 6;
                         format     = E_D07_FMT_YYMMDDhhmmNN;    
                         func     = trans_d07_data_YYMMDDhhmmNN;
-                        sprintf(name_1, "¸ø¶¨Ê±¼ä¼ÇÂ¼¿é");    
+                        sprintf(name_1, "ç»™å®šæ—¶é—´è®°å½•å—");    
                     }
                     break;
 
@@ -5907,8 +5907,8 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         type     = E_D07_RULER_TYPE_RECNT_OVERLOAD_RECORD;
                         len        = 1;
                         format     = E_D07_FMT_NN;    
-                        func     = trans_d07_data_NN; // ¹Ì¶¨Öµ01
-                        sprintf(name_1, "¸ø¶¨Ê±¼ä¼ÇÂ¼¿é");    
+                        func     = trans_d07_data_NN; // å›ºå®šå€¼01
+                        sprintf(name_1, "ç»™å®šæ—¶é—´è®°å½•å—");    
                     }
                     break;
 
@@ -5927,7 +5927,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         len        = 1;
                         format     = E_D07_FMT_NN;    
                         func     = trans_d07_data_NN;
-                        sprintf(name_1, "µÚ%dÀà¸ººÉ×îÔç¼ÇÂ¼¿é", ucDi2);    
+                        sprintf(name_1, "ç¬¬%dç±»è´Ÿè·æœ€æ—©è®°å½•å—", ucDi2);    
                     }
                     break;
 
@@ -5937,7 +5937,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         len        = 6;
                         format     = E_D07_FMT_YYMMDDhhmmNN;    
                         func     = trans_d07_data_YYMMDDhhmmNN;
-                        sprintf(name_1, "µÚ%dÀà¸ººÉ¸ø¶¨Ê±¼ä¼ÇÂ¼¿é", ucDi2);    
+                        sprintf(name_1, "ç¬¬%dç±»è´Ÿè·ç»™å®šæ—¶é—´è®°å½•å—", ucDi2);    
                     }
                     break;
 
@@ -5946,8 +5946,8 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
                         type     = E_D07_RULER_TYPE_RECNT_OVERLOAD_RECORD_1 + (E_D07_RULER_TYPE)(ucDi2 - 1);
                         len        = 1;
                         format     = E_D07_FMT_NN;    
-                        func     = trans_d07_data_NN; // ¹Ì¶¨Öµ01
-                        sprintf(name_1, "µÚ%dÀà¸ººÉ×î½üÒ»¸ö¼ÇÂ¼¿é", ucDi2);    
+                        func     = trans_d07_data_NN; // å›ºå®šå€¼01
+                        sprintf(name_1, "ç¬¬%dç±»è´Ÿè·æœ€è¿‘ä¸€ä¸ªè®°å½•å—", ucDi2);    
                     }
                     break;
 
@@ -5959,7 +5959,7 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
         }
         break;
 
-        /* ÓÃ»§À©Õ¹ */
+        /* ç”¨æˆ·æ‰©å±• */
         
 
         default: //{!(0~6)[*][*][*]}
@@ -5967,10 +5967,10 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
         
     }
 
-    // ºÏ³É×îºóµÄÃû×Ö
+    // åˆæˆæœ€åçš„åå­—
     sprintf(name, "%s%s", strPayOff, name_1);
 
-    // ½á¹ûÊı¾İÊä³ö 
+    // ç»“æœæ•°æ®è¾“å‡º 
     outRulerInfo->type = type;
     outRulerInfo->rdwr = rdwr;
     outRulerInfo->format = format;
@@ -5986,20 +5986,20 @@ INT32 get_d07_ruler_info(UINT32 rulerID, S_D07_RULER_INFO *outRulerInfo)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : d07_bcd2str
- ¹¦ÄÜÃèÊö  : ½«³¤¶ÈÎªlenµÄBCDÂë×ª»»Îª×Ö·û´®
- ÊäÈë²ÎÊı  : const char* inBCD  
+ å‡½ æ•° å  : d07_bcd2str
+ åŠŸèƒ½æè¿°  : å°†é•¿åº¦ä¸ºlençš„BCDç è½¬æ¢ä¸ºå­—ç¬¦ä¸²
+ è¾“å…¥å‚æ•°  : const char* inBCD  
              char *outStr       
              INT32 len            
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ21ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ21æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 void d07_bcd2str(const char* inBCD, char *outStr, INT32 len)
@@ -6037,11 +6037,11 @@ void d07_bcd2str(const char* inBCD, char *outStr, INT32 len)
     
 }
 
-/* º¯ÊıÊµÏÖ */
+/* å‡½æ•°å®ç° */
 
 /*************************************************
 Function:       str2bcd
-Description:    ½«³¤¶ÈÎªlenµÄ×Ö·û´®pstr½«ÎªBCDÂëÊä³öpbcd
+Description:    å°†é•¿åº¦ä¸ºlençš„å­—ç¬¦ä¸²pstrå°†ä¸ºBCDç è¾“å‡ºpbcd
 Calls:          
 Called By:      
 Input:          
@@ -6049,7 +6049,7 @@ Input:
 Output:        
 
 Return:        
-Others:       pstrµÄ³¤¶ÈÊÇpbcdµÄ¶ş±¶ 
+Others:       pstrçš„é•¿åº¦æ˜¯pbcdçš„äºŒå€ 
 
 *************************************************/
 void d07_str2bcd(const char *pstr, UINT8 *pbcd, INT32 len)
@@ -6123,15 +6123,15 @@ INT32 d07_pow_r(INT32 value,INT32 x)
 
 /*************************************************
   Function:       BCD2Decimal
-  Description:    ½«bcdÂë×ª»»ÎªÊ®½øÖÆÊı
+  Description:    å°†bcdç è½¬æ¢ä¸ºåè¿›åˆ¶æ•°
   Calls:          
   Called By:      
   Input:          UINT8* pBcd, UINT8 len
                 
   Output:         
                     
-  Return:         ·µ»Ø°üµÄ×Ü³¤¶ÈÖµ
-  Others:         ×î´óÖ§³ÖÎ»Êı 20, ×î´óÊıÎª 18446744073709551616
+  Return:         è¿”å›åŒ…çš„æ€»é•¿åº¦å€¼
+  Others:         æœ€å¤§æ”¯æŒä½æ•° 20, æœ€å¤§æ•°ä¸º 18446744073709551616
 *************************************************/
 double BCD2Decimal(UINT8* pBcd, INT32 len)
 {
@@ -6151,20 +6151,20 @@ double BCD2Decimal(UINT8* pBcd, INT32 len)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : d07_remove_dot
- ¹¦ÄÜÃèÊö  : ½«inArray×ª³öÎª³¤¶ÈÎªlenµÄÊı×é
- ÊäÈë²ÎÊı  : INT32 len         
+ å‡½ æ•° å  : d07_remove_dot
+ åŠŸèƒ½æè¿°  : å°†inArrayè½¬å‡ºä¸ºé•¿åº¦ä¸ºlençš„æ•°ç»„
+ è¾“å…¥å‚æ•°  : INT32 len         
              char*inArray    
              char *outArray  
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ21ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ21æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 INT32 d07_remove_dot(INT32 len, char*inArray, char *outArray)
@@ -6198,21 +6198,21 @@ INT32 d07_remove_dot(INT32 len, char*inArray, char *outArray)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : d07_add_dot
- ¹¦ÄÜÃèÊö  : ½«inArray ÖĞ³¤¶ÈÎªlenµÄÄÚÈİ¼ÓÉÏÒ»¸öĞ¡Êıµã£¬Î»ÖÃÊÇ×óÊıµÚdotpos
- ÊäÈë²ÎÊı  : INT32 len         
+ å‡½ æ•° å  : d07_add_dot
+ åŠŸèƒ½æè¿°  : å°†inArray ä¸­é•¿åº¦ä¸ºlençš„å†…å®¹åŠ ä¸Šä¸€ä¸ªå°æ•°ç‚¹ï¼Œä½ç½®æ˜¯å·¦æ•°ç¬¬dotpos
+ è¾“å…¥å‚æ•°  : INT32 len         
              char*inArray    
              char *outArray  
              INT32 dotpos      
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ21ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ21æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 INT32 d07_add_dot(INT32 len, char*inArray, char *outArray,  INT32 dotpos)
@@ -6244,17 +6244,17 @@ INT32 d07_add_dot(INT32 len, char*inArray, char *outArray,  INT32 dotpos)
 }
 /*************************************************
   Function:       d07_bcd_to_double
-  Description:    dlt645 2007½«bcdÂë×ª»»ÎªÊ®½øÖÆÊı¸¡µã
+  Description:    dlt645 2007å°†bcdç è½¬æ¢ä¸ºåè¿›åˆ¶æ•°æµ®ç‚¹
   Calls:          
   Called By:      
   Input:          UINT8* pBcd, UINT8 len
-                    UINT8 LeftDigit Ğ¡Êıµã×óÒÆÎ»ÊÇ
+                    UINT8 LeftDigit å°æ•°ç‚¹å·¦ç§»ä½æ˜¯
                 
   Output:         
                     
-  Return:         ·µ»Ø°üµÄ×Ü³¤¶ÈÖµ
-  Others:         ×î´óÖ§³ÖÎ»Êı 20, ×î´óÊıÎª 18446744073709551616
-                  Èç¹ûÊ×Î»ÊıÎª0x8X ÔòÕâ¸öÊÇ¸ºÊı
+  Return:         è¿”å›åŒ…çš„æ€»é•¿åº¦å€¼
+  Others:         æœ€å¤§æ”¯æŒä½æ•° 20, æœ€å¤§æ•°ä¸º 18446744073709551616
+                  å¦‚æœé¦–ä½æ•°ä¸º0x8X åˆ™è¿™ä¸ªæ˜¯è´Ÿæ•°
 *************************************************/
 double d07_bcd_to_double(UINT8* pBcd, INT32 len,INT32 LeftDigit)
 {
@@ -6279,20 +6279,20 @@ double d07_bcd_to_double(UINT8* pBcd, INT32 len,INT32 LeftDigit)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : d07_str_to_double
- ¹¦ÄÜÃèÊö  : ½«pstr×ª»»ÎªÓĞĞ§Î»ÊıÎªdigits£¬Ğ¡ÊıµãÎ»ÖÃÔÚ×óÊıµÚrightDigitPosÎ»µÄ¸¡µãÊı
- ÊäÈë²ÎÊı  : UINT8* pStr        
+ å‡½ æ•° å  : d07_str_to_double
+ åŠŸèƒ½æè¿°  : å°†pstrè½¬æ¢ä¸ºæœ‰æ•ˆä½æ•°ä¸ºdigitsï¼Œå°æ•°ç‚¹ä½ç½®åœ¨å·¦æ•°ç¬¬rightDigitPosä½çš„æµ®ç‚¹æ•°
+ è¾“å…¥å‚æ•°  : UINT8* pStr        
              INT32 digits         
              INT32 rightDigitPos  
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 double d07_str_to_double(char* pStr, INT32 digits, INT32 rightDigitPos)
@@ -6313,20 +6313,20 @@ double d07_str_to_double(char* pStr, INT32 digits, INT32 rightDigitPos)
     
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_2
- ¹¦ÄÜÃèÊö  : XX_2
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_2
+ åŠŸèƒ½æè¿°  : XX_2
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_2(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6334,20 +6334,20 @@ eD07Err trans_d07_data_XX_2(E_D07_TRANS_FLG flag, char *user, char *frame)
     return trans_d07_data_XXXX(flag, user, frame);
 }
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_3
- ¹¦ÄÜÃèÊö  : XX_3
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_3
+ åŠŸèƒ½æè¿°  : XX_3
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_3(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6356,20 +6356,20 @@ eD07Err trans_d07_data_XX_3(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_4
- ¹¦ÄÜÃèÊö  : XX_4
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_4
+ åŠŸèƒ½æè¿°  : XX_4
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_4(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6378,20 +6378,20 @@ eD07Err trans_d07_data_XX_4(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_6
- ¹¦ÄÜÃèÊö  : XX_6½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_6
+ åŠŸèƒ½æè¿°  : XX_6ç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_6(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6435,20 +6435,20 @@ eD07Err trans_d07_data_XX_6(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_8
- ¹¦ÄÜÃèÊö  : XX_8½á¹¹×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_8
+ åŠŸèƒ½æè¿°  : XX_8ç»“æ„è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_8(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6491,20 +6491,20 @@ eD07Err trans_d07_data_XX_8(E_D07_TRANS_FLG flag, char *user, char *frame)
     return E_D07_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_10
- ¹¦ÄÜÃèÊö  : XX_10½á¹¹
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_10
+ åŠŸèƒ½æè¿°  : XX_10ç»“æ„
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_10(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6548,20 +6548,20 @@ eD07Err trans_d07_data_XX_10(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XX_16
- ¹¦ÄÜÃèÊö  : XX_16½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XX_16
+ åŠŸèƒ½æè¿°  : XX_16ç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XX_16(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -6959,7 +6959,7 @@ eD07Err trans_d07_data_YYMMDDhhmmss_XXX_XXX_YYMMDDhhmmss(E_D07_TRANS_FLG flag, c
     if(E_D07_TRANS_U2F == flag)
     {
 
-        //²âÊÔÊı¾İ
+        //æµ‹è¯•æ•°æ®
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -7026,7 +7026,7 @@ eD07Err trans_d07_data_YYMMDDhhmmss_XXX_XXX_YYMMDDhhmmss(E_D07_TRANS_FLG flag, c
         //fXXX_XXX
         pDataUser->fXXX_XXX = d07_str_to_double(&str[i+=2], 6, 2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -7060,20 +7060,20 @@ eD07Err trans_d07_data_YYMMDDhhmmss_XXX_XXX_YYMMDDhhmmss(E_D07_TRANS_FLG flag, c
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_XXXXXX_2
- ¹¦ÄÜÃèÊö  : XXXXXX_2½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_XXXXXX_2
+ åŠŸèƒ½æè¿°  : XXXXXX_2ç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_XXXXXX_2(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -7380,7 +7380,7 @@ eD07Err trans_d07_data_XXXXXX_XX(E_D07_TRANS_FLG flag, char *user, char *frame)
 
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -7412,7 +7412,7 @@ eD07Err trans_d07_data_XXXXXX_XX(E_D07_TRANS_FLG flag, char *user, char *frame)
         dd = d07_bcd_to_double((UINT8*)frame, 4, 2);
         *(float*)user = (float)dd;
        // printf("dd = %6.2f\n", dd);
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -7449,7 +7449,7 @@ eD07Err trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm(E_D07_TRANS_FLG flag, c
     if(E_D07_TRANS_U2F == flag)
     {
         #ifdef D07_DEBUG_ON
-        //²âÊÔÊı¾İ
+        //æµ‹è¯•æ•°æ®
         if(D07_ON == g_need_pack_07)
         {
             pDataUser->sBgnTime.YY = 11;
@@ -7529,7 +7529,7 @@ eD07Err trans_d07_data_YYMMDDhhmmss_2_XX_XXXX_YYMMDDhhmm(E_D07_TRANS_FLG flag, c
         pDataUser->sDemand.hh = d07_str_to_num(&str[i+=2], 2);
         pDataUser->sDemand.mm = d07_str_to_num(&str[i+=2], 2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -7573,7 +7573,8 @@ eD07Err trans_d07_data_YYMMDDhhmmss_2(E_D07_TRANS_FLG flag, char *user, char *fr
     char acTmp[24] = {0};
     INT32 i = 0;
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -7650,20 +7651,20 @@ eD07Err trans_d07_data_YYMMDDhhmmss_2(E_D07_TRANS_FLG flag, char *user, char *fr
     return E_D07_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_YYMMDDhhmm
- ¹¦ÄÜÃèÊö  : YYMMDDhhmm
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_YYMMDDhhmm
+ åŠŸèƒ½æè¿°  : YYMMDDhhmm
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_YYMMDDhhmm(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -7673,7 +7674,8 @@ eD07Err trans_d07_data_YYMMDDhhmm(E_D07_TRANS_FLG flag, char *user, char *frame)
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -7734,7 +7736,8 @@ eD07Err trans_d07_data_YYMMDDhhmmNN(E_D07_TRANS_FLG flag, char *user, char *fram
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -7799,7 +7802,8 @@ eD07Err trans_d07_data_YYMMDDhhmmss(E_D07_TRANS_FLG flag, char *user, char *fram
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -7857,20 +7861,20 @@ eD07Err trans_d07_data_YYMMDDhhmmss(E_D07_TRANS_FLG flag, char *user, char *fram
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_NN
- ¹¦ÄÜÃèÊö  : Êı¾İ½á¹¹NN×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_NN
+ åŠŸèƒ½æè¿°  : æ•°æ®ç»“æ„NNè½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_NN(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -7934,20 +7938,20 @@ eD07Err trans_d07_data_NN_6(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_NN_32
- ¹¦ÄÜÃèÊö  : NN_32×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_NN_32
+ åŠŸèƒ½æè¿°  : NN_32è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ30ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ30æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_NN_32(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8044,20 +8048,20 @@ eD07Err trans_d07_data_N_NNN(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_NN_NNNN
- ¹¦ÄÜÃèÊö  : NN.NNNN½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_NN_NNNN
+ åŠŸèƒ½æè¿°  : NN.NNNNç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ30ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ30æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_NN_NNNN(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8106,20 +8110,20 @@ eD07Err trans_d07_data_NN_NNNN(E_D07_TRANS_FLG flag, char *user, char *frame)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_NNN_N
- ¹¦ÄÜÃèÊö  : NNN.N½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_NNN_N
+ åŠŸèƒ½æè¿°  : NNN.Nç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ30ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ30æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_NNN_N(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8169,20 +8173,20 @@ eD07Err trans_d07_data_NNN_N(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_MMDDNN_14
- ¹¦ÄÜÃèÊö  : MMDDNN_14½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_MMDDNN_14
+ åŠŸèƒ½æè¿°  : MMDDNN_14ç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ30ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ30æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_MMDDNN_14(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8199,7 +8203,8 @@ eD07Err trans_d07_data_MMDDNN_14(E_D07_TRANS_FLG flag, char *user, char *frame)
 #endif
 
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -8265,7 +8270,8 @@ eD07Err trans_d07_data_hhmmNN_14(E_D07_TRANS_FLG flag, char *user, char *frame)
     INT32 len = 0;
 #endif
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -8320,20 +8326,20 @@ eD07Err trans_d07_data_hhmmNN_14(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_hhmmss
- ¹¦ÄÜÃèÊö  : hhmmss½á¹¹×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_hhmmss
+ åŠŸèƒ½æè¿°  : hhmmssç»“æ„è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_hhmmss(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8343,7 +8349,8 @@ eD07Err trans_d07_data_hhmmss(E_D07_TRANS_FLG flag, char *user, char *frame)
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
 
@@ -8390,20 +8397,20 @@ eD07Err trans_d07_data_hhmmss(E_D07_TRANS_FLG flag, char *user, char *frame)
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_DDhh
- ¹¦ÄÜÃèÊö  : DDhh½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_DDhh
+ åŠŸèƒ½æè¿°  : DDhhç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ29ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ29æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_DDhh(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8413,7 +8420,8 @@ eD07Err trans_d07_data_DDhh(E_D07_TRANS_FLG flag, char *user, char *frame)
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
 
@@ -8464,7 +8472,8 @@ eD07Err trans_d07_data_MMDDhhmm(E_D07_TRANS_FLG flag, char *user, char *frame)
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -8516,14 +8525,15 @@ eD07Err trans_d07_data_MMDDhhmm(E_D07_TRANS_FLG flag, char *user, char *frame)
     return E_D07_OK;
 }
 
-//YYMMDDWW ½á¹¹×ª»»
+//YYMMDDWW ç»“æ„è½¬æ¢
 eD07Err trans_d07_data_YYMMDDWW(E_D07_TRANS_FLG flag, char *user, char *frame)
 {
     S_D07_YYMMDDWW *pYYMMDDWW = NULL;
     char acTmp[10] = {0};
     INT32 i = 0;
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -8583,7 +8593,8 @@ eD07Err trans_d07_data_YYMMDDNN(E_D07_TRANS_FLG flag, char *user, char *frame)
     INT32 i = 0;
     
     if(NULL == user || NULL == frame)
-    {
+    {
+
         return E_D07_ERRO_NULL;
     }
     
@@ -8665,7 +8676,7 @@ eD07Err trans_d07_data_XX_XXXX_YYMMDDhhmm(E_D07_TRANS_FLG flag, char *user, char
             pDataUser->hh,
             pDataUser->mm);
     
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -8689,7 +8700,7 @@ eD07Err trans_d07_data_XX_XXXX_YYMMDDhhmm(E_D07_TRANS_FLG flag, char *user, char
         pDataUser->hh = d07_str_to_num(&str[12],2);
         pDataUser->mm = d07_str_to_num(&str[14],2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -8707,20 +8718,20 @@ eD07Err trans_d07_data_XX_XXXX_YYMMDDhhmm(E_D07_TRANS_FLG flag, char *user, char
     return E_D07_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_loss_less_volt
- ¹¦ÄÜÃèÊö  : Ê§Ñ¹»òÇ·Ñ¹¼ÇÂ¼Êı¾İ½á¹¹ÓÃ»§²àµ½Ö¡²à×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_loss_less_volt
+ åŠŸèƒ½æè¿°  : å¤±å‹æˆ–æ¬ å‹è®°å½•æ•°æ®ç»“æ„ç”¨æˆ·ä¾§åˆ°å¸§ä¾§è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ22ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ22æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_loss_less_volt(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -8748,7 +8759,7 @@ eD07Err trans_d07_data_recd_loss_less_volt(E_D07_TRANS_FLG flag, char *user, cha
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -8816,7 +8827,7 @@ eD07Err trans_d07_data_recd_loss_less_volt(E_D07_TRANS_FLG flag, char *user, cha
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"         //sBgnTime
                         "%02d%02d%02d%02d%02d%02d"        //end time
                         "%09.2f%09.2f%09.2f%09.2f"        //sPowerTotal
@@ -8952,7 +8963,7 @@ eD07Err trans_d07_data_recd_loss_less_volt(E_D07_TRANS_FLG flag, char *user, cha
         pDataUser->sAtime.dAtimePhaseC =  d07_str_to_double(&strUsr[i+=8], 8, 6);
         
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9032,23 +9043,23 @@ eD07Err trans_d07_data_recd_loss_less_volt(E_D07_TRANS_FLG flag, char *user, cha
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_anti_phase
- ¹¦ÄÜÃèÊö  : µçÑ¹ÄæĞòµÈÊı¾İ½á¹¹ÓÃ»§²àºÍÖ¡²à½á¹¹×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_anti_phase
+ åŠŸèƒ½æè¿°  : ç”µå‹é€†åºç­‰æ•°æ®ç»“æ„ç”¨æˆ·ä¾§å’Œå¸§ä¾§ç»“æ„è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
-eD07Err trans_d07_data_recd_anti_phase(E_D07_TRANS_FLG flag, char *user, char *frame)// ÄæÏàĞòÊı¾İ¸ñÊ½
+eD07Err trans_d07_data_recd_anti_phase(E_D07_TRANS_FLG flag, char *user, char *frame)// é€†ç›¸åºæ•°æ®æ ¼å¼
 {
 
     S_D07_EventRevPhase *pDataUser = NULL;
@@ -9072,7 +9083,7 @@ eD07Err trans_d07_data_recd_anti_phase(E_D07_TRANS_FLG flag, char *user, char *f
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9116,7 +9127,7 @@ eD07Err trans_d07_data_recd_anti_phase(E_D07_TRANS_FLG flag, char *user, char *f
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"         //sBgnTime
                         "%02d%02d%02d%02d%02d%02d"        //end time
                         "%09.2f%09.2f%09.2f%09.2f"        //sPowerTotal
@@ -9201,7 +9212,7 @@ eD07Err trans_d07_data_recd_anti_phase(E_D07_TRANS_FLG flag, char *user, char *f
         pDataUser->sPowerC.dCombNone1PowerIcr     = d07_str_to_double(&strUsr[i+=8], 8, 6);
         pDataUser->sPowerC.dCombNone2PowerIcr     = d07_str_to_double(&strUsr[i+=8], 8, 6);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9253,20 +9264,20 @@ eD07Err trans_d07_data_recd_anti_phase(E_D07_TRANS_FLG flag, char *user, char *f
     return E_D07_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_un_balance
- ¹¦ÄÜÃèÊö  : µçÑ¹²»Æ½ºâ¼ÇÂ¼ÊÂ¼ş½á¹¹ÓÃ»§²àµ½Ö¡²à½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_un_balance
+ åŠŸèƒ½æè¿°  : ç”µå‹ä¸å¹³è¡¡è®°å½•äº‹ä»¶ç»“æ„ç”¨æˆ·ä¾§åˆ°å¸§ä¾§ç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_un_balance(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -9291,7 +9302,7 @@ eD07Err trans_d07_data_recd_un_balance(E_D07_TRANS_FLG flag, char *user, char *f
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9335,7 +9346,7 @@ eD07Err trans_d07_data_recd_un_balance(E_D07_TRANS_FLG flag, char *user, char *f
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"         //sBgnTime
                         "%02d%02d%02d%02d%02d%02d"        //end time
                         "%09.2f%09.2f%09.2f%09.2f"        //sPowerTotal
@@ -9420,7 +9431,7 @@ eD07Err trans_d07_data_recd_un_balance(E_D07_TRANS_FLG flag, char *user, char *f
         pDataUser->sPowerC.dCombNone1PowerIcr     = d07_str_to_double(&strUsr[i+=8], 8, 6);
         pDataUser->sPowerC.dCombNone2PowerIcr     = d07_str_to_double(&strUsr[i+=8], 8, 6);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9473,20 +9484,20 @@ eD07Err trans_d07_data_recd_un_balance(E_D07_TRANS_FLG flag, char *user, char *f
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_zone_prog
- ¹¦ÄÜÃèÊö  : Ê±Çø±í±à³Ì¼ÇÂ¼×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_zone_prog
+ åŠŸèƒ½æè¿°  : æ—¶åŒºè¡¨ç¼–ç¨‹è®°å½•è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ26ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ26æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_zone_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -9507,7 +9518,7 @@ eD07Err trans_d07_data_recd_zone_prog(E_D07_TRANS_FLG flag, char *user, char *fr
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9756,7 +9767,7 @@ eD07Err trans_d07_data_recd_zone_prog(E_D07_TRANS_FLG flag, char *user, char *fr
         pDataUser->sZoneSet2[13].DD = d07_str_to_num(&strUsr[i+=2], 2);
         pDataUser->sZoneSet2[13].NN = d07_str_to_num(&strUsr[i+=2], 2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -9877,7 +9888,7 @@ eD07Err trans_d07_data_recd_zone_prog(E_D07_TRANS_FLG flag, char *user, char *fr
 }
 
 
-// ÓĞĞ©½á¹¹»¹ÊÇ²»Ã÷°×
+// æœ‰äº›ç»“æ„è¿˜æ˜¯ä¸æ˜ç™½
 eD07Err trans_d07_data_recd_part_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
 {
     #ifdef D07_DEBUG_ON
@@ -9888,20 +9899,20 @@ eD07Err trans_d07_data_recd_part_prog(E_D07_TRANS_FLG flag, char *user, char *fr
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_adjust_time
- ¹¦ÄÜÃèÊö  : Ğ£Ê±ÊÂ¼şÊı¾İ½á¹¹×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_adjust_time
+ åŠŸèƒ½æè¿°  : æ ¡æ—¶äº‹ä»¶æ•°æ®ç»“æ„è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ26ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ26æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_adjust_time(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -9923,7 +9934,7 @@ eD07Err trans_d07_data_recd_adjust_time(E_D07_TRANS_FLG flag, char *user, char *
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -10002,7 +10013,7 @@ eD07Err trans_d07_data_recd_adjust_time(E_D07_TRANS_FLG flag, char *user, char *
         pDataUser->sAftTime.mm = d07_str_to_num(&strUsr[i+=2], 2);
         pDataUser->sAftTime.ss = d07_str_to_num(&strUsr[i+=2], 2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -10039,20 +10050,20 @@ eD07Err trans_d07_data_recd_adjust_time(E_D07_TRANS_FLG flag, char *user, char *
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_less_more_loss_elec
- ¹¦ÄÜÃèÊö  : ÓÃ»§²àºÍÖ¡²à×ª»»£¬¹ıÁ÷£¬Ê§Á÷£¬¶ÏÁ÷ÊÂ¼şĞÅÏ¢½á¹¹
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_less_more_loss_elec
+ åŠŸèƒ½æè¿°  : ç”¨æˆ·ä¾§å’Œå¸§ä¾§è½¬æ¢ï¼Œè¿‡æµï¼Œå¤±æµï¼Œæ–­æµäº‹ä»¶ä¿¡æ¯ç»“æ„
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_less_more_loss_elec(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -10076,7 +10087,7 @@ eD07Err trans_d07_data_recd_less_more_loss_elec(E_D07_TRANS_FLG flag, char *user
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {    
@@ -10138,7 +10149,7 @@ eD07Err trans_d07_data_recd_less_more_loss_elec(E_D07_TRANS_FLG flag, char *user
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"         //sBgnTime
                         "%02d%02d%02d%02d%02d%02d"        //end time
                         "%09.2f%09.2f%09.2f%09.2f"        //sPowerTotal
@@ -10261,7 +10272,7 @@ eD07Err trans_d07_data_recd_less_more_loss_elec(E_D07_TRANS_FLG flag, char *user
         pDataUser->sFactorC.fNonePowerRate= d07_str_to_double(&strUsr[i+=6], 6, 2);
         pDataUser->sFactorC.fPowerRateFactor = d07_str_to_double(&strUsr[i+=6], 4, 1);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -10335,20 +10346,20 @@ eD07Err trans_d07_data_recd_less_more_loss_elec(E_D07_TRANS_FLG flag, char *user
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_event_clear
- ¹¦ÄÜÃèÊö  : ÊÂ¼şÇåÁã¼ÇÂ¼½á¹¹×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_event_clear
+ åŠŸèƒ½æè¿°  : äº‹ä»¶æ¸…é›¶è®°å½•ç»“æ„è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ26ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ26æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_event_clear(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -10370,7 +10381,7 @@ eD07Err trans_d07_data_recd_event_clear(E_D07_TRANS_FLG flag, char *user, char *
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -10393,7 +10404,7 @@ eD07Err trans_d07_data_recd_event_clear(E_D07_TRANS_FLG flag, char *user, char *
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                         "%02d%02d%02d%02d"                            //operator
                         //ulEventID
@@ -10436,7 +10447,7 @@ eD07Err trans_d07_data_recd_event_clear(E_D07_TRANS_FLG flag, char *user, char *
         pDataUser->ulEventID = d07_hex_str_to_long(&strUsr[i+=2], 8);
         
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -10468,20 +10479,20 @@ eD07Err trans_d07_data_recd_event_clear(E_D07_TRANS_FLG flag, char *user, char *
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_demand_clear
- ¹¦ÄÜÃèÊö  : ×îÔÚĞèÁ¿ÇåÁãÊÂ¼ş¼ÇÂ¼×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_demand_clear
+ åŠŸèƒ½æè¿°  : æœ€åœ¨éœ€é‡æ¸…é›¶äº‹ä»¶è®°å½•è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ26ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ26æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_demand_clear(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -10503,7 +10514,7 @@ eD07Err trans_d07_data_recd_demand_clear(E_D07_TRANS_FLG flag, char *user, char 
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -10673,7 +10684,7 @@ eD07Err trans_d07_data_recd_demand_clear(E_D07_TRANS_FLG flag, char *user, char 
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                         "%02d%02d%02d%02d"                            //operator
                         //sTotal
@@ -11034,7 +11045,7 @@ eD07Err trans_d07_data_recd_demand_clear(E_D07_TRANS_FLG flag, char *user, char 
         pDataUser->sPhaseC.sNoneDemandQuad4.hh = d07_str_to_num(&strUsr[i+=2], 2);
         pDataUser->sPhaseC.sNoneDemandQuad4.mm = d07_str_to_num(&strUsr[i+=2], 2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11242,20 +11253,20 @@ eD07Err trans_d07_data_recd_demand_clear(E_D07_TRANS_FLG flag, char *user, char 
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_meter_clear
- ¹¦ÄÜÃèÊö  : µç±íÇåÁãÊÂ¼şÊı¾İ½á¹¹
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_meter_clear
+ åŠŸèƒ½æè¿°  : ç”µè¡¨æ¸…é›¶äº‹ä»¶æ•°æ®ç»“æ„
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_meter_clear(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -11274,7 +11285,7 @@ eD07Err trans_d07_data_recd_meter_clear(E_D07_TRANS_FLG flag, char *user, char *
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11324,7 +11335,7 @@ eD07Err trans_d07_data_recd_meter_clear(E_D07_TRANS_FLG flag, char *user, char *
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                         "%02d%02d%02d%02d"                            //operator
                         "%09.2f%09.2f%09.2f%09.2f%09.2f%09.2f"        //sTotal
@@ -11420,7 +11431,7 @@ eD07Err trans_d07_data_recd_meter_clear(E_D07_TRANS_FLG flag, char *user, char *
         pDataUser->sPhaseC.dNonePowerQuad3= d07_str_to_double(&strUsr[i+=8], 8, 6);
         pDataUser->sPhaseC.dNonePowerQuad4= d07_str_to_double(&strUsr[i+=8], 8, 6);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11480,20 +11491,20 @@ eD07Err trans_d07_data_recd_meter_clear(E_D07_TRANS_FLG flag, char *user, char *
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_meter_prog
- ¹¦ÄÜÃèÊö  : ±à³Ì¼ÇÂ¼Êı¾İ½á¹¹×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_meter_prog
+ åŠŸèƒ½æè¿°  : ç¼–ç¨‹è®°å½•æ•°æ®ç»“æ„è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_meter_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -11505,13 +11516,14 @@ eD07Err trans_d07_data_recd_meter_prog(E_D07_TRANS_FLG flag, char *user, char *f
     if(NULL == user || NULL == frame)
     {
         return E_D07_ERRO_NULL;
-    }
+    }
+
     
     pDataUser = (S_D07_EventMeterProgram *)user;
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11590,7 +11602,7 @@ eD07Err trans_d07_data_recd_meter_prog(E_D07_TRANS_FLG flag, char *user, char *f
         pDataUser->ulRulerID[8] = (UINT32)d07_hex_str_to_long(&str[i+=8], 8);
         pDataUser->ulRulerID[9] = (UINT32)d07_hex_str_to_long(&str[i+=8], 8);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11627,20 +11639,20 @@ eD07Err trans_d07_data_recd_meter_prog(E_D07_TRANS_FLG flag, char *user, char *f
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_volt_pass_percent
- ¹¦ÄÜÃèÊö  : ºÏ¸ñÂÊÊÂ¼şÊı¾İ½á¹¹
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_volt_pass_percent
+ åŠŸèƒ½æè¿°  : åˆæ ¼ç‡äº‹ä»¶æ•°æ®ç»“æ„
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ23ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ23æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_volt_pass_percent(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -11726,7 +11738,7 @@ eD07Err trans_d07_data_recd_volt_pass_percent(E_D07_TRANS_FLG flag, char *user, 
         pDataUser->sTimeVoltValueMin.hh            = d07_str_to_num(&strUsr[i+=2], 2);
         pDataUser->sTimeVoltValueMin.mm            = d07_str_to_num(&strUsr[i+=2], 2);
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11769,20 +11781,20 @@ eD07Err trans_d07_data_recd_volt_pass_percent(E_D07_TRANS_FLG flag, char *user, 
     return E_D07_OK;
 }
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_weekday_prog
- ¹¦ÄÜÃèÊö  : ÖÜĞİÈÕ±à³ÌÊÂ¼ş¼ÇÂ¼Êı¾İ½á¹¹×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_weekday_prog
+ åŠŸèƒ½æè¿°  : å‘¨ä¼‘æ—¥ç¼–ç¨‹äº‹ä»¶è®°å½•æ•°æ®ç»“æ„è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ26ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ26æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_weekday_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -11804,7 +11816,7 @@ eD07Err trans_d07_data_recd_weekday_prog(E_D07_TRANS_FLG flag, char *user, char 
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11827,7 +11839,7 @@ eD07Err trans_d07_data_recd_weekday_prog(E_D07_TRANS_FLG flag, char *user, char 
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                         "%02d%02d%02d%02d"                            //operator
                         //ulEventID
@@ -11869,7 +11881,7 @@ eD07Err trans_d07_data_recd_weekday_prog(E_D07_TRANS_FLG flag, char *user, char 
         //ulEventID
         pDataUser->ucTableNum = d07_str_to_num(&strUsr[i+=2], 2);
         
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11901,20 +11913,20 @@ eD07Err trans_d07_data_recd_weekday_prog(E_D07_TRANS_FLG flag, char *user, char 
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_holiday_prog
- ¹¦ÄÜÃèÊö  : ½Ú¼ÙÈÕ±à³ÌÊÂ¼ş¼ÇÂ¼×ª»»
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_holiday_prog
+ åŠŸèƒ½æè¿°  : èŠ‚å‡æ—¥ç¼–ç¨‹äº‹ä»¶è®°å½•è½¬æ¢
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ26ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ26æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_holiday_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -11933,7 +11945,7 @@ eD07Err trans_d07_data_recd_holiday_prog(E_D07_TRANS_FLG flag, char *user, char 
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -11963,7 +11975,7 @@ eD07Err trans_d07_data_recd_holiday_prog(E_D07_TRANS_FLG flag, char *user, char 
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr,
                 "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                 "%02d%02d%02d%02d"                            //operator
@@ -12063,7 +12075,7 @@ eD07Err trans_d07_data_recd_holiday_prog(E_D07_TRANS_FLG flag, char *user, char 
             pDataUser->operator[j] = d07_str_to_num(&strUsr[i+=2], 2);
         }
         
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12150,20 +12162,20 @@ eD07Err trans_d07_data_recd_holiday_prog(E_D07_TRANS_FLG flag, char *user, char 
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_power_prog
- ¹¦ÄÜÃèÊö  : ×éºÏÓĞ¹¦ÎŞ¹¦±à³ÌÊÂ¼ş½á¹¹
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_power_prog
+ åŠŸèƒ½æè¿°  : ç»„åˆæœ‰åŠŸæ— åŠŸç¼–ç¨‹äº‹ä»¶ç»“æ„
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ27ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ27æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_power_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -12182,7 +12194,7 @@ eD07Err trans_d07_data_recd_power_prog(E_D07_TRANS_FLG flag, char *user, char *f
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12205,7 +12217,7 @@ eD07Err trans_d07_data_recd_power_prog(E_D07_TRANS_FLG flag, char *user, char *f
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                         "%02d%02d%02d%02d"                            //operator
                         //ulEventID
@@ -12248,7 +12260,7 @@ eD07Err trans_d07_data_recd_power_prog(E_D07_TRANS_FLG flag, char *user, char *f
         pDataUser->ucWord = d07_str_to_num(&strUsr[i+=2], 2);
         
 
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12280,20 +12292,20 @@ eD07Err trans_d07_data_recd_power_prog(E_D07_TRANS_FLG flag, char *user, char *f
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_payoff_prog
- ¹¦ÄÜÃèÊö  : ½áËãÈÕ±à³ÌÊÂ¼ş¼ÇÂ¼
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_payoff_prog
+ åŠŸèƒ½æè¿°  : ç»“ç®—æ—¥ç¼–ç¨‹äº‹ä»¶è®°å½•
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ27ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ27æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_payoff_prog(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -12311,7 +12323,7 @@ eD07Err trans_d07_data_recd_payoff_prog(E_D07_TRANS_FLG flag, char *user, char *
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12339,7 +12351,7 @@ eD07Err trans_d07_data_recd_payoff_prog(E_D07_TRANS_FLG flag, char *user, char *
         }
         #endif
         
-        /* start time  ×Ö½Ú×Ü³¤ 297*/
+        /* start time  å­—èŠ‚æ€»é•¿ 297*/
         sprintf(strUsr, "%02d%02d%02d%02d%02d%02d"                     //sOccurTime
                         "%02d%02d%02d%02d"                            //operator
                         //ulEventID
@@ -12390,7 +12402,7 @@ eD07Err trans_d07_data_recd_payoff_prog(E_D07_TRANS_FLG flag, char *user, char *
         pDataUser->sDay3.DD = d07_str_to_num(&strUsr[i+=2], 2);
         pDataUser->sDay3.hh = d07_str_to_num(&strUsr[i+=2], 2);
         
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12429,20 +12441,20 @@ eD07Err trans_d07_data_recd_payoff_prog(E_D07_TRANS_FLG flag, char *user, char *
 }
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_recd_open_meter_cap
- ¹¦ÄÜÃèÊö  : µç±í¿ª¸ÇÊÂ¼ş¼ÇÂ¼½á¹¹
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_recd_open_meter_cap
+ åŠŸèƒ½æè¿°  : ç”µè¡¨å¼€ç›–äº‹ä»¶è®°å½•ç»“æ„
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2012Äê11ÔÂ27ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2012å¹´11æœˆ27æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_recd_open_meter_cap(E_D07_TRANS_FLG flag, char *user, char *frame)    
@@ -12465,7 +12477,7 @@ eD07Err trans_d07_data_recd_open_meter_cap(E_D07_TRANS_FLG flag, char *user, cha
     
     if(E_D07_TRANS_U2F == flag)
     {
-        //ÏÔÊ¾Êı¾İĞÅÏ¢
+        //æ˜¾ç¤ºæ•°æ®ä¿¡æ¯
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12574,7 +12586,7 @@ eD07Err trans_d07_data_recd_open_meter_cap(E_D07_TRANS_FLG flag, char *user, cha
         pDataUser->sPowerAfterOpen.dNonePowerQuad3= d07_str_to_double(&strUsr[i+=8], 8, 6);
         pDataUser->sPowerAfterOpen.dNonePowerQuad4= d07_str_to_double(&strUsr[i+=8], 8, 6);
         
-        //Êı¾İÊä³ö
+        //æ•°æ®è¾“å‡º
         #ifdef D07_DEBUG_ON
         if(D07_ON == g_need_pack_07)
         {
@@ -12618,7 +12630,7 @@ eD07Err trans_d07_data_recd_open_meter_cap(E_D07_TRANS_FLG flag, char *user, cha
     return E_D07_OK;
 }
 
-// Í¬¿ª±í¸Ç
+// åŒå¼€è¡¨ç›–
 eD07Err trans_d07_data_recd_open_btn_box(E_D07_TRANS_FLG flag, char *user, char *frame)    
 {
     return trans_d07_data_recd_open_meter_cap(flag, user, frame);
@@ -12626,20 +12638,20 @@ eD07Err trans_d07_data_recd_open_btn_box(E_D07_TRANS_FLG flag, char *user, char 
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : trans_d07_data_err
- ¹¦ÄÜÃèÊö  : ´íÎó×´Ì¬×Ö×ª»»º¯Êı
- ÊäÈë²ÎÊı  : E_D07_TRANS_FLG flag  
+ å‡½ æ•° å  : trans_d07_data_err
+ åŠŸèƒ½æè¿°  : é”™è¯¯çŠ¶æ€å­—è½¬æ¢å‡½æ•°
+ è¾“å…¥å‚æ•°  : E_D07_TRANS_FLG flag  
              char *user            
              char *frame           
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê1ÔÂ5ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´1æœˆ5æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
 eD07Err trans_d07_data_err(E_D07_TRANS_FLG flag, char *user, char *frame)
@@ -12670,7 +12682,7 @@ eD07Err trans_d07_data_err(E_D07_TRANS_FLG flag, char *user, char *frame)
 
         *pucErr = ucErr;
 
-        // ÏÔÊ¾ĞÅÏ¢
+        // æ˜¾ç¤ºä¿¡æ¯
     }
     else
     {
@@ -12683,23 +12695,23 @@ eD07Err trans_d07_data_err(E_D07_TRANS_FLG flag, char *user, char *frame)
         psErr->bNoneReq  = (ucErr & 0x02) ? TRUE : FALSE;
         psErr->bOtherErr = (ucErr & 0x01) ? TRUE : FALSE;
 
-        //ÏÔÊ¾ĞÅÏ¢
+        //æ˜¾ç¤ºä¿¡æ¯
         #ifdef D07_DEBUG_ON
         sprintf(g_out_data_07, 
-        "·ÑÂÊÊı³¬: \t%s\n"
-        "ÈÕÊ±¶ÎÊı³¬: \t%s\n"
-        "ÄêÊ±ÇøÊı³¬: \t%s\n"
-        "Í¨Ñ¶ËÙÂÊ²»ÄÜ¸ü¸Ä: \t%s\n"
-        "ÃÜÂë´í/Î´ÊÚÈ¨: \t%s\n"
-        "ÎŞÇëÇóÊı¾İ: \t%s\n"
-        "ÆäËû´íÎó: \t%s\n", 
-        psErr->bRateErr  == TRUE ? "ÓĞ" : "ÎŞ",
-        psErr->bDayErr   == TRUE ? "ÓĞ" : "ÎŞ",
-        psErr->bYearErr  == TRUE ? "ÓĞ" : "ÎŞ",
-        psErr->bCommErr  == TRUE ? "ÓĞ" : "ÎŞ",
-        psErr->bPwdErr   == TRUE ? "ÓĞ" : "ÎŞ",
-        psErr->bNoneReq  == TRUE ? "ÓĞ" : "ÎŞ",
-        psErr->bOtherErr == TRUE ? "ÓĞ" : "ÎŞ");
+        "è´¹ç‡æ•°è¶…: \t%s\n"
+        "æ—¥æ—¶æ®µæ•°è¶…: \t%s\n"
+        "å¹´æ—¶åŒºæ•°è¶…: \t%s\n"
+        "é€šè®¯é€Ÿç‡ä¸èƒ½æ›´æ”¹: \t%s\n"
+        "å¯†ç é”™/æœªæˆæƒ: \t%s\n"
+        "æ— è¯·æ±‚æ•°æ®: \t%s\n"
+        "å…¶ä»–é”™è¯¯: \t%s\n", 
+        psErr->bRateErr  == TRUE ? "æœ‰" : "æ— ",
+        psErr->bDayErr   == TRUE ? "æœ‰" : "æ— ",
+        psErr->bYearErr  == TRUE ? "æœ‰" : "æ— ",
+        psErr->bCommErr  == TRUE ? "æœ‰" : "æ— ",
+        psErr->bPwdErr   == TRUE ? "æœ‰" : "æ— ",
+        psErr->bNoneReq  == TRUE ? "æœ‰" : "æ— ",
+        psErr->bOtherErr == TRUE ? "æœ‰" : "æ— ");
         #endif
     }
     
@@ -12709,31 +12721,31 @@ eD07Err trans_d07_data_err(E_D07_TRANS_FLG flag, char *user, char *frame)
 
 
 /*****************************************************************************
- º¯ Êı Ãû  : get_d07_first_valid_frame
- ¹¦ÄÜÃèÊö  : DLT645 2007 ÕÒµ½µÚÒ»¸öÓĞĞ§Ö¡µÄÎ»ÖÃ¼°³¤¶È
- ÊäÈë²ÎÊı  : const UINT8 *pBuf    
+ å‡½ æ•° å  : get_d07_first_valid_frame
+ åŠŸèƒ½æè¿°  : DLT645 2007 æ‰¾åˆ°ç¬¬ä¸€ä¸ªæœ‰æ•ˆå¸§çš„ä½ç½®åŠé•¿åº¦
+ è¾“å…¥å‚æ•°  : const UINT8 *pBuf    
              UINT16 usLenBuf      
              UINT8  **ppFirstPos  
              UINT16 *pusLenFrame  
- Êä³ö²ÎÊı  : ÎŞ
- ·µ »Ø Öµ  : 
- µ÷ÓÃº¯Êı  : 
- ±»µ÷º¯Êı  : 
+ è¾“å‡ºå‚æ•°  : æ— 
+ è¿” å› å€¼  : 
+ è°ƒç”¨å‡½æ•°  : 
+ è¢«è°ƒå‡½æ•°  : 
  
- ĞŞ¸ÄÀúÊ·      :
-  1.ÈÕ    ÆÚ   : 2013Äê1ÔÂ25ÈÕ
-    ×÷    Õß   : liming
-    ĞŞ¸ÄÄÚÈİ   : ĞÂÉú³Éº¯Êı
+ ä¿®æ”¹å†å²      :
+  1.æ—¥    æœŸ   : 2013å¹´1æœˆ25æ—¥
+    ä½œ    è€…   : liming
+    ä¿®æ”¹å†…å®¹   : æ–°ç”Ÿæˆå‡½æ•°
 
 *****************************************************************************/
-int get_d07_first_valid_frame(const UINT8 *pBuf,         // Òª½âÎöµÄbuf
-                              UINT16 usLenBuf,           // Òª½âÎöµÄbuf×Ö½ÚÊı
-                              UINT8  **ppFirstPos,       // Êä³öÖ¡buffer
-                              UINT16 *pusLenFrame)      // Êä³öFrame×Ö½ÚÊı
+int get_d07_first_valid_frame(const UINT8 *pBuf,         // è¦è§£æçš„buf
+                              UINT16 usLenBuf,           // è¦è§£æçš„bufå­—èŠ‚æ•°
+                              UINT8  **ppFirstPos,       // è¾“å‡ºå¸§buffer
+                              UINT16 *pusLenFrame)      // è¾“å‡ºFrameå­—èŠ‚æ•°
 {
 
     int i = 0, j = 0;
-    UINT16 usLenLeft = 0; // Ñ­»·¼ì²âÖ®µÄ³¤¶È
+    UINT16 usLenLeft = 0; // å¾ªç¯æ£€æµ‹ä¹‹çš„é•¿åº¦
     UINT8 ucDataLen = 0;
     UINT8 ucCheckSum = 0;
     int nLen = 0;
@@ -12771,21 +12783,21 @@ int get_d07_first_valid_frame(const UINT8 *pBuf,         // Òª½âÎöµÄbuf
              nCheckSumPos = nCheckSumPosStart + ucDataLen + 10;
              nEndPos = nCheckSumPos+1;
 
-             // ¼ÆËãĞ£ÑéºÍ
-             //²é¼ìchecksum
+             // è®¡ç®—æ ¡éªŒå’Œ
+             //æŸ¥æ£€checksum
             for(j = nCheckSumPosStart; j < nCheckSumPos; j++)
             {
                 ucCheckSum +=  pBuf[j];
             }
 
-            // ¼ì²éºÍ³ö´í
+            // æ£€æŸ¥å’Œå‡ºé”™
             if(ucCheckSum != pBuf[nCheckSumPos])
             {
                 //return E_D07_ERRO_FRAME_CHECK_SUM;
                 continue;
             }
 
-            //½áÊø·û
+            //ç»“æŸç¬¦
             if(0x16 != pBuf[nEndPos])
             {
                 //return E_D07_ERRO_FRAME_END_0x16;
