@@ -176,8 +176,8 @@ void usage()
 {
 	printf("serial \"1,2400,n,8,1\" \"fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16\"\n");
 	printf("or ommit com para: serial \"fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16\"\n");
+	printf("serial -baud 2400 -stop 1 -parity e -data 8 -port 1 -frame \"fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16\"\n");
 }
-
 
 /*
  * 功能: 获取串口配置.
@@ -290,22 +290,30 @@ void readBuf(int fd, u8* buf, u32* bufSize)
 	*bufSize = read(fd, buf, 2048);
 }
 
+void setDefaultPara(comConfig_s* pConfig)
+{
+	if ( NULL == pConfig )
+		return;
+
+	pConfig->port = 2;
+	pConfig->baud = baud2400;
+	pConfig->par = parEven;
+	pConfig->stopb = 1;
+	pConfig->bits = 8;
+}
+
 /*
  * serial "1,2400,e,1,8" "fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16"
  */
 int main(int argc, char* argv[])
 {
-	comConfig_s config;
+	comConfig_s config = {0};
 	char* pFrame = NULL;
 	u8 buf[256] = {0};
 	u32 bufSize = 0;
 	int fd = -1;
 
-	config.port = 2;
-	config.baud = baud2400;
-	config.par = parEven;
-	config.stopb = 1;
-	config.bits = 8;
+	setDefaultPara(&config);
 
 	if (argc == 1 || argc > 3) {
 		usage();
