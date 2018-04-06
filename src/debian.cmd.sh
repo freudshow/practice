@@ -4,7 +4,7 @@
 #https://debian-handbook.info/browse/zh-CN/stable/index.html    debian管理员手册
 
 #让apt-get支持https开头的软件源
-sudo apt-get install apt-transport-https
+sudo apt-get install -y apt-transport-https
 
 
 #普通用户使用sudo命令, 不再需要输入密码:
@@ -16,17 +16,19 @@ cat /etc/debian_version
 
 #NFS服务器搭建, 以下命令均在root账号下运行,
 #否则系统会提示没有权限("/nfsroot", 可替换为自己设置的目录)
-apt-get install rpcbind nfs-kernel-server nfs-common -y
+sudo apt-get install -y rpcbind nfs-kernel-server nfs-common
 echo "/nfsroot    *(rw,sync,no_root_squash)" >> /etc/exports
 mkdir -p /nfsroot
 chmod 777 -R /nfsroot
 /etc/init.d/rpcbind restart
 /etc/init.d/nfs-kernel-server restart
-mount -t nfs -o nolock server:/nfsroot /mnt
+mount -t nfs -o nolock localhost:/nfsroot /mnt
 
 sudo apt-get install linux-headers-$(uname -r) dkms caja-open-terminal git vim cscope ctags chromium build-essential -y
 
 #git alias
+git config --global user.name "s_baoshan"
+git config --global user.email "s_baoshan@163.com"
 git config --global alias.co checkout
 git config --global alias.br branch
 git config --global alias.ci commit
@@ -38,19 +40,30 @@ echo "deb https://download.virtualbox.org/virtualbox/debian stretch contrib">>/e
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 apt update
-sudo apt-get install virtualbox-5.2
-sudo usermod -a -G vboxsf yourname
+sudo apt-get install -y virtualbox-5.2
+sudo usermod -a -G vboxsf $(whoami)
 
 #add i386 support
-dpkg --print-architecture
-dpkg --add-architecture i386
-apt install lib32z1 lib32ncurses5 gcc-multilib firmware-realtek
+sudo apt install -y firmware-realtek
+sudo dpkg --print-architecture
+sudo dpkg --add-architecture i386
+sudo apt install  -y lib32z1 lib32ncurses5 gcc-multilib 
 
 #安装6.828开发环境
-apt install libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool
-apt install libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-1-dev
+sudo apt install  -y libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool
+sudo apt install  -y libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-1-dev
 git clone http://web.mit.edu/ccutler/www/qemu.git
 ./configure --disable-kvm --prefix=/opt/qemu --target-list="i386-softmmu x86_64-softmmu"
 make
 sudo make install
+
+#Linux自体渲染
+sudo apt install dirmngr
+echo "deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/infinality.list
+echo "deb-src http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list.d/infinality.list
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E985B27B
+#执行以下命令来升级你的系统并安装 Infinality 包：
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install -y fontconfig-infinality
 
