@@ -39,15 +39,15 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 echo "deb https://download.virtualbox.org/virtualbox/debian stretch contrib">>/etc/apt/sources.list
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
-apt update
-sudo apt-get install -y virtualbox-5.2
+sudo apt update
+sudo apt-get install -y virtualbox-5.2 libqt5core5a libqt5widgets5 libqt5x11extras5 libssl1.1 libvpx4 libsdl-ttf2.0-0
 sudo usermod -a -G vboxsf $(whoami)
 
 #add i386 support
 sudo apt install -y firmware-realtek
 sudo dpkg --print-architecture
 sudo dpkg --add-architecture i386
-sudo apt install  -y lib32z1 lib32ncurses5 gcc-multilib 
+sudo apt install  -y lib32z1 lib32ncurses5 gcc-multilib
 
 #安装6.828开发环境
 sudo apt install  -y libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool
@@ -57,7 +57,7 @@ git clone http://web.mit.edu/ccutler/www/qemu.git
 make
 sudo make install
 
-#Linux自体渲染
+#Linux自字体渲染
 sudo apt install dirmngr
 echo "deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/infinality.list
 echo "deb-src http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list.d/infinality.list
@@ -66,4 +66,12 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E985B27B
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install -y fontconfig-infinality
+
+#以太网和wifi同时上网
+route
+echo "#!/bin/bash">/etc/NetworkManager/dispatcher.d/02myroutes
+echo "sudo route del -net default netmask 0.0.0.0 dev enp7s0">>/etc/NetworkManager/dispatcher.d/02myroutes
+echo "sudo route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.0.1 dev enp7s0">>/etc/NetworkManager/dispatcher.d/02myroutes
+
+
 
