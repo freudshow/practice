@@ -1,0 +1,1 @@
+gcc -o ../bin/sqltest -lsqlite3 sqltest.c

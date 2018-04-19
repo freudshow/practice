@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <time.h>
+#include <string.h>
 #include "lib.h"
 
 void get_local_time(char* buf, u32 bufSize)
@@ -19,7 +20,7 @@ void get_local_time(char* buf, u32 bufSize)
 			timeinfo.tm_min, timeinfo.tm_sec);
 }
 
-void debug(const char* file, const char* func, u32 line, const char *fmt, ...)
+void debug(const char* file, const char* func, u32 line, u8 printEnter, const char *fmt, ...)
 {
 	va_list ap;
 	char buf[20] = { 0 };
@@ -29,7 +30,8 @@ void debug(const char* file, const char* func, u32 line, const char *fmt, ...)
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
-	fprintf(stderr, "\n");
+	if(1 == printEnter)
+		fprintf(stderr, "\n");
 }
 
 void showArray(int v[], int length)
@@ -40,6 +42,105 @@ void showArray(int v[], int length)
 		fprintf(stderr, "%d\t", v[i]);
 	}
 	fprintf(stderr, "\n");
+}
+
+/*
+ * 功能: 将帧字符串转化为16进制字节串 *
+ * @str: 帧字符串
+ * @buf: 目标字节串
+ * @bufSize: 目标字节串原本的长度
+ */
+void readFrm(char *str, u8 *buf, u32 *bufSize)
+{
+    int state = 0;//0, 初始状态; 1, 空格状态; 2, 字节高状态; 3, 字节低状态; 4, 错误状态.
+    u8 high = 0;
+    u8 low = 0;
+    u32 destLen = 0;//已扫描过的字节个数
+    char *p = str;
+    u8 *pBuf = buf;
+
+    if (bufSize == NULL || buf == NULL || str == NULL)
+        return;
+
+    while (*p != '\0') {
+        if (!(isHex(*p) || isDelim(*p))) {
+            state = 4;
+            goto final;
+        }
+
+        switch (state) {
+		case 0://init state
+			if (isDelim(*p)) {
+				state = 1;
+			} else if (isHex(*p)) {
+				high = *p;
+				state = 2;
+			}
+			break;
+		case 1://space state
+			if (isHex(*p)) {
+				high = *p;
+				state = 2;
+			}
+			break;
+		case 2://high state
+			if (isDelim(*p)) {
+				state = 4;
+				goto final;
+			}
+
+			if (destLen < (*bufSize)) {
+				low = *p;
+				high = ASCII_TO_HEX(high);
+				low = ASCII_TO_HEX(low);
+
+				*pBuf = (high << 4 | low);
+				pBuf++;
+				destLen++;
+				high = low = 0;
+				state = 3;
+			} else {
+				goto final;
+			}
+			break;
+		case 3://low state
+			if (isHex(*p)) {
+				state = 4;
+				goto final;
+			} else {
+				state = 1;
+			}
+			break;
+		default:
+			goto final;
+        }
+
+        p++;
+    }
+
+final:
+    if (state == 4 || state == 2) {//高位状态和非法状态均为不可接受状态
+        DEBUG_TIME_LINE("存在非法字符, 或字符串格式非法\n");
+        if (destLen > 0) {
+            memset(buf, 0, destLen);
+            destLen = 0;
+        }
+    }
+    *bufSize = destLen;
+}
+
+void printBuf(u8* buf, u32 bufSize)
+{
+	u32 i = 0;
+
+	if (NULL == buf || 0 == bufSize) {
+		return;
+	}
+
+	for (i=0; i < (bufSize-1); i++) {
+		printf("%02X ", buf[i]);
+	}
+	printf("%02X\n", buf[i]);
 }
 
 int arrayCmp(int a, int b)
@@ -87,24 +188,6 @@ int binSearchInt(int elem, int array[], int length)
 	return NOT_FOUND;
 }
 
-void xorSwap(int v[], int i, int j)
-{
-	if(i==j)//because a^a = 0, then xorSwap cannot swap two equal numbers!
-		return;
-
-	v[i] = v[i]^v[j];
-	v[j] = v[i]^v[j];
-	v[i] = v[i]^v[j];
-}
-
-void swap(int v[], int i, int j)
-{
-	int temp;
-	temp = v[i];
-	v[i] = v[j];
-	v[j] = temp;
-}
-
 void quikSort(int v[], int n)
 {
 	int i, last;
@@ -113,20 +196,37 @@ void quikSort(int v[], int n)
 		return;
 	fprintf(stderr, "before swap pivot:\n");
 	showArray(v, n);
-	xorSwap(v, 0, (rand()%n));
+	SWAP(v[0], v[(rand()%n)]);
 	DEBUG_OUT("after swap pivot:\n");
 	showArray(v, n);
 	last = 0;
 	for(i=1; i < n; i++)
-		if(v[i] < v[0])
-			xorSwap(v, ++last, i);
+		if(v[i] < v[0]) {
+			last++;
+			SWAP(v[last], v[i]);
+		}
 	DEBUG_OUT("after select:\n");
 	showArray(v, n);
 
-	xorSwap(v, 0, last);
+	SWAP(v[0], v[last]);
 	DEBUG_OUT("after restore pivot:\n");
 	showArray(v, n);
 
 	quikSort(v, last);
 	quikSort(v+last+1, n-last-1);
+}
+
+int bufIsNULL(u8 *buf, u32 bufSize) {
+    u32 i = 0;
+
+    if (NULL == buf || 0 == bufSize) {
+        return TRUE;
+    }
+
+    for (i = 0; i < bufSize; i++) {
+        if (buf[i] != 0)
+            return FALSE;
+    }
+
+    return TRUE;
 }
