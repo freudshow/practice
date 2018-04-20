@@ -73,5 +73,11 @@ echo "#!/bin/bash">/etc/NetworkManager/dispatcher.d/02myroutes
 echo "sudo route del -net default netmask 0.0.0.0 dev enp7s0">>/etc/NetworkManager/dispatcher.d/02myroutes
 echo "sudo route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.0.1 dev enp7s0">>/etc/NetworkManager/dispatcher.d/02myroutes
 
+#Vim配置
+git clone https://github.com/amix/vimrc.git
+git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
+sh ~/.vim_runtime/install_awesome_vimrc.sh
 
+#windows xp sn
+MRX3F-47B9T-2487J-KWKMF-RPWBY
 
