@@ -81,3 +81,5 @@ sh ~/.vim_runtime/install_awesome_vimrc.sh
 #windows xp sn
 MRX3F-47B9T-2487J-KWKMF-RPWBY
 
+#Unable to open serial port /dev/ttyUSB0
+sudo echo "KERNEL==\"ttyUSB[0-9]*\", MODE=\"0666\"">/etc/udev/rules.d/70-ttyusb.rules
