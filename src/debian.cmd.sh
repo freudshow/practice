@@ -83,3 +83,22 @@ MRX3F-47B9T-2487J-KWKMF-RPWBY
 
 #Unable to open serial port /dev/ttyUSB0
 sudo echo "KERNEL==\"ttyUSB[0-9]*\", MODE=\"0666\"">/etc/udev/rules.d/70-ttyusb.rules
+
+#delete by inode
+ls -il
+find ./ -inum
+find ./ -inum 277191 -exec rm -i {} \;
+
+#tftp Sever
+sudo apt install -y tftpd-hpa tftp
+just use Sample configuration
+service tftpd-hpa status
+service tftpd-hpa stop
+service tftpd-hpa start
+service tftpd-hpa restart
+service tftpd-hpa force-reload
+mkdir -p /srv/tftp
+sudo chmod 777 /srv/tftp -R
+
+#get tftp files in arm board
+tftp tftp-server-ip -g -r remotefile
