@@ -11,21 +11,21 @@
 #include "serial.h"
 
 
+
 int openCom(comConfig_s* config)
 {
 	struct serial_rs485 rs485conf;
-	int rs485gpio;
-	int fd = 0;
+	int fd = -10;
 	struct termios old_termi = { }, new_termi = { };
 	int baud_lnx = 0;
-	unsigned char tmp[20] = {0};
+	unsigned char tmp[20] = { 0 };
 
 	if (NULL == config) {
 		printf("param is NULL!\n");
 		return -1;
 	}
 
-	sprintf((char *) tmp, "/dev/ttyS%d", config->port);
+	sprintf((char *) tmp, "%s", config->port);
 	fd = open((char *) tmp, O_RDWR | O_NOCTTY); /* 打开串口文件 */
 	if (fd < 0) {
 		printf("open the serial port fail! errno is: %d\n", errno);
@@ -33,7 +33,8 @@ int openCom(comConfig_s* config)
 	}
 
 	if (tcgetattr(fd, &old_termi) != 0) {/*存储原来的设置*/
-		printf("get the terminal parameter error when set baudrate! errno is: %d\n",
+		printf(
+				"get the terminal parameter error when set baudrate! errno is: %d\n",
 				errno);
 		/*获取终端相关参数时出错*/
 		return 0;
@@ -114,7 +115,7 @@ int openCom(comConfig_s* config)
 	}
 
 	switch (config->stopb) {
-	case 1://停止位
+	case 1: //停止位
 		new_termi.c_cflag &= ~CSTOPB; //设置停止位为:一位停止位
 		break;
 	case 2:
@@ -130,45 +131,38 @@ int openCom(comConfig_s* config)
 
 	tcflush(fd, TCIOFLUSH); /* 刷新输入输出流 */
 	if (tcsetattr(fd, TCSANOW, &new_termi) != 0) {/* 激活串口配置 */
-		printf("Set serial port parameter error!\n");
+		DEBUG_TIME_LINE("Set serial port parameter error!\n");
 		return -1;
 	}
 
-	if ((config->port == S4851) || (config->port == S4852)) {
-		/* Enable RS485 mode: */
+	if (strcmp(config->port, S4851) == 0 || strcmp(config->port, S4852) == 0) {
 		memset(&rs485conf, 0, sizeof(rs485conf));
+		if (ioctl(fd, TIOCGRS485, &rs485conf) < 0) {
+			DEBUG_TIME_LINE("ioctl TIOCGRS485 error.\n");
+		}
+
 		rs485conf.flags |= SER_RS485_ENABLED;
-
-		/* Set logical level for RTS pin equal to 1 when sending: */
-		//	rs485conf.flags |= SER_RS485_RTS_ON_SEND;
-		//	/* or, set logical level for RTS pin equal to 0 when sending: */
 		rs485conf.flags &= ~(SER_RS485_RTS_ON_SEND);
-
-		/* Set logical level for RTS pin equal to 1 after sending: */
 		rs485conf.flags |= SER_RS485_RTS_AFTER_SEND;
-		/* or, set logical level for RTS pin equal to 0 after sending: */
-		//	rs485conf.flags &= ~(SER_RS485_RTS_AFTER_SEND);
+
 		if (ioctl(fd, TIOCSRS485, &rs485conf) < 0) {
-			fprintf(stderr, "ioctl TIOCSRS485 error\n");
+			DEBUG_TIME_LINE("ioctl TIOCSRS485 error\n");
 		}
 
-		switch (config->port) {
-		case S4851:
-			rs485gpio = AT91_PIN_PC1; //上海485I：AT91_PIN_PC1， 485II：AT91_PIN_PA7 ，这里要根据不同的口进行不同的设置，需修改
-			break;
-		case S4852:
-			rs485gpio = AT91_PIN_PA7;
-			break;
-		default:
-			rs485gpio = AT91_PIN_PC1;
-		}
+		int rs485gpio;
+		// if (strcmp(config->port, S4851) == 0) {
+		// 	rs485gpio = AT91_PIN_PC1;
+		// } else if (strcmp(config->port, S4852) == 0){
+		// 		rs485gpio = AT91_PIN_PA7;
+		// } else {
+		// 	rs485gpio = AT91_PIN_PC1;
+		// }
 
 		if (ioctl(fd, RTS485, &rs485gpio) < 0) {
 			fprintf(stderr, "ioctl RTS485 error\n");
 		}
 		fprintf(stderr, "rs485gpio=%d,fd=%d\n", rs485gpio, fd);
 	}
-
 	return fd;
 }
 
@@ -186,7 +180,7 @@ void usage()
  * 校验方式: e-偶校验, o-奇校验, n-无校验, 其他字符无效.
  * 必须以','分隔, 其他的分隔符不允许出现.
  * 波特率取值: {1200, 2400, 4800, 9600, 19200, 38400, 115200}
- * 比如: "1,2400,e,1,8".
+ * 比如: "/dev/ttySA1,2400,e,1,8".
  * @str: 串口配置字符串, 以'\0'结尾
  * @pConfig: 串口配置结构体
  */
@@ -213,7 +207,7 @@ s8 getComConfig(char* str, comConfig_s* pConfig)
 	}
 
 	p = str;
-	pConfig->port = atoi(p);
+	memcpy(pConfig->port, p, strlen(p));
 
 	p = &str[position[0]+1];
 	baudrate = atoi(p);
@@ -275,9 +269,10 @@ s8 sendBuf(int fd, u8* buf, u32 bufSize)
         return FALSE;
 
 	if (write(fd, buf, bufSize) < 0) {
-		printf("send error!\n");
+		DEBUG_TIME_LINE("send error!\n");
 		return FALSE;
 	}
+	DEBUG_TIME_LINE("send bufSize:%d", bufSize);
 
 	return TRUE;
 }
@@ -288,6 +283,7 @@ void readBuf(int fd, u8* buf, u32* bufSize)
         return;
 
 	*bufSize = read(fd, buf, 2048);
+	DEBUG_TIME_LINE("read bufSize:%d", *bufSize);
 }
 
 void setDefaultPara(comConfig_s* pConfig)
@@ -295,58 +291,79 @@ void setDefaultPara(comConfig_s* pConfig)
 	if ( NULL == pConfig )
 		return;
 
-	pConfig->port = 2;
+	bzero(pConfig, sizeof(comConfig_s));
+
+	strcpy(pConfig->port, S4851);
 	pConfig->baud = baud2400;
 	pConfig->par = parEven;
 	pConfig->stopb = 1;
 	pConfig->bits = 8;
 }
 
-/*
- * serial "1,2400,e,1,8" "fe fe fe fe 68 18 16 00 00 00 00 68 11 04 33 33 34 33 e0 16"
- */
 int main(int argc, char* argv[])
 {
-	comConfig_s config = {0};
+	comConfig_s config;
 	char* pFrame = NULL;
-	u8 buf[256] = {0};
+	u8 buf[2048] = {0};
 	u32 bufSize = 0;
 	int fd = -1;
 
+	bzero(&config, sizeof(config));
 	setDefaultPara(&config);
 
+#ifdef NORMAL
 	if (argc == 1 || argc > 3) {
 		usage();
 		exit(0);
 	} else if (argc == 3) {
 		if (getComConfig(argv[1], &config) == FALSE) {
-			perror("get com config failed!");
+			DEBUG_TIME_LINE("get com config failed!");
 			goto ret;
 		}
 		pFrame = argv[2];
 	} else if (argc == 2) {
 		pFrame = argv[1];
 	}
+#endif
 
 	//sem_wait();
 	if ( (fd = openCom(&config)) < 0 ) {
 		perror("open failed!");
 		exit(1);
 	}
-	printf("port: %d, baud: %d, parity: %d, stop: %d, bits: %d\n",
+	DEBUG_TIME_LINE("port: %s, baud: %d, parity: %d, stop: %d, bits: %d\n",
 		  config.port, config.baud, config.par, config.stopb, config.bits);
 	bufSize = sizeof(buf);
+
+#ifdef NORMAL
 	readFrm(pFrame, buf, &bufSize);
 	DEBUG_OUT("[send]:");
 	printBuf(buf, bufSize);
 	if (sendBuf(fd, buf, bufSize) == FALSE) {
 		goto ret;
 	}
-	sleep(1);
-	readBuf(fd, buf, &bufSize);
-	DEBUG_OUT("[read]:");
-	printBuf(buf, bufSize);
+	int cnt = 0;
+	while (cnt<2000) {
+		usleep(3000);
+		readBuf(fd, buf, &bufSize);
+		DEBUG_OUT("[read]:");
+		printBuf(buf, bufSize);
+		DEBUG_OUT("[cnt]:%d", cnt);
+		cnt++;
+	}
+
+#endif
+
+#ifdef LISTEN
+	while (1) {
+		sleep(1);
+		readBuf(fd, buf, &bufSize);
+		DEBUG_OUT("[read]:");
+		printBuf(buf, bufSize);
+		fprintf(stderr, "\n");
+	}
 	//sem_post();
+#endif
 
 ret:
 	close(fd);

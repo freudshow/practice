@@ -27,10 +27,28 @@ extern "C" {
 //　　485II [ /dev/ttyS1 ]
 //　　485III[ /dev/ttyS4 ]
 
-#define S4851   		1
-#define S4852   		2
-#define S4853   		3
-#define SER_ZB			5
+// #define S4851   		1
+// #define S4852   		2
+// #define S4853   		3
+// #define SER_ZB			5
+
+#ifdef CCTII
+#define S4851   		"/dev/ttyS2"
+#define S4852   		"/dev/ttyS1"
+#endif
+
+#ifdef CJQIII
+#define S4851   		"/dev/ttySA1"
+#define S4852   		"/dev/ttySA5"
+#define SMBUS1   		"/dev/ttySA3"
+#define SMBUS2			"/dev/ttySA10"
+#define SMBUS3			"/dev/ttySA6"
+#define SMODULE1		"/dev/ttySA8"
+#define SMODULE2		"/dev/ttySA2"
+#define SMODULE3		"/dev/ttySA9"
+#define SMODULE4		"/dev/ttySA7"
+#define SINFRARED		"/dev/ttySA4"
+#endif
 
 #define PIN_BASE 32
 #define AT91_PIN_PC1 (PIN_BASE + 0x40 + 1)
@@ -68,7 +86,7 @@ typedef enum parity_enum{
 #pragma pack(1)
 
 typedef struct {
-	u8 port;
+	char port[128];
 	baud_e baud;
 	parity_e par;
 	u8 stopb;

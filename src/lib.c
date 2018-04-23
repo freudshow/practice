@@ -127,6 +127,8 @@ final:
         }
     }
     *bufSize = destLen;
+
+		printBuf(buf, destLen);
 }
 
 void printBuf(u8* buf, u32 bufSize)
@@ -138,9 +140,9 @@ void printBuf(u8* buf, u32 bufSize)
 	}
 
 	for (i=0; i < (bufSize-1); i++) {
-		printf("%02X ", buf[i]);
+		fprintf(stderr, "%02X ", buf[i]);
 	}
-	printf("%02X\n", buf[i]);
+	fprintf(stderr, "%02X\n", buf[i]);
 }
 
 int arrayCmp(int a, int b)
