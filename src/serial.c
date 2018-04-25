@@ -304,8 +304,10 @@ int main(int argc, char* argv[])
 {
 	comConfig_s config;
 	char* pFrame = NULL;
-	u8 buf[2048] = {0};
-	u32 bufSize = 0;
+	u8 rbuf[2048] = {0};
+	u8 sbuf[2048] = {0};
+	u32 sbufSize = 0;
+	u32 rbufSize = 0;
 	int fd = -1;
 
 	bzero(&config, sizeof(config));
@@ -333,33 +335,39 @@ int main(int argc, char* argv[])
 	}
 	DEBUG_TIME_LINE("port: %s, baud: %d, parity: %d, stop: %d, bits: %d\n",
 		  config.port, config.baud, config.par, config.stopb, config.bits);
-	bufSize = sizeof(buf);
+	sbufSize = sizeof(sbuf);
 
 #ifdef NORMAL
-	readFrm(pFrame, buf, &bufSize);
+	readFrm(pFrame, sbuf, &sbufSize);
 	DEBUG_OUT("[send]:");
-	printBuf(buf, bufSize);
-	if (sendBuf(fd, buf, bufSize) == FALSE) {
-		goto ret;
+	printBuf(sbuf, sbufSize);
+	int sendcnt = 0;
+
+	while (sendcnt < 5) {
+		if (sendBuf(fd, sbuf, sbufSize) == FALSE) {
+			goto ret;
+		}
+		int cnt = 0;
+		while (cnt<5) {
+			usleep(1000000);
+			readBuf(fd, rbuf, &rbufSize);
+			DEBUG_OUT("[read]:");
+			printBuf(rbuf, rbufSize);
+			DEBUG_OUT("[cnt]:%d", cnt);
+			cnt++;
+		}
+		// sendcnt++;
 	}
-	int cnt = 0;
-	while (cnt<2000) {
-		usleep(3000);
-		readBuf(fd, buf, &bufSize);
-		DEBUG_OUT("[read]:");
-		printBuf(buf, bufSize);
-		DEBUG_OUT("[cnt]:%d", cnt);
-		cnt++;
-	}
+
 
 #endif
 
 #ifdef LISTEN
 	while (1) {
 		sleep(1);
-		readBuf(fd, buf, &bufSize);
+		readBuf(fd, rbuf, &rbufSize);
 		DEBUG_OUT("[read]:");
-		printBuf(buf, bufSize);
+		printBuf(rbuf, rbufSize);
 		fprintf(stderr, "\n");
 	}
 	//sem_post();
