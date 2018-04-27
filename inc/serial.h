@@ -31,13 +31,10 @@ extern "C" {
 // #define S4852   		2
 // #define S4853   		3
 // #define SER_ZB			5
-
-#ifdef CCTII
+#if defined CCTII
 #define S4851   		"/dev/ttyS2"
 #define S4852   		"/dev/ttyS1"
-#endif
-
-#ifdef CJQIII
+#elif defined CJQIII
 #define S4851   		"/dev/ttySA1"
 #define S4852   		"/dev/ttySA5"
 #define SMBUS1   		"/dev/ttySA3"
@@ -48,6 +45,9 @@ extern "C" {
 #define SMODULE3		"/dev/ttySA9"
 #define SMODULE4		"/dev/ttySA7"
 #define SINFRARED		"/dev/ttySA4"
+#elif defined (CCTI) || (CCTIII)
+#define S4851   		"/dev/ttyS1"
+#define S4852   		"/dev/ttyS2"
 #endif
 
 #define PIN_BASE 32
@@ -86,15 +86,29 @@ typedef enum parity_enum{
 #pragma pack(1)
 
 typedef struct {
+	u8 listen;
+	u32 times;
+	u8 wait;
+	u8 inv;
+	char com[128];
+	u32 baud;
+	u8 data;
+	u8 stop;
+	u8 par;
+	char* frame[2048];
+} option_s;
+typedef option_s* option_p;
+
+typedef struct {
 	char port[128];
 	baud_e baud;
 	parity_e par;
 	u8 stopb;
 	u8 bits;
 } comConfig_s;
+typedef comConfig_s* comConfig_p;
 
 #pragma pack(pop)
-
 
 #ifdef __cplusplus
 }

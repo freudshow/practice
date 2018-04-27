@@ -24,7 +24,8 @@ extern int binSearchInt(int elem, int array[], int length);
 extern void xorSwap(int v[], int i, int j);
 extern void swap(int v[], int i, int j);
 extern void quikSort(int v[], int len);
-extern void readFrm(char *str, u8 *buf, u32 *bufSize);
+extern int readFrm(char *str, u8 *buf, u32 *bufSize);
 extern void printBuf(u8* buf, u32 bufSize);
+extern int isDecimal(char* dec);
 
 #endif// __LIB_H__

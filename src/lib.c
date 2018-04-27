@@ -50,7 +50,7 @@ void showArray(int v[], int length)
  * @buf: 目标字节串
  * @bufSize: 目标字节串原本的长度
  */
-void readFrm(char *str, u8 *buf, u32 *bufSize)
+int readFrm(char *str, u8 *buf, u32 *bufSize)
 {
     int state = 0;//0, 初始状态; 1, 空格状态; 2, 字节高状态; 3, 字节低状态; 4, 错误状态.
     u8 high = 0;
@@ -58,9 +58,10 @@ void readFrm(char *str, u8 *buf, u32 *bufSize)
     u32 destLen = 0;//已扫描过的字节个数
     char *p = str;
     u8 *pBuf = buf;
+    int ret = TRUE;
 
     if (bufSize == NULL || buf == NULL || str == NULL)
-        return;
+        return FALSE;
 
     while (*p != '\0') {
         if (!(isHex(*p) || isDelim(*p))) {
@@ -125,10 +126,12 @@ final:
             memset(buf, 0, destLen);
             destLen = 0;
         }
+        ret = FALSE;
     }
     *bufSize = destLen;
+	printBuf(buf, destLen);
 
-		printBuf(buf, destLen);
+	return ret;
 }
 
 void printBuf(u8* buf, u32 bufSize)
@@ -232,3 +235,16 @@ int bufIsNULL(u8 *buf, u32 bufSize) {
 
     return TRUE;
 }
+
+int isDecimal(char* dec)
+{
+	if(NULL == dec)
+		return FALSE;
+
+//	while('\0'!= dec) {
+//		switch(dec) {
+//		case
+//		}
+//	}
+}
+

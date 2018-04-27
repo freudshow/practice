@@ -1,6 +1,25 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#if defined CCTII
+#define S4851   		"/dev/ttyS2"
+#define S4852   		"/dev/ttyS1"
+#elif defined CJQIII
+#define S4851   		"/dev/ttySA1"
+#define S4852   		"/dev/ttySA5"
+#define SMBUS1   		"/dev/ttySA3"
+#define SMBUS2			"/dev/ttySA10"
+#define SMBUS3			"/dev/ttySA6"
+#define SMODULE1		"/dev/ttySA8"
+#define SMODULE2		"/dev/ttySA2"
+#define SMODULE3		"/dev/ttySA9"
+#define SMODULE4		"/dev/ttySA7"
+#define SINFRARED		"/dev/ttySA4"
+#elif defined (CCTI) || (CCTIII)
+#define S4851   		"/dev/ttyS1"
+#define S4852   		"/dev/ttyS2"
+#endif
+
 int main(int argc, char * argv[]) {
 	int aflag = 0, bflag = 0, cflag = 0;
 	int ch;
@@ -35,4 +54,6 @@ int main(int argc, char * argv[]) {
 	}
 	printf("----------------------------\n");
 	printf("optind=%d,argv[%d]=%s\n", optind, optind, argv[optind]);
+
+	printf("%s\n", S4851);
 }
