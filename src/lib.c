@@ -238,13 +238,58 @@ int bufIsNULL(u8 *buf, u32 bufSize) {
 
 int isDecimal(char* dec)
 {
-	if(NULL == dec)
+	if (NULL == dec)
 		return FALSE;
 
-//	while('\0'!= dec) {
-//		switch(dec) {
-//		case
-//		}
-//	}
+	s8 ret = TRUE;
+	u8 state = 0; //0-init state; 1-integer state; 2-dec point state; 3-fraction state; 4-error state.
+
+	while ('\0' != *dec) {
+		if (!isDigit(*dec) && (*dec != '.')) {
+			state = 4;
+			goto final;
+		}
+
+		switch (state) {
+		case 0: //init state, only accepts digit
+			if (isDigit(*dec)) {
+				state = 1;
+			} else {
+				state = 4;
+				goto final;
+			}
+			break;
+		case 1: //integer state, only accepts digit or '.'
+			if (*dec == '.') {
+				state = 2;
+			} else if (!isDigit(*dec)) {
+				state = 4;
+				goto final;
+			}
+			break;
+		case 2: //dec point state, , only accepts digit
+			if (!isDigit(*dec)) {
+				state = 4;
+				goto final;
+			} else {
+				state = 3;
+			}
+			break;
+		case 3: //fraction state, only accepts digit
+			if (!isDigit(*dec)) {
+				state = 4;
+				goto final;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+final:
+	if (4 == state)
+		ret = FALSE;
+
+	return ret;
 }
 

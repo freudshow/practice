@@ -13,16 +13,16 @@ extern "C" {
 #endif
 
 /**********base data types***********/
-typedef unsigned	char			u8;
-typedef unsigned	short			u16;
-typedef unsigned	int				u32;
-typedef unsigned long long			u64;
-typedef char						s8;
-typedef short						s16;
-typedef int							s32;
-typedef signed long long			s64;
-typedef float						fp32;
-typedef double						fp64;
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef unsigned long long u64;
+typedef char s8;
+typedef short s16;
+typedef int s32;
+typedef signed long long s64;
+typedef float fp32;
+typedef double fp64;
 
 #define BOOLEAN		u8		/* bool                                                */
 #define INT8U		u8		/* Unsigned  8 bit quantity                           */
@@ -67,7 +67,6 @@ typedef double						fp64;
 												)\
 											)\
 										)
-
 
 /*************************************************************
  * convert BCD char to ascii code
@@ -123,7 +122,6 @@ typedef double						fp64;
 
 #define Error(Str)        FatalError(Str)
 #define FatalError(Str)   fprintf(stderr, "%s\n", Str), exit(1)
-
 
 #ifdef __cplusplus
 }

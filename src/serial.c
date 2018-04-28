@@ -13,22 +13,21 @@
 #include "serial.h"
 
 static const char *optString = "l:t:w:i:c:b:d:s:p:f:h";
-static const struct option longOpts[] = {
-	{ "listen", required_argument, NULL, 'l' },
-	{ "times", required_argument, NULL, 't' },
-	{ "wait", required_argument, NULL, 'w' },
-	{ "inv", required_argument, NULL, 'i' },
-	{ "com", required_argument, NULL, 'c' },
-	{ "baud", required_argument, NULL, 'b' },
-	{ "data", required_argument, NULL, 'd' },
-	{ "stop", required_argument, NULL, 's' },
-	{ "par", required_argument, NULL, 'p' },
-	{ "frame", required_argument, NULL, 'f' },
-	{ "help", no_argument, NULL, 'h' }
-};
+static const struct option longOpts[] = { { "listen", required_argument, NULL, 'l' },
+										  { "times", required_argument, NULL, 't' },
+										  { "wait",	required_argument, NULL, 'w' },
+										  { "inv", required_argument, NULL, 'i' },
+										  { "com", required_argument, NULL, 'c' },
+										  { "baud", required_argument, NULL, 'b' },
+										  { "data", required_argument, NULL, 'd' },
+										  { "stop",	required_argument, NULL, 's' },
+										  { "par", required_argument, NULL, 'p' },
+										  { "frame", required_argument, NULL, 'f' },
+										  {	"help", no_argument, NULL, 'h' },
+										  { NULL, no_argument, NULL, 0 }
+										};
 
-int openCom(comConfig_s* config)
-{
+int openCom(comConfig_s* config) {
 	struct serial_rs485 rs485conf;
 	int fd = -10;
 	int rs485gpio = 0;
@@ -168,8 +167,8 @@ int openCom(comConfig_s* config)
 #if defined (CCTI) || (CCTII) || (CCTIII)
 		if (strcmp(config->port, S4851) == 0) {
 			rs485gpio = AT91_PIN_PC1;
-		} else if (strcmp(config->port, S4852) == 0){
-				rs485gpio = AT91_PIN_PA7;
+		} else if (strcmp(config->port, S4852) == 0) {
+			rs485gpio = AT91_PIN_PA7;
 		} else {
 			rs485gpio = AT91_PIN_PC1;
 		}
@@ -183,30 +182,28 @@ int openCom(comConfig_s* config)
 	return fd;
 }
 
-void usage()
-{
-	fprintf(stderr, "功能: 向串口发送报文, 并监听应答报文");
-	fprintf(stderr, "用法: serial [选项]");
-	fprintf(stderr, "-l,	--listen	监听开关, 0-发送报文并等待应答; 1-一直监听一个串口不发送报文, 默认0;");
-	fprintf(stderr, "-t,	--times 	发送并监听次数, 默认0, 无限次, 最大值1024;");
-	fprintf(stderr, "-w,	--wait  	发送报文后, 读取串口数据的次数, 默认20次, 最多1024次;");
-	fprintf(stderr, "-i,	--inv			发送报文后, 读取串口数据的时间间隔, 单位毫秒, 默认50毫秒, 最大1024毫秒;");
-	fprintf(stderr, "-c,	--com			向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号("")封闭,");
-	fprintf(stderr, "									默认\"/dev/ttySA1\", 即RS-485 I;");
-	fprintf(stderr, "-b,	--baud		设置串口波特率, 默认2400;");
-	fprintf(stderr, "-d,	--data		设置串口数据位, 6, 7, 8为有效值, 其他值视为使用默认值, 默认值8;");
-	fprintf(stderr, "-s,	--stop		设置串口停止位, 1, 1.5, 2为有效值, 其他值视为使用默认值, 默认值1;");
-	fprintf(stderr, "-p,	--par			设置串口校验位, 0-偶, 1-奇, 2-无, 其他值视为使用默认值, 默认值0;");
-	fprintf(stderr, "-f,	--frame		传入的报文, 必须以半角引号(\"\")封闭.");
-	fprintf(stderr, "									默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".");
-	fprintf(stderr, "-h,	--help		打印本帮助");
-	fprintf(stderr, "如果任何参数都不传入, 程序使用默认参数来监听\"/dev/ttySA1\".");
+void usage() {
+	fprintf(stderr, "功能: 向串口发送报文, 并监听应答报文\n");
+	fprintf(stderr, "用法: serial [选项]\n");
+	fprintf(stderr, "-l,    --listen    监听开关, 0-发送报文并等待应答; 1-一直监听一个串口不发送报文, 默认0;\n");
+	fprintf(stderr, "-t,    --times     发送并监听次数, 默认0, 无限次, 最大值1024;\n");
+	fprintf(stderr, "-w,    --wait      发送报文后, 读取串口数据的次数, 默认20次, 最多1024次;\n");
+	fprintf(stderr, "-i,    --inv       发送报文后, 读取串口数据的时间间隔, 单位毫秒, 默认50毫秒, 最大1024毫秒;\n");
+	fprintf(stderr, "-c,    --com       向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号(" ")封闭,\n");
+	fprintf(stderr, "                        默认\"/dev/ttySA1\", 即RS-485 I;\n");
+	fprintf(stderr, "-b,    --baud      设置串口波特率, 默认2400;\n");
+	fprintf(stderr, "-d,    --data      设置串口数据位, 6, 7, 8为有效值, 其他值视为使用默认值, 默认值8;\n");
+	fprintf(stderr, "-s,    --stop      设置串口停止位, 1, 2为有效值, 其他值视为使用默认值, 默认值1;\n");
+	fprintf(stderr, "-p,    --par            设置串口校验位, 0-偶, 1-奇, 2-无, 其他值视为使用默认值, 默认值0;\n");
+	fprintf(stderr, "-f,    --frame     传入的报文, 必须以半角引号(\"\")封闭.\n");
+	fprintf(stderr, "                        默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".\n");
+	fprintf(stderr, "-h,	--help      打印本帮助\n");
+	fprintf(stderr, "如果任何参数都不传入, 程序使用默认参数来监听\"/dev/ttySA1\".\n");
 }
 
-s8 getComConfig(option_p pOpt, comConfig_p pConfig)
-{
-	if ( NULL == pOpt || NULL == pConfig )
-        return FALSE;
+s8 getComConfig(option_p pOpt, comConfig_p pConfig) {
+	if ( NULL == pOpt || NULL == pConfig)
+		return FALSE;
 
 	strcpy(pConfig->port, pOpt->com);
 
@@ -259,32 +256,29 @@ s8 getComConfig(option_p pOpt, comConfig_p pConfig)
 	return TRUE;
 }
 
-s8 sendcom(int fd, u8* buf, u32 bufSize)
-{
-	if ( 0 == bufSize || NULL == buf )
-        return FALSE;
+s8 sendcom(int fd, u8* buf, u32 bufSize) {
+	if (0 == bufSize || NULL == buf)
+		return FALSE;
 
 	if (write(fd, buf, bufSize) < 0) {
 		DEBUG_TIME_LINE("send error!\n");
 		return FALSE;
 	}
-	DEBUG_TIME_LINE("send bufSize:%d", bufSize);
+	DEBUG_OUT("[send]bufSize:%d; ", bufSize);
+	printBuf(buf, bufSize);
 
 	return TRUE;
 }
 
-void readcom(int fd, u8* buf, u32* bufSize)
-{
-	if ( NULL == bufSize || NULL == buf )
-        return;
+void readcom(int fd, u8* buf, u32* bufSize) {
+	if ( NULL == bufSize || NULL == buf)
+		return;
 
 	*bufSize = read(fd, buf, 2048);
-	DEBUG_TIME_LINE("read bufSize:%d", *bufSize);
 }
 
-void setDefaultPara(comConfig_p pConfig)
-{
-	if ( NULL == pConfig )
+void setDefaultPara(comConfig_p pConfig) {
+	if ( NULL == pConfig)
 		return;
 
 	bzero(pConfig, sizeof(comConfig_s));
@@ -296,9 +290,8 @@ void setDefaultPara(comConfig_p pConfig)
 	pConfig->bits = 8;
 }
 
-void setDefaultOpt(option_p pOpt)
-{
-	if ( NULL == pOpt )
+void setDefaultOpt(option_p pOpt) {
+	if ( NULL == pOpt)
 		return;
 
 	bzero(pOpt, sizeof(option_s));
@@ -314,17 +307,10 @@ void setDefaultOpt(option_p pOpt)
 	strcpy(pOpt->frame, "FE FE FE FE 68 12 34 56 78 90 16");
 }
 
-int sendFrame()
-{
-	int ret = TRUE;
-
-	return ret;
-}
-
-int baudValid(int baud)
-{
+int baudValid(int baud) {
 	int i = 0;
-	int array[] = {50, 75, 110, 150, 200, 600, 1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
+	int array[] = { 50, 75, 110, 150, 200, 600, 1200, 2400, 4800, 9600, 19200,
+			38400, 57600, 115200 };
 
 	for (i = 0; i < sizeof(array); i++) {
 		if (baud == array[i])
@@ -334,8 +320,7 @@ int baudValid(int baud)
 	return FALSE;
 }
 
-void getOptions(int argc, char* argv[], option_p pOpt)
-{
+void getOptions(int argc, char* argv[], option_p pOpt) {
 	int ch = 0;
 	int longIndex = 0;
 
@@ -345,40 +330,40 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 	while ((ch = getopt_long(argc, argv, optString, longOpts, &longIndex)) != -1) {
 		switch (ch) {
 		case 'l':
-			printf("option -l: %s\n", optarg);
+			fprintf(stderr, "option -l: %s\n", optarg);
 			pOpt->listen = atoi(optarg);
 			if (0 != pOpt->listen || 1 != pOpt->listen) {
 				pOpt->listen = 0;
 			}
 			break;
 		case 't':
-			printf("option -t: %s\n", optarg);
+			fprintf(stderr, "option -t: %s\n", optarg);
 			pOpt->times = atoi(optarg);
 			if (pOpt->times > 1024) {
 				pOpt->times = 1024;
 			}
 			break;
 		case 'w':
-			printf("option -w: %s\n", optarg);
+			fprintf(stderr, "option -w: %s\n", optarg);
 			pOpt->wait = atoi(optarg);
 			if (pOpt->wait > 1024) {
 				pOpt->wait = 1024;
 			}
 			break;
 		case 'i':
-			printf("option -i: %s\n", optarg);
+			fprintf(stderr, "option -i: %s\n", optarg);
 			pOpt->inv = atoi(optarg);
-			if (pOpt->inv > 1024) {
-				pOpt->inv = 1024;
+			if (pOpt->inv > 2048) {
+				pOpt->inv = 2048;
 			}
 			break;
 		case 'c':
-			printf("option -c: %s\n", optarg);
+			fprintf(stderr, "option -c: %s\n", optarg);
 			bzero(pOpt->com, sizeof(pOpt->com));
 			strcpy(pOpt->com, optarg);
 			break;
 		case 'b':
-			printf("option -b: %s\n", optarg);
+			fprintf(stderr, "option -b: %s\n", optarg);
 			pOpt->baud = atoi(optarg);
 			if (baudValid(pOpt->baud) == FALSE) {
 				fprintf(stderr, "invalid baud\n");
@@ -386,7 +371,7 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 			}
 			break;
 		case 'd':
-			printf("option -d: %s\n", optarg);
+			fprintf(stderr, "option -d: %s\n", optarg);
 			pOpt->data = atoi(optarg);
 			if (pOpt->data != 8 && pOpt->data != 7 && pOpt->data != 6) {
 				fprintf(stderr, "invalid databits, use 8 databits\n");
@@ -394,7 +379,7 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 			}
 			break;
 		case 's':
-			printf("option -s: %s\n", optarg);
+			fprintf(stderr, "option -s: %s\n", optarg);
 			pOpt->stop = atoi(optarg);
 			if (pOpt->stop != 1 && pOpt->stop != 2) {
 				fprintf(stderr, "invalid stopbits, use 1 stopbits\n");
@@ -402,7 +387,7 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 			}
 			break;
 		case 'p':
-			printf("option -p: %s\n", optarg);
+			fprintf(stderr, "option -p: %s\n", optarg);
 			pOpt->par = atoi(optarg);
 			if (pOpt->par != 0 && pOpt->par != 1 && pOpt->par != 2) {
 				fprintf(stderr, "invalid parity, use 0(even) parity\n");
@@ -410,26 +395,38 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 			}
 			break;
 		case 'f':
-			printf("option -f: %s\n", optarg);
+			fprintf(stderr, "option -f: %s\n", optarg);
 			bzero(pOpt->frame, sizeof(pOpt->frame));
 			strcpy(pOpt->frame, optarg);
 			break;
 		case 'h':
+		default:
 			usage();
 			exit(0);
-			break;
-		default:
 			break;
 		}
 	}
 }
 
-int main(int argc, char* argv[])
+void printOpt(option_p pOpt)
 {
-	comConfig_s config = {};
-	option_s options = {};
-	u8 rbuf[2048] = {0};
-	u8 sbuf[2048] = {0};
+	fprintf(stderr, "listen: %u\n", pOpt->listen);
+	fprintf(stderr, "times: %u\n", pOpt->times);
+	fprintf(stderr, "wait: %u\n", pOpt->wait);
+	fprintf(stderr, "inv: %u\n", pOpt->inv);
+	fprintf(stderr, "com: %s\n", pOpt->com);
+	fprintf(stderr, "baud: %u\n", pOpt->baud);
+	fprintf(stderr, "data: %u\n", pOpt->data);
+	fprintf(stderr, "stop: %u\n", pOpt->stop);
+	fprintf(stderr, "par: %u\n", pOpt->par);
+	fprintf(stderr, "frame: %s\n", pOpt->frame);
+}
+
+int main(int argc, char* argv[]) {
+	comConfig_s config = { };
+	option_s options = { };
+	u8 rbuf[2048] = { 0 };
+	u8 sbuf[2048] = { 0 };
 	u32 sbufSize = sizeof(sbuf);
 	u32 rbufSize = sizeof(rbuf);
 	int fd = -1;
@@ -437,32 +434,31 @@ int main(int argc, char* argv[])
 	setDefaultOpt(&options);
 	setDefaultPara(&config);
 
-	if (argc>1)
+	if (argc > 1)
 		getOptions(argc, argv, &options);
 
 	getComConfig(&options, &config);
 	DEBUG_TIME_LINE("port: %s, baud: %d, parity: %d, stop: %d, bits: %d\n",
-		  config.port, config.baud, config.par, config.stopb, config.bits);
-
-	if ( (fd = openCom(&config)) < 0 ) {
+			config.port, config.baud, config.par, config.stopb, config.bits);
+	printOpt(&options);
+	if ((fd = openCom(&config)) < 0) {
 		perror("open failed!");
 		exit(1);
 	}
 
-	if ( 0 == options.listen ) {//一直监听串口
+	if (1 == options.listen) { //一直监听串口
 		while (1) {
-			usleep(options.inv*1000);
+			usleep(options.inv * 1000);
 			readcom(fd, rbuf, &rbufSize);
 			fprintf(stderr, "[read]:");
 			printBuf(rbuf, rbufSize);
 			fprintf(stderr, "\n");
 		}
-	} else {//发送报文并监听串口
+	} else { //发送报文并监听串口
 		if (readFrm(options.frame, sbuf, &sbufSize) == FALSE) {
 			exit(0);
 		}
-		DEBUG_OUT("[send]:");
-		printBuf(sbuf, sbufSize);
+
 		u32 sendcnt = 0;
 
 		while ((options.times > 0) ? (sendcnt < options.times) : 1) {
@@ -470,12 +466,13 @@ int main(int argc, char* argv[])
 				goto ret;
 			}
 			int cnt = 0;
-			while (cnt<options.wait) {
-				usleep(options.inv*1000);
+			while (cnt < options.wait) {
+				usleep(options.inv * 1000);
 				readcom(fd, rbuf, &rbufSize);
-				DEBUG_OUT("[read]:");
-				printBuf(rbuf, rbufSize);
-				DEBUG_OUT("[cnt]:%d", cnt);
+				if (rbufSize > 0) {
+					DEBUG_OUT("[read]");
+					printBuf(rbuf, rbufSize);
+				}
 				cnt++;
 			}
 
@@ -484,7 +481,6 @@ int main(int argc, char* argv[])
 		}
 
 	}
-
 
 ret:
 	close(fd);

@@ -1,13 +1,14 @@
 CROSS			=arm-none-linux-gnueabi-
 CC				=$(CROSS)gcc
 TARGET			=serial
-MKCCTII			=listen
-MKCJQIII		=serialiii
-MKCJQIIILISTEN=serialiiilisten
+MKCCTI			=jzqi
+MKCCTII			=jzqii
+MKZBIII			=zbiii
+MKCJQIII		=cjqiii
+DEFINCCTI		=-DCCTI
 DEFINCCTII		=-DCCTII
+DEFINCCTIII		=-DCCTIII
 DEFINCJQIII		=-DCJQIII
-DEFINLISTEN		=-DLISTEN
-DEFINNOR			=-DNORMAL
 BIN				=./bin/$(TARGET)
 SRC				=./src/serial.c ./src/lib.c
 INC				=-I ./inc
@@ -21,13 +22,13 @@ $(TARGET): $(SRC)
 	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC)
 
 $(MKCCTII): $(SRC)
-	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINCCTII) $(DEFINLISTEN)
+	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINCCTII)
 
 $(MKCJQIII): $(SRC)
-	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII) $(DEFINNOR)
+	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII)
 
-$(MKCJQIIILISTEN): $(SRC)
-	$(CC) $(MKCJQIIILISTEN) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII) $(DEFINLISTEN)
+$(DEFINCJQIII): $(SRC)
+	$(CC) $(MKCJQIIILISTEN) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII)
 
 
 clean:

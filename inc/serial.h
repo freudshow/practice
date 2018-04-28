@@ -27,10 +27,7 @@ extern "C" {
 //　　485II [ /dev/ttyS1 ]
 //　　485III[ /dev/ttyS4 ]
 
-// #define S4851   		1
-// #define S4852   		2
-// #define S4853   		3
-// #define SER_ZB			5
+
 #if defined CCTII
 #define S4851   		"/dev/ttyS2"
 #define S4852   		"/dev/ttyS1"
@@ -58,7 +55,7 @@ extern "C" {
 #define TIOCGRS485 0x542E
 #define TIOCSRS485 0x542F
 
-typedef enum baudrate_enum{
+typedef enum baudrate_enum {
 	baud0 = 0,
 	baud50,
 	baud75,
@@ -76,10 +73,8 @@ typedef enum baudrate_enum{
 	baud115200
 } baud_e;
 
-typedef enum parity_enum{
-	parEven = 0,
-	parOdd,
-	parNone
+typedef enum parity_enum {
+	parEven = 0, parOdd, parNone
 } parity_e;
 
 #pragma	pack(push)
@@ -88,14 +83,14 @@ typedef enum parity_enum{
 typedef struct {
 	u8 listen;
 	u32 times;
-	u8 wait;
-	u8 inv;
+	u32 wait;
+	u32 inv;
 	char com[128];
 	u32 baud;
 	u8 data;
 	u8 stop;
 	u8 par;
-	char* frame[2048];
+	char frame[2048];
 } option_s;
 typedef option_s* option_p;
 

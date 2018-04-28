@@ -13,13 +13,13 @@ typedef ptrToNode position;
 #pragma pack(1)
 
 typedef struct node {
-    elementType element;
-    position pNext;
+	elementType element;
+	position pNext;
 };
 
 typedef struct {
-	char*	name;
-	int		value;
+	char* name;
+	int value;
 } nameVal;
 
 #pragma pack(pop)
@@ -36,7 +36,5 @@ extern position header(list L);
 extern position first(list L);
 extern position advance(position P);
 extern elementType retrieve(position P);
-
-
 
 #endif // list_H
