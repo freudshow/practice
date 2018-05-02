@@ -27,7 +27,8 @@ static const struct option longOpts[] = { { "listen", required_argument, NULL, '
 										  { NULL, no_argument, NULL, 0 }
 										};
 
-int openCom(comConfig_s* config) {
+int openCom(comConfig_s* config)
+{
 	struct serial_rs485 rs485conf;
 	int fd = -10;
 	int rs485gpio = 0;
@@ -182,26 +183,35 @@ int openCom(comConfig_s* config) {
 	return fd;
 }
 
-void usage() {
+void usage()
+{
 	fprintf(stderr, "功能: 向串口发送报文, 并监听应答报文\n");
 	fprintf(stderr, "用法: serial [选项]\n");
-	fprintf(stderr, "-l,    --listen    监听开关, 0-发送报文并等待应答; 1-一直监听一个串口不发送报文, 默认0;\n");
+	fprintf(stderr,
+			"-l,    --listen    监听开关, 0-发送报文并等待应答; 1-一直监听一个串口不发送报文, 默认0;\n");
 	fprintf(stderr, "-t,    --times     发送并监听次数, 默认0, 无限次, 最大值1024;\n");
 	fprintf(stderr, "-w,    --wait      发送报文后, 读取串口数据的次数, 默认20次, 最多1024次;\n");
-	fprintf(stderr, "-i,    --inv       发送报文后, 读取串口数据的时间间隔, 单位毫秒, 默认50毫秒, 最大1024毫秒;\n");
-	fprintf(stderr, "-c,    --com       向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号(" ")封闭,\n");
+	fprintf(stderr,
+			"-i,    --inv       发送报文后, 读取串口数据的时间间隔, 单位毫秒, 默认50毫秒, 最大1024毫秒;\n");
+	fprintf(stderr,
+			"-c,    --com       向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号(" ")封闭,\n");
 	fprintf(stderr, "                        默认\"/dev/ttySA1\", 即RS-485 I;\n");
 	fprintf(stderr, "-b,    --baud      设置串口波特率, 默认2400;\n");
-	fprintf(stderr, "-d,    --data      设置串口数据位, 6, 7, 8为有效值, 其他值视为使用默认值, 默认值8;\n");
-	fprintf(stderr, "-s,    --stop      设置串口停止位, 1, 2为有效值, 其他值视为使用默认值, 默认值1;\n");
-	fprintf(stderr, "-p,    --par            设置串口校验位, 0-偶, 1-奇, 2-无, 其他值视为使用默认值, 默认值0;\n");
+	fprintf(stderr,
+			"-d,    --data      设置串口数据位, 6, 7, 8为有效值, 其他值视为使用默认值, 默认值8;\n");
+	fprintf(stderr,
+			"-s,    --stop      设置串口停止位, 1, 2为有效值, 其他值视为使用默认值, 默认值1;\n");
+	fprintf(stderr,
+			"-p,    --par            设置串口校验位, 0-偶, 1-奇, 2-无, 其他值视为使用默认值, 默认值0;\n");
 	fprintf(stderr, "-f,    --frame     传入的报文, 必须以半角引号(\"\")封闭.\n");
-	fprintf(stderr, "                        默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".\n");
+	fprintf(stderr,
+			"                        默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".\n");
 	fprintf(stderr, "-h,	--help      打印本帮助\n");
 	fprintf(stderr, "如果任何参数都不传入, 程序使用默认参数来监听\"/dev/ttySA1\".\n");
 }
 
-s8 getComConfig(option_p pOpt, comConfig_p pConfig) {
+s8 getComConfig(option_p pOpt, comConfig_p pConfig)
+{
 	if ( NULL == pOpt || NULL == pConfig)
 		return FALSE;
 
@@ -256,7 +266,8 @@ s8 getComConfig(option_p pOpt, comConfig_p pConfig) {
 	return TRUE;
 }
 
-s8 sendcom(int fd, u8* buf, u32 bufSize) {
+s8 sendcom(int fd, u8* buf, u32 bufSize)
+{
 	if (0 == bufSize || NULL == buf)
 		return FALSE;
 
@@ -270,14 +281,16 @@ s8 sendcom(int fd, u8* buf, u32 bufSize) {
 	return TRUE;
 }
 
-void readcom(int fd, u8* buf, u32* bufSize) {
+void readcom(int fd, u8* buf, u32* bufSize)
+{
 	if ( NULL == bufSize || NULL == buf)
 		return;
 
 	*bufSize = read(fd, buf, 2048);
 }
 
-void setDefaultPara(comConfig_p pConfig) {
+void setDefaultPara(comConfig_p pConfig)
+{
 	if ( NULL == pConfig)
 		return;
 
@@ -290,7 +303,8 @@ void setDefaultPara(comConfig_p pConfig) {
 	pConfig->bits = 8;
 }
 
-void setDefaultOpt(option_p pOpt) {
+void setDefaultOpt(option_p pOpt)
+{
 	if ( NULL == pOpt)
 		return;
 
@@ -307,7 +321,8 @@ void setDefaultOpt(option_p pOpt) {
 	strcpy(pOpt->frame, "FE FE FE FE 68 12 34 56 78 90 16");
 }
 
-int baudValid(int baud) {
+int baudValid(int baud)
+{
 	int i = 0;
 	int array[] = { 50, 75, 110, 150, 200, 600, 1200, 2400, 4800, 9600, 19200,
 			38400, 57600, 115200 };
@@ -320,7 +335,8 @@ int baudValid(int baud) {
 	return FALSE;
 }
 
-void getOptions(int argc, char* argv[], option_p pOpt) {
+void getOptions(int argc, char* argv[], option_p pOpt)
+{
 	int ch = 0;
 	int longIndex = 0;
 
@@ -332,7 +348,7 @@ void getOptions(int argc, char* argv[], option_p pOpt) {
 		case 'l':
 			fprintf(stderr, "option -l: %s\n", optarg);
 			pOpt->listen = atoi(optarg);
-			if (0 != pOpt->listen || 1 != pOpt->listen) {
+			if (0 != pOpt->listen && 1 != pOpt->listen) {
 				pOpt->listen = 0;
 			}
 			break;
@@ -422,7 +438,8 @@ void printOpt(option_p pOpt)
 	fprintf(stderr, "frame: %s\n", pOpt->frame);
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
 	comConfig_s config = { };
 	option_s options = { };
 	u8 rbuf[2048] = { 0 };
@@ -434,8 +451,11 @@ int main(int argc, char* argv[]) {
 	setDefaultOpt(&options);
 	setDefaultPara(&config);
 
-	if (argc > 1)
+	if (argc > 1) {
 		getOptions(argc, argv, &options);
+	} else {
+		options.listen = 1;
+	}
 
 	getComConfig(&options, &config);
 	DEBUG_TIME_LINE("port: %s, baud: %d, parity: %d, stop: %d, bits: %d\n",
@@ -482,7 +502,6 @@ int main(int argc, char* argv[]) {
 
 	}
 
-ret:
-	close(fd);
+	ret: close(fd);
 	exit(0);
 }
