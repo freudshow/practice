@@ -9,7 +9,7 @@
 #define DEBUG_TIME_LINE(format, ...) debug(FILE_LINE, 1, format, ##__VA_ARGS__)
 #define	DEBUG_PRINT(format, ...)	fprintf(stderr, "[%s][%s][%d]"format"\n", , ##__VA_ARGS__)
 
-#define	INIT_STATE	-1
+#define	 INIT_STATE	-1
 #define EQUAL_TO	0
 #define GREAT_THAN	1
 #define SMALL_THAN	2
