@@ -102,3 +102,7 @@ sudo chmod 777 /srv/tftp -R
 
 #get tftp files in arm board
 tftp tftp-server-ip -g -r remotefile
+
+#eclipse  cp  $ProjName
+arm-none-linux-gnueabi-strip ${ProjName}&&cp ${ProjName} ../../bin_arm/
+.project中<natures>一节,  <nature>org.eclipse.cdt.core.ccnature</nature>定义了项目类型是C++

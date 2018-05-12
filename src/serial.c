@@ -486,12 +486,21 @@ int main(int argc, char* argv[])
 				goto ret;
 			}
 			int cnt = 0;
+			float flow = 0.0;
+			u8* p = rbuf;
 			while (cnt < options.wait) {
 				usleep(options.inv * 1000);
 				readcom(fd, rbuf, &rbufSize);
+
 				if (rbufSize > 0) {
 					DEBUG_OUT("[read]");
 					printBuf(rbuf, rbufSize);
+					while(*p != 0x68) p++;
+					p += 14;
+					p[1] -= 0x33;
+					p[0] -= 0x33;
+					flow = (float)(BCD_TO_HEX(p[1])) + (float)(BCD_TO_HEX(p[0]))/100.0;
+					fprintf(stderr, "电量: %.2f千瓦时\n", flow);
 				}
 				cnt++;
 			}
@@ -499,7 +508,6 @@ int main(int argc, char* argv[])
 			if (options.times > 0)
 				sendcnt++;
 		}
-
 	}
 
 	ret: close(fd);
