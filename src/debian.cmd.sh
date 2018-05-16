@@ -112,3 +112,19 @@ test tex:
 \begin{document}
     Hello, world!
 \end{document}
+
+#eclipse  cp  $ProjName
+arm-none-linux-gnueabi-strip ${ProjName}&&cp ${ProjName} ../../bin_arm/
+.project中<natures>一节,  <nature>org.eclipse.cdt.core.ccnature</nature>定义了项目类型是C++
+
+#ttyUSB0 permission
+sudo chmod 666 /dev/ttyUSB0
+sudo gpasswd --add floyd dialout
+sudo echo "KERNEL=="ttyUSB0", GROUP="username", MODE="0666"">/etc/udev/rules.d/50-usb-serial.rules
+sudo /etc/init.d/udev restart or reboot
+
+#CGAL
+# Debian or Linux Mint
+sudo apt-get install libcgal-dev # install the CGAL library
+sudo apt-get install libcgal-demo # install the CGAL demos
+
