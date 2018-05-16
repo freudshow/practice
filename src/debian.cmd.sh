@@ -102,3 +102,13 @@ sudo chmod 777 /srv/tftp -R
 
 #get tftp files in arm board
 tftp tftp-server-ip -g -r remotefile
+
+#install LaTex
+sudo apt-get install texlive-full
+sudo apt-get install texmaker
+
+test tex:
+\documentclass{article}
+\begin{document}
+    Hello, world!
+\end{document}
