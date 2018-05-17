@@ -103,14 +103,36 @@ sudo chmod 777 /srv/tftp -R
 #get tftp files in arm board
 tftp tftp-server-ip -g -r remotefile
 
+#install LaTex
+sudo apt-get install texlive-full
+sudo apt-get install texmaker
+
+test tex:
+\documentclass{article}
+\begin{document}
+    Hello, world!
+\end{document}
+
 #eclipse  cp  $ProjName
 arm-none-linux-gnueabi-strip ${ProjName}&&cp ${ProjName} ../../bin_arm/
 .project中<natures>一节,  <nature>org.eclipse.cdt.core.ccnature</nature>定义了项目类型是C++
 
 #install  graphviz
-sudo apt install -y graphviz 
+sudo apt install -y graphviz
 dot -version  #查看graphviz版本
 dot -Tpng sample.dot -o sample.png  #编译成png图
 dot -Tsvg sample.dot -o sample.png  #编译成png图
 
 echo &quot;#define GL_VERSION \\&quot; &gt; ../../inc/version.h; git log | grep -e 'commit [a-zA-Z0-9]*' | wc -l  &gt;&gt; ../../inc/version.h"
+
+#ttyUSB0 permission
+sudo chmod 666 /dev/ttyUSB0
+sudo gpasswd --add floyd dialout
+sudo echo "KERNEL=="ttyUSB0", GROUP="username", MODE="0666"">/etc/udev/rules.d/50-usb-serial.rules
+sudo /etc/init.d/udev restart or reboot
+
+#CGAL
+# Debian or Linux Mint
+sudo apt-get install libcgal-dev # install the CGAL library
+sudo apt-get install libcgal-demo # install the CGAL demos
+
