@@ -8,6 +8,8 @@
 #define SEMNAME_SPI0_0		"sem_spi0.0"//专变、I型集中器交采和esam的spi通信互斥信号量
 #define SEMNAME_PARA_SAVE		"sem_para_save"
 
+# define __FDS_BITS(set) ((set)->__fds_bits)
+
 char* getLastStr(char* s, char delim)
 {
 	char* p = NULL;

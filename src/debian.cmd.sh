@@ -106,3 +106,11 @@ tftp tftp-server-ip -g -r remotefile
 #eclipse  cp  $ProjName
 arm-none-linux-gnueabi-strip ${ProjName}&&cp ${ProjName} ../../bin_arm/
 .project中<natures>一节,  <nature>org.eclipse.cdt.core.ccnature</nature>定义了项目类型是C++
+
+#install  graphviz
+sudo apt install -y graphviz 
+dot -version  #查看graphviz版本
+dot -Tpng sample.dot -o sample.png  #编译成png图
+dot -Tsvg sample.dot -o sample.png  #编译成png图
+
+echo &quot;#define GL_VERSION \\&quot; &gt; ../../inc/version.h; git log | grep -e 'commit [a-zA-Z0-9]*' | wc -l  &gt;&gt; ../../inc/version.h"
