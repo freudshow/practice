@@ -1,0 +1,29 @@
+" Prerequirements
+set exrc" forces Vim to source .vimrc file if it present in working directory, thus providing a place to store project-specific configuration
+set secure
+
+" Project-specific options
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set noexpandtab
+
+set colorcolumn=110
+highlight ColorColumn ctermbg=darkgray
+
+" Filetype detection
+augroup project
+    autocmd!
+    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
+
+" Setting path variable
+let &path.="src/inc,src/include,/usr/include/AL,"
+set includeexpr=substitute(v:fname,'\\.','/','g')
+
+" Autocomplete
+
+
+
+
+
