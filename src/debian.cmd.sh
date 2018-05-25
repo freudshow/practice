@@ -136,3 +136,6 @@ sudo /etc/init.d/udev restart or reboot
 sudo apt-get install libcgal-dev # install the CGAL library
 sudo apt-get install libcgal-demo # install the CGAL demos
 
+
+#install chrome
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
