@@ -123,7 +123,8 @@ dot -version  #查看graphviz版本
 dot -Tpng sample.dot -o sample.png  #编译成png图
 dot -Tsvg sample.dot -o sample.png  #编译成png图
 
-echo &quot;#define GL_VERSION \\&quot; &gt; ../../inc/version.h; git log | grep -e 'commit [a-zA-Z0-9]*' | wc -l  &gt;&gt; ../../inc/version.h"
+arm-none-linux-gnueabi-strip ${ProjName} ;cp ${ProjName} ../../bin_arm;
+echo "#define GL_VERSION \\" > ../../inc/version.h; git log | grep -e 'commit [a-zA-Z0-9]*' | wc -l  >> ../../inc/version.h
 
 #ttyUSB0 permission
 sudo chmod 666 /dev/ttyUSB0
@@ -142,3 +143,26 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
 #look directory's size
 du -sh .
+
+
+ 
+#Ubuntu下配置Common Lisp开发环境
+sudo apt-get install emacs
+#安装 Common Lisp 环境
+sudo apt-get install common-lisp-controller
+#安装 Slime
+sudo apt-get install slime
+#修改 Emacs 配置文件，以支持 Common Lisp
+emacs -nw ~/.emacs.d/user.el
+
+(setq inferior-lisp-program "/usr/bin/sbcl")
+    (add-to-list 'load-path "/usr/local/bin/slime/")
+    (require 'slime)
+    (slime-setup)
+(slime-setup '(slime-fancy))
+'
+#验证开发环境
+emacs 或 emacs -nw
+输入 Alt + X，输入 slime，回车
+
+
