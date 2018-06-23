@@ -165,4 +165,7 @@ emacs -nw ~/.emacs.d/user.el
 emacs 或 emacs -nw
 输入 Alt + X，输入 slime，回车
 
-
+#mount ftpfs
+sudo apt install curlftpfs
+mkdir -p ~/ftpfs
+curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
