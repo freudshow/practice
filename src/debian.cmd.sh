@@ -169,3 +169,7 @@ emacs 或 emacs -nw
 sudo apt install curlftpfs
 mkdir -p ~/ftpfs
 curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
+
+#git clone 时显示Filename too long的解决办法
+git config --global core.longpaths true
+
