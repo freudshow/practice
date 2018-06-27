@@ -173,3 +173,5 @@ curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
 #git clone 时显示Filename too long的解决办法
 git config --global core.longpaths true
 
+#make update.sh
+./tmake -t 2 -l ZheJiang --cmd "cj event set 3106 06 01 {1,4320,5,1,1320,1760};cj event enable 3106 1 1;cj dev set f101 0 0;cp /nand/event/property/3106/* /nor/init/;echo "ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up">/nor/rc.d/ip.sh" -v
