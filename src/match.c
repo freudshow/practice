@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "match.h"
 
 /*match :在text中查找regexp*/
@@ -34,4 +37,19 @@ int matchstar(int c, char *regexp, char *text)
 			return 1;
 	} while (*text != '\0' && (*text++ == c || c == '.'));
 	return 0;
+}
+
+int main(int argc, char* argv[])
+{
+	if(3 != argc) {
+		fprintf(stderr, "wrong usage\n");
+		exit(0);
+	}
+
+	if (match(argv[1], argv[2]) == 1)
+		fprintf(stderr, "match success!\n");
+	else
+		fprintf(stderr, "match fail!\n");
+
+	exit(0);
 }
