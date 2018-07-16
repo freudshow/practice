@@ -20,6 +20,9 @@ all: $(TARGET)
 
 $(TARGET): $(SRC)
 	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC)
+	
+$(MKCCTI): $(SRC)
+	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINCCTI)
 
 $(MKCCTII): $(SRC)
 	$(CC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINCCTII)

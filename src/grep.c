@@ -37,6 +37,8 @@ int main(int argc, char *argv[])
 			fclose(f);
 		}
 	}
+
+	printf("nmatch: %d\n", nmatch);
 	return nmatch == 0;
 }
 

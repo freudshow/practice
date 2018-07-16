@@ -287,6 +287,13 @@ void readcom(int fd, u8* buf, u32* bufSize)
 		return;
 
 	*bufSize = read(fd, buf, 2048);
+
+	if (*bufSize > 0) {
+		DEBUG_OUT("[read]bufSize:%d; ", *bufSize);
+		printBuf(buf, *bufSize);
+	} else {
+		DEBUG_OUT("[read]no data\n", bufSize);
+	}
 }
 
 void setDefaultPara(comConfig_p pConfig)
@@ -447,6 +454,11 @@ int main(int argc, char* argv[])
 	u32 sbufSize = sizeof(sbuf);
 	u32 rbufSize = sizeof(rbuf);
 	int fd = -1;
+	u32 sendcnt = 0;
+	int cnt = 0;
+	fd_set fds = {};
+	struct timeval timeout = {};
+	int nready = 0;
 
 	setDefaultOpt(&options);
 	setDefaultPara(&config);
@@ -476,40 +488,38 @@ int main(int argc, char* argv[])
 		}
 	} else { //发送报文并监听串口
 		if (readFrm(options.frame, sbuf, &sbufSize) == FALSE) {
-			exit(0);
+			goto ret;
 		}
 
-		u32 sendcnt = 0;
-
+		sendcnt = 0;
 		while ((options.times > 0) ? (sendcnt < options.times) : 1) {
+			usleep(options.inv * 1000);
 			if (sendcom(fd, sbuf, sbufSize) == FALSE) {
 				goto ret;
 			}
-			int cnt = 0;
-			float flow = 0.0;
-			u8* p = rbuf;
-			while (cnt < options.wait) {
-				usleep(options.inv * 1000);
-				readcom(fd, rbuf, &rbufSize);
 
-				if (rbufSize > 0) {
-					DEBUG_OUT("[read]");
-					printBuf(rbuf, rbufSize);
-					while(*p != 0x68) p++;
-					p += 14;
-					p[1] -= 0x33;
-					p[0] -= 0x33;
-					flow = (float)(BCD_TO_HEX(p[1])) + (float)(BCD_TO_HEX(p[0]))/100.0;
-					fprintf(stderr, "电量: %.2f千瓦时\n", flow);
+			cnt = 0;
+			nready = 0;
+			FD_ZERO(&fds);
+			FD_SET(fd, &fds);
+
+			timeout.tv_sec = 1;
+			timeout.tv_usec = 0;
+
+			while (cnt < options.wait) {
+				sleep(1);
+				nready = select(fd + 1, &fds, NULL, NULL, &timeout);
+				if(nready > 0) {
+					readcom(fd, rbuf, &rbufSize);
 				}
 				cnt++;
 			}
 
-			if (options.times > 0)
-				sendcnt++;
+			sendcnt++;
 		}
 	}
 
-	ret: close(fd);
+ret:
+	close(fd);
 	exit(0);
 }
