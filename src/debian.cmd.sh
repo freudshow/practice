@@ -175,3 +175,22 @@ git config --global core.longpaths true
 
 #make update.sh
 ./tmake -t 2 -l ZheJiang --cmd "cj event set 3106 06 01 {1,4320,5,1,1320,1760};cj event enable 3106 1 1;cj dev set f101 0 0;cp /nand/event/property/3106/* /nor/init/;echo \"ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up\">/nor/rc.d/ip.sh" -v
+
+
+#cat /etc/fstab , UUID can be got with cmd: 'ls /dev/disk/by-uuid/'
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda3 during installation
+UUID=790013c3-2d51-432b-b1e7-5929503eb15d /               ext4    errors=remount-ro 0       1
+# /home was on /dev/sda5 during installation
+UUID=21206b36-e29b-4758-8982-c6206e46e442 /home           ext4    defaults        0       2
+# swap was on /dev/sda6 during installation
+UUID=314d0826-7f4a-45aa-bc9b-047afddb34e0 none            swap    sw              0       0
+/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+UUID=000C03AB00086F92 /win/c          ntfs    rw        0       2
+UUID=B8745094745056EA /win/d          ntfs    rw        0       2
