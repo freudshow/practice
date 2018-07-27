@@ -50,7 +50,7 @@ sudo dpkg --add-architecture i386
 sudo apt install  -y lib32z1 lib32ncurses5 gcc-multilib
 
 #安装6.828开发环境
-sudo apt install  -y libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool
+sudo apt install  -y libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool zlib1g-dev
 sudo apt install  -y libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-1-dev
 git clone http://web.mit.edu/ccutler/www/qemu.git
 ./configure --disable-kvm --prefix=/opt/qemu --target-list="i386-softmmu x86_64-softmmu"
@@ -172,6 +172,10 @@ curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
 
 #git clone 时显示Filename too long的解决办法
 git config --global core.longpaths true
+
+#debian中查找已安装软件及卸载软件
+dpkg -l | grep -i name
+apt-get remove name
 
 #make update.sh
 ./tmake -t 2 -l ZheJiang --cmd "cj event set 3106 06 01 {1,4320,5,1,1320,1760};cj event enable 3106 1 1;cj dev set f101 0 0;cp /nand/event/property/3106/* /nor/init/;echo \"ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up\">/nor/rc.d/ip.sh" -v
