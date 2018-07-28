@@ -33,6 +33,8 @@ $(MKCJQIII): $(SRC)
 $(DEFINCJQIII): $(SRC)
 	$(CC) $(MKCJQIIILISTEN) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII)
 
+stack: DSAAC2eCode/stackli.c DSAAC2eCode/teststkl.c
+	$(CC) -o ./bin/stack $(CFLAGS) DSAAC2eCode/stackli.c DSAAC2eCode/teststkl.c  $(INC)
 
 clean:
 	@rm -vf $(BIN) *.o *~

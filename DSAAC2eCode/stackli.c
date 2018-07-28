@@ -30,7 +30,7 @@ void DisposeStack(Stack S) {
 	free(S);
 }
 
-void Push(ElementType X, Stack S) {
+void Push(elem_t X, Stack S) {
 	PtrToNode TmpCell;
 
 	TmpCell = malloc(sizeof(struct Node));
@@ -40,14 +40,15 @@ void Push(ElementType X, Stack S) {
 		TmpCell->Element = X;
 		TmpCell->Next = S->Next;
 		S->Next = TmpCell;
+		printf("Push: %d\n", TmpCell->Element);
 	}
 }
 
-ElementType Top(Stack S) {
+elem_t Top(Stack S) {
 	if (!IsEmpty(S))
 		return S->Next->Element;
 	Error("Empty stack");
-	return (ElementType)0; /* Return value used to avoid warning */
+	return (elem_t)0; /* Return value used to avoid warning */
 }
 
 void Pop(Stack S) {
@@ -58,6 +59,7 @@ void Pop(Stack S) {
 	else {
 		FirstCell = S->Next;
 		S->Next = S->Next->Next;
+		printf("pop: %d\n", FirstCell->Element);
 		free(FirstCell);
 	}
 }
