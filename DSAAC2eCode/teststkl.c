@@ -90,10 +90,50 @@ void calcPost(int argc, char* argv[])
 	} else {
 		printf("result: %d\n", result);
 	}
+	DisposeStack(S);
+}
+
+void infix2postfix(int argc, char* argv[])
+{
+	Stack S;
+	char *c = argv[1];
+	int d = 0;
+
+	S = CreateStack();
+	while (*c != '\0') {
+		printf("%c\n", *c);
+
+		if (isdigit(*c)) {
+			d = ASCII_TO_HEX(*c);
+			Push(d, S);
+			c++;
+		} else if (isOprater(*c)) {
+			if(*(c+1) != '\0') {
+				if(isdigit(*(c+1))) {
+					d = ASCII_TO_HEX(*(c+1));
+					Push(d, S);
+					Push(*c, S);
+					c +=2;
+				} else {
+					printf("illegal!!!\n");
+					break;
+				}
+			} else {
+				printf("illegal!!!\n");
+				break;
+			}
+		} else {
+			printf("illegal!!!\n");
+			break;
+		}
+
+	}
+
+	DisposeStack(S);
 }
 
 int main(int argc, char* argv[])
 {
-	calcPost(argc, argv);
+	infix2postfix(argc, argv);
 	exit(0);
 }
