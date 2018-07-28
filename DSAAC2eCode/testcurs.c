@@ -1,53 +1,47 @@
 #include <stdio.h>
 #include "cursor.h"
 
-void
-PrintList( const List L )
-{
-    Position P = Header( L );
+void PrintList(const List L) {
+	Position P = Header(L);
 
-    if( IsEmpty( L ) )
-        printf( "Empty list\n" );
-    else
-    {
-        do
-        {
-            P = Advance( P );
-            printf( "%d ", Retrieve( P ) );
-        } while( !IsLast( P, L ) );
-        printf( "\n" );
-    }
+	if (IsEmpty(L))
+		printf("Empty list\n");
+	else {
+		do {
+			P = Advance(P);
+			printf("%d ", Retrieve(P));
+		} while (!IsLast(P, L));
+		printf("\n");
+	}
 }
 
-main( )
-{
-    List L;
-    Position P;
-    int i;
+main() {
+	List L;
+	Position P;
+	int i;
 
-    InitializeCursorSpace( );
-    L = MakeEmpty( NULL );
-    P = Header( L );
-    PrintList( L );
+	InitializeCursorSpace();
+	L = MakeEmpty( NULL);
+	P = Header(L);
+	PrintList(L);
 
-    for( i = 0; i < 10; i++ )
-    {
-        Insert( i, L, P );
-        PrintList( L );
-        P = Advance( P );
-    }
-    for( i = 0; i < 10; i+= 2 )
-        Delete( i, L );
+	for (i = 0; i < 10; i++) {
+		Insert(i, L, P);
+		PrintList(L);
+		P = Advance(P);
+	}
+	for (i = 0; i < 10; i += 2)
+		Delete(i, L);
 
-    for( i = 0; i < 10; i++ )
-        if( ( i % 2 == 0 ) == ( Find( i, L ) != NULL ) )
-            printf( "Find fails\n" );
+	for (i = 0; i < 10; i++)
+		if ((i % 2 == 0) == (Find(i, L) != NULL))
+			printf("Find fails\n");
 
-    printf( "Finished deletions\n" );
+	printf("Finished deletions\n");
 
-    PrintList( L );
+	PrintList(L);
 
-    DeleteList( L );
+	DeleteList(L);
 
-    return 0;
+	return 0;
 }

@@ -1,19 +1,25 @@
-#ifndef STACK_H
-#define STACK_H
+#ifndef _STACK_H
+#define _STACK_H
 
-#include "basedef.h"
+typedef int ElementType;
 
-struct StackRecord;
-typedef node_s* Stack;
+struct Node;
+typedef stack_s *PtrToNode;
+typedef PtrToNode Stack;
 
-extern int isEmpty(Stack S);
-extern int isFull(Stack S);
-extern Stack createStack(int MaxElements);
-extern void disposeStack(Stack S);
-extern void makeEmpty(Stack S);
-extern void push(elementType X, Stack S);
-extern elementType top(Stack S);
-extern void pop(Stack S);
-extern elementType topAndPop(Stack S);
+typedef struct Node {
+	ElementType Element;
+	PtrToNode Next;
+}stack_s;
 
-#endif // STACK_H
+
+int IsEmpty(Stack S);
+Stack CreateStack(void);
+void DisposeStack(Stack S);
+void MakeEmpty(Stack S);
+void Push(ElementType X, Stack S);
+ElementType Top(Stack S);
+void Pop(Stack S);
+
+#endif  //_STACK_H
+
