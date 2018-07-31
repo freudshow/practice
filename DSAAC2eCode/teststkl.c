@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "stackli.h"
+#include "stackar.h"
 #include "basedef.h"
 
 
@@ -48,7 +49,7 @@ int chkBrace(int argc, char* argv[])
 }
 
 #define isOperater(c)	((c)=='+' || (c) == '-' || (c) == '*' || (c) == '/' || (c) == '^')
-#define isOperand(c)     (((c) >= '0' && (c) <='9') || ((c) >='a'&& (c) <='z') || ((c) >= 'A' && (c) <='Z'))
+#define isOperand(c)    (isalpha((c)) || isdigit(c))
 
 typedef enum {
 	e_pInvalid = -1,
@@ -128,9 +129,11 @@ void infix2postfix(int argc, char* argv[])
 	char *c = NULL;
 	char p[256] = {'\0'};
 	stack_s s = { };
+	StackArray sa = CreateStackArray(256);
 
+	bzero(sa->Array, 256);
 	getStack(&s);
-	strcpy(p, "A+(B*C-(D/E^F)*G)*H");
+	strcpy(p, argv[1]);
 	if (p[0] != '(') {
 		s.push('(', s.s);
 		p[strlen(p)] = ')';
@@ -140,25 +143,24 @@ void infix2postfix(int argc, char* argv[])
 	c = p;
 	while (*c != '\0') {
 		if (isOperand(*c)) {
-			printf("%c", *c);
+			PushArray(*c, sa);
 		} else if (*c == '(') {
 			s.push(*c, s.s);
 		} else if (isOperater(*c)) {
-			while (isOperater(s.top(s.s))) {
-				if (getPrior(s.top(s.s)) < getPrior(*c))
-					break;
-				printf("%c", s.pop(s.s));
+			while (isOperater(s.top(s.s)) && (getPrior(s.top(s.s)) >= getPrior(*c))) {
+				PushArray(s.pop(s.s), sa);
 			}
 			s.push(*c, s.s);
 		} else if (*c == ')') {
 			while(isOperater(s.top(s.s))) {
-				printf("%c", s.pop(s.s));
+				PushArray(s.pop(s.s), sa);
 			}
 			s.pop(s.s);
 		}
 		c++;
 	}
-	printf("\n");
+	printf("[%s][%d]%s\n", __FUNCTION__, __LINE__, sa->Array);
+	DisposeStackArray(sa);
 	s.disposeStack(s.s);
 }
 

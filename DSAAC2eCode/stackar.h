@@ -1,27 +1,27 @@
-typedef int ElementType;
+typedef char ElementType;
 /* START: fig3_45.txt */
-#ifndef _Stack_h
-#define _Stack_h
+#ifndef _StackArray_h
+#define _StackArray_h
 
-struct StackRecord;
-typedef struct StackRecord *Stack;
+struct StackArrayRecord;
+typedef struct StackArrayRecord *StackArray;
 
-struct StackRecord {
+struct StackArrayRecord {
 	int Capacity;
 	int TopOfStack;
 	ElementType *Array;
 };
 
-int IsEmpty(Stack S);
-int IsFull(Stack S);
-Stack CreateStack(int MaxElements);
-void DisposeStack(Stack S);
-void MakeEmpty(Stack S);
-void Push(ElementType X, Stack S);
-ElementType Top(Stack S);
-void Pop(Stack S);
-ElementType TopAndPop(Stack S);
+int IsEmptyArray(StackArray S);
+int IsFullArray(StackArray S);
+StackArray CreateStackArray(int MaxElements);
+void DisposeStackArray(StackArray S);
+void MakeEmptyArray(StackArray S);
+void PushArray(ElementType X, StackArray S);
+ElementType TopArray(StackArray S);
+void PopArray(StackArray S);
+ElementType TopAndPop(StackArray S);
 
-#endif  /* _Stack_h */
+#endif  /* _StackArray_h */
 
 /* END */

@@ -3,26 +3,26 @@
 #include <stdlib.h>
 
 #define EmptyTOS ( -1 )
-#define MinStackSize ( 5 )
+#define MinStackArraySize ( 5 )
 
 /* START: fig3_48.txt */
-int IsEmpty(Stack S) {
+int IsEmptyArray(StackArray S) {
 	return S->TopOfStack == EmptyTOS;
 }
 /* END */
 
-int IsFull(Stack S) {
+int IsFullArray(StackArray S) {
 	return S->TopOfStack == S->Capacity - 1;
 }
 
 /* START: fig3_46.txt */
-Stack CreateStack(int MaxElements) {
-	Stack S;
+StackArray CreateStackArray(int MaxElements) {
+	StackArray S;
 
-	/* 1*/if (MaxElements < MinStackSize)
-		/* 2*/Error("Stack size is too small");
+	/* 1*/if (MaxElements < MinStackArraySize)
+		/* 2*/Error("StackArray size is too small");
 
-	/* 3*/S = malloc(sizeof(struct StackRecord));
+	/* 3*/S = malloc(sizeof(struct StackArrayRecord));
 	/* 4*/if (S == NULL)
 		/* 5*/FatalError("Out of space!!!");
 
@@ -30,20 +30,20 @@ Stack CreateStack(int MaxElements) {
 	/* 7*/if (S->Array == NULL)
 		/* 8*/FatalError("Out of space!!!");
 	/* 9*/S->Capacity = MaxElements;
-	/*10*/MakeEmpty(S);
+	/*10*/MakeEmptyArray(S);
 
 	/*11*/return S;
 }
 /* END */
 
 /* START: fig3_49.txt */
-void MakeEmpty(Stack S) {
+void MakeEmptyArray(StackArray S) {
 	S->TopOfStack = EmptyTOS;
 }
 /* END */
 
 /* START: fig3_47.txt */
-void DisposeStack(Stack S) {
+void DisposeStackArray(StackArray S) {
 	if (S != NULL) {
 		free(S->Array);
 		free(S);
@@ -52,37 +52,37 @@ void DisposeStack(Stack S) {
 /* END */
 
 /* START: fig3_50.txt */
-void Push(ElementType X, Stack S) {
-	if (IsFull(S))
-		Error("Full stack");
+void PushArray(ElementType X, StackArray S) {
+	if (IsFullArray(S))
+		Error("Full StackArray");
 	else
-		S->Array[++S->TopOfStack] = X;
+		S->Array[++(S->TopOfStack)] = X;
 }
 /* END */
 
 /* START: fig3_51.txt */
-ElementType Top(Stack S) {
-	if (!IsEmpty(S))
+ElementType TopArray(StackArray S) {
+	if (!IsEmptyArray(S))
 		return S->Array[S->TopOfStack];
-	Error("Empty stack");
+	Error("Empty StackArray");
 	return 0; /* Return value used to avoid warning */
 }
 /* END */
 
 /* START: fig3_52.txt */
-void Pop(Stack S) {
-	if (IsEmpty(S))
-		Error("Empty stack");
+void PopArray(StackArray S) {
+	if (IsEmptyArray(S))
+		Error("Empty StackArray");
 	else
 		S->TopOfStack--;
 }
 /* END */
 
 /* START: fig3_53.txt */
-ElementType TopAndPop(Stack S) {
-	if (!IsEmpty(S))
+ElementType TopAndPop(StackArray S) {
+	if (!IsEmptyArray(S))
 		return S->Array[S->TopOfStack--];
-	Error("Empty stack");
+	Error("Empty StackArray");
 	return 0; /* Return value used to avoid warning */
 }
 /* END */

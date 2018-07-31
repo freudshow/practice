@@ -1,0 +1,19 @@
+Let, X is an arithmetic expression written in infix notation. This algorithm finds the equivalent postfix expression Y.
+
+1. Push “(“onto Stack, and add “)” to the end of X.
+2. Scan X from left to right and repeat Step 3 to 6 for each element of X until the Stack is empty.
+3. If an operand is encountered, add it to Y.
+4. If a left parenthesis is encountered, push it onto Stack.
+5. If an operator is encountered ,then:
+	1. Repeatedly pop from Stack and add to Y each operator (on the top of Stack) which has the same precedence as or higher precedence than operator.
+	2. Add operator to Stack.
+	[End of If]
+6. If a right parenthesis is encountered ,then:
+	1. Repeatedly pop from Stack and add to Y each operator (on the top of Stack) until a left parenthesis is encountered.
+	2. Remove the left Parenthesis.
+	[End of If]
+	[End of If]
+END.
+
+A+(B*C-(D/E^F)*G)*H
+ABC*DEF^/G*-H*+

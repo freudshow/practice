@@ -61,7 +61,7 @@ elem_t Pop(Stack S) {
 		FirstCell = S->Next;
 		S->Next = S->Next->Next;
 		e = FirstCell->Element;
-//		printf("pop: %c\n", FirstCell->Element);
+//		printf("%c", FirstCell->Element);
 		free(FirstCell);
 	}
 	return e;
