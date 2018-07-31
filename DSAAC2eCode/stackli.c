@@ -40,7 +40,7 @@ void Push(elem_t X, Stack S) {
 		TmpCell->Element = X;
 		TmpCell->Next = S->Next;
 		S->Next = TmpCell;
-		printf("Push: %d\n", TmpCell->Element);
+//		printf("Push: %c\n", TmpCell->Element);
 	}
 }
 
@@ -51,15 +51,30 @@ elem_t Top(Stack S) {
 	return (elem_t)0; /* Return value used to avoid warning */
 }
 
-void Pop(Stack S) {
+elem_t Pop(Stack S) {
 	PtrToNode FirstCell;
+	elem_t e = (elem_t)0;
 
 	if (IsEmpty(S))
 		Error("Empty stack");
 	else {
 		FirstCell = S->Next;
 		S->Next = S->Next->Next;
-		printf("pop: %d\n", FirstCell->Element);
+		e = FirstCell->Element;
+//		printf("pop: %c\n", FirstCell->Element);
 		free(FirstCell);
 	}
+	return e;
+}
+
+void getStack(stack_s* s)
+{
+	s->createStack = CreateStack;
+	s->isEmpty = IsEmpty;
+	s->disposeStack = DisposeStack;
+	s->makeEmpty = MakeEmpty;
+	s->top = Top;
+	s->push = Push;
+	s->pop = Pop;
+	s->s = s->createStack();
 }

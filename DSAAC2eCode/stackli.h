@@ -1,27 +1,45 @@
-typedef char elem_t;
 /* START: fig3_39.txt */
 #ifndef _Stack_h
 #define _Stack_h
 
+typedef char elem_t;
 struct Node;
 typedef struct Node *PtrToNode;
 typedef PtrToNode Stack;
 
-typedef struct Node {
+struct Node {
 	elem_t Element;
 	PtrToNode Next;
-} stack_s;
+};
+
+typedef int (*isEmpty_f)(Stack S);
+typedef Stack (*createStack_f)(void);
+typedef void (*disposeStack_f)(Stack S);
+typedef void (*makeEmpty_f)(Stack S);
+typedef void (*push_f)(elem_t X, Stack S);
+typedef elem_t (*top_f)(Stack S);
+typedef elem_t (*pop_f)(Stack S);
+
+typedef struct {
+	Stack s;
+	createStack_f createStack;
+	isEmpty_f isEmpty;
+	disposeStack_f disposeStack;
+	makeEmpty_f makeEmpty;
+	top_f top;
+	push_f push;
+	pop_f pop;
+}stack_s;
 
 
-
-
-int IsEmpty(Stack S);
-Stack CreateStack(void);
-void DisposeStack(Stack S);
-void MakeEmpty(Stack S);
-void Push(elem_t X, Stack S);
-elem_t Top(Stack S);
-void Pop(Stack S);
+extern int IsEmpty(Stack S);
+extern Stack CreateStack(void);
+extern void DisposeStack(Stack S);
+extern void MakeEmpty(Stack S);
+extern void Push(elem_t X, Stack S);
+extern elem_t Top(Stack S);
+extern elem_t Pop(Stack S);
+extern void getStack(stack_s* s);
 
 #endif  /* _Stack_h */
 
