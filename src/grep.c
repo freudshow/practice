@@ -92,9 +92,12 @@ int match(char *regexp, char *text)
 /* matchstar: search for c*regexp at beginning of text */
 int matchstar(int c, char *regexp, char *text)
 {
-	do {	/* a * matches zero or more instances */
-		if (matchhere(regexp, text))
-			return 1;
-	} while (*text != '\0' && (*text++ == c || c == '.'));
+	char *t;
+	for (t = text; *t != '\0' && (*t == c || c == '.'); t++)
+		do { /* a * matches zero or more instances */
+			if (matchhere(regexp, t))
+				return 1;
+		} while (t-- > text);
+
 	return 0;
 }
