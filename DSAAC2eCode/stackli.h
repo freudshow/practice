@@ -32,13 +32,13 @@ typedef struct {
 }stack_s;
 
 
-extern int IsEmpty(Stack S);
-extern Stack CreateStack(void);
-extern void DisposeStack(Stack S);
-extern void MakeEmpty(Stack S);
-extern void Push(elem_t X, Stack S);
-extern elem_t Top(Stack S);
-extern elem_t Pop(Stack S);
+extern int isEmpty(Stack S);
+extern Stack createStack(void);
+extern void disposeStack(Stack S);
+extern void makeEmpty(Stack S);
+extern void push(elem_t X, Stack S);
+extern elem_t top(Stack S);
+extern elem_t pop(Stack S);
 extern void getStack(stack_s* s);
 
 #endif  /* _Stack_h */
