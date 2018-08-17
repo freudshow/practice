@@ -198,3 +198,44 @@ UUID=314d0826-7f4a-45aa-bc9b-047afddb34e0 none            swap    sw            
 /dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
 UUID=000C03AB00086F92 /win/c          ntfs    rw        0       2
 UUID=B8745094745056EA /win/d          ntfs    rw        0       2
+
+#如何在快速定位Debian系统软件的安装路径信息
+$ dpkg -l | grep openjdk
+ii  openjdk-8-jdk:amd64                           8u181-b13-1~deb9u1                          amd64        OpenJDK Development Kit (JDK)
+ii  openjdk-8-jdk-headless:amd64                  8u181-b13-1~deb9u1                          amd64        OpenJDK Development Kit (JDK) (headless)
+ii  openjdk-8-jre:amd64                           8u181-b13-1~deb9u1                          amd64        OpenJDK Java runtime, using Hotspot JIT
+ii  openjdk-8-jre-headless:amd64                  8u181-b13-1~deb9u1                          amd64        OpenJDK Java runtime, using Hotspot JIT (headless)
+
+#知道了包的准确名字, 就可以定位了
+$ dpkg -L openjdk-8-jdk
+/.
+/usr
+/usr/lib
+/usr/lib/jvm
+/usr/lib/jvm/java-8-openjdk-amd64
+/usr/lib/jvm/java-8-openjdk-amd64/bin
+/usr/lib/jvm/java-8-openjdk-amd64/bin/appletviewer
+/usr/lib/jvm/java-8-openjdk-amd64/bin/jconsole
+/usr/lib/jvm/java-8-openjdk-amd64/include
+/usr/lib/jvm/java-8-openjdk-amd64/include/jawt.h
+/usr/lib/jvm/java-8-openjdk-amd64/include/linux
+/usr/lib/jvm/java-8-openjdk-amd64/include/linux/jawt_md.h
+/usr/lib/jvm/java-8-openjdk-amd64/lib
+/usr/lib/jvm/java-8-openjdk-amd64/lib/jconsole.jar
+/usr/lib/jvm/java-8-openjdk-amd64/man
+/usr/lib/jvm/java-8-openjdk-amd64/man/ja_JP.UTF-8
+/usr/lib/jvm/java-8-openjdk-amd64/man/ja_JP.UTF-8/man1
+/usr/lib/jvm/java-8-openjdk-amd64/man/ja_JP.UTF-8/man1/appletviewer.1.gz
+/usr/lib/jvm/java-8-openjdk-amd64/man/ja_JP.UTF-8/man1/jconsole.1.gz
+/usr/lib/jvm/java-8-openjdk-amd64/man/man1
+/usr/lib/jvm/java-8-openjdk-amd64/man/man1/appletviewer.1.gz
+/usr/lib/jvm/java-8-openjdk-amd64/man/man1/jconsole.1.gz
+/usr/share
+/usr/share/doc
+/usr/share/doc/openjdk-8-jre-headless
+/usr/share/doc/openjdk-8-jre-headless/test-amd64
+/usr/share/doc/openjdk-8-jre-headless/test-amd64/check-hotspot-hotspot.log.gz
+/usr/share/doc/openjdk-8-jre-headless/test-amd64/check-langtools-hotspot.log.gz
+/usr/share/doc/openjdk-8-jre-headless/test-amd64/failed_tests-hotspot.tar.gz
+/usr/share/doc/openjdk-8-jre-headless/test-amd64/jtreg-summary-hotspot.log.gz
+/usr/share/doc/openjdk-8-jdk
