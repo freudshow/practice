@@ -2,11 +2,11 @@
 #include "fatal.h"
 #include <stdlib.h>
 
-int IsEmpty(Stack S) {
+int isEmpty(Stack S) {
 	return (S->Next == NULL);
 }
 
-Stack CreateStack(void) {
+Stack createStack(void) {
 	Stack S;
 
 	S = malloc(sizeof(stack_s));
@@ -17,7 +17,7 @@ Stack CreateStack(void) {
 	return S;
 }
 
-void MakeEmpty(Stack S) {
+void makeEmpty(Stack S) {
 	if (S == NULL)
 		Error("Must use CreateStack first");
 	else
@@ -25,12 +25,12 @@ void MakeEmpty(Stack S) {
 			Pop(S);
 }
 
-void DisposeStack(Stack S) {
+void disposeStack(Stack S) {
 	MakeEmpty(S);
 	free(S);
 }
 
-void Push(elem_t X, Stack S) {
+void push(elem_t X, Stack S) {
 	PtrToNode TmpCell;
 
 	TmpCell = malloc(sizeof(struct Node));
@@ -44,14 +44,14 @@ void Push(elem_t X, Stack S) {
 	}
 }
 
-elem_t Top(Stack S) {
+elem_t top(Stack S) {
 	if (!IsEmpty(S))
 		return S->Next->Element;
 	Error("Empty stack");
 	return (elem_t)0; /* Return value used to avoid warning */
 }
 
-elem_t Pop(Stack S) {
+elem_t pop(Stack S) {
 	PtrToNode FirstCell;
 	elem_t e = (elem_t)0;
 
@@ -61,7 +61,6 @@ elem_t Pop(Stack S) {
 		FirstCell = S->Next;
 		S->Next = S->Next->Next;
 		e = FirstCell->Element;
-//		printf("%c", FirstCell->Element);
 		free(FirstCell);
 	}
 	return e;
@@ -69,12 +68,12 @@ elem_t Pop(Stack S) {
 
 void getStack(stack_s* s)
 {
-	s->createStack = CreateStack;
-	s->isEmpty = IsEmpty;
-	s->disposeStack = DisposeStack;
-	s->makeEmpty = MakeEmpty;
-	s->top = Top;
-	s->push = Push;
-	s->pop = Pop;
+	s->createStack = createStack;
+	s->isEmpty = isEmpty;
+	s->disposeStack = disposeStack;
+	s->makeEmpty = makeEmpty;
+	s->top = top;
+	s->push = push;
+	s->pop = pop;
 	s->s = s->createStack();
 }

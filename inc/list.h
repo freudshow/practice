@@ -5,9 +5,9 @@
 
 typedef int elementType;
 typedef struct node node_s;
-typedef node_s* ptrToNode;
-typedef ptrToNode list;
-typedef ptrToNode position;
+typedef node_s* node_p;
+typedef node_p list;
+typedef node_p position;
 
 #pragma pack(push)
 #pragma pack(1)
