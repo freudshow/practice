@@ -104,8 +104,7 @@ sudo chmod 777 /srv/tftp -R
 tftp tftp-server-ip -g -r remotefile
 
 #install LaTex
-sudo apt-get install texlive-full
-sudo apt-get install texmaker
+sudo apt-get install texlive-full texmaker -y
 
 test tex:
 \documentclass{article}
@@ -134,8 +133,8 @@ sudo /etc/init.d/udev restart or reboot
 
 #CGAL
 # Debian or Linux Mint
-sudo apt-get install libcgal-dev # install the CGAL library
-sudo apt-get install libcgal-demo # install the CGAL demos
+sudo apt-get install libcgal-dev  -y# install the CGAL library
+sudo apt-get install libcgal-demo  -y# install the CGAL demos
 
 
 #install chrome
@@ -147,11 +146,11 @@ du -sh .
 
  
 #Ubuntu下配置Common Lisp开发环境
-sudo apt-get install emacs
+sudo apt-get install emacs -y
 #安装 Common Lisp 环境
-sudo apt-get install common-lisp-controller
+sudo apt-get install common-lisp-controller -y
 #安装 Slime
-sudo apt-get install slime
+sudo apt-get install slime -y
 #修改 Emacs 配置文件，以支持 Common Lisp
 emacs -nw ~/.emacs.d/user.el
 
@@ -166,7 +165,7 @@ emacs 或 emacs -nw
 输入 Alt + X，输入 slime，回车
 
 #mount ftpfs
-sudo apt install curlftpfs
+sudo apt install curlftpfs -y
 mkdir -p ~/ftpfs
 curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
 
