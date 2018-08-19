@@ -57,6 +57,9 @@ git clone http://web.mit.edu/ccutler/www/qemu.git
 make
 sudo make install
 
+#apue.3e cannot find -lbsd
+sudo apt install -y libbsd-dev
+
 #Linux自字体渲染
 sudo apt install dirmngr
 echo "deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/infinality.list
