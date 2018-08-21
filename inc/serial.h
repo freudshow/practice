@@ -82,6 +82,9 @@ typedef enum parity_enum {
 
 typedef struct {
 	u8 listen;
+#define MASTER_DEV	0
+#define SLAVE_DEV	1
+	u8 master; //0-主机 1-从机
 	u32 times;
 	u32 wait;
 	u32 inv;

@@ -12,7 +12,7 @@
 #include "lib.h"
 #include "serial.h"
 
-static const char *optString = "l:t:w:i:c:b:d:s:p:f:h";
+static const char *optString = "l:t:w:i:c:b:d:s:p:f:m:h";
 static const struct option longOpts[] = { { "listen", required_argument, NULL, 'l' },
 										  { "times", required_argument, NULL, 't' },
 										  { "wait",	required_argument, NULL, 'w' },
@@ -23,6 +23,7 @@ static const struct option longOpts[] = { { "listen", required_argument, NULL, '
 										  { "stop",	required_argument, NULL, 's' },
 										  { "par", required_argument, NULL, 'p' },
 										  { "frame", required_argument, NULL, 'f' },
+										  {	"master", no_argument, NULL, 'm' },
 										  {	"help", no_argument, NULL, 'h' },
 										  { NULL, no_argument, NULL, 0 }
 										};
@@ -317,6 +318,7 @@ void setDefaultOpt(option_p pOpt)
 
 	bzero(pOpt, sizeof(option_s));
 	pOpt->listen = 0;
+	pOpt->master = MASTER_DEV;
 	pOpt->times = 0;
 	pOpt->wait = 20;
 	pOpt->inv = 50;
@@ -357,6 +359,12 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 			pOpt->listen = atoi(optarg);
 			if (0 != pOpt->listen && 1 != pOpt->listen) {
 				pOpt->listen = 0;
+			}
+			break;
+		case 'm':
+			pOpt->master = atoi(optarg);
+			if(MASTER_DEV != pOpt->master && SLAVE_DEV != pOpt->master) {
+					pOpt->master = MASTER_DEV;
 			}
 			break;
 		case 't':
@@ -478,19 +486,26 @@ int main(int argc, char* argv[])
 		exit(1);
 	}
 
+	if (readFrm(options.frame, sbuf, &sbufSize) == FALSE) {
+			goto ret;
+	}
+
 	if (1 == options.listen) { //一直监听串口
 		while (1) {
 			usleep(options.inv * 1000);
-			readcom(fd, rbuf, &rbufSize);
-			fprintf(stderr, "[read]:");
-			printBuf(rbuf, rbufSize);
-			fprintf(stderr, "\n");
-		}
-	} else { //发送报文并监听串口
-		if (readFrm(options.frame, sbuf, &sbufSize) == FALSE) {
-			goto ret;
-		}
+			
+			nready = 0;
+			FD_ZERO(&fds);
+			FD_SET(fd, &fds);
 
+			timeout.tv_sec = 1;
+			timeout.tv_usec = 0;
+			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
+			if(nready > 0) {
+				readcom(fd, rbuf, &rbufSize);
+			}
+		}
+	} else if(MASTER_DEV == options.master) { //主机, 发送报文并监听串口
 		sendcnt = 0;
 		while ((options.times > 0) ? (sendcnt < options.times) : 1) {
 			usleep(options.inv * 1000);
@@ -516,6 +531,22 @@ int main(int argc, char* argv[])
 			}
 
 			sendcnt++;
+		}
+	} else if(SLAVE_DEV == options.master) { //从机, 收到报文后1秒钟应答
+		while(1) {
+			sleep(1);
+			nready = 0;
+			FD_ZERO(&fds);
+			FD_SET(fd, &fds);
+			timeout.tv_sec = 1;
+			timeout.tv_usec = 0;
+
+			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
+			if(nready > 0) {
+				readcom(fd, rbuf, &rbufSize);
+				sleep(1);
+				sendcom(fd, sbuf, sbufSize);
+			}
 		}
 	}
 

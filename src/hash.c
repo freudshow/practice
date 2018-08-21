@@ -11,7 +11,7 @@ unsigned hash(const char *s) {
 
 int main(int argc, char const *argv[]) {
 	unsigned h = hash(argv[1]);
-	fprintf(stderr, "%x\n", h);
+	printf("%u\n", h);
 
 	return 0;
 }
