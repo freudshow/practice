@@ -51,8 +51,8 @@ typedef struct {
 	size_t idxlen; //当前索引记录的长度
 	off_t datoff; //数据记录在数据文件中的偏移量
 	size_t datlen; //数据记录的长度
-	off_t ptrval; //下一条索引记录的偏移量
-	off_t ptroff; /* chain ptr offset pointing to this idx record */
+	off_t ptrNext; //下一条索引记录的偏移量
+	off_t ptroff; //当前的偏移量
 	off_t chainoff; //当前key所在的散列表的表头偏移量
 	off_t hashoff; //散列表表头中每条记录的长度
 	DBHASH nhash; //散列表的长度, 最好是个素数
@@ -262,8 +262,8 @@ static void _db_free(DB *db) {
 }
 
 /*
- * 读取链表的表头记录在文件
- * 中的偏移量
+ * 在散列表头中读取当前链表的第
+ * 1条索引记录在文件中的偏移量
  */
 static off_t _db_readptr(DB *db, off_t offset) {
 	char asciiptr[PTR_SZ + 1] = { 0 };
@@ -286,55 +286,44 @@ static off_t _db_readptr(DB *db, off_t offset) {
 static off_t _db_readidx(DB *db, off_t offset) {
 	ssize_t i;
 	char *ptr1, *ptr2;
-	char asciiptr[PTR_SZ + 1], asciilen[IDXLEN_SZ + 1];
+	char asciiptr[PTR_SZ + 1] = {0};//初始化为'\0'
+	char asciilen[IDXLEN_SZ + 1] = {0};//初始化为'\0'
 	struct iovec iov[2] = { };
 
 	/*
-	 * Position index file and record the offset.  db_nextrec
-	 * calls us with offset==0, meaning read from current offset.
-	 * We still need to call lseek to record the current offset.
+	 * lseek()如果成功, 返回相对于文件起始位置的
+	 * 字节数, 将其记录到db->idxoff中.
+	 * db_nextrec()调用本函数时, 将offset置0,
+	 * 意为从当前位置开始读取.
 	 */
 	if ((db->idxoff = lseek(db->idxfd, offset,
 			offset == 0 ? SEEK_CUR : SEEK_SET)) == -1)
 		err_dump("_db_readidx: lseek error");
 
-	/*
-	 * Read the ascii chain ptr and the ascii length at
-	 * the front of the index record.  This tells us the
-	 * remaining size of the index record.
-	 */
-	iov[0].iov_base = asciiptr;
-	iov[0].iov_len = PTR_SZ;
-	iov[1].iov_base = asciilen;
-	iov[1].iov_len = IDXLEN_SZ;
+	iov[0].iov_base = asciiptr;//下一个索引记录的偏移量
+	iov[0].iov_len = PTR_SZ;//偏移量长度, 数值长度固定
+	iov[1].iov_base = asciilen;//本条索引记录的长度
+	iov[1].iov_len = IDXLEN_SZ;//记录长度, 数值长度固定
 	if ((i = readv(db->idxfd, &iov[0], 2)) != PTR_SZ + IDXLEN_SZ) {
 		if (i == 0 && offset == 0)
 			return (-1); /* EOF for db_nextrec */
 		err_dump("_db_readidx: readv error of index record");
 	}
 
-	/*
-	 * This is our return value; always >= 0.
-	 */
-	asciiptr[PTR_SZ] = 0; /* null terminate */
-	db->ptrval = atol(asciiptr); /* offset of next key in chain */
-
-	asciilen[IDXLEN_SZ] = 0; /* null terminate */
-	if ((db->idxlen = atoi(asciilen)) < IDXLEN_MIN || db->idxlen > IDXLEN_MAX)
+	db->ptrNext = atol(asciiptr);//下一个索引记录的偏移量
+	db->idxlen = atoi(asciilen);//本条索引记录的长度
+	if ((db->idxlen) < IDXLEN_MIN || db->idxlen > IDXLEN_MAX)
 		err_dump("_db_readidx: invalid length");
 
-	/*
-	 * Now read the actual index record.  We read it into the key
-	 * buffer that we malloced when we opened the database.
-	 */
 	if ((i = read(db->idxfd, db->idxbuf, db->idxlen)) != db->idxlen)
 		err_dump("_db_readidx: read error of index record");
-	if (db->idxbuf[db->idxlen - 1] != NEWLINE) /* sanity check */
-		err_dump("_db_readidx: missing newline");
-	db->idxbuf[db->idxlen - 1] = 0; /* replace newline with null */
+
+	if (db->idxbuf[db->idxlen - 1] != NEWLINE) //完整性检查. sanity check
+		err_dump("_db_readidx: missing newline");//sanity - 明智的, 头脑清楚的
+	db->idxbuf[db->idxlen - 1] = 0;//终结符'\0'
 
 	/*
-	 * Find the separators in the index record.
+	 * 把SEP替换成终结符'\0'
 	 */
 	if ((ptr1 = strchr(db->idxbuf, SEP)) == NULL)
 		err_dump("_db_readidx: missing first separator");
@@ -347,26 +336,22 @@ static off_t _db_readidx(DB *db, off_t offset) {
 	if (strchr(ptr2, SEP) != NULL)
 		err_dump("_db_readidx: too many separators");
 
-	/*
-	 * Get the starting offset and length of the data record.
-	 */
 	if ((db->datoff = atol(ptr1)) < 0)
 		err_dump("_db_readidx: starting offset < 0");
 	if ((db->datlen = atol(ptr2)) <= 0 || db->datlen > DATLEN_MAX)
 		err_dump("_db_readidx: invalid length");
-	return (db->ptrval); /* return offset of next key in chain */
+	return (db->ptrNext);
 }
 
 /*
- * Read the current data record into the data buffer.
- * Return a pointer to the null-terminated data buffer.
+ * 读取一条数据记录
  */
 static char *_db_readdat(DB *db) {
-	if (lseek(db->datfd, db->datoff, SEEK_SET) == -1)
+	if (lseek(db->datfd, db->datoff, SEEK_SET) == -1)//置偏移量
 		err_dump("_db_readdat: lseek error");
-	if (read(db->datfd, db->datbuf, db->datlen) != db->datlen)
+	if (read(db->datfd, db->datbuf, db->datlen) != db->datlen)//将数据读取到缓冲区
 		err_dump("_db_readdat: read error");
-	if (db->datbuf[db->datlen - 1] != NEWLINE) /* sanity check */
+	if (db->datbuf[db->datlen - 1] != NEWLINE)//数据必须以换行符结尾
 		err_dump("_db_readdat: missing newline");
 	db->datbuf[db->datlen - 1] = 0; /* replace newline with null */
 	return (db->datbuf); /* return pointer to data record */
@@ -379,20 +364,13 @@ static char *_db_readdat(DB *db) {
 static int _db_find_and_lock(DB *db, const char *key, int writelock) {
 	off_t offset, nextoffset;
 
-	/*
-	 * Calculate the hash value for this key, then calculate the
-	 * byte offset of corresponding chain ptr in hash table.
-	 * This is where our search starts.  First we calculate the
-	 * offset in the hash table for this key.
-	 */
-	db->chainoff = (_db_hash(db, key) * PTR_SZ) + db->hashoff;
-	db->ptroff = db->chainoff;
+	db->chainoff = (_db_hash(db, key) * PTR_SZ) + db->hashoff;//表头的偏移量
+	db->ptroff = db->chainoff;//哈希表头的偏移量
 
 	printf("%s-%u\n", key, _db_hash(db, key));
 
 	/*
-	 * We lock the hash chain here.  The caller must unlock it
-	 * when done.  Note we lock and unlock only the first byte.
+	 * 加锁, 调用者负责释放锁
 	 */
 	if (writelock) {
 		if (writew_lock(db->idxfd, db->chainoff, SEEK_SET, 1) < 0)
@@ -402,21 +380,16 @@ static int _db_find_and_lock(DB *db, const char *key, int writelock) {
 			err_dump("_db_find_and_lock: readw_lock error");
 	}
 
-	/*
-	 * Get the offset in the index file of first record
-	 * on the hash chain (can be 0).
-	 */
-	offset = _db_readptr(db, db->ptroff);/*读取链表第一个记录的偏移量*/
+	offset = _db_readptr(db, db->ptroff);//第一个索引记录的偏移量
 	while (offset != 0) {
-		nextoffset = _db_readidx(db, offset);
+		nextoffset = _db_readidx(db, offset);//下一个索引记录的偏移量
 		if (strcmp(db->idxbuf, key) == 0)
-			break; /* found a match */
+			break; //键一致, 找到记录了, 跳出循环
+
 		db->ptroff = offset; /* offset of this (unequal) record */
 		offset = nextoffset; /* next one to compare */
 	}
-	/*
-	 * offset == 0 on error (record not found).
-	 */
+
 	return (offset == 0 ? -1 : 0);
 }
 
@@ -430,39 +403,26 @@ static void _db_dodelete(DB *db) {
 	char *ptr;
 	off_t freeptr, saveptr;
 
-	/*
-	 * Set data buffer and key to all blanks.
-	 */
+	//数据置' '
 	for (ptr = db->datbuf, i = 0; i < db->datlen - 1; i++)
 		*ptr++ = SPACE;
-	*ptr = 0; /* null terminate for _db_writedat */
+	*ptr = 0; //结束符
+
+	//只把键置' ', 遇到结束符就退出了
 	ptr = db->idxbuf;
 	while (*ptr)
 		*ptr++ = SPACE;
 
-	/*
-	 * We have to lock the free list.
-	 */
+	//锁定空闲链表
 	if (writew_lock(db->idxfd, FREE_OFF, SEEK_SET, 1) < 0)
 		err_dump("_db_dodelete: writew_lock error");
 
-	/*
-	 * Write the data record with all blanks.
-	 */
+	//将原有的数据区, 置SPACE
 	_db_writedat(db, db->datbuf, db->datoff, SEEK_SET);
 
-	/*
-	 * Read the free list pointer.  Its value becomes the
-	 * chain ptr field of the deleted index record.  This means
-	 * the deleted record becomes the head of the free list.
-	 */
-	freeptr = _db_readptr(db, FREE_OFF);
 
-	/*
-	 * Save the contents of index record chain ptr,
-	 * before it's rewritten by _db_writeidx.
-	 */
-	saveptr = db->ptrval;
+	freeptr = _db_readptr(db, FREE_OFF);//读空闲链表第一个记录的位置
+	saveptr = db->ptrNext;//保存下一条索引记录的偏移量
 
 	/*
 	 * Rewrite the index record.  This also rewrites the length
@@ -506,7 +466,7 @@ static void _db_writedat(DB *db, const char *data, off_t offset, int whence) {
 
 	if ((db->datoff = lseek(db->datfd, offset, whence)) == -1)
 		err_dump("_db_writedat: lseek error");
-	db->datlen = strlen(data) + 1; /* datlen includes newline */
+	db->datlen = strlen(data) + 1; //文件中用换行符代替'\0'
 
 	iov[0].iov_base = (char *) data;
 	iov[0].iov_len = db->datlen - 1;
@@ -531,8 +491,10 @@ static void _db_writeidx(DB *db, const char *key, off_t offset, int whence,
 	char asciiptrlen[PTR_SZ + IDXLEN_SZ + 1];
 	int len;
 
-	if ((db->ptrval = ptrval) < 0 || ptrval > PTR_MAX)
+	db->ptrNext = ptrval;
+	if (ptrval < 0 || ptrval > PTR_MAX)
 		err_quit("_db_writeidx: invalid ptr: %d", ptrval);
+
 	sprintf(db->idxbuf, "%s%c%lld%c%ld\n", key, SEP, (long long) db->datoff,
 			SEP, (long) db->datlen);
 	len = strlen(db->idxbuf);
@@ -626,7 +588,7 @@ static int _db_findfree(DB *db, int keylen, int datlen) {
 		 * the free list.  We set this chain ptr to db->ptrval,
 		 * which removes the empty record from the free list.
 		 */
-		_db_writeptr(db, saveoffset, db->ptrval);
+		_db_writeptr(db, saveoffset, db->ptrNext);
 		rc = 0;
 
 		/*
@@ -746,8 +708,8 @@ char *db_fetch(DBHANDLE h, const char *key) {
 	DB *db = h;
 	char *ptr;
 
-	if (_db_find_and_lock(db, key, 0) < 0) {
-		ptr = NULL; /* error, record not found */
+	if (_db_find_and_lock(db, key, 0) < 0) {//如果未找到数据, 错误计数+1
+		ptr = NULL;
 		db->cnt_fetcherr++;
 	} else {
 		ptr = _db_readdat(db); /* return pointer to data */
@@ -887,7 +849,7 @@ int db_store(DBHANDLE h, const char *key, const char *data, int flag) {
 	}
 	rc = 0; /* OK */
 
-	doreturn: /* unlock hash chain locked by _db_find_and_lock */
+doreturn: /* unlock hash chain locked by _db_find_and_lock */
 	if (un_lock(db->idxfd, db->chainoff, SEEK_SET, 1) < 0)
 		err_dump("db_store: un_lock error");
 	return (rc);
