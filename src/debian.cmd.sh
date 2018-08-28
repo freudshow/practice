@@ -3,6 +3,21 @@
 #https://www.debian.org/doc/manuals/debian-reference/    debian官方教程
 #https://debian-handbook.info/browse/zh-CN/stable/index.html    debian管理员手册
 
+#中科大软件源
+#Tips: Remember to install package <apt-transport-https>
+
+deb https://mirrors.ustc.edu.cn/debian/ stretch main contrib non-free
+deb-src https://mirrors.ustc.edu.cn/debian/ stretch main contrib non-free
+
+deb https://mirrors.ustc.edu.cn/debian/ stretch-updates main contrib non-free
+deb-src https://mirrors.ustc.edu.cn/debian/ stretch-updates main contrib non-free
+
+deb https://mirrors.ustc.edu.cn/debian/ stretch-backports main contrib non-free
+deb-src https://mirrors.ustc.edu.cn/debian/ stretch-backports main contrib non-free
+
+deb https://mirrors.ustc.edu.cn/debian-security/ stretch/updates main contrib non-free
+deb-src https://mirrors.ustc.edu.cn/debian-security/ stretch/updates main contrib non-free
+
 #让apt-get支持https开头的软件源
 sudo apt-get install -y apt-transport-https
 
@@ -61,7 +76,7 @@ sudo make install
 sudo apt install -y libbsd-dev
 
 #Linux自字体渲染
-sudo apt install dirmngr
+sudo apt install -y dirmngr
 echo "deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee /etc/apt/sources.list.d/infinality.list
 echo "deb-src http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu xenial main" | sudo tee -a /etc/apt/sources.list.d/infinality.list
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E985B27B
@@ -136,8 +151,8 @@ sudo /etc/init.d/udev restart or reboot
 
 #CGAL
 # Debian or Linux Mint
-sudo apt-get install libcgal-dev  -y# install the CGAL library
-sudo apt-get install libcgal-demo  -y# install the CGAL demos
+sudo apt-get install  -y libcgal-dev  -y# install the CGAL library
+sudo apt-get install  -y libcgal-demo  -y# install the CGAL demos
 
 
 #install chrome
@@ -180,7 +195,7 @@ dpkg -l | grep -i name
 apt-get remove name
 
 #make update.sh
-./tmake -t 2 -l ZheJiang --cmd "cj event set 3106 06 01 {1,4320,5,1,1320,1760};cj event enable 3106 1 1;cj dev set f101 0 0;cp /nand/event/property/3106/* /nor/init/;echo \"ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up\">/nor/rc.d/ip.sh" -v
+./tmake -t 2 -l ZheJiang --cmd "cj event set 3106 06 01 {1,4320,5,1,1320,1760};cj event enable 3106 1 1;cj dev set f101 0 0;cp /nand/event/property/3106/* /nor/init/;ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up;echo \"ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up\">/nor/rc.d/ip.sh" -v
 
 
 #cat /etc/fstab , UUID can be got with cmd: 'ls /dev/disk/by-uuid/'

@@ -485,22 +485,22 @@ static void _db_writedat(DB *db, const char *data, off_t offset, int whence) {
  * this function to set the datoff and datlen fields in the
  * DB structure, which we need to write the index record.
  */
-static void _db_writeidx(DB *db, const char *key, off_t offset, int whence,
-		off_t ptrval) {
+static void _db_writeidx(DB *db, const char *key, off_t this_offset, int whence,
+		off_t ptrNext) {
 	struct iovec iov[2];
 	char asciiptrlen[PTR_SZ + IDXLEN_SZ + 1];
 	int len;
 
-	db->ptrNext = ptrval;
-	if (ptrval < 0 || ptrval > PTR_MAX)
-		err_quit("_db_writeidx: invalid ptr: %d", ptrval);
+	db->ptrNext = ptrNext;
+	if (ptrNext < 0 || ptrNext > PTR_MAX)
+		err_quit("_db_writeidx: invalid ptr: %d", ptrNext);
 
 	sprintf(db->idxbuf, "%s%c%lld%c%ld\n", key, SEP, (long long) db->datoff,
 			SEP, (long) db->datlen);
 	len = strlen(db->idxbuf);
 	if (len < IDXLEN_MIN || len > IDXLEN_MAX)
 		err_dump("_db_writeidx: invalid length");
-	sprintf(asciiptrlen, "%*lld%*d", PTR_SZ, (long long) ptrval,
+	sprintf(asciiptrlen, "%*lld%*d", PTR_SZ, (long long) ptrNext,
 	IDXLEN_SZ, len);
 
 	/*
@@ -516,7 +516,7 @@ static void _db_writeidx(DB *db, const char *key, off_t offset, int whence,
 	/*
 	 * Position the index file and record the offset.
 	 */
-	if ((db->idxoff = lseek(db->idxfd, offset, whence)) == -1)
+	if ((db->idxoff = lseek(db->idxfd, this_offset, whence)) == -1)
 		err_dump("_db_writeidx: lseek error");
 
 	iov[0].iov_base = asciiptrlen;
