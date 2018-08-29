@@ -5,11 +5,12 @@
 #define MinQueueSize ( 5 )
 
 struct QueueRecord {
-	int Capacity;
+	int Capacity;//max elements
 	int Front;
 	int Rear;
-	int Size;
+	int Size;//current elements
 	ElementType *Array;
+	Queue this;
 };
 
 int IsEmpty(Queue Q) {
@@ -26,15 +27,16 @@ Queue CreateQueue(int MaxElements) {
 	if (MaxElements < MinQueueSize)
 		Error("Queue size is too small");
 
-	Q = malloc(sizeof(struct QueueRecord));
+	Q = calloc(1, sizeof(struct QueueRecord));
 	if (Q == NULL)
 		FatalError("Out of space!!!");
+	Q->this = Q;
 
-	Q->Array = malloc(sizeof(ElementType) * MaxElements);
-	if (Q->Array == NULL)
+	Q->this->Array = calloc(1, sizeof(ElementType) * MaxElements);
+	if (Q->this->Array == NULL)
 		FatalError("Out of space!!!");
-	Q->Capacity = MaxElements;
-	MakeEmpty(Q);
+	Q->this->Capacity = MaxElements;
+	MakeEmpty(Q->this);
 
 	return Q;
 }
@@ -52,18 +54,12 @@ void DisposeQueue(Queue Q) {
 	}
 }
 
-static int Succ(int Value, Queue Q) {
-	if (++Value == Q->Capacity)
-		Value = 0;
-	return Value;
-}
-
 void Enqueue(ElementType X, Queue Q) {
 	if (IsFull(Q))
 		Error("Full queue");
 	else {
 		Q->Size++;
-		Q->Rear = Succ(Q->Rear, Q);
+		Q->Rear = ((Q->Rear+1)%Q->Capacity);
 		Q->Array[Q->Rear] = X;
 	}
 }
@@ -80,7 +76,7 @@ void Dequeue(Queue Q) {
 		Error("Empty queue");
 	else {
 		Q->Size--;
-		Q->Front = Succ(Q->Front, Q);
+		Q->Front = ((Q->Front+1)%Q->Capacity);
 	}
 }
 
@@ -92,7 +88,7 @@ ElementType FrontAndDequeue(Queue Q) {
 	else {
 		Q->Size--;
 		X = Q->Array[Q->Front];
-		Q->Front = Succ(Q->Front, Q);
+		Q->Front = ((Q->Front+1)%Q->Capacity);
 	}
 
 	return X;
