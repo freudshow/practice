@@ -68,7 +68,7 @@ void print_name(tree_ptr t, int depth)
 {
 	int i = 0;
 	for (i = 0; i < depth; i++)
-		printf("-");
+		printf("\t");
 	printf("/%s\n", t->e);
 }
 
