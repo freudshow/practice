@@ -6,33 +6,23 @@
 #define QUEUE_SIZE 2048
 
 int main(int argc, char** argv) {
-	Queue Q;
+	queue q;
 	int i;
-	int cap = 0;
+	int nelem = 0;
 
 	if(argc == 2) {
-		cap = atoi(argv[1]);
+		nelem = atoi(argv[1]);
 	} else
-		cap = QUEUE_SIZE;
+		nelem = QUEUE_SIZE;
 
-	Q = CreateQueue(cap);
+	q = createQueue(nelem);
 
-	for (i = 0; i < cap; i++)
-		Enqueue(i, Q);
+	for (i = 0; i < qCapacity(q); i++)
+		enqueue(i, q);
 
-	while (!IsEmpty(Q)) {
-		printf("%d\n", Front(Q));
-		Dequeue(Q);
-	}
+	while (!isEmpty(q))
+		printf("%d\n", frontAndDequeue(q));
 
-	for (i = 0; i < cap; i++)
-		Enqueue(i, Q);
-
-	while (!IsEmpty(Q)) {
-		printf("%d\n", Front(Q));
-		Dequeue(Q);
-	}
-
-	DisposeQueue(Q);
+	disposeQueue(q);
 	return 0;
 }
