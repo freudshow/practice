@@ -67,8 +67,22 @@ void addSibling(tree_ptr s, tree_ptr t)
 void print_name(tree_ptr t, int depth)
 {
 	int i = 0;
-	for (i = 0; i < depth; i++)
-		printf("\t");
+//	for (i = 0; i < depth; i++)
+//		printf("\t");
+//	printf("/%s\n", t->e);
+//
+	tree_ptr p = NULL;
+	tree_ptr list[256] = {};
+
+	p = t->father;
+	while(p) {
+		list[i++] = p;
+		p = p->father;
+	}
+
+	while (i--) {
+		printf("/%s", list[i]->e);
+	}
 	printf("/%s\n", t->e);
 }
 
