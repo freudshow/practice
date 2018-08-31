@@ -81,13 +81,18 @@ void disposeQueue(queue q)
 	}
 }
 
+static int foreword(queue q, int idx)
+{
+	return ((q == NULL) ? 0 : ((idx + 1) % q->capacity));
+}
+
 void enqueue(elem_t e, queue q)
 {
 	if (isFull(q))
 		Error("Full queue");
 	else {
 		q->size++;
-		q->rear = ((q->rear + 1) % q->capacity);
+		q->rear = foreword(q, q->rear);
 		q->array[q->rear] = e;
 	}
 }
@@ -106,7 +111,7 @@ void dequeue(queue q)
 		Error("Empty queue");
 	else {
 		q->size--;
-		q->front = ((q->front + 1) % q->capacity);
+		q->front = foreword(q, q->front);
 	}
 }
 
@@ -119,7 +124,7 @@ elem_t frontAndDequeue(queue q)
 	else {
 		q->size--;
 		e = q->array[q->front];
-		q->front = ((q->front + 1) % q->capacity);
+		q->front = foreword(q, q->front);
 	}
 
 	return e;

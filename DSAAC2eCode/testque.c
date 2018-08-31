@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv) {
 	queue q;
-	int i;
+	elem_t i;
 	int nelem = 0;
 
 	if(argc == 2) {
