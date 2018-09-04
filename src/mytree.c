@@ -7,6 +7,7 @@ typedef char elem_t;
 typedef struct tree_node *tree_ptr;
 typedef struct tree_node {
 	elem_t e[256];
+	elem_t size;
 	tree_ptr father;
 	tree_ptr child;
 	tree_ptr sibling;
@@ -80,10 +81,10 @@ void print_name(tree_ptr t, int depth)
 		p = p->father;
 	}
 
-	while (i--) {
+	while (i--) {//print father one by one with '/'
 		printf("/%s", list[i]->e);
 	}
-	printf("/%s\n", t->e);
+	printf("/%s\n", t->e);//print itself with '/'
 }
 
 int isLeaf(tree_ptr t)
