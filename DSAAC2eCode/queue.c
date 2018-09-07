@@ -2,98 +2,130 @@
 #include "fatal.h"
 #include <stdlib.h>
 
-#define MinQueueSize ( 5 )
+#define MinQueueSize ( 2 )
 
-struct QueueRecord {
-	int Capacity;
-	int Front;
-	int Rear;
-	int Size;
-	ElementType *Array;
+/*
+ * 为安全操作起见,结构
+ * 体不能暴露给调用者.
+ */
+struct queueRecord {
+	int capacity; //max elements
+	int front;
+	int rear;
+	int size; //current elements
+	elem_t *array;
+	queue this;
 };
 
-int IsEmpty(Queue Q) {
-	return Q->Size == 0;
+int isEmpty(queue q)
+{
+	return q->size == 0;
 }
 
-int IsFull(Queue Q) {
-	return Q->Size == Q->Capacity;
+int isFull(queue q)
+{
+	return q->size == q->capacity;
 }
 
-Queue CreateQueue(int MaxElements) {
-	Queue Q;
+int qCapacity(queue q)
+{
+	return q->capacity;
+}
+
+queue createQueue(int MaxElements)
+{
+	queue q;
 
 	if (MaxElements < MinQueueSize)
 		Error("Queue size is too small");
 
-	Q = malloc(sizeof(struct QueueRecord));
-	if (Q == NULL)
+	q = calloc(1, sizeof(struct queueRecord));
+	if (q == NULL)
+		FatalError("Out of space!!!");
+	q->this = q;
+
+	q->this->array = calloc(1, sizeof(elem_t) * MaxElements);
+	if (q->this->array == NULL)
 		FatalError("Out of space!!!");
 
-	Q->Array = malloc(sizeof(ElementType) * MaxElements);
-	if (Q->Array == NULL)
-		FatalError("Out of space!!!");
-	Q->Capacity = MaxElements;
-	MakeEmpty(Q);
+	q->this->capacity = MaxElements;
+	makeEmpty(q->this);
 
-	return Q;
+	return q;
 }
 
-void MakeEmpty(Queue Q) {
-	Q->Size = 0;
-	Q->Front = 1;
-	Q->Rear = 0;
+/*
+ * 因为入列前, rear要先后移1次,
+ * 再赋值,所以初始状态下, rear要比
+ * front靠前1个位置, 这样在出列时,
+ * front的位置才能指向第0个元素.
+ * 如果rear先赋值再后移, 则不符合
+ * rear的语义了, 即rear总是指向
+ * 队列的最后一个有效元素. 如果
+ * rear先赋值, 则rear的意义则变成
+ * 总是指向队列最后一个有效元素的
+ * 下一个位置了.
+ */
+void makeEmpty(queue q)
+{
+	q->size = 0;
+	q->front = 1;
+	q->rear = 0;
 }
 
-void DisposeQueue(Queue Q) {
-	if (Q != NULL) {
-		free(Q->Array);
-		free(Q);
+void disposeQueue(queue q)
+{
+	if (q != NULL) {
+		free(q->array);
+		free(q);
 	}
 }
 
-static int Succ(int Value, Queue Q) {
-	if (++Value == Q->Capacity)
-		Value = 0;
-	return Value;
+static int foreword(queue q, int idx)
+{
+	return ((q == NULL) ? 0 : ((idx + 1) % q->capacity));
 }
 
-void Enqueue(ElementType X, Queue Q) {
-	if (IsFull(Q))
+void enqueue(elem_t e, queue q)
+{
+	if (isFull(q))
 		Error("Full queue");
 	else {
-		Q->Size++;
-		Q->Rear = Succ(Q->Rear, Q);
-		Q->Array[Q->Rear] = X;
+		q->size++;
+		q->rear = foreword(q, q->rear);
+		q->array[q->rear] = e;
 	}
 }
 
-ElementType Front(Queue Q) {
-	if (!IsEmpty(Q))
-		return Q->Array[Q->Front];
+elem_t front(queue q)
+{
+	if (!isEmpty(q))
+		return q->array[q->front];
 	Error("Empty queue");
 	return 0;
 }
 
-void Dequeue(Queue Q) {
-	if (IsEmpty(Q))
+void dequeue(queue q)
+{
+	if (isEmpty(q))
 		Error("Empty queue");
 	else {
-		Q->Size--;
-		Q->Front = Succ(Q->Front, Q);
+		q->size--;
+		q->front = foreword(q, q->front);
 	}
 }
 
-ElementType FrontAndDequeue(Queue Q) {
-	ElementType X = 0;
+elem_t frontAndDequeue(queue q)
+{
+	elem_t e = 0;
 
-	if (IsEmpty(Q))
+	if (isEmpty(q))
 		Error("Empty queue");
 	else {
-		Q->Size--;
-		X = Q->Array[Q->Front];
-		Q->Front = Succ(Q->Front, Q);
+		q->size--;
+		e = q->array[q->front];
+		q->front = foreword(q, q->front);
 	}
 
-	return X;
+	return e;
 }

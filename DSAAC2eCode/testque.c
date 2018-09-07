@@ -1,27 +1,28 @@
+#include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include "queue.h"
 
-main() {
-	Queue Q;
-	int i;
+#define QUEUE_SIZE 2048
 
-	Q = CreateQueue(12);
+int main(int argc, char** argv) {
+	queue q;
+	elem_t i;
+	int nelem = 0;
 
-	for (i = 0; i < 10; i++)
-		Enqueue(i, Q);
+	if(argc == 2) {
+		nelem = atoi(argv[1]);
+	} else
+		nelem = QUEUE_SIZE;
 
-	while (!IsEmpty(Q)) {
-		printf("%d\n", Front(Q));
-		Dequeue(Q);
-	}
-	for (i = 0; i < 10; i++)
-		Enqueue(i, Q);
+	q = createQueue(nelem);
 
-	while (!IsEmpty(Q)) {
-		printf("%d\n", Front(Q));
-		Dequeue(Q);
-	}
+	for (i = 0; i < qCapacity(q); i++)
+		enqueue(i, q);
 
-	DisposeQueue(Q);
+	while (!isEmpty(q))
+		printf("%d\n", frontAndDequeue(q));
+
+	disposeQueue(q);
 	return 0;
 }
