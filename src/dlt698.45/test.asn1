@@ -1,0 +1,388 @@
+DLT69845 DEFINITIONS ::= BEGIN
+    Null ::= NULL
+	Array ::= SEQUENCE OF Data
+	Structure ::= SEQUENCE OF Data
+	Bool ::= BOOLEAN
+	BitString ::= BIT STRING
+	Integer32 ::= INTEGER
+	Integer8  ::= INTEGER(0..255)
+	DoubleLong ::= Integer32
+	DoubleLongUnsigned ::= Integer32
+	OctetString ::= OCTET STRING
+	Integer ::= BIT STRING(SIZE(8))
+	Long ::= BIT STRING(SIZE(16))
+	Unsigned ::= BIT STRING(SIZE(8))
+	LongUnsigned ::= BIT STRING(SIZE(16))
+	Long64 ::= BIT STRING(SIZE(64))
+	Long64Unsigned ::= BIT STRING(SIZE(64))
+	Enum ::= BIT STRING(SIZE(8))
+	Float32 ::= OctetString(SIZE(4))
+	Float64 ::= OctetString(SIZE(8))
+	ComBCD2 ::= OctetString(SIZE(1))
+	ComBCD4 ::= OctetString(SIZE(2))
+	ComBCD6 ::= OctetString(SIZE(3))
+	ComBCD8 ::= OctetString(SIZE(4))
+
+	DateTime ::= SEQUENCE {
+		year LongUnsigned,
+		month Unsigned,
+		dayOfMonth Unsigned,
+		dayOfWeek Unsigned,
+		hour Unsigned,
+		minute Unsigned,
+		second Unsigned,
+		milliseconds LongUnsigned
+	}
+
+	Date ::= SEQUENCE {
+		year LongUnsigned,
+		month Unsigned,
+		dayOfMonth Unsigned,
+		dayOfWeek Unsigned
+	}
+
+	Time ::= SEQUENCE {
+		hour Unsigned,
+		minute Unsigned,
+		second Unsigned
+	}
+
+	DateTimeBCD ::= SEQUENCE {
+		year  ComBCD4,
+		month  ComBCD2,
+		day  ComBCD2,
+		hour ComBCD2,
+		minute ComBCD2,
+		sec  ComBCD2
+	}
+
+	DateTimeBCDH ::= SEQUENCE {
+		dateTime DateTimeBCD,
+		milliSec  LongUnsigned
+	}
+
+	DateTimeBCDS ::= SEQUENCE {
+		year  ComBCD4,
+		month  ComBCD2,
+		day  ComBCD2,
+		hour ComBCD2,
+		minute ComBCD2
+	}
+
+	DateBCD ::= SEQUENCE {
+		year  ComBCD4,
+		month  ComBCD2,
+		day  ComBCD2
+	}
+
+	TimeBCD ::= SEQUENCE {
+		hour ComBCD2,
+		minute ComBCD2,
+		sec  ComBCD2
+	}
+
+	PIID ::= BIT STRING(SIZE(8)) {
+		svrPrio		(0),	--服务优先级
+		rsv			(1),	--保留
+		svrSeq5		(2),	--服务序号bit5
+		svrSeq4		(3),	--服务序号bit4 
+		svrSeq3		(4),	--服务序号bit3 
+		svrSeq2		(5),	--服务序号bit2 
+		svrSeq1		(6),	--服务序号bit1 
+		svrSeq0		(7)		--服务序号bit0 
+	}
+
+	PIID-ACD ::= BIT STRING(SIZE(8)) {
+		svrPrio		(0),
+		acd 		(1),	--请求访问(ACD) bit6
+		svrSeq5		(2),
+		svrSeq4		(3),
+		svrSeq3		(4),
+		svrSeq2		(5),
+		svrSeq1		(6),
+		svrSeq0		(7)
+	}
+
+	OI ::= LongUnsigned
+
+	OAD ::= SEQUENCE {
+		objId OI,
+		attrIdChara BitString(SIZE(8)),
+		attrElemIdx Integer8(1..255)
+	}
+
+	ROAD ::= SEQUENCE {
+		objDescr OAD,
+		ralateObjDescr SEQUENCE OF OAD
+	}
+
+	DAR ::= ENUMERATED {
+		suc								(0),	--	成功
+		hardInvalid						(1),	--	硬件失效
+		invalidForMoment				(2),	--	暂时失效
+		refuseRdWr						(3),	--	拒绝读写
+		objNotDef						(4),	--	对象未定义
+		objInterNotMatch				(5),	--	对象接口类不符合
+		objNotExist						(6),	--	对象不存在
+		typeNotMatch					(7),	--	类型不匹配
+		overflow						(8),	--	越界
+		dataBlkDisable					(9),	--	数据块不可用
+		subframeTransCancle				(10),	--	分帧传输已取消
+		notInSubframeTransState			(11),	--	不处于分帧传输状态
+		cancleBlkWR						(12),	--	块写取消
+		blkWRNotExist					(13),	--	不存在块写状态
+		blkSeqInvalid					(14),	--	数据块序号无效
+		passwdWrongOrNotPermit			(15),	--	密码错/未授权
+		cannotModifyBaudrate			(16),	--	通信速率不能更改
+		overflowYearInterval			(17),	--	年时区数超
+		overflowDayInterval				(18),	--	日时段数超
+		overflowRateCnt					(19),	--	费率数超
+		securityCertificateNotMatch		(20),	--	安全认证不匹配
+		repeatRecharge					(21),	--	重复充值
+		esamAuthenticationFailed		(22),	--	ESAM验证失败
+		saftyAuthenticationFailed		(23),	--	安全认证失败
+		customerIDNotMatch				(24),	--	客户编号不匹配
+		rechargeCntErr					(25),	--	充值次数错误
+		electricityPurchasingOverflow	(26),	--	购电超囤积
+		addrException					(27),	--	地址异常
+		symmetricDecryptionErr			(28),	--	对称解密错误
+		asymmetricDecryptionErr			(29),	--	非对称解密错误
+		signatureErr					(30),	--	签名错误
+		meterSuspend					(31),	--	电能表挂起
+		timeTagInvalid					(32),	--	时间标签无效
+		other							(-255)	--	其它
+	}
+
+
+	OMD ::= SEQUENCE {
+		objId OI,
+		methodId Integer8(1..255),
+		actionMode Integer8(0)
+	}
+
+	TI::=SEQUENCE {
+		unit ENUMERATED {
+			sec  (0),
+			minute (1),
+			hour (2),
+			day  (3),
+			month  (4),
+			year  (5)
+		},
+		interval LongUnsigned
+	}
+
+	TSA ::= OctetString(SIZE(1..16))
+	MAC ::= OctetString
+	RN ::= OctetString  --ESAM 生成用于加密的信息串。
+	CSD ::= CHOICE {
+		oad [0] OAD,
+		road [1] ROAD
+	}
+
+	RCSD ::= SEQUENCE OF CSD
+
+	Region ::= SEQUENCE {
+		regionUnit ENUMERATED {
+			closeOpen (0),
+			openClose (1),
+			closeClose (2),
+			openOpen (3)
+		},
+		start Data,
+		end Data
+	}
+
+    PhysicalUnit ::= ENUMERATED {
+        a   (1),
+        mo  (2),
+        wk  (3),
+        d   (4),
+        h   (5),
+        min (6),
+        s   (7),
+        rad (8),
+        tK   (9),
+        currency    (10),
+        m   (11),
+        mPerSec (12),
+        squareMeter  (13),
+        sqMeter (14),
+        sqMeterPerHour  (15)
+    }
+
+	ScalerUnit ::= SEQUENCE {
+		conversion Integer8,	--换算——倍数因子的指数,基数为 10；如数值不是数字的,则换算应被置 0。
+		unit PhysicalUnit		--物理单位, 详见698.45<表B.1 物理单位的枚举定义>, 其符号待以后添加
+	}
+
+	RSD ::= CHOICE {
+		notSel [0] NULL,
+		sel1 [1] Selector1,
+		sel2 [2] Selector2,
+		sel3 [3] Selector3,
+		sel4 [4] Selector4,
+		sel5 [5] Selector5,
+		sel6 [6] Selector6,
+		sel7 [7] Selector7,
+		sel8 [8] Selector8,
+		sel9 [9] Selector9,
+		sel10 [10] Selector10
+	}
+
+	Selector1 ::= SEQUENCE {
+		objDescr OAD,
+		value Data
+	}
+
+	Selector2 ::= SEQUENCE {
+		objDescr OAD,		--对象描述符
+		startValue Data,	--起始值
+		endValue Data,		--结束值
+		interv Data			--数据间隔
+	}
+
+	Selector3 ::= SEQUENCE OF Selector2
+
+	Selector4 ::= SEQUENCE {
+		acqStartTime DateTimeBCD,	--采集启动时间
+		meterSet	 MS	--电能表集合
+	}
+
+	Selector5 ::= SEQUENCE {
+		acqStoreTime DateTimeBCD,
+		meterSet MS
+	}
+
+	Selector6 ::= SEQUENCE {
+		acqStartTimeStartValue DateTimeBCD,	--采集启动时间起始值
+		acqStartTimeEndValue DateTimeBCD,	--采集启动时间结束值
+		timeInterv TI,						--时间间隔
+		meterSet MS							--电能表集合
+	}
+
+	Selector7 ::= SEQUENCE {
+		acqStoreTimeStartValue DateTimeBCD,	--采集存储时间起始值
+		acqStoreTimeEndValue DateTimeBCD,	--采集存储时间结束值
+		timeInterv TI,						--时间间隔
+		meterSet MS							--电能表集合
+	}
+
+	Selector8 ::= SEQUENCE {
+		acqSucTimeStartValue DateTimeBCD,	--采集成功时间起始值
+		acqSucTimeEndValue DateTimeBCD,	--采集成功时间结束值
+		timeInterv TI,	--时间间隔
+		meterSet MS	--电能表集合
+	}
+
+	Selector9 ::= SEQUENCE {
+		upNRec unsigned	--上n次记录
+	}
+
+	Selector10 ::= SEQUENCE {
+		upNRecord unsigned,	--上 n 条记录
+		meterSet MS			--电能表集合
+	}
+
+	MS ::= CHOICE	{
+		noMeter [0] NULL,
+		allAddr [1] NULL,
+		aGrpUserType [2] SEQUENCE OF Unsigned,	--一组用户类型
+		aGrpUserAddr [3] SEQUENCE OF TSA,	--一组用户地址
+		aGrpCfgSeq [4] SEQUENCE OF LongUnsigned,	--一组配置序号
+		aGrpUserTypeInterv [5] SEQUENCE OF Region,	--一组用户类型区间
+		aGrpUserAddrInterv [6] SEQUENCE OF Region,	--一组用户地址区间
+		aGrpUserCfgSeqInterv [7] SEQUENCE OF Region		--一组配置序号区间
+	}
+
+	SID ::= SEQUENCE {
+		identity DoubleLongUnsigned,
+		appendData OctetString
+	}
+
+	SIDMAC ::= SEQUENCE {
+		saftyId SID,
+		dataMAC MAC
+	}
+
+	BaudRate ::= ENUMERATED {
+		baud300bps (0), baud600bps (1), baud1200bps (2),
+		baud2400bps (3), baud4800bps (4), baud7200bps (5),
+		baud9600bps (6), baud19200bps (7), baud38400bps (8),
+		baud57600bps (9), baud115200bps (10), autoAjust (255)
+	}
+	
+	Parity ::= ENUMERATED {
+		no(0), odd(1), even(2)
+	}
+
+	DataBits ::= ENUMERATED {
+		databit5(5), databit6(6),
+		databit7(7), databit8(8)
+	}
+
+	StopBits ENUMERATED {
+		stopbits1(1), stopbits2(2)
+	}
+	
+	FlowCtl ENUMERATED {
+		no(0), hard(1), soft(2)
+	}
+
+	COMDCB ::= SEQUENCE {
+		baudrate BaudRate,
+		parity Parity,
+		databits DataBits,
+		stopbits StopBits,
+		flowctl FlowCtl
+	}
+
+	Data ::= CHOICE {
+		null				[0] NULL,
+		array				[1] SEQUENCE OF Data,
+		structure			[2] SEQUENCE OF Data,
+		bool				[3] BOOLEAN,
+		bitString			[4] BitString,
+		doubleLong			[5] DoubleLong,
+		doubleLongunsigned	[6] DoubleLongUnsigned,
+		octetString			[9] OctetString,
+		visibleString		[10] VisibleString,
+		utf8String			[12] UTF8String,
+		integer				[15] Integer,
+		long				[16] Long,
+		unsigned			[17] Unsigned,
+		longunsigned		[18] LongUnsigned,
+		long64				[20] Long64,
+		long64Unsigned		[21] Long64Unsigned,
+		enum				[22] Enum,
+		float32				[23] Float32,
+		float64				[24] Float64,
+		dateTime			[25] DateTime,
+		date				[26] Date,
+		time				[27] Time,
+		dateTimeBCD			[28] DateTimeBCD,
+		dateTimeBCDH		[29] DateTimeBCDH,
+		datetimeBCDS		[30] DateTimeBCDS,
+		dateBCD				[31] DateBCD,
+		timeBCD				[32] TimeBCD,
+		oi					[80] OI,
+		oad					[81] OAD,
+		road				[82] ROAD,
+		omd					[83] OMD,
+		ti					[84] TI,
+		tsa					[85] TSA,
+		mac					[86] MAC,
+		rn			     	[87] RN,
+		region				[88] Region,
+		scalerUnit			[89] ScalerUnit,
+		rsd					[90] RSD,
+		csd					[91] CSD,
+		ms					[92] MS,
+		sid					[93] SID,
+		sidMac 	        	[94] SIDMAC,
+		comdcb            	[95] COMDCB,
+		rcsd              	[96] RCSD
+	}
+
+	
+END
