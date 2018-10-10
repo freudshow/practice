@@ -51,6 +51,11 @@ git config --global alias.st status
 git config --global core.filemode false
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
+#把 gw 分支下的libevent/event.h合并到dev_save分支下的libevent/event.h
+git checkout dev_save
+git checkout --patch gw libevent/event.h
+git checkout --patch gw libevent/event.c
+
 #virtualbox
 echo "deb https://download.virtualbox.org/virtualbox/debian stretch contrib">>/etc/apt/sources.list
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -

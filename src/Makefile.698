@@ -1,0 +1,14 @@
+DIRS = libBase libGui libMq  lib698Esam libAccess \
+   		lib698 libDlt645  libevent lib376.2\
+		cjmain cjdeal cjcomm cj cupdate cj645 cjup    \
+
+all:
+		for i in $(DIRS); do \
+					(cd $$i/Release && echo "making $$i" && make ) || exit 1; \
+						done
+
+clean:
+		for i in $(DIRS); do \
+					(cd $$i/Release && echo "cleaning $$i" && make clean) || exit 1; \
+						done
+
