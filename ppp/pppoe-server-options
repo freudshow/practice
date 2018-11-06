@@ -1,0 +1,4 @@
+login 
+lcp-echo-interval 30 
+lcp-echo-failure 4 
+ms-dns  202.118.224.101
