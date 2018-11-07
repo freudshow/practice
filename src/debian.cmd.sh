@@ -168,7 +168,7 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 du -sh .
 
 
- 
+
 #Ubuntu下配置Common Lisp开发环境
 sudo apt-get install emacs -y
 #安装 Common Lisp 环境
@@ -192,6 +192,10 @@ emacs 或 emacs -nw
 sudo apt install curlftpfs -y
 mkdir -p ~/ftpfs
 curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
+
+#pppoe-server
+sudo pppoe-server -I enp9s0 -L 192.168.13.1 -R 192.168.13.100 -N 333
+
 
 #git clone 时显示Filename too long的解决办法
 git config --global core.longpaths true
