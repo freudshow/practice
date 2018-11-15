@@ -194,8 +194,16 @@ mkdir -p ~/ftpfs
 curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
 
 #pppoe-server
+sudo apt-get install pppoe pppoeconf
+sudo echo "\"user\" * \"123\" *">/etc/pap-secrets
+sudo echo "\"user\" * \"123\" *">/etc/chap-secrets
+sudo echo "login">/etc/ppp/pppoe-server-options
+sudo echo "lcp-echo-interval 30">>/etc/ppp/pppoe-server-options
+sudo echo "lcp-echo-failure 4">>/etc/ppp/pppoe-server-options
+sudo echo "ms-dns  202.118.224.101">>/etc/ppp/pppoe-server-options
+modprobe pppoe
 sudo pppoe-server -I enp9s0 -L 192.168.13.1 -R 192.168.13.100 -N 333
-
+sudo pppoe-server -I eno1 -L 192.168.13.1 -R 192.168.13.100 -N 333
 
 #git clone 时显示Filename too long的解决办法
 git config --global core.longpaths true
@@ -207,6 +215,7 @@ apt-get remove name
 #make update.sh
 ./tmake -t 2 -l ZheJiang --cmd "cj event set 3106 06 01 {1,4320,5,1,1320,1760};cj event enable 3106 1 1;cj dev set f101 0 0;cp /nand/event/property/3106/* /nor/init/;ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up;echo \"ifconfig eth0 192.168.0.4 netmask 255.255.255.0 up\">/nor/rc.d/ip.sh" -v
 
+./tmake -t 2 -l ShanDong -v --cmd "cj ip 192.168.1.9:8889 192.168.1.9:8889;cj para set 4510 gw \"192.168.1.177\";cj para set 4510 mask \"255.255.255.255\""
 
 #cat /etc/fstab , UUID can be got with cmd: 'ls /dev/disk/by-uuid/'
 # /etc/fstab: static file system information.
