@@ -56,6 +56,9 @@ git checkout dev_save
 git checkout --patch gw libevent/event.h
 git checkout --patch gw libevent/event.c
 
+#同步远程分支列表
+git remote update origin --prune
+
 #virtualbox
 echo "deb https://download.virtualbox.org/virtualbox/debian stretch contrib">>/etc/apt/sources.list
 wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
