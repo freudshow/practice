@@ -1,0 +1,14 @@
+1. 配置编译选项
+./configure --host=arm-none-linux-gnueabi --prefix=$(pwd)/install --enable-editline=yes --enable-readline=yes --enable-static-shell=no
+
+2. 编译
+make
+make install
+
+3. 去除调试信息
+arm-none-linux-gnueabi-strip $(pwd)/install/bin/sqlite3 $(pwd)/install/lib/libsqlite3.so.0.8.6
+
+4. 在开发板添加符号链接
+ln -s libsqlite3.so.0.8.6 libsqlite3.so.0
+ln -s libsqlite3.so.0.8.6 libsqlite3.so
+
