@@ -17,7 +17,7 @@
 #define PFILE_NAME	"count"
 
 /*需要创建的进程数*/
-#define PROCESS_NUM		100
+#define PROCESS_NUM		10000
 
 /*每个进程请求次数*/
 #define REQUEST_TIMES	10000
