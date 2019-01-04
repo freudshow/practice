@@ -187,6 +187,7 @@ static U32 XXH_read32(const void* memPtr)
 #define XXH_GCC_VERSION (__GNUC__ * 100 + __GNUC_MINOR__)
 
 /* Note : although _rotl exists for minGW (GCC under windows), performance seems poor */
+
 #if defined(_MSC_VER)
 #  define XXH_rotl32(x,r) _rotl(x,r)
 #  define XXH_rotl64(x,r) _rotl64(x,r)
@@ -200,12 +201,13 @@ static U32 XXH_read32(const void* memPtr)
 #elif XXH_GCC_VERSION >= 403
 #  define XXH_swap32 __builtin_bswap32
 #else
+/* transform Endianness */
 static U32 XXH_swap32 (U32 x)
 {
-    return  ((x << 24) & 0xff000000 ) |
-            ((x <<  8) & 0x00ff0000 ) |
-            ((x >>  8) & 0x0000ff00 ) |
-            ((x >> 24) & 0x000000ff );
+    return  ((x << 24) & 0xff000000 ) | //lowest to highest
+            ((x <<  8) & 0x00ff0000 ) | //2nd lowest to 3rd lowest
+            ((x >>  8) & 0x0000ff00 ) | //3rd lowest to 2nd lowest
+            ((x >> 24) & 0x000000ff );  //highest to lowest
 }
 #endif
 
