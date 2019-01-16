@@ -1,28 +1,45 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int fibonacci(int n);
+typedef unsigned long long u64;
 
-int main(int argc, char **argv)
+u64 fibRec(u64 n)
 {
-    int fib;
-    int n;
-    for (n = 0; n <= 42; n++) {
-        fib = fibonacci(n);
-        printf("fibonnaci(%d) = %dn", n, fib);
+    u64 fib;
+    if (n > 1) {
+        fib = fibRec(n -1) + fibRec(n - 2);
+    } else {
+        fib = n;
     }
-    return 0;
+
+    return fib;
 }
 
-int fibonacci(int n)
+u64 fibLinear(u64 n)
 {
-    int fib;
-    if (n <= 0) {
-        fib = 0;
-    } else if (n == 1) {
-        fib = 1;
+    u64 f = 0;
+    u64 g = 1;
+
+    if (n > 1) {
+        n -= 1;
+        while (n--) {
+            g = g+f;
+            f = g-f;
+        }
     } else {
-        fib = fibonacci(n -1) + fibonacci(n - 2);
+        g = n;
     }
-    
-    return fib;
+
+    return g;
+}
+
+u64 main(u64 argc, char **argv)
+{
+    unsigned int n = 0;
+
+    for (n = 0; n <= atol(argv[1]); n++)
+        printf("fibonnaci(%u) = %ll \n", n, fibLinear(n));
+
+    return 0;
 }
