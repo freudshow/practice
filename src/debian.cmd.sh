@@ -39,7 +39,7 @@ chmod 777 -R /nfsroot
 /etc/init.d/nfs-kernel-server restart
 mount -t nfs -o nolock localhost:/nfsroot /mnt
 
-sudo apt-get install linux-headers-$(uname -r) dkms caja-open-terminal git vim cscope ctags chromium build-essential -y
+sudo apt-get install linux-headers-$(uname -r) dkms caja-open-terminal git vim cscope ctags build-essential -y
 
 #git alias
 git config --global user.name "s_baoshan"
@@ -50,6 +50,9 @@ git config --global alias.ci commit
 git config --global alias.st status
 git config --global core.filemode false
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+#git clone 时显示Filename too long的解决办法
+git config --global core.longpaths true
+
 
 #把 gw 分支下的libevent/event.h合并到dev_save分支下的libevent/event.h
 git checkout dev_save
@@ -74,8 +77,7 @@ sudo dpkg --add-architecture i386
 sudo apt install  -y lib32z1 lib32ncurses5 gcc-multilib
 
 #安装6.828开发环境
-sudo apt install  -y libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool zlib1g-dev
-sudo apt install  -y libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-1-dev
+sudo apt install  -y libgmp-dev libmpfr-dev libmpc-dev binutils pkg-config autoconf automake libtool zlib1g-dev libsdl1.2-dev libtool-bin libglib2.0-dev libz-dev libpixman-1-dev
 git clone http://web.mit.edu/ccutler/www/qemu.git
 ./configure --disable-kvm --prefix=/opt/qemu --target-list="i386-softmmu x86_64-softmmu"
 make
@@ -131,7 +133,7 @@ sudo chmod 777 /srv/tftp -R
 tftp tftp-server-ip -g -r remotefile
 
 #install LaTex
-sudo apt-get install texlive-full texmaker -y
+sudo apt-get -y install texlive-full texmaker
 
 test tex:
 \documentclass{article}
@@ -170,8 +172,6 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 #look directory's size
 du -sh .
 
-
-
 #Ubuntu下配置Common Lisp开发环境
 sudo apt-get install emacs -y
 #安装 Common Lisp 环境
@@ -192,12 +192,12 @@ emacs 或 emacs -nw
 输入 Alt + X，输入 slime，回车
 
 #mount ftpfs
-sudo apt install curlftpfs -y
+sudo apt install -y curlftpfs
 mkdir -p ~/ftpfs
 curlftpfs ftp://root:1@192.168.0.4 /home/floyd/ftpfs/
 
 #pppoe-server
-sudo apt-get install pppoe pppoeconf
+sudo apt-get install -y pppoe pppoeconf
 sudo echo "\"user\" * \"123\" *">/etc/pap-secrets
 sudo echo "\"user\" * \"123\" *">/etc/chap-secrets
 sudo echo "login">/etc/ppp/pppoe-server-options
@@ -208,8 +208,6 @@ modprobe pppoe
 sudo pppoe-server -I enp9s0 -L 192.168.13.1 -R 192.168.13.100 -N 333
 sudo pppoe-server -I eno1 -L 192.168.13.1 -R 192.168.13.100 -N 333
 
-#git clone 时显示Filename too long的解决办法
-git config --global core.longpaths true
 
 #debian中查找已安装软件及卸载软件
 dpkg -l | grep -i name

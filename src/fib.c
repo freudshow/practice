@@ -24,8 +24,8 @@ u64 fibLinear(u32 n)
 
     if (n > 1) {
         while (--n) {
-            g = g+f;
-            f = g-f;
+            g = g+f; // g <- a[n+1] <- (a[n] + a[n-1])
+            f = g-f; // f <- (a[n+1] - a[n-1] = a[n])
         }
     } else {
         g = n;
