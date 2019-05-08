@@ -11,4 +11,5 @@ clean:
 		for i in $(DIRS); do \
 					(cd $$i/Release && echo "cleaning $$i" && make clean) || exit 1; \
 						done
+		rm bin_arm/*
 
