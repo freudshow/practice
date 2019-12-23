@@ -38,6 +38,7 @@ typedef struct {
 #define CONVERT_CR_LF		1
 #define NOT_CONVERT_CR_LF	0
 	u8 convert;
+	u8 dev[128];
 	char at[512];
 } option_s;
 typedef option_s *option_p;
@@ -50,16 +51,16 @@ typedef option_s *option_p;
 extern void debug(const char *file, const char *func, u32 line, u8 printEnter,
 		const char *fmt, ...);
 
-static const char *optString = "l:t:w:i:m:p:a:ch";
-static const struct option longOpts[] = { { "listen", required_argument, NULL, 'l' },
+static const char *optString = "d:l:t:w:i:m:p:a:ch";
+static const struct option longOpts[] = { { "at", required_argument, NULL, 'a' },
+										  { "convert",no_argument, NULL, 'c' },
+										  { "dev", required_argument, NULL, 'd' },
+										  { "inv", required_argument, NULL, 'i' },
+                                          { "listen", required_argument, NULL, 'l' },
+										  { "master", required_argument, NULL, 'm' },
+										  { "power", required_argument, NULL, 'p' },
                                           { "times", required_argument, NULL, 't' },
                                           { "wait",	required_argument, NULL, 'w' },
-                                          { "inv", required_argument, NULL, 'i' },
-                                          { "master", required_argument, NULL, 'm' },
-										  { "power", required_argument, NULL, 'p' },
-										  { "power", required_argument, NULL, 'p' },
-										  { "at", required_argument, NULL, 'a' },
-										  { "convert",no_argument, NULL, 'c' },
 										  { "help",no_argument, NULL, 'h' },
 										  { NULL, no_argument, NULL, 0 }
                                         };
@@ -101,19 +102,15 @@ int gpio_writebyte(char *devpath, s8 data) {
     }
 }
 
-int OpenMuxCom(u8 port, int baud, unsigned char *par, unsigned char stopb,
+int OpenMuxCom(u8* dev, int baud, unsigned char *par, unsigned char stopb,
 		u8 bits) {
 	int Com_Port = 0;
 	struct termios old_termi, new_termi;
 	int baud_lnx = 0;
-	unsigned char tmp[128];
-	memset(tmp, 0, 128);
-//	sprintf((char*) tmp, "/dev/mux%d", port); // /dev/ttyS0
-	sprintf((char*)tmp, "/dev/ttyS%d", port);
 
-	fprintf(stderr, "open com: %s\n", tmp);
+	fprintf(stderr, "open com: %s\n", dev);
 
-	Com_Port = open((char*) tmp, O_RDWR | O_NOCTTY); /* 打开串口文件 */
+	Com_Port = open((char*) dev, O_RDWR | O_NOCTTY); /* 打开串口文件 */
 	if (Com_Port < 0) {
 		fprintf(stderr, "open the serial port fail! errno is: %d\n", errno);
 		return -1; /*打开串口失败*/
@@ -211,12 +208,14 @@ int OpenMuxCom(u8 port, int baud, unsigned char *par, unsigned char stopb,
 		fprintf(stderr, "Set serial port parameter error!\n"); // close(Com_Port);
 		return 0;
 	}
+
 	return Com_Port;
 }
 
 void usage() {
 	fprintf(stderr, "功能: 向4G模块发送命令, 并监听应答报文\n");
 	fprintf(stderr, "用法: at [选项]\n");
+	fprintf(stderr, "-d,\t--dev\t\t\t\t要打开的设备名, 如果不指定, 默认打开 /dev/ttyS0;\n");
 	fprintf(stderr, "-l,\t--listen\t\t\t\t监听开关, 0-发送报文并等待应答; 1-一直监听串口不发送at, 默认0;\n");
 	fprintf(stderr, "-t,\t--times\t\t\t\t发送并监听次数, 默认0, 无限次, 最大值1024;\n");
 	fprintf(stderr, "-w,\t--wait\t\t\t\t发送报文后, 读取串口数据的次数, 默认20次, 最多1024次;\n");
@@ -226,6 +225,7 @@ void usage() {
 	fprintf(stderr, "-c,\t--convert\t\t\t\t要转换at命令中的换行符\n");
 	fprintf(stderr, "-a,\t--at\t\t\t\t传入的at命令, 必须以半角引号(\"\")封闭.\n");
 	fprintf(stderr, "-h,\t--help\t\t\t\t打印本帮助\n");
+	fprintf(stderr, "例如: at -p 1 -w 10 -i 500 -t 50 -m 0 -c -d \"/dev/ttyS0\" -a \"AT\r\n\"\n");
 }
 
 void openModel() {
@@ -258,6 +258,11 @@ void getOptions(int argc, char *argv[], option_p pOpt) {
 
 	while ((ch = getopt_long(argc, argv, optString, longOpts, &longIndex)) != -1) {
 		switch (ch) {
+		case 'd':
+			fprintf(stderr, "option -d: %s\n", optarg);
+			bzero(pOpt->dev, sizeof(pOpt->dev));
+			strcpy(pOpt->dev, optarg);
+			break;
 		case 'l':
 			fprintf(stderr, "option -l: %s\n", optarg);
 			pOpt->listen = atoi(optarg);
@@ -301,7 +306,7 @@ void getOptions(int argc, char *argv[], option_p pOpt) {
 			}
 			break;
 		case 'c':
-			fprintf(stderr, "option -c used\n");
+			fprintf(stderr, "option -c used, convert CR LF to 0x0D and 0x0A\n");
 			pOpt->convert = CONVERT_CR_LF;
 			break;
 		case 'a':
@@ -330,6 +335,20 @@ typedef struct trans {
 	convState_e next;
 }trans_s;
 
+
+/*
+ * use graphviz to generate svg DFA using command:
+ * dot -Tsvg -o bin/at.svg at.state.dot
+ * digraph at {
+ *	 e_state_init -> e_state_slash [label = "'\\'"]
+ *	 e_state_init -> e_state_init [label = "other"]
+ *	 e_state_slash -> e_state_crlf [label = "'r'"]
+ *	 e_state_slash -> e_state_crlf [label = "'n'"]
+ *	 e_state_crlf -> e_state_slash [label = "'\\'"]
+ *	 e_state_slash -> e_state_init [label = "other"]
+ *	 e_state_crlf -> e_state_init  [label = "other"]
+ * }
+ */
 trans_s tbl[] = {
 			{e_state_init, '\\', e_state_slash},
 			{e_state_slash, 'r', e_state_crlf},
@@ -400,10 +419,13 @@ void convertCRLF(u8* buf)
 }
 
 void printOpt(option_p pOpt) {
+	fprintf(stderr, "dev: %s\n", pOpt->dev);
 	fprintf(stderr, "listen: %u\n", pOpt->listen);
 	fprintf(stderr, "times: %u\n", pOpt->times);
 	fprintf(stderr, "wait: %u\n", pOpt->wait);
 	fprintf(stderr, "inv: %u\n", pOpt->inv);
+	fprintf(stderr, "convert: %d\n", pOpt->convert);
+	fprintf(stderr, "master: %d\n", pOpt->master);
 	fprintf(stderr, "at: %s\n", pOpt->at);
 	fprintf(stderr, "power: %u\n", pOpt->power);
 }
@@ -482,25 +504,22 @@ int main(int argc, char **argv) {
 		openModel();
 	}
 
-#ifdef C1
-	fd = OpenMuxCom(0, 115200, (unsigned char*) "none", 1, 8);
-#elif defined C2
-	fd = OpenMuxCom(5, 115200, (unsigned char*) "none", 1, 8);
-#endif
+	if (strlen(options.dev) > 0) {
+		fd = OpenMuxCom(options.dev, 115200, (unsigned char*) "none", 1, 8);
+	} else {
+		fd = OpenMuxCom("/dev/ttyS0", 115200, (unsigned char*) "none", 1, 8);
+	}
 
 	if (fd < 0) {
 		perror("OpenMuxCom failed!");
 		exit(1);
 	}
 
-	DEBUG_TIME_LINE("at: %s", options.at);
 	if (CONVERT_CR_LF == options.convert) {
 		convertCRLF(options.at);
-		DEBUG_TIME_LINE("at: %s", options.at);
 	}
 
 	if (strlen(options.at) == 0) {
-		DEBUG_TIME_LINE("at lengh is 0!");
 		goto ret;
 	} else {
 		strcpy(sbuf, options.at);
