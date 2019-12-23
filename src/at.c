@@ -225,7 +225,7 @@ void usage() {
 	fprintf(stderr, "-c,\t--convert\t\t\t\t要转换at命令中的换行符\n");
 	fprintf(stderr, "-a,\t--at\t\t\t\t传入的at命令, 必须以半角引号(\"\")封闭.\n");
 	fprintf(stderr, "-h,\t--help\t\t\t\t打印本帮助\n");
-	fprintf(stderr, "例如: at -p 1 -w 10 -i 500 -t 50 -m 0 -c -d \"/dev/ttyS0\" -a \"AT\r\n\"\n");
+	fprintf(stderr, "例如: at -p 1 -w 10 -i 500 -t 50 -m 0 -c -d \"/dev/ttyS0\" -a \"AT\\r\\n\"\n");
 }
 
 void openModel() {
