@@ -1,0 +1,26 @@
+
+at -p 2 -w 10 -i 500 -t 50 -m 0 -c -d "/dev/ttyS5" -a "AT$MYNETCON=0,\"APN\",\"ZJJC\"\r\n"
+
+
+at -p 2 -w 10 -i 500 -t 50 -m 0 -c -d "/dev/ttyS5" -a "AT+CGDCONT=1,\"IP\",\"ZJJC\"\r\n"
+
+
+at -p 2 -w 10 -i 500 -t 50 -m 0 -c -d "/dev/ttyS5" -a "AT\$MYNETACT=0,1\r\n"
+
+at -p 2 -w 10 -i 500 -t 50 -m 0 -c -d "/dev/ttyS5" -a "AT\$MYSYSINFO\r\n" //网络注册信息查询
+
+响应
+$MYSYSINFO:<sysmode>,<MNC>
+OK
+
+<sysmode> 当前注册的网络制式
+0 No service
+2 2G（包括 GPRS 和 CDMA）
+3 3G（包括 WCDMA、 TD-SCDMA 和 CDMA EVDO）
+4 4G（包括 FDD-LTE 和 TDD-LTE）
+
+<MNC> 网络运营商 Code 码
+00 注册失败
+01 China Mobile（中国移动）
+02 China Unicom（中国联通）
+03 China Telecom（中国电信）

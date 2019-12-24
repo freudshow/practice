@@ -51,6 +51,43 @@ typedef option_s *option_p;
 extern void debug(const char *file, const char *func, u32 line, u8 printEnter,
 		const char *fmt, ...);
 
+
+typedef enum ispEnum {
+	e_unknown = 0,
+	e_chinaMobile,
+	e_chinaUnicom,
+	e_chinaTelecom
+}ispEnum_e;
+
+typedef struct districtApn {
+	char*		city;
+	u16			areaCode;
+	ispEnum_e	isp;
+	char*		ip;
+	char*		port;
+	char*		apn;
+	char*		usr;
+	char*		pwd;
+}districtApn_s;
+
+static const districtApn_s tblApn[] = {
+		{"QinHuangDao","1383","e_chinaMobile","172.16.30.56","9010","BDL8-QHD.HE","",""},
+		{"QinHuangDao","1383","e_chinaUnicom","192.168.9.1","9010","qhdgdj1.heapn","",""},
+		{"QinHuangDao","1383","e_chinaTelecom","192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"ChengDe","1358","e_chinaMobile","192.168.001.002","9010","CDPOW8-CHD.HE","",""},
+		{"ChengDe","1358","e_chinaUnicom","192.168.010.002","9010","L.WXPOS.HEAPN","",""},
+		{"ChengDe","1358","e_chinaTelecom","192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"ZhangJiaKou","1397","e_chinaMobile","192.168.1.5","9010","gdgs8-zjk.he","",""},
+		{"ZhangJiaKou","1397","e_chinaUnicom","192.168.254.245","9010","zjgdj1.heapn","",""},
+		{"ZhangJiaKou","1397","e_chinaTelecom","192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"TangShan","1382","e_chinaMobile","172.29.1.5","9010","PMON8-TAS.HE","",""},
+		{"TangShan","1382","e_chinaUnicom","172.29.1.5","9010","ydxx.ydoa.heapn","",""},
+		{"TangShan","1382","e_chinaTelecom","192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"LangFang","1390","e_chinaMobile","211.143.102.138","9010","POW8-LAF.HE","",""},
+		{"LangFang","1390","e_chinaUnicom","192.168.0.10","9010","LFGHD.YCCB.HEAPN","",""},
+		{"LangFang","1390","e_chinaTelecom","192.168.0.2","9010","PRIVATE.VPDN.HE","LFGDJ@LFGDJ.VPDN.HE","LFGDJ"}
+};
+
 static const char *optString = "d:l:t:w:i:m:p:a:ch";
 static const struct option longOpts[] = { { "at", required_argument, NULL, 'a' },
 										  { "convert",no_argument, NULL, 'c' },
