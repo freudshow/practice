@@ -1,4 +1,25 @@
 
+	/*山东测试发现有的厂家模块需要加AT+CGDCONT=1,"IP","APN"才能上线*/
+	case 60:
+		retry = 0;
+		ao->state = 61;
+		return 100;
+	case 61:
+		if (retry > 8) {
+			ao->state = 0;
+			return 100;
+		}
+		if (SendCommandGetOK(ao, 1, "\rAT+CGDCONT=1,\"IP\",\"%s\"\r\n", &(((CLASS25*) dbGet("class25"))->commconfig.apn[1])) == 1) {
+			retry = 0;
+			ao->state = 50;
+			return 100;
+		}
+		retry++;
+		return 500;
+	/*山东测试发现有的厂家模块需要加AT+CGDCONT=1,"IP","APN"才能上线end*/
+
+
+
 at -p 2 -w 10 -i 500 -t 50 -m 0 -c -d "/dev/ttyS5" -a "AT$MYNETCON=0,\"APN\",\"ZJJC\"\r\n"
 
 
@@ -15,12 +36,36 @@ OK
 
 <sysmode> 当前注册的网络制式
 0 No service
-2 2G（包括 GPRS 和 CDMA）
-3 3G（包括 WCDMA、 TD-SCDMA 和 CDMA EVDO）
-4 4G（包括 FDD-LTE 和 TDD-LTE）
+2 2G(包括 GPRS 和 CDMA)
+3 3G(包括 WCDMA、 TD-SCDMA 和 CDMA EVDO)
+4 4G(包括 FDD-LTE 和 TDD-LTE)
 
 <MNC> 网络运营商 Code 码
 00 注册失败
-01 China Mobile（中国移动）
-02 China Unicom（中国联通）
-03 China Telecom（中国电信）
+01 China Mobile(中国移动)
+02 China Unicom(中国联通)
+03 China Telecom(中国电信)
+
+国际移动签署者标识<IMSI> International Mobile Subscriber Identity (string without double quotes)
+Dec 24 14:21:09 ava user.info cjcomm: AT+CIMI
+Dec 24 14:21:10 ava user.info cjcomm: [AT]recv:
+Dec 24 14:21:10 ava user.info cjcomm: AT+CIMI460045872400474OK
+
+460045872400474
+IMSI:460001357924680
+MCC	460	中华人民共和国
+MNC	04	中国移动
+MSIN	1357924680
+
+
+46000 中国移动 (GSM)
+46002 中国移动 (TD-S)
+46004
+46007 中国移动 (TD-S)
+
+46001 中国联通 (GSM)
+46006 中国联通 (WCDMA)
+
+46003 中国电信(CDMA)
+46005 中国电信 (CDMA)
+46011 中国电信 (FDD-LTE)
