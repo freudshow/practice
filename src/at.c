@@ -40,8 +40,8 @@ typedef struct {
 	u8 convert;
 	u8 dev[128];
 	char at[512];
-	char imsi[512];
-	u16 region;
+	u32 imsi;
+	u32 region;
 } option_s;
 typedef option_s *option_p;
 
@@ -65,7 +65,7 @@ typedef enum ispEnum {
 
 typedef struct districtApn {
 	char*		city;
-	u16			areaCode;
+	u32			areaCode;
 	ispEnum_e	isp;
 	char*		ip;
 	char*		port;
@@ -94,33 +94,33 @@ static const districtApn_s tblApn[] = {
 
 typedef struct imsiCode {
 	ispEnum_e	isp;
-	char*		code;
+	u32			code;
 }imsiCode_s;
 
 /*
  * http://en.wikipedia.org/wiki/Mobile_country_code
  */
 static const imsiCode_s tblIMSI[] = {
-		{e_chinaMobile, "46000"},
-		{e_chinaMobile, "46002"},
-		{e_chinaMobile, "46004"},
-		{e_chinaMobile, "46007"},
-		{e_chinaMobile, "46008"},
+		{e_chinaMobile, 46000},
+		{e_chinaMobile, 46002},
+		{e_chinaMobile, 46004},
+		{e_chinaMobile, 46007},
+		{e_chinaMobile, 46008},
 
-		{e_chinaUnicom, "46001"},
-		{e_chinaUnicom, "46006"},
-		{e_chinaUnicom, "46009"},
+		{e_chinaUnicom, 46001},
+		{e_chinaUnicom, 46006},
+		{e_chinaUnicom, 46009},
 
-		{e_chinaTelecom, "46003"},
-		{e_chinaTelecom, "46005"},
-		{e_chinaTelecom, "46011"},
+		{e_chinaTelecom, 46003},
+		{e_chinaTelecom, 46005},
+		{e_chinaTelecom, 46011},
 
-		{e_chinaTietong, "46020"}
+		{e_chinaTietong, 46020}
 };
 
 
-static u8 getISP(char *imsi, ispEnum_e *isp) {
-	if (NULL == imsi || NULL == isp) {
+static u8 getISP(u32 imsi, ispEnum_e *isp) {
+	if (NULL == isp) {
 		return 0;
 	}
 
@@ -128,7 +128,7 @@ static u8 getISP(char *imsi, ispEnum_e *isp) {
 	char *pos = NULL;
 	int len = ARRAY_COUNT(tblIMSI);
 	for (i = 0; i < len; i++) {
-		if ((pos = strstr(imsi, tblIMSI[i].code)) != NULL) {
+		if (imsi == tblIMSI[i].code) {
 			*isp = tblIMSI[i].isp;
 			return 1;
 		}
@@ -137,8 +137,8 @@ static u8 getISP(char *imsi, ispEnum_e *isp) {
 	return 0;
 }
 
-u8 getApnPara(u16 areaCode, char *imsi, districtApn_s *apn) {
-	if (NULL == imsi) {
+u8 getApnPara(u16 areaCode, u32 imsi, districtApn_s *apn) {
+	if (NULL == apn) {
 		return 0;
 	}
 
@@ -170,7 +170,27 @@ void printApn(districtApn_s *apn)
 {
 	fprintf(stderr, "city: %s\n", apn->city);
 	fprintf(stderr, "areaCode: %d\n", apn->areaCode);
-	fprintf(stderr, "isp: %d\n", apn->isp);
+	fprintf(stderr, "isp: ");
+	switch (apn->isp) {
+	case e_unknown:
+		fprintf(stderr, "unknown\n");
+		break;
+	case e_chinaMobile:
+		fprintf(stderr, "e_chinaMobile\n");
+		break;
+	case e_chinaUnicom:
+		fprintf(stderr, "e_chinaUnicom\n");
+		break;
+	case e_chinaTelecom:
+		fprintf(stderr, "e_chinaTelecom\n");
+		break;
+	case e_chinaTietong:
+		fprintf(stderr, "e_chinaTietong\n");
+		break;
+	default:
+		fprintf(stderr, "unknown\n");
+		break;
+	}
 	fprintf(stderr, "ip: %s\n", apn->ip);
 	fprintf(stderr, "port: %s\n", apn->port);
 	fprintf(stderr, "apn: %s\n", apn->apn);
@@ -353,7 +373,7 @@ void usage() {
 	fprintf(stderr, "-p,\t--power\t\t\t\t开关4G模块, 0-关机, 1-开机, 2-不进行开关机操作\n");
 	fprintf(stderr, "-c,\t--convert\t\t\t\t要转换at命令中的换行符\n");
 	fprintf(stderr, "-a,\t--at\t\t\t\t传入的at命令, 必须以半角引号(\"\")封闭.\n");
-	fprintf(stderr, "-r,\t--imsi\t\t\t\t指定冀北地区区域代码.\n");
+	fprintf(stderr, "-r,\t--region\t\t\t\t指定冀北地区区域代码.\n");
 	fprintf(stderr, "-s,\t--imsi\t\t\t\t查询冀北地区apn, 用户名, 密码等参数, 单独运行, 必须以半角引号(\"\")封闭.\n");
 	fprintf(stderr, "-h,\t--help\t\t\t\t打印本帮助\n");
 	fprintf(stderr, "例如: at -p 1 -w 10 -i 500 -t 50 -m 0 -c -d \"/dev/ttyS0\" -a \"AT\\r\\n\"\n");
@@ -451,8 +471,7 @@ void getOptions(int argc, char *argv[], option_p pOpt) {
 			break;
 		case 's':
 			fprintf(stderr, "option -s: %s\n", optarg);
-			bzero(pOpt->imsi, sizeof(pOpt->imsi));
-			strcpy(pOpt->imsi, optarg);
+			sscanf(optarg, "%*[^0-9]%5u", &pOpt->imsi);
 			break;
 		case 'h':
 		default:
@@ -567,7 +586,7 @@ void printOpt(option_p pOpt) {
 	fprintf(stderr, "convert: %d\n", pOpt->convert);
 	fprintf(stderr, "master: %d\n", pOpt->master);
 	fprintf(stderr, "at: %s\n", pOpt->at);
-	fprintf(stderr, "imsi: %s\n", pOpt->imsi);
+	fprintf(stderr, "imsi: %u\n", pOpt->imsi);
 	fprintf(stderr, "power: %u\n", pOpt->power);
 }
 
@@ -636,19 +655,16 @@ int main(int argc, char **argv) {
 
 	bzero(&options, sizeof(options));
 	getOptions(argc, argv, &options);
-	printOpt(&options);
 
-	if (strlen(options.imsi) == 0) {
-		goto ret;
-	} else {
+	if (options.imsi > 0) {
 		districtApn_s apn = {};
-		if (getApnPara(options.region, options.imsi, &apn) == 0) {
-			goto ret;
-		} else {
+		if (getApnPara(options.region, options.imsi, &apn) == 1) {
 			printApn(&apn);
 			goto ret;
 		}
 	}
+
+	printOpt(&options);
 
 	if (0 == options.power) {
 		closeModel();

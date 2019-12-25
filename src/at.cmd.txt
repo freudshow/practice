@@ -1,24 +1,41 @@
+static const districtApn_s tblApn[] = {
+		{"QinHuangDao",1383,e_chinaMobile,"172.16.30.56","9010","BDL8-QHD.HE","\0","\0"},
+		{"QinHuangDao",1383,e_chinaUnicom,"192.168.9.1","9010","qhdgdj1.heapn","\0","\0"},
+		{"QinHuangDao",1383,e_chinaTelecom,"192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"ChengDe",1358,e_chinaMobile,"192.168.001.002","9010","CDPOW8-CHD.HE","\0","\0"},
+		{"ChengDe",1358,e_chinaUnicom,"192.168.010.002","9010","L.WXPOS.HEAPN","\0","\0"},
+		{"ChengDe",1358,e_chinaTelecom,"192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"ZhangJiaKou",1397,e_chinaMobile,"192.168.1.5","9010","gdgs8-zjk.he","\0","\0"},
+		{"ZhangJiaKou",1397,e_chinaUnicom,"192.168.254.245","9010","zjgdj1.heapn","\0","\0"},
+		{"ZhangJiaKou",1397,e_chinaTelecom,"192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"TangShan",1382,e_chinaMobile,"172.29.1.5","9010","PMON8-TAS.HE","\0","\0"},
+		{"TangShan",1382,e_chinaUnicom,"172.29.1.5","9010","ydxx.ydoa.heapn","\0","\0"},
+		{"TangShan",1382,e_chinaTelecom,"192.168.0.2","9010","private.vpdn.he","lfgdj@lfgdj.vpdn.he","lfgdj"},
+		{"LangFang",1390,e_chinaMobile,"211.143.102.138","9010","POW8-LAF.HE","\0","\0"},
+		{"LangFang",1390,e_chinaUnicom,"192.168.0.10","9010","LFGHD.YCCB.HEAPN","\0","\0"},
+		{"LangFang",1390,e_chinaTelecom,"192.168.0.2","9010","PRIVATE.VPDN.HE","LFGDJ@LFGDJ.VPDN.HE","LFGDJ"}
+};
 
-	/*山东测试发现有的厂家模块需要加AT+CGDCONT=1,"IP","APN"才能上线*/
-	case 60:
-		retry = 0;
-		ao->state = 61;
-		return 100;
-	case 61:
-		if (retry > 8) {
-			ao->state = 0;
-			return 100;
-		}
-		if (SendCommandGetOK(ao, 1, "\rAT+CGDCONT=1,\"IP\",\"%s\"\r\n", &(((CLASS25*) dbGet("class25"))->commconfig.apn[1])) == 1) {
-			retry = 0;
-			ao->state = 50;
-			return 100;
-		}
-		retry++;
-		return 500;
-	/*山东测试发现有的厂家模块需要加AT+CGDCONT=1,"IP","APN"才能上线end*/
+static const imsiCode_s tblIMSI[] = {
+		{e_chinaMobile, 46000},
+		{e_chinaMobile, 46002},
+		{e_chinaMobile, 46004},
+		{e_chinaMobile, 46007},
+		{e_chinaMobile, 46008},
+
+		{e_chinaUnicom, 46001},
+		{e_chinaUnicom, 46006},
+		{e_chinaUnicom, 46009},
+
+		{e_chinaTelecom, 46003},
+		{e_chinaTelecom, 46005},
+		{e_chinaTelecom, 46011},
+
+		{e_chinaTietong, 46020}
+};
 
 
+at -r 1383 -s "CIMI460045872400474OK"
 
 at -p 2 -w 10 -i 500 -t 50 -m 0 -c -d "/dev/ttyS5" -a "AT$MYNETCON=0,\"APN\",\"ZJJC\"\r\n"
 
