@@ -26,6 +26,14 @@ typedef double fp64;
 #define TRUE	(0)
 #define FALSE	(-1)
 
+#define delay(A) usleep((A)*1000)
+
+typedef enum atFunc{
+	e_func_unknown = 0, // 未知
+	e_func_at,		//测试单独的at命令
+	e_func_test		//测试冀北的拨号流程
+}atFunc_e;
+
 typedef struct {
 	u8 listen;
 #define MASTER_DEV	0
@@ -42,6 +50,7 @@ typedef struct {
 	char at[512];
 	u32 imsi;
 	u32 region;
+	atFunc_e func;
 } option_s;
 typedef option_s *option_p;
 
@@ -198,7 +207,7 @@ void printApn(districtApn_s *apn)
 	fprintf(stderr, "pwd: %s\n", apn->pwd);
 }
 
-static const char *optString = "d:l:t:w:i:m:p:a:r:s:ch";
+static const char *optString = "d:l:t:w:i:m:p:a:r:s:f:ch";
 static const struct option longOpts[] = { { "at", required_argument, NULL, 'a' },
 										  { "convert",no_argument, NULL, 'c' },
 										  { "dev", required_argument, NULL, 'd' },
@@ -210,6 +219,7 @@ static const struct option longOpts[] = { { "at", required_argument, NULL, 'a' }
                                           { "wait",	required_argument, NULL, 'w' },
 										  { "region",	required_argument, NULL, 'r' },
 										  { "imsi",	required_argument, NULL, 's' },
+										  { "function",	required_argument, NULL, 'f' },
 										  { "help",no_argument, NULL, 'h' },
 										  { NULL, no_argument, NULL, 0 }
                                         };
@@ -375,6 +385,7 @@ void usage() {
 	fprintf(stderr, "-a,\t--at\t\t\t\t传入的at命令, 必须以半角引号(\"\")封闭.\n");
 	fprintf(stderr, "-r,\t--region\t\t\t\t指定冀北地区区域代码.\n");
 	fprintf(stderr, "-s,\t--imsi\t\t\t\t查询冀北地区apn, 用户名, 密码等参数, 单独运行, 必须以半角引号(\"\")封闭.\n");
+	fprintf(stderr, "-f,\t--function\t\t\t\t指定程序功能, 0-未知, 1-测试单独的at命令, 2-测试冀北的拨号上网.\n");
 	fprintf(stderr, "-h,\t--help\t\t\t\t打印本帮助\n");
 	fprintf(stderr, "例如: at -p 1 -w 10 -i 500 -t 50 -m 0 -c -d \"/dev/ttyS0\" -a \"AT\\r\\n\"\n");
 }
@@ -472,6 +483,15 @@ void getOptions(int argc, char *argv[], option_p pOpt) {
 		case 's':
 			fprintf(stderr, "option -s: %s\n", optarg);
 			sscanf(optarg, "%*[^0-9]%5u", &pOpt->imsi);
+			break;
+		case 'f':
+			fprintf(stderr, "option -f: %s\n", optarg);
+			pOpt->func = atoi(optarg);
+			if (pOpt->func == 0 ||  pOpt->func > e_func_test) {
+				fprintf(stderr, "option -f: para error\n");
+				usage();
+				exit(0);
+			}
 			break;
 		case 'h':
 		default:
@@ -590,7 +610,7 @@ void printOpt(option_p pOpt) {
 	fprintf(stderr, "power: %u\n", pOpt->power);
 }
 
-void printBuf(u8* buf, u32 bufSize)
+void printBuf(const u8* buf, u32 bufSize)
 {
 	u32 i = 0;
 
@@ -604,7 +624,10 @@ void printBuf(u8* buf, u32 bufSize)
 	fprintf(stderr, "%02X\n", buf[i]);
 }
 
-s8 sendcom(int fd, u8 *buf, u32 bufSize) {
+u8 rbuf[2048] = { 0 };
+u8 sbuf[2048] = { 0 };
+
+s8 sendcom(int fd, const u8 *buf, u32 bufSize) {
 	if (0 == bufSize || NULL == buf)
 		return FALSE;
 
@@ -635,6 +658,65 @@ void readcom(int fd, u8 *buf, u32 *bufSize) {
 	}
 }
 
+int readAt(int fd, u8 *buf, u32 bufSize) {
+	if ( NULL == buf)
+		return 0;
+
+	int len = read(fd, buf, bufSize);
+
+	return len;
+}
+
+static const u8 at[] = "AT\r\n";
+static const u8 atCPIN[] = "AT+CPIN?\r\n";
+static const u8 atCSQ[] = "AT+CSQ\r\n";
+static const u8 atCREG[] = "AT+CREG?\r\n";
+static const u8 atAPN[] = "AT$MYNETCON=0,\"APN\",\"CMNET\"\r\n";
+static const u8 atUSERPWD[] = "AT$MYNETCON=0,\"USERPWD\",\"card,card\"\r\n";
+static const u8 atACT[] = "AT$MYUSBNETACT=0,1\r\n";
+static const u8 atNETQ[] = "AT$MYUSBNETACT?\r\n";
+static const u8 dhcp[] = "udhcpc -i usb0";
+
+static const u8* atTbl[] = {at, atCPIN, atCSQ, atCREG, atAPN, atUSERPWD, atACT, atNETQ, dhcp};
+
+
+int testJibeiECM(int fd)
+{
+	static int atStep = 0;
+	const int tblLen = ARRAY_COUNT(atTbl);
+	int recvLen = 0;
+	int times = 0;
+	int bufsize = sizeof(rbuf);
+
+	DEBUG_TIME_LINE("");
+	for ( atStep = 0; atStep < tblLen-1; atStep++) {
+		sendcom(fd, atTbl[atStep], strlen(atTbl[atStep]));
+		times = 0;
+		while (times < 5) {
+			delay(500);
+			recvLen = readAt(fd, rbuf, bufsize);
+			if (recvLen > 0) {
+				DEBUG_OUT("[read]bufSize:%d; ", recvLen);
+				fprintf(stderr,"%s\n", rbuf);
+				printBuf(rbuf, recvLen);
+				fprintf(stderr, "\n");
+				break;
+			} else {
+				DEBUG_OUT("[read]no data\n");
+			}
+			times++;
+		}
+	}
+
+	if (atStep == tblLen-1) {
+		system(atTbl[atStep]);
+		delay(3000);
+		system("ping www.baidu.com");
+	}
+
+	return 1;
+}
+
 int main(int argc, char **argv) {
 	if (argc < 2) {
 		usage();
@@ -642,8 +724,7 @@ int main(int argc, char **argv) {
 	}
 
 	int fd = -1;
-	u8 rbuf[2048] = { 0 };
-	u8 sbuf[2048] = { 0 };
+
 	u32 sbufSize = sizeof(sbuf);
 	u32 rbufSize = sizeof(rbuf);
 	u32 sendcnt = 0;
@@ -666,12 +747,6 @@ int main(int argc, char **argv) {
 
 	printOpt(&options);
 
-	if (0 == options.power) {
-		closeModel();
-		exit(0);
-	} else if (1 == options.power) {
-		openModel();
-	}
 
 	if (strlen(options.dev) > 0) {
 		fd = OpenMuxCom(options.dev, 115200, (unsigned char*) "none", 1, 8);
@@ -682,6 +757,21 @@ int main(int argc, char **argv) {
 	if (fd < 0) {
 		perror("OpenMuxCom failed!");
 		exit(1);
+	}
+
+	if (e_func_test == options.func) {
+		if (testJibeiECM(fd))
+			fprintf(stderr, "passed");
+		else
+			fprintf(stderr, "failed");
+		exit(0);
+	}
+
+	if (0 == options.power) {
+		closeModel();
+		exit(0);
+	} else if (1 == options.power) {
+		openModel();
 	}
 
 	if (CONVERT_CR_LF == options.convert) {
