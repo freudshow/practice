@@ -184,6 +184,136 @@ int openCom(comConfig_s* config)
 	return fd;
 }
 
+void set_baudrate (struct termios* opt, unsigned int baudrate)
+{
+   cfsetispeed(opt, baudrate);
+   cfsetospeed(opt, baudrate);
+}
+
+void set_stopbit (struct termios *opt, const char *stopbit)
+{
+    if (0 == strcmp (stopbit, "1")) {
+        opt->c_cflag &= ~CSTOPB;            /* 1位停止位*/
+    } else if (0 == strcmp (stopbit, "1.5")) {
+        opt->c_cflag &= ~CSTOPB;            /* 1.5位停止位 */
+    } else if (0 == strcmp (stopbit, "2")) {
+        opt->c_cflag |= CSTOPB;             /* 2位停止位*/
+    } else {
+        opt->c_cflag &= ~CSTOPB;            /* 1位停止位*/
+    }
+}
+
+// set_data_bit函数
+// CSIZE--字符长度掩码。取值为 CS5, CS6, CS7, 或 CS8
+void set_data_bit (struct termios *opt, unsigned int databit)
+{
+    opt->c_cflag &= ~CSIZE;
+    switch (databit) {
+    case 8:
+        opt->c_cflag |= CS8;
+        break;
+    case 7:
+        opt->c_cflag |= CS7;
+        break;
+    case 6:
+        opt->c_cflag |= CS6;
+        break;
+    case 5:
+        opt->c_cflag |= CS5;
+        break;
+    default:
+        opt->c_cflag |= CS8;
+        break;
+    }
+}
+
+// set_parity函数
+// ‘N’和‘n’（无奇偶校验）、‘E’和‘e’（表示偶校验）、‘O’和‘o’（表示奇校验）。
+void set_parity (struct termios *opt, char parity)
+{
+    switch (parity)
+    {
+    case 'N':                 /*无校验*/
+    case 'n':
+        opt->c_cflag &= ~PARENB;
+        break;
+    case 'E':                 /*偶校验*/
+    case 'e':
+        opt->c_cflag |= PARENB;
+        opt->c_cflag &= ~PARODD;
+        break;
+    case 'O':                 /*奇校验*/
+    case 'o':
+        opt->c_cflag |= PARENB;
+        opt->c_cflag |= ~PARODD;
+        break;
+    default:                  /*其它选择为无校验 */
+        opt->c_cflag &= ~PARENB;
+        break;
+    }
+}
+
+int set_port_attr(int fd, int baudrate, int databit, const char* stopbit,
+                  char parity, int vtime, int vmin )
+{
+    struct termios opt;
+    tcgetattr(fd, &opt);
+
+    set_baudrate(&opt, baudrate);
+    set_data_bit(&opt, databit);
+    set_parity(&opt, parity);
+    set_stopbit(&opt, stopbit);
+
+    opt.c_cflag &= ~CRTSCTS;       // 不使用硬件流控制
+    opt.c_cflag |= CLOCAL | CREAD; // CLOCAL--忽略 modem 控制线,本地连线, 不具数据机控制功能,
+                                   // CREAD--使能接收标志
+    /*
+    IXON--启用输出的 XON/XOFF 流控制
+    IXOFF--启用输入的 XON/XOFF 流控制
+    IXANY--允许任何字符来重新开始输出
+    IGNCR--忽略输入中的回车
+    */
+    opt.c_iflag &= ~(IXON | IXOFF | IXANY);
+    opt.c_oflag &= 0; //输出模式
+    /*
+    ICANON--启用标准模式 (canonical mode)。允许使用特殊字符 EOF, EOL,
+            EOL2, ERASE, KILL, LNEXT, REPRINT, STATUS, 和 WERASE，以及按行的缓冲。
+    ECHO--回显输入字符
+    ECHOE--如果同时设置了 ICANON，字符 ERASE 擦除前一个输入字符，WERASE 擦除前一个词
+    ISIG--当接受到字符 INTR, QUIT, SUSP, 或 DSUSP 时，产生相应的信号
+    */
+    opt.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+    opt.c_cc[VMIN] = vmin;   // 设置非规范模式下的超时时长和最小字符数：
+    opt.c_cc[VTIME] = vtime; // VTIME与VMIN配合使用，是指限定的传输或等待的最长时间
+
+    tcflush (fd, TCIFLUSH);                 /* TCIFLUSH-- update the options and do it NOW */
+    return (tcsetattr (fd, TCSANOW, &opt)); /* TCSANOW--改变立即发生 */
+}
+
+int open_tty(char *tty)
+{
+	int fd = open(tty, O_RDWR| O_NOCTTY);
+	//int fd = open("/dev/ttySZ4", O_RDWR | O_NOCTTY);
+
+	if (fd == -1) 
+	{
+		printf("open fd%d\n", fd);
+		return -1;
+	}
+
+    printf("open fd%d  Suncessful \r\n", fd) ;
+	
+	tcflush(fd, TCIOFLUSH);//溢出数据可以接收，但不读
+	fcntl(fd, F_SETFL, FNDELAY);
+	int ret = set_port_attr(fd, B9600, 8, "1", 'E', 0, 60);// vtime=0 read时最少字符数
+	if (ret < 0) 
+	{
+		printf("set baud failed\n");
+		return -2;
+	}
+	return fd;
+}
+
 void usage()
 {
 	fprintf(stderr, "功能: 向串口发送报文, 并监听应答报文\n");
