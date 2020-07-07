@@ -16,6 +16,15 @@ static const districtApn_s tblApn[] = {
 		{"LangFang",1390,e_chinaTelecom,"192.168.0.2","9010","PRIVATE.VPDN.HE","LFGDJ@LFGDJ.VPDN.HE","LFGDJ"}
 };
 
+[device]
+device=1
+zone=JiBei
+realtofreeze=1
+divPhase=1
+useEcm=1
+district=3706
+[end]
+
 static const imsiCode_s tblIMSI[] = {
 		{e_chinaMobile, 46000},
 		{e_chinaMobile, 46002},
