@@ -21,7 +21,7 @@
 
 #define sem1_key	0x13149
 
-#define region_count	300
+#define region_count	10
 #define region_size(type)	(region_count*sizeof(type))
 #define OBJ_PERMS (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP)
 

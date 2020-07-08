@@ -3,22 +3,51 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <time.h>
+#include "shm.h"
 
-int main(int argc, char** argv) {
-	printf("This is parent process%d\n", getpid());
+void doTask(int i) {
+	region_t r;
+	int idx = 0;
+	int random = 0;
 
-	pid_t p1;
+	printf("This is child [%d] process [%d]\n", i, getpid());
+	srand(time(0));
+	random = rand();
+
+	idx = (rand() % region_count);
+	if (random % 2) { //odd
+		r.longth = rand();
+		r.width = rand();
+		r.height = rand();
+
+		printf("write region: longth-[%d], width-[%d], height-[%d], idx-{%d}\n",
+				r.longth, r.width, r.height, idx);
+		write_region(&r, idx);
+	} else { //even
+		read_region(&r, idx);
+		printf("read region: longth-[%d], width-[%d], height-[%d], idx-{%d}\n",
+				r.longth, r.width, r.height, idx);
+
+	}
+}
+
+int main(int argc, char **argv) {
+	pid_t p1[20];
 	int i;
 
-	for (i = 0; i <= 20; i++) {
-		if ((p1 = fork()) == 0) {
-			while(1) {
-				printf("This is child [%d] process [%d]\n", i, getpid());
+//	printf("%d, %d, %d\n",!(1111), !(0), !(-1));
+
+	/*
+	 * C provides a compile-time unary operator called sizeof that can be used to compute the size
+	 * of any object -- k&r c, P. 120
+	 */
+	for (i = 0; i <= sizeof(p1) / sizeof(p1[0]); i++) {
+		if ((p1[i] = fork()) == 0) {
+			while (1) {
+				doTask(i);
 				sleep(1);
 			}
-		} else {
-			waitpid(p1, NULL, 0); //父进程等待p1子进程执行后才能继续fork其他子进程
-			printf("This is parent process [%d]\n", getpid());
 		}
 	}
 }

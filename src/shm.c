@@ -163,13 +163,19 @@ int init_region()
 void write_region(region_t *r, int idx)
 {
 	region_t *p;
+
+	if (idx < 0 || idx >= region_count) {
+		fprintf(stderr, "write_region fail: idx overflow!\n");
+		exit(EXIT_FAILURE);
+	}
+
 	int semid = open_sem(sem1_key);
 
 	wait_sem(semid, idx);
 
 	int shmid = open_shm(shm1_key);
 	p = attach_shm(shmid);
-	memcpy(p+idx, r, sizeof(region_t));
+	memcpy(p + idx, r, sizeof(region_t));
 
 	detach_shm(p);
 
@@ -179,6 +185,12 @@ void write_region(region_t *r, int idx)
 void read_region(region_t *r, int idx)
 {
 	region_t *p;
+
+	if (idx < 0 || idx >= region_count) {
+		fprintf(stderr, "read_region fail: idx overflow!\n");
+		exit(EXIT_FAILURE);
+	}
+
 	int semid = open_sem(sem1_key);
 
 	wait_sem(semid, idx);
