@@ -1,4 +1,4 @@
-CROSS			=arm-none-linux-gnueabi-
+CROSS			=arm-linux-gnueabihf-
 CC				=$(CROSS)gcc
 TARGET			=serial
 MKCCTI			=jzqi

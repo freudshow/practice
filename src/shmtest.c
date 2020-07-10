@@ -12,9 +12,8 @@ void doTask(int i) {
 	int random = 0;
 
 	printf("This is child [%d] process [%d]\n", i, getpid());
-	srand(time(0));
-	random = rand();
 
+	random = rand();
 	idx = (rand() % region_count);
 	if (random % 2) { //odd
 		r.longth = rand();
@@ -35,7 +34,7 @@ void doTask(int i) {
 int main(int argc, char **argv) {
 	pid_t p1[20];
 	int i;
-
+	srand(time(0));
 //	printf("%d, %d, %d\n",!(1111), !(0), !(-1));
 
 	/*
@@ -46,7 +45,7 @@ int main(int argc, char **argv) {
 		if ((p1[i] = fork()) == 0) {
 			while (1) {
 				doTask(i);
-				sleep(1);
+				usleep(100);
 			}
 		}
 	}

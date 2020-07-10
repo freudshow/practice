@@ -35,15 +35,13 @@ int openCom(comConfig_s* config)
 	int rs485gpio = 0;
 	struct termios old_termi = { }, new_termi = { };
 	int baud_lnx = 0;
-	unsigned char tmp[20] = { 0 };
 
 	if (NULL == config) {
 		printf("param is NULL!\n");
 		return -1;
 	}
 
-	sprintf((char *) tmp, "%s", config->port);
-	fd = open((char *) tmp, O_RDWR | O_NOCTTY); /* 打开串口文件 */
+	fd = open(config->port, O_RDWR | O_NOCTTY); /* 打开串口文件 */
 	if (fd < 0) {
 		printf("open the serial port fail! errno is: %d\n", errno);
 		return 0; /*打开串口失败*/
@@ -297,15 +295,16 @@ int open_tty(char *tty)
 
 	if (fd == -1) 
 	{
-		printf("open fd%d\n", fd);
+		printf("\n[%s()%d]tty: %s, fd: %d\n", __FUNCTION__, __LINE__, tty, fd);
+		printf("%d, %s\n", errno, strerror(errno));
 		return -1;
 	}
 
-    printf("open fd%d  Suncessful \r\n", fd) ;
+    printf("open fd-{%d}  Successful \r\n", fd) ;
 	
 	tcflush(fd, TCIOFLUSH);//溢出数据可以接收，但不读
 	fcntl(fd, F_SETFL, FNDELAY);
-	int ret = set_port_attr(fd, B9600, 8, "1", 'E', 0, 60);// vtime=0 read时最少字符数
+	int ret = set_port_attr(fd, B2400, 8, "1", 'E', 0, 60);// vtime=0 read时最少字符数
 	if (ret < 0) 
 	{
 		printf("set baud failed\n");
@@ -611,7 +610,7 @@ int main(int argc, char* argv[])
 	DEBUG_TIME_LINE("port: %s, baud: %d, parity: %d, stop: %d, bits: %d\n",
 			config.port, config.baud, config.par, config.stopb, config.bits);
 	printOpt(&options);
-	if ((fd = openCom(&config)) < 0) {
+	if ((fd = open_tty(config.port)) < 0) {
 		perror("open failed!");
 		exit(1);
 	}

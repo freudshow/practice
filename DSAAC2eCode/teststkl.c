@@ -7,7 +7,6 @@
 #include "stackar.h"
 #include "basedef.h"
 
-
 int chkBrace(int argc, char* argv[])
 {
 	Stack S;
