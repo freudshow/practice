@@ -45,6 +45,11 @@ extern "C" {
 #elif defined (CCTI) || (CCTIII)
 #define S4851   		"/dev/ttyS1"
 #define S4852   		"/dev/ttyS2"
+#elif defined (TTU)
+#define S4851   		"/dev/ttySZ3"
+#define S4852   		"/dev/ttySZ4"
+#define S4853   		"/dev/ttySZ5"
+#define S4854   		"/dev/ttySZ6"
 #endif
 
 #define PIN_BASE 32
