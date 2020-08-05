@@ -13,22 +13,17 @@
 #include "serial.h"
 
 static const char *optString = "l:t:w:i:c:b:d:s:p:f:m:h";
-static const struct option longOpts[] = { { "listen", required_argument, NULL, 'l' },
-										  { "times", required_argument, NULL, 't' },
-										  { "wait",	required_argument, NULL, 'w' },
-										  { "inv", required_argument, NULL, 'i' },
-										  { "com", required_argument, NULL, 'c' },
-										  { "baud", required_argument, NULL, 'b' },
-										  { "data", required_argument, NULL, 'd' },
-										  { "stop",	required_argument, NULL, 's' },
-										  { "par", required_argument, NULL, 'p' },
-										  { "frame", required_argument, NULL, 'f' },
-										  {	"master", no_argument, NULL, 'm' },
-										  {	"help", no_argument, NULL, 'h' },
-										  { NULL, no_argument, NULL, 0 }
-										};
+static const struct option longOpts[] = { { "listen", required_argument, NULL,
+		'l' }, { "times", required_argument, NULL, 't' }, { "wait",
+		required_argument, NULL, 'w' }, { "inv", required_argument, NULL, 'i' },
+		{ "com", required_argument, NULL, 'c' }, { "baud", required_argument,
+				NULL, 'b' }, { "data", required_argument, NULL, 'd' }, { "stop",
+				required_argument, NULL, 's' }, { "par", required_argument,
+				NULL, 'p' }, { "frame", required_argument, NULL, 'f' }, {
+				"master", no_argument, NULL, 'm' }, { "help", no_argument, NULL,
+				'h' }, { NULL, no_argument, NULL, 0 } };
 
-int openCom(comConfig_s* config)
+int openCom(comConfig_s *config)
 {
 	struct serial_rs485 rs485conf;
 	int fd = -10;
@@ -182,131 +177,186 @@ int openCom(comConfig_s* config)
 	return fd;
 }
 
-void set_baudrate (struct termios* opt, unsigned int baudrate)
+void set_baudrate(struct termios *opt, unsigned int baudrate)
 {
-   cfsetispeed(opt, baudrate);
-   cfsetospeed(opt, baudrate);
+	int baud_lnx = B2400;
+	switch (baudrate) {
+	case baud1200:
+		baud_lnx = B1200;
+		break;
+	case baud2400:
+		baud_lnx = B2400;
+		break;
+	case baud4800:
+		baud_lnx = B4800;
+		break;
+	case baud9600:
+		baud_lnx = B9600;
+		break;
+	case baud19200:
+		baud_lnx = B19200;
+		break;
+	case baud38400:
+		baud_lnx = B38400;
+		break;
+	case baud57600:
+		baud_lnx = B57600;
+		break;
+	case baud115200:
+		baud_lnx = B115200;
+		break;
+	default:
+		baud_lnx = B2400;
+		break;
+	}
+	cfsetispeed(opt, baud_lnx);
+	cfsetospeed(opt, baud_lnx);
 }
 
-void set_stopbit (struct termios *opt, const char *stopbit)
+void set_stopbit(struct termios *opt, const char *stopbit)
 {
-    if (0 == strcmp (stopbit, "1")) {
-        opt->c_cflag &= ~CSTOPB;            /* 1位停止位*/
-    } else if (0 == strcmp (stopbit, "1.5")) {
-        opt->c_cflag &= ~CSTOPB;            /* 1.5位停止位 */
-    } else if (0 == strcmp (stopbit, "2")) {
-        opt->c_cflag |= CSTOPB;             /* 2位停止位*/
-    } else {
-        opt->c_cflag &= ~CSTOPB;            /* 1位停止位*/
-    }
+	if (0 == strcmp(stopbit, "1")) {
+		opt->c_cflag &= ~CSTOPB; /* 1位停止位*/
+	} else if (0 == strcmp(stopbit, "1.5")) {
+		opt->c_cflag &= ~CSTOPB; /* 1.5位停止位 */
+	} else if (0 == strcmp(stopbit, "2")) {
+		opt->c_cflag |= CSTOPB; /* 2位停止位*/
+	} else {
+		opt->c_cflag &= ~CSTOPB; /* 1位停止位*/
+	}
 }
 
 // set_data_bit函数
 // CSIZE--字符长度掩码。取值为 CS5, CS6, CS7, 或 CS8
-void set_data_bit (struct termios *opt, unsigned int databit)
+void set_data_bit(struct termios *opt, unsigned int databit)
 {
-    opt->c_cflag &= ~CSIZE;
-    switch (databit) {
-    case 8:
-        opt->c_cflag |= CS8;
-        break;
-    case 7:
-        opt->c_cflag |= CS7;
-        break;
-    case 6:
-        opt->c_cflag |= CS6;
-        break;
-    case 5:
-        opt->c_cflag |= CS5;
-        break;
-    default:
-        opt->c_cflag |= CS8;
-        break;
-    }
+	opt->c_cflag &= ~CSIZE;
+	switch (databit) {
+	case 8:
+		opt->c_cflag |= CS8;
+		break;
+	case 7:
+		opt->c_cflag |= CS7;
+		break;
+	case 6:
+		opt->c_cflag |= CS6;
+		break;
+	case 5:
+		opt->c_cflag |= CS5;
+		break;
+	default:
+		opt->c_cflag |= CS8;
+		break;
+	}
 }
 
 // set_parity函数
 // ‘N’和‘n’（无奇偶校验）、‘E’和‘e’（表示偶校验）、‘O’和‘o’（表示奇校验）。
-void set_parity (struct termios *opt, char parity)
+void set_parity(struct termios *opt, char parity)
 {
-    switch (parity)
-    {
-    case 'N':                 /*无校验*/
-    case 'n':
-        opt->c_cflag &= ~PARENB;
-        break;
-    case 'E':                 /*偶校验*/
-    case 'e':
-        opt->c_cflag |= PARENB;
-        opt->c_cflag &= ~PARODD;
-        break;
-    case 'O':                 /*奇校验*/
-    case 'o':
-        opt->c_cflag |= PARENB;
-        opt->c_cflag |= ~PARODD;
-        break;
-    default:                  /*其它选择为无校验 */
-        opt->c_cflag &= ~PARENB;
-        break;
-    }
+	switch (parity) {
+	case 'N': /*无校验*/
+	case 'n':
+		opt->c_cflag &= ~PARENB;
+		break;
+	case 'E': /*偶校验*/
+	case 'e':
+		opt->c_cflag |= PARENB;
+		opt->c_cflag &= ~PARODD;
+		break;
+	case 'O': /*奇校验*/
+	case 'o':
+		opt->c_cflag |= PARENB;
+		opt->c_cflag |= ~PARODD;
+		break;
+	default: /*其它选择为无校验 */
+		opt->c_cflag &= ~PARENB;
+		break;
+	}
 }
 
-int set_port_attr(int fd, int baudrate, int databit, const char* stopbit,
-                  char parity, int vtime, int vmin )
+int set_port_attr(int fd, int baudrate, int databit, const char *stopbit,
+		char parity, int vtime, int vmin)
 {
-    struct termios opt;
-    tcgetattr(fd, &opt);
+	struct termios opt;
+	tcgetattr(fd, &opt);
 
-    set_baudrate(&opt, baudrate);
-    set_data_bit(&opt, databit);
-    set_parity(&opt, parity);
-    set_stopbit(&opt, stopbit);
+	set_baudrate(&opt, baudrate);
+	set_data_bit(&opt, databit);
+	set_parity(&opt, parity);
+	set_stopbit(&opt, stopbit);
 
-    opt.c_cflag &= ~CRTSCTS;       // 不使用硬件流控制
-    opt.c_cflag |= CLOCAL | CREAD; // CLOCAL--忽略 modem 控制线,本地连线, 不具数据机控制功能,
-                                   // CREAD--使能接收标志
-    /*
-    IXON--启用输出的 XON/XOFF 流控制
-    IXOFF--启用输入的 XON/XOFF 流控制
-    IXANY--允许任何字符来重新开始输出
-    IGNCR--忽略输入中的回车
-    */
-    opt.c_iflag &= ~(IXON | IXOFF | IXANY);
-    opt.c_oflag &= 0; //输出模式
-    /*
-    ICANON--启用标准模式 (canonical mode)。允许使用特殊字符 EOF, EOL,
-            EOL2, ERASE, KILL, LNEXT, REPRINT, STATUS, 和 WERASE，以及按行的缓冲。
-    ECHO--回显输入字符
-    ECHOE--如果同时设置了 ICANON，字符 ERASE 擦除前一个输入字符，WERASE 擦除前一个词
-    ISIG--当接受到字符 INTR, QUIT, SUSP, 或 DSUSP 时，产生相应的信号
-    */
-    opt.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-    opt.c_cc[VMIN] = vmin;   // 设置非规范模式下的超时时长和最小字符数：
-    opt.c_cc[VTIME] = vtime; // VTIME与VMIN配合使用，是指限定的传输或等待的最长时间
+	opt.c_cflag &= ~CRTSCTS;       // 不使用硬件流控制
+	opt.c_cflag |= CLOCAL | CREAD; // CLOCAL--忽略 modem 控制线,本地连线, 不具数据机控制功能,
+								   // CREAD--使能接收标志
+	/*
+	 IXON--启用输出的 XON/XOFF 流控制
+	 IXOFF--启用输入的 XON/XOFF 流控制
+	 IXANY--允许任何字符来重新开始输出
+	 IGNCR--忽略输入中的回车
+	 */
+	opt.c_iflag &= ~(IXON | IXOFF | IXANY);
+	opt.c_oflag &= 0; //输出模式
+	/*
+	 ICANON--启用标准模式 (canonical mode)。允许使用特殊字符 EOF, EOL,
+	 EOL2, ERASE, KILL, LNEXT, REPRINT, STATUS, 和 WERASE，以及按行的缓冲。
+	 ECHO--回显输入字符
+	 ECHOE--如果同时设置了 ICANON，字符 ERASE 擦除前一个输入字符，WERASE 擦除前一个词
+	 ISIG--当接受到字符 INTR, QUIT, SUSP, 或 DSUSP 时，产生相应的信号
+	 */
+	opt.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+	opt.c_cc[VMIN] = vmin;   // 设置非规范模式下的超时时长和最小字符数：
+	opt.c_cc[VTIME] = vtime; // VTIME与VMIN配合使用，是指限定的传输或等待的最长时间
 
-    tcflush (fd, TCIFLUSH);                 /* TCIFLUSH-- update the options and do it NOW */
-    return (tcsetattr (fd, TCSANOW, &opt)); /* TCSANOW--改变立即发生 */
+	tcflush(fd, TCIFLUSH); /* TCIFLUSH-- update the options and do it NOW */
+	return (tcsetattr(fd, TCSANOW, &opt)); /* TCSANOW--改变立即发生 */
 }
 
-int open_tty(char *tty)
+int open_tty(comConfig_p pConfig)
 {
-	int fd = open(tty, O_RDWR| O_NOCTTY);
-	//int fd = open("/dev/ttySZ4", O_RDWR | O_NOCTTY);
+	int fd = open(pConfig->port, O_RDWR | O_NOCTTY);
 
-	if (fd == -1) 
-	{
-		printf("\n[%s()%d]tty: %s, fd: %d\n", __FUNCTION__, __LINE__, tty, fd);
+	if (fd == -1) {
+		printf("\n[%s()%d]tty: %s, fd: %d\n", __FUNCTION__, __LINE__, pConfig->port, fd);
 		printf("%d, %s\n", errno, strerror(errno));
 		return -1;
 	}
 
-    printf("open fd-{%d}  Successful \r\n", fd) ;
-	
-	tcflush(fd, TCIOFLUSH);//溢出数据可以接收，但不读
+	printf("open fd-{%d}  Successful \r\n", fd);
+
+	tcflush(fd, TCIOFLUSH); //溢出数据可以接收，但不读
 	fcntl(fd, F_SETFL, FNDELAY);
-	int ret = set_port_attr(fd, B2400, 8, "1", 'E', 0, 60);// vtime=0 read时最少字符数
-	if (ret < 0) 
-	{
+
+	char stop[4] = { 0 };
+	switch (pConfig->stopb) {
+	case 1:
+		stop[0] = '1';
+		break;
+	case 2:
+		stop[0] = '2';
+		break;
+	default:
+		stop[0] = '1';
+		break;
+	}
+
+	char par = 'E';
+	switch (pConfig->par) {
+	case parEven:
+		par = 'E';
+		break;
+	case parOdd:
+		par = 'O';
+		break;
+	case parNone:
+		par = 'N';
+		break;
+	default:
+		break;
+	}
+
+	int ret = set_port_attr(fd, pConfig->baud, pConfig->bits, stop, par, 0, 60); // vtime=0 read时最少字符数
+	if (ret < 0) {
 		printf("set baud failed\n");
 		return -2;
 	}
@@ -396,7 +446,7 @@ s8 getComConfig(option_p pOpt, comConfig_p pConfig)
 	return TRUE;
 }
 
-s8 sendcom(int fd, u8* buf, u32 bufSize)
+s8 sendcom(int fd, u8 *buf, u32 bufSize)
 {
 	if (0 == bufSize || NULL == buf)
 		return FALSE;
@@ -411,7 +461,7 @@ s8 sendcom(int fd, u8* buf, u32 bufSize)
 	return TRUE;
 }
 
-void readcom(int fd, u8* buf, u32* bufSize)
+void readcom(int fd, u8 *buf, u32 *bufSize)
 {
 	if ( NULL == bufSize || NULL == buf)
 		return;
@@ -473,7 +523,7 @@ int baudValid(int baud)
 	return FALSE;
 }
 
-void getOptions(int argc, char* argv[], option_p pOpt)
+void getOptions(int argc, char *argv[], option_p pOpt)
 {
 	int ch = 0;
 	int longIndex = 0;
@@ -492,8 +542,8 @@ void getOptions(int argc, char* argv[], option_p pOpt)
 			break;
 		case 'm':
 			pOpt->master = atoi(optarg);
-			if(MASTER_DEV != pOpt->master && SLAVE_DEV != pOpt->master) {
-					pOpt->master = MASTER_DEV;
+			if (MASTER_DEV != pOpt->master && SLAVE_DEV != pOpt->master) {
+				pOpt->master = MASTER_DEV;
 			}
 			break;
 		case 't':
@@ -582,7 +632,7 @@ void printOpt(option_p pOpt)
 	fprintf(stderr, "frame: %s\n", pOpt->frame);
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	comConfig_s config = { };
 	option_s options = { };
@@ -593,8 +643,8 @@ int main(int argc, char* argv[])
 	int fd = -1;
 	u32 sendcnt = 0;
 	int cnt = 0;
-	fd_set fds = {};
-	struct timeval timeout = {};
+	fd_set fds = { };
+	struct timeval timeout = { };
 	int nready = 0;
 
 	setDefaultOpt(&options);
@@ -610,19 +660,19 @@ int main(int argc, char* argv[])
 	DEBUG_TIME_LINE("port: %s, baud: %d, parity: %d, stop: %d, bits: %d\n",
 			config.port, config.baud, config.par, config.stopb, config.bits);
 	printOpt(&options);
-	if ((fd = open_tty(config.port)) < 0) {
+	if ((fd = open_tty(&config)) < 0) {
 		perror("open failed!");
 		exit(1);
 	}
 
 	if (readFrm(options.frame, sbuf, &sbufSize) == FALSE) {
-			goto ret;
+		goto ret;
 	}
 
 	if (1 == options.listen) { //一直监听串口
 		while (1) {
 			usleep(options.inv * 1000);
-			
+
 			nready = 0;
 			FD_ZERO(&fds);
 			FD_SET(fd, &fds);
@@ -630,11 +680,11 @@ int main(int argc, char* argv[])
 			timeout.tv_sec = 1;
 			timeout.tv_usec = 0;
 			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
-			if(nready > 0) {
+			if (nready > 0) {
 				readcom(fd, rbuf, &rbufSize);
 			}
 		}
-	} else if(MASTER_DEV == options.master) { //主机, 发送报文并监听串口
+	} else if (MASTER_DEV == options.master) { //主机, 发送报文并监听串口
 		sendcnt = 0;
 		while ((options.times > 0) ? (sendcnt < options.times) : 1) {
 			usleep(options.inv * 1000);
@@ -653,7 +703,7 @@ int main(int argc, char* argv[])
 			while (cnt < options.wait) {
 				sleep(1);
 				nready = select(fd + 1, &fds, NULL, NULL, &timeout);
-				if(nready > 0) {
+				if (nready > 0) {
 					readcom(fd, rbuf, &rbufSize);
 				}
 				cnt++;
@@ -661,8 +711,8 @@ int main(int argc, char* argv[])
 
 			sendcnt++;
 		}
-	} else if(SLAVE_DEV == options.master) { //从机, 收到报文后1秒钟应答
-		while(1) {
+	} else if (SLAVE_DEV == options.master) { //从机, 收到报文后1秒钟应答
+		while (1) {
 			sleep(1);
 			nready = 0;
 			FD_ZERO(&fds);
@@ -671,7 +721,7 @@ int main(int argc, char* argv[])
 			timeout.tv_usec = 0;
 
 			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
-			if(nready > 0) {
+			if (nready > 0) {
 				readcom(fd, rbuf, &rbufSize);
 				sleep(1);
 				sendcom(fd, sbuf, sbufSize);
@@ -679,7 +729,6 @@ int main(int argc, char* argv[])
 		}
 	}
 
-ret:
-	close(fd);
+	ret: close(fd);
 	exit(0);
 }
