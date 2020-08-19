@@ -148,6 +148,8 @@ void debugBufFormat2fp(FILE *fp, const char *file, const char *func,
 		getBufString(buf, len, s);
 		fprintf(fp, "%s\n", s);
 		fflush(fp);
-		fclose(fp);
+
+		if(fp != stdout && fp != stderr)
+			fclose(fp);
 	}
 }

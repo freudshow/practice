@@ -23,7 +23,7 @@ extern "C" {
 												if (fp != NULL) {\
 													debugBufFormat2fp(fp, FILE_LINE, NULL, 0, format, ##__VA_ARGS__);\
 												}\
-												logLimit(fname, LOG_NAME, LOG_COUNT);\
+												logLimit(fname, LOG_SIZE, LOG_COUNT);\
 											} while(0);
 
 #else
