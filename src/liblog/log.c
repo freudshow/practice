@@ -104,10 +104,10 @@ int logLimit(char* fname, int logsize, int logCount)
 
 	/**
 	 * 检查当前日志文件名的最大值(以logCount为参照)
-	 * 比如, logCount = 10, 如果当前文件名有'9'
-	 * 结尾的, 那么就将'fname9'删掉, 依次将'fname8'复制
-	 * 为'fname9', 'fname7'复制为'fname8'...'fname'
-	 * 复制为'fname0'; 如果当前文件没有达到最大值,
+	 * 比如, logCount = 10, 如果当前文件名有'.9'
+	 * 结尾的, 那么就将'fname.9'删掉, 依次将'fname.8'复制
+	 * 为'fname9', 'fname.7'复制为'fname.8'...'fname'
+	 * 复制为'fname.1'; 如果当前文件没有达到最大值,
 	 * 则依次复制当前最大值的文件名, 往后累加一个.
 	 * 所以, 最关键的是获取当前最大的文件名.
 	 */
