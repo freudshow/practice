@@ -145,14 +145,16 @@ void debugBufFormat2fp(FILE *fp, const char *file, const char *func,
 		vfprintf(fp, fmt, ap);
 		va_end(ap);
 
-		char *s = calloc(1, 3 * (len + 1)); //多开3个字符的余量
-		if (s != NULL) {
-			getBufString(buf, len, s);
-			fprintf(fp, "%s\n", s);
+		if (buf != NULL && len > 0) {
+			char *s = calloc(1, 3 * (len + 1)); //多开3个字符的余量
+			if (s != NULL) {
+				getBufString(buf, len, s);
+				fprintf(fp, "%s\n", s);
+			}
 			free(s);
-			fflush(fp);
 		}
 
+		fflush(fp);
 		if (fp != stdout && fp != stderr)
 			fclose(fp);
 	}
