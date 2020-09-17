@@ -31,7 +31,6 @@ int main()
 	printf("Rect r2(x=%d,y=%d,width=%d,height=%d)\n", r2.super.x, r2.super.y,
 			r2.width, r2.height);
 
-	Rectangle_t r1, r2; /* multiple instances of Rectangle */
 	Circle_t c1, c2; /* multiple instances of Circle */
 	Shape const *shapes[] = { /* collection of shapes */
 	&c1.super, &r2.super, &c2.super, &r1.super };

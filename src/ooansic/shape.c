@@ -22,6 +22,17 @@ void Shape_moveBy(Shape *const me, int16_t dx, int16_t dy)
 	me->y += dy;
 }
 
+/* "getter" operations implementation */
+int16_t Shape_getX(Shape *const me)
+{
+	return me->x;
+}
+
+int16_t Shape_getY(Shape *const me)
+{
+	return me->y;
+}
+
 /* Shape class implementations of its virtual functions... */
 static uint32_t Shape_area_(Shape const *const me)
 {
