@@ -1,7 +1,9 @@
-#include "basedef.h"
-#include "lib.h"
-#include "showbytes.h"
-#include "md5.h"
+//#include "basedef.h"
+//#include "lib.h"
+//#include "showbytes.h"
+//#include "md5.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 int main(int argc, char* argv[])
 {
@@ -18,8 +20,9 @@ int main(int argc, char* argv[])
 //	SWAP_NUM(v[0], v[4]);
 //	showArray(v, NELEM(v));
 
-	char md5string[100] = {0};
-	MD5_File("/bin/ls", md5string);
-
+//	char md5string[100] = {0};
+//	MD5_File("/bin/ls", md5string);
+    long int i = strtol("2001",NULL, 16);
+    printf("%d, %02X\n", i, i);
 	return 0;
 }
