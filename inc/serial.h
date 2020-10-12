@@ -50,6 +50,7 @@ extern "C" {
 #define S4852   		"/dev/ttySZ4"
 #define S4853   		"/dev/ttySZ5"
 #define S4854   		"/dev/ttySZ6"
+#define SPLC            "/dev/ttyS7"
 #endif
 
 #define PIN_BASE 32
