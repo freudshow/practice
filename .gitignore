@@ -4,3 +4,11 @@ Debug/*
 .settings
 bin/*
 /Debug
+
+*.aux
+*.log
+*.pdf
+*.toc
+*.gz
+*.o
+*.so

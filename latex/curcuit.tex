@@ -1,0 +1,21 @@
+\documentclass{article}
+
+\usepackage{tikz}%调用宏包tikz
+\usepackage{circuitikz}%调用宏包circuitikz
+
+\begin{document}
+
+\begin{figure}[h!]%使用figure环境
+  \begin{center}
+    \begin{circuitikz}
+      \draw (0,0)%坐标(0,0)做为起始点，(0,2)做为终点，绘制电压源。_V_代表电压源，_v=$U_q$_绘制标识。
+      to[V,v=$U_q$] (0,2) % 电压源
+      to[short] (2,2)%坐标(2,2)做为起始点，(2,0)做为终点，绘制电阻。_R_代表电压源，_R=$R_1$_绘制标识。
+      to[R=$R_1$] (2,0) % 电阻
+      to[short] (0,0);%注意结尾的分号！
+    \end{circuitikz}
+    \caption{first circuit.}%添加标题
+  \end{center}
+\end{figure}
+
+\end{document}

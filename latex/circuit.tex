@@ -1,0 +1,106 @@
+\documentclass{article}
+
+\usepackage{tikz}%调用宏包tikz
+\usepackage{circuitikz}%调用宏包circuitikz
+
+\begin{document}
+
+\begin{figure}[h!]%使用figure环境
+  \begin{center}
+    \begin{circuitikz}
+      \draw (0,0)%坐标(0,0)做为起始点，(0,2)做为终点，绘制电压源。_V_代表电压源，_v=$U_q$_绘制标识。
+      to[V,v=$U_q$] (0,2) % 电压源
+      to[short] (2,2)%坐标(2,2)做为起始点，(2,0)做为终点，绘制电阻。_R_代表电压源，_R=$R_1$_绘制标识。
+      to[R=$R_1$] (2,0) % 电阻
+      to[short] (0,0);%注意结尾的分号！
+    \end{circuitikz}
+    \caption{first circuit.}%添加标题
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \begin{circuitikz}
+      \draw (0,2)%坐标(0,2)做为起始点，(0,0)做为终点，绘制电压源。_V_代表电压源，_v=$U_q$_绘制标识。
+      to[V,v=$U_q$] (0,0) %(0,0)为终点。
+      to[short] (2,0)%由点(0,0)短接至点(2,0)
+      to[R=$R_1$] (2,2) %坐标(2,0)做为起始点，(2,2)做为终点，绘制电阻。_R_代表电压源，_R=$R_1$_绘制标识。
+      to[short] (0,2);%由点(2,2)短接至点(0,2).注意结尾的分号！
+    \end{circuitikz}
+    \caption{second circuit.}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \begin{circuitikz}
+      \draw (0,0)
+      to[V,v=$U_q$] (0,2)   % 电压源
+      to[short] (2,2)
+      to[R=$R_1$] (2,0)    % 电阻
+      to[short] (0,0);
+      \draw (2,2)
+      to[short] (4,2)
+      to[L=$L_1$] (4,0)   % 电感
+      to[short] (2,0);
+     \end{circuitikz}
+    \caption{third circuit.}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \begin{circuitikz}
+      \draw (0,0)
+      to[V,v=$U_q$] (0,2) % 电压源
+      to[short] (2,2)
+      to[R=$R_1$] (2,0) % 电阻
+      to[short] (0,0);
+      \draw (2,2)
+      to[short] (4,2)
+      to[L=$L_1$] (4,0)  % 电感
+      to[short] (2,0);
+      \draw (4,2)
+      to[short] (6,2)
+      to[C=$C_1$] (6,0)  % 电容
+      to[short] (4,0);
+    \end{circuitikz}
+    \caption{fourth circuit.}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+	\begin{center}
+		\begin{circuitikz}
+			  \draw (0,0) node[npn](npn1) {}
+			  (npn1.base) node[anchor=east] {B}
+			  (npn1.collector) node[anchor=south] {C}
+			  (npn1.emitter) node[anchor=north] {E};
+		\end{circuitikz}
+ 		\caption{fifth circuit.}
+  	\end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \begin{circuitikz}
+      \draw (0,0)
+      to[V,v=$U_q$,i<^=$i_q$] (0,2) % 电压源
+      to[short] (2,2)
+      to[R=$R_1$,i^<=$i_R$] (2,0) % 电阻
+      to[short,*-] (0,0);
+      \draw (2,2)
+      to[short,*-] (4,2)
+      to[L=$L_1$,i^<=$i_L$] (4,0)  % 电感
+      to[short,*-]  (2,0);
+      \draw (4,2)
+      to[short,*-] (6,2)
+      to[C=$C_1$,i^<=$i_C$] (6,0)  % 电容
+      to[short] (4,0);
+      \draw (4,0) to[short] node[ground] {GND} (4,-0.5);
+    \end{circuitikz}
+    \caption{sixth circuit.}
+  \end{center}
+\end{figure}
+
+\end{document}
