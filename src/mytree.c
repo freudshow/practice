@@ -32,6 +32,7 @@ void makeEmpty(tree_ptr t)
 		return;
 
 	bzero(t->e, sizeof(t->e));
+    t->size = 0;
 	t->father = NULL;
 	t->child = NULL;
 	t->sibling = NULL;
