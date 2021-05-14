@@ -8,7 +8,7 @@
 extern "C"{
 #endif
 
-//#define INFOADDR2BYTE       1   //ÓĞµÄĞÅÏ¢ÌåµØÖ·ÊÇ2×Ö½Ú
+//#define INFOADDR2BYTE       1   //æœ‰çš„ä¿¡æ¯ä½“åœ°å€æ˜¯2å­—èŠ‚
 
 #define APP_DATA1_DEF (HaveInitEnd|HaveCOS|HaveSOE|HaveYK|CallAllData|CallTimeDelay|CallDD|HaveFA|CallSetNVA|ProtectCon|CallParaSet|FreezeDD|CallReadData|CallLCdata|DATA1_FT_FREVENT|LCSetPara|LCActivatePara|CallLightStatus|SummonInfoOnBoot)
 #define APP_DATA2_DEF (CallClock|CallTest|HaveNVA|CallReset|DATA2_FT_DIR|DATA2_FT_FILEACT|DATA2_FT_FILEDATA|DATA2_FT_WTFILEACT|DATA2_FT_WTDATAACT|DATA2_RMT_SETSEC|DATA2_RMT_READSEC|DATA2_RMT_SETPARA|DATA2_RMT_READPARA|DATA2_PUP_PROGUP|DATA2_XSFT_SYNACT|DATA2_XSFT_SYNACTFINISH|DATA2_GX_READPARA|DATA2_GX_SETPARA|DATA2_RMT_READPARA_GD|DATA2_RMT_WRITEPARA_GD)
@@ -60,18 +60,18 @@ extern "C"{
 #define DATA2_GX_READPARA   0x00200000
 #define DATA2_GX_SETPARA    0x00400000
 #define DATA2_GX_ACTIVATEPARA    0x00800000
-#define DATA2_XSFT_SYNACT        0x01000000     //ÏßËğÎÄ¼şÍ¬²½¼¤»î  CL 20180607
-#define DATA2_XSFT_SYNACTFINISH  0x02000000     //ÏßËğÎÄ¼şÍ³¼Æ¼¤»îÖÕÖ¹
-#define DATA2_RMT_READPARA_GD    0X04000000     //¹ã¶«¶Á²ÎÊı
-#define DATA2_RMT_WRITEPARA_GD   0X08000000     //¹ã¶«Ğ´²ÎÊı
+#define DATA2_XSFT_SYNACT        0x01000000     //çº¿æŸæ–‡ä»¶åŒæ­¥æ¿€æ´»  CL 20180607
+#define DATA2_XSFT_SYNACTFINISH  0x02000000     //çº¿æŸæ–‡ä»¶ç»Ÿè®¡æ¿€æ´»ç»ˆæ­¢
+#define DATA2_RMT_READPARA_GD    0X04000000     //å¹¿ä¸œè¯»å‚æ•°
+#define DATA2_RMT_WRITEPARA_GD   0X08000000     //å¹¿ä¸œå†™å‚æ•°
 
 #define BIETFRAME   0x01
 #define BIENTFRAME  0x02
 #define FAPROCFRAME 0x04
 
-#define WAIT_CALLALL_DELAY  10      /*µÚ1´Î×ÜÕĞ½ûÖ¹±»´ò¶Ï£¬ÓÃÓÚÆ½ºâÄ£Ê½£¬¹ãÎ÷²âÊÔÒªÇó*/
+#define WAIT_CALLALL_DELAY  10      /*ç¬¬1æ¬¡æ€»æ‹›ç¦æ­¢è¢«æ‰“æ–­ï¼Œç”¨äºå¹³è¡¡æ¨¡å¼ï¼Œå¹¿è¥¿æµ‹è¯•è¦æ±‚*/
 
-/*Òº¾§ÏîÄ¿ËùĞèºê¶¨Òå,°üÀ¨4¸öÀ©Õ¹ÀàĞÍ±êÊ¶*/
+/*æ¶²æ™¶é¡¹ç›®æ‰€éœ€å®å®šä¹‰,åŒ…æ‹¬4ä¸ªæ‰©å±•ç±»å‹æ ‡è¯†*/
 #define C_LC_CALL_YC_YX 136
 #define SUMMON_YX       49
 #define SUMMON_YC       50
@@ -105,7 +105,7 @@ enum PFileStatus{PFileOver=0,PCallDir,PSelectFile,PCallFile,PCallSection,
                  PSendSegment,PLastSegment,PLastSection,PLastFile};
 
 struct PNva
-{  //±ä»¯Ò£²â½á¹¹
+{  //å˜åŒ–é¥æµ‹ç»“æ„
     INT8U Flag;
     short Value;
     short TempValue;
@@ -118,12 +118,12 @@ struct YcPara
     INT16U UpLimit;
     INT16U LowLimit;
     INT16U porperty;
-    BOOL type;  //1-ÓĞ·ûºÅ 0-ÎŞ·ûºÅ
+    BOOL type;  //1-æœ‰ç¬¦å· 0-æ— ç¬¦å·
 };
 
 
 struct PDevData
-{  //Éè±¸²É¼¯Á¿ÊıÄ¿
+{  //è®¾å¤‡é‡‡é›†é‡æ•°ç›®
     INT16U AINum;
     INT16U BINum;
     INT16U DBINum;             //wjr
@@ -133,7 +133,7 @@ struct PDevData
     INT16U BCDNum;
     INT16U NvaNo;
     INT32U *LastCounterData;
-    INT32U *HisCounterData;//±£´æÀúÊ·µç¶È
+    INT32U *HisCounterData;//ä¿å­˜å†å²ç”µåº¦
     INT16U  HisDDReadPtr;
     struct RealCounter_t *CounterData;
     struct PNva	*AIData;
@@ -143,14 +143,14 @@ struct PDevData
 };
 
 struct PData1
-{   //Ò»¼¶Êı¾İ½á¹¹
+{   //ä¸€çº§æ•°æ®ç»“æ„
     INT32U Flag;
     BOOL COT;
-    INT16U SOENum;      //·¢ËÍµÄSOEÊıÄ¿
-    INT16U BIENTNum;    //·¢ËÍµÄ±äÎ»YXÊıÄ¿
-    INT16U FAProcNum;   //·¢ËÍµÄFAÊıÄ¿
+    INT16U SOENum;      //å‘é€çš„SOEæ•°ç›®
+    INT16U BIENTNum;    //å‘é€çš„å˜ä½YXæ•°ç›®
+    INT16U FAProcNum;   //å‘é€çš„FAæ•°ç›®
     INT16U PubAddr;
-    INT16U InfoAddr;	//ĞÅÏ¢ÌåµØÖ·¡ª¡ª2
+    INT16U InfoAddr;	//ä¿¡æ¯ä½“åœ°å€â€”â€”2
 
 };
 
@@ -164,7 +164,7 @@ struct PDevInfo
     struct LogDbaseWin_t *pDbaseWin;
     struct RealDbaseWin_t *RealWin;
     INT8U DLUseStatus;
-    struct PData1 Data1;//zzw2004/6/7£»ÓÃÓÚ¼ÇÂ¼Ã¿¸öÉè±¸µÄ1¼¶Êı¾İĞÅÏ¢¡£
+    struct PData1 Data1;//zzw2004/6/7ï¼›ç”¨äºè®°å½•æ¯ä¸ªè®¾å¤‡çš„1çº§æ•°æ®ä¿¡æ¯ã€‚
 };
 
 struct PGroupTrn
@@ -173,22 +173,22 @@ struct PGroupTrn
     BOOL First;
     INT8U COT;
     INT16U PubAddr;
-    INT16U DevIndex;//·Ö×é·¢ËÍµÄµ±Ç°Éè±¸ĞòºÅ
+    INT16U DevIndex;//åˆ†ç»„å‘é€çš„å½“å‰è®¾å¤‡åºå·
     INT16U GroupNo;
-    INT16U InfoAddr;	//ĞÅÏ¢ÌåµØÖ·¡ª¡ª2
+    INT16U InfoAddr;	//ä¿¡æ¯ä½“åœ°å€â€”â€”2
     INT8U Description;
-    INT8U  HaveSendDBI; //DBI´«ËÍ±êÖ¾¡£ÓÃÓÚÆô¶¯Ë«µãÒ£ĞÅÆô¶¯
-    INT16U SoeStartPtr; //soe×ÜÕÙ»½µÄ¿ªÊ¼Ö¸Õë¡££¨¹ãÎ÷£©
+    INT8U  HaveSendDBI; //DBIä¼ é€æ ‡å¿—ã€‚ç”¨äºå¯åŠ¨åŒç‚¹é¥ä¿¡å¯åŠ¨
+    INT16U SoeStartPtr; //soeæ€»å¬å”¤çš„å¼€å§‹æŒ‡é’ˆã€‚ï¼ˆå¹¿è¥¿ï¼‰
  };
 
 extern struct config_t MyConfig;
 
-//ÏßËğÎÄ¼şÏà¹Ø½á¹¹Ìå
+//çº¿æŸæ–‡ä»¶ç›¸å…³ç»“æ„ä½“
 extern struct XSFileSynInfo_t XSFileSynInfo;
 
-//¶¨Ê±±£´æÀúÊ·µç¶È
-#define TIMETOSAVEDATA	60   //Ê±¼ä¼ä¸ô
-#define SAVENUM	(24*30)//±£´æÀúÊ·µç¶ÈµÄÊ±¼äµãÊı
+//å®šæ—¶ä¿å­˜å†å²ç”µåº¦
+#define TIMETOSAVEDATA	60   //æ—¶é—´é—´éš”
+#define SAVENUM	(24*30)//ä¿å­˜å†å²ç”µåº¦çš„æ—¶é—´ç‚¹æ•°
 
 struct DATAFORMAT
 {
@@ -206,7 +206,7 @@ struct SAVEDATABUF
 
 #define GX_RW_MAXNUM 64
 
-#define SFILETRANAPP101  1       /*µ÷ÓÃÎÄ¼ş´«Êä²Ù×÷*/
+#define SFILETRANAPP101  1       /*è°ƒç”¨æ–‡ä»¶ä¼ è¾“æ“ä½œ*/
 
 #ifdef SFILETRANAPP101
 #define CSFileTran      CSecAppSev
@@ -214,37 +214,37 @@ struct SAVEDATABUF
 
 /***********************************************/
 
-#define SFTYPECALLYC            192         /*ÕÙ»½Ò£²â£¨À©Õ¹ÃüÁî£©*/
-#define SFTYPESELECTFILE        193         /*Ñ¡ÔñÎÄ¼ş£¨À©Õ¹ÃüÁî£©*/
+#define SFTYPECALLYC            192         /*å¬å”¤é¥æµ‹ï¼ˆæ‰©å±•å‘½ä»¤ï¼‰*/
+#define SFTYPESELECTFILE        193         /*é€‰æ‹©æ–‡ä»¶ï¼ˆæ‰©å±•å‘½ä»¤ï¼‰*/
 
-/*ÒÔÏÂÎªÎÄ¼şÃû£¨À©Õ¹ÃüÁî£©*/
-#define SFTFYC                  192         /*ÀúÊ·Ò£²âÎÄ¼ş*/
-#define SFTFDD                  193         /*ÀúÊ·µç¶ÈÎÄ¼ş*/
-#define SFTFMAX                 194         /*¼«´óÖµÎÄ¼ş*/
-#define SFTFMIN                 195         /*¼«Ğ¡ÖµÎÄ¼ş*/
+/*ä»¥ä¸‹ä¸ºæ–‡ä»¶åï¼ˆæ‰©å±•å‘½ä»¤ï¼‰*/
+#define SFTFYC                  192         /*å†å²é¥æµ‹æ–‡ä»¶*/
+#define SFTFDD                  193         /*å†å²ç”µåº¦æ–‡ä»¶*/
+#define SFTFMAX                 194         /*æå¤§å€¼æ–‡ä»¶*/
+#define SFTFMIN                 195         /*æå°å€¼æ–‡ä»¶*/
 
 
-#define	SF_SC_NA        		122         /*ÕÙ»½Ä¿Â¼©pÑ¡ÔñÎÄ¼ş©pÕÙ»½ÎÄ¼ş©pÕÙ»½½Ú*/
-#define	SF_AF_NA        		124         /*È·ÈÏÎÄ¼ş©pÈ·ÈÏ½Ú*/
-#define	SFREQ       		    5           /*´«ËÍÔ­Òò£­£­ÇëÇó»ò±»ÇëÇó*/
-#define	SFACTCON		        7 	        /*¼¤»îÈ·ÈÏ*/
-#define	SFACTTERM		        10 	        /*¼¤»î½áÊø*/
-#define	SFILE               	13 	        /*´«ËÍÔ­Òò£­£­ÎÄ¼ş´«ËÍ*/
-#define SFUNKNOWNTYPEID         44          /*´«ËÍÔ­Òò£­£­Î´ÖªµÄÀàĞÍ±êÊ¶*/
-#define SFUNKNOWNCOT            45          /*´«ËÍÔ­Òò£­£­Î´ÖªµÄ´«ËÍÔ­Òò*/
-#define SFUNKNOWNPUBADDR        46          /*´«ËÍÔ­Òò£­£­Î´ÖªµÄÓ¦ÓÃ·şÎñÊı¾İµ¥Ôª¹«¹²µØÖ·*/
-#define SFUNKNOWNTINFOADDR      47          /*´«ËÍÔ­Òò£­£­Î´ÖªµÄĞÅÏ¢¶ÔÏóµØÖ·*/
+#define	SF_SC_NA        		122         /*å¬å”¤ç›®å½•ï¹‘é€‰æ‹©æ–‡ä»¶ï¹‘å¬å”¤æ–‡ä»¶ï¹‘å¬å”¤èŠ‚*/
+#define	SF_AF_NA        		124         /*ç¡®è®¤æ–‡ä»¶ï¹‘ç¡®è®¤èŠ‚*/
+#define	SFREQ       		    5           /*ä¼ é€åŸå› ï¼ï¼è¯·æ±‚æˆ–è¢«è¯·æ±‚*/
+#define	SFACTCON		        7 	        /*æ¿€æ´»ç¡®è®¤*/
+#define	SFACTTERM		        10 	        /*æ¿€æ´»ç»“æŸ*/
+#define	SFILE               	13 	        /*ä¼ é€åŸå› ï¼ï¼æ–‡ä»¶ä¼ é€*/
+#define SFUNKNOWNTYPEID         44          /*ä¼ é€åŸå› ï¼ï¼æœªçŸ¥çš„ç±»å‹æ ‡è¯†*/
+#define SFUNKNOWNCOT            45          /*ä¼ é€åŸå› ï¼ï¼æœªçŸ¥çš„ä¼ é€åŸå› */
+#define SFUNKNOWNPUBADDR        46          /*ä¼ é€åŸå› ï¼ï¼æœªçŸ¥çš„åº”ç”¨æœåŠ¡æ•°æ®å•å…ƒå…¬å…±åœ°å€*/
+#define SFUNKNOWNTINFOADDR      47          /*ä¼ é€åŸå› ï¼ï¼æœªçŸ¥çš„ä¿¡æ¯å¯¹è±¡åœ°å€*/
 #define SFLAI                   0x4001
 
-#define SFFILEHEADLEN           17          /*ÎÄ¼şÍ·³¤¶È*/
-#define SFSectionLen            64000       /*½Ú³¤¶È*/
+#define SFFILEHEADLEN           17          /*æ–‡ä»¶å¤´é•¿åº¦*/
+#define SFSectionLen            64000       /*èŠ‚é•¿åº¦*/
 
 
 enum FileStatus {FileOver=0,CallDir,SelectFile,CallFile,CallSection,
                  SendSegment,LastSegment,LastSection,LastFile};
 enum CallYcStatus {CYNouse=0, CYAck, CYCall, CYEnd, CYError};
 
-struct SFileInfo_t{         /*ÔËĞĞĞÅÏ¢*/
+struct SFileInfo_t{         /*è¿è¡Œä¿¡æ¯*/
     enum FileStatus FileStep;
     
     INT8U   RxID;
@@ -257,13 +257,13 @@ struct SFileInfo_t{         /*ÔËĞĞĞÅÏ¢*/
     struct Iec101ClockTime_t    RxTimeStart;
     struct Iec101ClockTime_t    RxTimeEnd;
     
-    INT16U  FileName;       /*ÎÄ¼şÃû*/
-    INT8U   SectionName;    /*½ÚÃû*/    
+    INT16U  FileName;       /*æ–‡ä»¶å*/
+    INT8U   SectionName;    /*èŠ‚å*/    
     
-    /*ÒÔÏÂÎªstruct FileOPData*/
-    INT16U  FDataPer;           /*Êı¾İµÄÊ±¼ä¼ä¸ô£¨µ¥Î»£º·ÖÖÓ£©*/
-    INT16U  FDataNum;           /*ĞÅÏ¢ÔªËØÊı*/
-    INT32U  FDataClock;         /*ÆğÊ¼¾ø¶ÔÊ±¼ä*/
+    /*ä»¥ä¸‹ä¸ºstruct FileOPData*/
+    INT16U  FDataPer;           /*æ•°æ®çš„æ—¶é—´é—´éš”ï¼ˆå•ä½ï¼šåˆ†é’Ÿï¼‰*/
+    INT16U  FDataNum;           /*ä¿¡æ¯å…ƒç´ æ•°*/
+    INT32U  FDataClock;         /*èµ·å§‹ç»å¯¹æ—¶é—´*/
 
     INT32U  FileLen;
     INT32U  SectLen;
@@ -273,13 +273,13 @@ struct SFileInfo_t{         /*ÔËĞĞĞÅÏ¢*/
     INT8U   FileChs;
     INT8U   SectChs;
     
-    /*ÕÙ»½Ò£²â*/
+    /*å¬å”¤é¥æµ‹*/
     INT16U  AllYCNum;
     enum CallYcStatus   CallYcStep;
     INT8U   RxYcLen;
     INT8U   RxYcData[250];
     INT8U   InfoNum;
-    INT16U  InfoAddr[127];  /*Ö§³ÖÒ£²âºÅ0¡«65535*/
+    INT16U  InfoAddr[127];  /*æ”¯æŒé¥æµ‹å·0ï½65535*/
 };
 
 #endif
@@ -297,27 +297,27 @@ class	CSecAppSev
 
     
     BOOL BalanMode;
-    INT8U InitFlag;     //³õÊ¼»¯ÊÇ·ñ·¢ËÍ¹ı±êÖ¾¡£0xff±íÊ¾Î´·¢ËÍ¹ı¡£ 0±íÊ¾·¢ËÍ¹ı¡£
+    INT8U InitFlag;     //åˆå§‹åŒ–æ˜¯å¦å‘é€è¿‡æ ‡å¿—ã€‚0xffè¡¨ç¤ºæœªå‘é€è¿‡ã€‚ 0è¡¨ç¤ºå‘é€è¿‡ã€‚
 
-    //Ó¦ÓÃ²ã·şÎñµ÷ÓÃ´øÈëµÄ²ÎÊı
+    //åº”ç”¨å±‚æœåŠ¡è°ƒç”¨å¸¦å…¥çš„å‚æ•°
     INT16U *AppCommand;
     INT16U DLCommand;
     INT16U LengthIn;
     INT16U *LengthOut;
-    INT8U *RxMsg;	//Ó¦ÓÃ²ã½ÓÊÕÊı¾İÖ¸Õë
-    INT8U *TxMsg;	//Ó¦ÓÃ²ãÊä³öÊı¾İÖ¸Õë
+    INT8U *RxMsg;	//åº”ç”¨å±‚æ¥æ”¶æ•°æ®æŒ‡é’ˆ
+    INT8U *TxMsg;	//åº”ç”¨å±‚è¾“å‡ºæ•°æ®æŒ‡é’ˆ
 
     BOOL DDFreeze;       //wjr 
 
-    INT8U DBData[2048];//ÏòÊı¾İ¿âÈ¡Êı¾İÊ±Ê¹ÓÃµÄÁÙÊ±»º³åÇø
+    INT8U DBData[2048];//å‘æ•°æ®åº“å–æ•°æ®æ—¶ä½¿ç”¨çš„ä¸´æ—¶ç¼“å†²åŒº
     
-    struct BIEWithTimeData_t DBIDBData[100];//ÏòÊı¾İ¿âÈ¡Êı¾İÊ±Ê¹ÓÃµÄÁÙÊ±»º³åÇø   wjr
-    struct BIEWithoutTimeData_t DBICOSDBData[100];//ÏòÊı¾İ¿âÈ¡Êı¾İÊ±Ê¹ÓÃµÄÁÙÊ±»º³åÇø   wjr
-    INT16U DBISOEnum;       //ÊÕµ½µÄË«µãÒ£ĞÅµÄsoeÊı
-    INT16U DBICOSnum;       //ÊÕµ½µÄË«µãÒ£ĞÅµÄcosÊı
-    INT16U DBIDevIndex;     //ĞèÒª·¢ËÍË«µãÒ£ĞÅsoeµÄÉè±¸ºÅ
-    INT16U DBICOSDevIndex;  //ĞèÒª·¢ËÍË«µãÒ£ĞÅcosµÄÉè±¸ºÅ
-    INT8U  IsDBISoeSend;   //ÊÇ·ñ·¢ËÍDBIsoe
+    struct BIEWithTimeData_t DBIDBData[100];//å‘æ•°æ®åº“å–æ•°æ®æ—¶ä½¿ç”¨çš„ä¸´æ—¶ç¼“å†²åŒº   wjr
+    struct BIEWithoutTimeData_t DBICOSDBData[100];//å‘æ•°æ®åº“å–æ•°æ®æ—¶ä½¿ç”¨çš„ä¸´æ—¶ç¼“å†²åŒº   wjr
+    INT16U DBISOEnum;       //æ”¶åˆ°çš„åŒç‚¹é¥ä¿¡çš„soeæ•°
+    INT16U DBICOSnum;       //æ”¶åˆ°çš„åŒç‚¹é¥ä¿¡çš„cosæ•°
+    INT16U DBIDevIndex;     //éœ€è¦å‘é€åŒç‚¹é¥ä¿¡soeçš„è®¾å¤‡å·
+    INT16U DBICOSDevIndex;  //éœ€è¦å‘é€åŒç‚¹é¥ä¿¡cosçš„è®¾å¤‡å·
+    INT8U  IsDBISoeSend;   //æ˜¯å¦å‘é€DBIsoe
 
     struct PData1 Data1;
     struct PGroupTrn GroupTrn;
@@ -326,29 +326,29 @@ class	CSecAppSev
 
     INT32U Data2Flag;
 
-    UINT16  LBIinfoaddr;  //µ¥µãÒ£ĞÅĞÅÏ¢ÌåµØÖ·       2008.11.5
-    UINT16  LDBIinfoaddr; //Ë«µãÒ£ĞÅĞÅÏ¢ÌåµØÖ·       2008.11.5
+    UINT16  LBIinfoaddr;  //å•ç‚¹é¥ä¿¡ä¿¡æ¯ä½“åœ°å€       2008.11.5
+    UINT16  LDBIinfoaddr; //åŒç‚¹é¥ä¿¡ä¿¡æ¯ä½“åœ°å€       2008.11.5
 
-    INT16U DevCount;//¹ÜÀíµÄÉè±¸ÊıÄ¿
+    INT16U DevCount;//ç®¡ç†çš„è®¾å¤‡æ•°ç›®
     INT16U ActDevIndex;//
-    INT16U LastDevIndex;//¼ÇÂ¼×î½üÒ»´Î·¢ËÍ±äÎ»YX£¬SOE£¬FA£¬µÄÉè±¸ĞòºÅ¡£
-    INT16U BODevIndex;//¼ÇÂ¼Ò£¿ØÃüÁîµÄÉè±¸ĞòºÅ
-    //struct PDevInfo *DevList;//Éè±¸ĞÅÏ¢
-    INT16U NvaActDevNo;//·¢ËÍ±ä»¯Ò£²âµÄµ±Ç°Éè±¸ĞòºÅ¡£
+    INT16U LastDevIndex;//è®°å½•æœ€è¿‘ä¸€æ¬¡å‘é€å˜ä½YXï¼ŒSOEï¼ŒFAï¼Œçš„è®¾å¤‡åºå·ã€‚
+    INT16U BODevIndex;//è®°å½•é¥æ§å‘½ä»¤çš„è®¾å¤‡åºå·
+    //struct PDevInfo *DevList;//è®¾å¤‡ä¿¡æ¯
+    INT16U NvaActDevNo;//å‘é€å˜åŒ–é¥æµ‹çš„å½“å‰è®¾å¤‡åºå·ã€‚
 
-    INT8U *YCGroupNo;   //ÓÃÀ´´¢´æÃ¿¸öÒ£²âµÄ×éºÅ£¬ÒÔ±ã¼ìË÷ÀàĞÍ±êÊ¶
-    INT8U *YXGroupNo;   //ÓÃÀ´´¢´æÃ¿¸öÒ£ĞÅµÄ×éºÅ£¬ÒÔ±ã¼ìË÷ÀàĞÍ±êÊ¶
+    INT8U *YCGroupNo;   //ç”¨æ¥å‚¨å­˜æ¯ä¸ªé¥æµ‹çš„ç»„å·ï¼Œä»¥ä¾¿æ£€ç´¢ç±»å‹æ ‡è¯†
+    INT8U *YXGroupNo;   //ç”¨æ¥å‚¨å­˜æ¯ä¸ªé¥ä¿¡çš„ç»„å·ï¼Œä»¥ä¾¿æ£€ç´¢ç±»å‹æ ‡è¯†
 
     //enum PMASTERUseStatus MasterStatus;//zzw
     
-    INT16U RestDLDelay;                 //Æô¶¯Á´Â·½¨Á¢Íê³Éºó£¬ÑÓÊ±30Ãë´Ó¶¯»¹Î´½¨Á¢Á´Â·£¬ÔòÆô¶¯Ó¦ÓÃ²ã±¨ÎÄ 
+    INT16U RestDLDelay;                 //å¯åŠ¨é“¾è·¯å»ºç«‹å®Œæˆåï¼Œå»¶æ—¶30ç§’ä»åŠ¨è¿˜æœªå»ºç«‹é“¾è·¯ï¼Œåˆ™å¯åŠ¨åº”ç”¨å±‚æŠ¥æ–‡ 
     
-    BOOL   IsAllSendInitEnd;            //ÊÇ·ñÃ¿´ÎÖØĞÂÁ´½Óºó·¢ËÍ³õÊ¼»¯½áÊøÖ¡
+    BOOL   IsAllSendInitEnd;            //æ˜¯å¦æ¯æ¬¡é‡æ–°é“¾æ¥åå‘é€åˆå§‹åŒ–ç»“æŸå¸§
             
-    BOOL   FirstCallAllData;              //µÚÒ»´Î×ÜÕĞ²»±»´ò¶Ï¹¦ÄÜ£¬ÊÊÓÃÓÚÆ½ºâÄ£Ê½£¬0xff-ÒÑ¾­×ÜÕĞ¹ı£¬0-Î´×ÜÕĞ¹ı¡£ÖÕ¶ËÊÕµ½¶Ô·½Á´Â·¸´Î»ºó£¬¸Ã±êÖ¾Îª0£¬µÚ1´Î×ÜÕĞ½áÊøºóÔÙ·¢ËÍÆäËûÊı¾İ¡£
+    BOOL   FirstCallAllData;              //ç¬¬ä¸€æ¬¡æ€»æ‹›ä¸è¢«æ‰“æ–­åŠŸèƒ½ï¼Œé€‚ç”¨äºå¹³è¡¡æ¨¡å¼ï¼Œ0xff-å·²ç»æ€»æ‹›è¿‡ï¼Œ0-æœªæ€»æ‹›è¿‡ã€‚ç»ˆç«¯æ”¶åˆ°å¯¹æ–¹é“¾è·¯å¤ä½åï¼Œè¯¥æ ‡å¿—ä¸º0ï¼Œç¬¬1æ¬¡æ€»æ‹›ç»“æŸåå†å‘é€å…¶ä»–æ•°æ®ã€‚
     INT16U WaitCallAllDelay;
     
-    //Ò£ĞÅÒÔË«µãÒ£ĞÅ·¢ËÍ-¹ã¶«·ğÉ½
+    //é¥ä¿¡ä»¥åŒç‚¹é¥ä¿¡å‘é€-å¹¿ä¸œä½›å±±
     BOOL  bSendAllDBI;
     
     INT16U RDPubAddr;
@@ -360,7 +360,7 @@ class	CSecAppSev
     INT16U ResetCount;
     INT8U ResetFlag;
    
-    //±±¾©¹ÊÕÏ¸´¹é
+    //åŒ—äº¬æ•…éšœå¤å½’
     INT8U RFaultFlag;
     BOOL YKSetAlready;
 
@@ -390,34 +390,34 @@ class	CSecAppSev
     INT32U CounterCount;
     INT32U WatchDogCount;
 
-    //±£´æÒ£¿ØÁÙÊ±ĞÅÏ¢
+    //ä¿å­˜é¥æ§ä¸´æ—¶ä¿¡æ¯
     INT8U YKTypeID;
     enum {NOTUSE=0,YKERROR,YKSETCON,YKEXECON,YKCANCELCON,YKTERM}YKStatus;
-    INT16U YkStatusForTest; //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24
+    INT16U YkStatusForTest; //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24
     INT8U DcoTemp;
     INT8U ScoTemp;
     //struct PDBBO PDBBOTemp;
     INT16U SwitchNoTemp;
 
-    INT16U SDTTime;//´æ´¢Ö÷Õ¾·¢ËÍµÄSDTÊ±¼ä
-    INT16U TrTime; //×ÓÕ¾´Ó½ÓÊÕµ½·¢ËÍÑÓÊ±»ñµÃÃüÁîµÄÊ±¼ä¼ä¸ô
+    INT16U SDTTime;//å­˜å‚¨ä¸»ç«™å‘é€çš„SDTæ—¶é—´
+    INT16U TrTime; //å­ç«™ä»æ¥æ”¶åˆ°å‘é€å»¶æ—¶è·å¾—å‘½ä»¤çš„æ—¶é—´é—´éš”
     INT16U SendTime;//=SDTTime+TrTime
     INT16U TimeDelay;
-    struct AbsTime_t SecSysTimeR;//×ÓÕ¾ÊÕµ½C_CD_NAÊ±µÄÏµÍ³Ê±¼ä
-    struct AbsTime_t SecSysTimeT;//×ÓÕ¾·¢ËÍM_CD_NAÊ±µÄÏµÍ³Ê±¼ä
-    struct AbsTime_t OldSysTime;//×ÓÕ¾ÉèÖÃÊ±ÖÓÇ°µÄÏµÍ³Ê±¼ä
+    struct AbsTime_t SecSysTimeR;//å­ç«™æ”¶åˆ°C_CD_NAæ—¶çš„ç³»ç»Ÿæ—¶é—´
+    struct AbsTime_t SecSysTimeT;//å­ç«™å‘é€M_CD_NAæ—¶çš„ç³»ç»Ÿæ—¶é—´
+    struct AbsTime_t OldSysTime;//å­ç«™è®¾ç½®æ—¶é’Ÿå‰çš„ç³»ç»Ÿæ—¶é—´
 
     INT8U EditDDCon;
-    struct AbsTime_t CounterTime;//¶³½áµç¶ÈµÄÊ±¼ä
+    struct AbsTime_t CounterTime;//å†»ç»“ç”µåº¦çš„æ—¶é—´
 
-    INT16U BackScanTime;//·Ö£¬±³¾°Êı¾İÉ¨Ãè¼ä¸ô
-    INT16U CycScanTime;//Ãë£¬ÖÜÆÚÑ­»·Êı¾İÉ¨Ãè¼ä¸ô
+    INT16U BackScanTime;//åˆ†ï¼ŒèƒŒæ™¯æ•°æ®æ‰«æé—´éš”
+    INT16U CycScanTime;//ç§’ï¼Œå‘¨æœŸå¾ªç¯æ•°æ®æ‰«æé—´éš”
     INT16U BackScanCount;
     INT16U CycScanCount;
 
     INT8U ReadTimeFlag;
 
-    //´íÎóÃüÁî´¦Àí
+    //é”™è¯¯å‘½ä»¤å¤„ç†
     BOOL HaveWrongData;
     INT16U WrongDataLength;
     INT8U WrongData[256];
@@ -428,13 +428,13 @@ class	CSecAppSev
     INT8U EditAllDataCon;
     
     INT8U EditReadParaCon;
-    INT8U ActiveParaCon;    //Ô¶³Ì²ÎÊı¼¤»î¿ØÖÆ²ÎÊı£¬1-»ØÈ·ÈÏÖ¡ 2-²ÎÊı»Ø¸´ 3-Ö÷¶¯·¢ËÍ²ÎÊı
+    INT8U ActiveParaCon;    //è¿œç¨‹å‚æ•°æ¿€æ´»æ§åˆ¶å‚æ•°ï¼Œ1-å›ç¡®è®¤å¸§ 2-å‚æ•°å›å¤ 3-ä¸»åŠ¨å‘é€å‚æ•°
     
 
     struct PDevInfo *pDev;
     enum PFrmState LastFrame;
 
-    //ÎÄ¼şÉÏ´«;Ò»¸öÎÄ¼şµ±×öÒ»¸ö½ÚÀ´´¦Àí¡£
+    //æ–‡ä»¶ä¸Šä¼ ;ä¸€ä¸ªæ–‡ä»¶å½“åšä¸€ä¸ªèŠ‚æ¥å¤„ç†ã€‚
     INT32U FileReadPtr;
     INT16U CurrentFileName;
     INT32U CurrentFileSize;
@@ -444,10 +444,10 @@ class	CSecAppSev
     enum PFileStatus FileStep;
     INT8U FileCheckSum;
 
-    //±£»¤¶¨Öµ
-    INT8U ProtectValue[33];//×îºóÒ»¸ö×Ö½Ú£¬¿ÉÒÔÓÃ×ö³É¹¦±êÖ¾
+    //ä¿æŠ¤å®šå€¼
+    INT8U ProtectValue[33];//æœ€åä¸€ä¸ªå­—èŠ‚ï¼Œå¯ä»¥ç”¨åšæˆåŠŸæ ‡å¿—
 
-    //ÀúÊ·µç¶È±£´æÊ±¼ä
+    //å†å²ç”µåº¦ä¿å­˜æ—¶é—´
     struct Iec101ClockTime_t HisDDTime;
     enum {Start=0,EditCon,SendData,SendOver}HisDDStatus;
 
@@ -457,12 +457,12 @@ class	CSecAppSev
     void SetDefaultPad(void);
     void ReadAIMaxVal(INT16U i);
 
-    //ÀúÊ·µç¶È
-    INT16U HisDDDevNo;//µ±Ç°ÀúÊ·µç¶ÈÉè±¸ĞòºÅ
+    //å†å²ç”µåº¦
+    INT16U HisDDDevNo;//å½“å‰å†å²ç”µåº¦è®¾å¤‡åºå·
 
     //
-    INT16U FixFrmLength;//¹Ì¶¨Ö¡³¤¶È
-    INT16U AsduHeadLength;//ASDUÍ·³¤¶È£¬ÀàĞÍ±êÖ¾µ½ĞÅÏ¢ÌåµØÖ·
+    INT16U FixFrmLength;//å›ºå®šå¸§é•¿åº¦
+    INT16U AsduHeadLength;//ASDUå¤´é•¿åº¦ï¼Œç±»å‹æ ‡å¿—åˆ°ä¿¡æ¯ä½“åœ°å€
     INT16U LinkAddrSize;
     INT16U CotSize;
     INT16U PubAddrSize;
@@ -494,39 +494,39 @@ class	CSecAppSev
     INT8U *pTxInfoAddr;
     INT8U *pTxData;
 
-    short Data[150];//Â¼²¨Êı¾İÔİ´æ
+    short Data[150];//å½•æ³¢æ•°æ®æš‚å­˜
     
-    INT8U *pRestType;   //¸´Î»¹æÔ¼½ø³Ì×´Ì¬¼ÇÒä ll 2010/07/20   for ¹ãÎ÷¹æÔ¼²âÊÔ
+    INT8U *pRestType;   //å¤ä½è§„çº¦è¿›ç¨‹çŠ¶æ€è®°å¿† ll 2010/07/20   for å¹¿è¥¿è§„çº¦æµ‹è¯•
     
     
     
-    INT16U RMTHaveReadParaFlag;     //²¿·Ö¶ÁÈ¡Ê±£¬×÷ÎªÒÑ¶ÁÈ¡ĞòºÅ¡£È«²¿¶ÁÈ¡Ê±×÷Îª¶ÁÈ¡Î»ÖÃ±êºÅ
-    BOOL   RMTParaReadAllFlag;      //¶ÁÈ«²¿²ÎÊı±êÖ¾
-    INT16U RMTSectionNo;            //ÔİÊ±¶¨ÒåÒ»¸ö£¬Ó¦¸¶µ±Ç°ÇøºÅ¡£
-    INT16U RMTParaNum;              //¶Á»òĞ´µÄ¸öÊı
+    INT16U RMTHaveReadParaFlag;     //éƒ¨åˆ†è¯»å–æ—¶ï¼Œä½œä¸ºå·²è¯»å–åºå·ã€‚å…¨éƒ¨è¯»å–æ—¶ä½œä¸ºè¯»å–ä½ç½®æ ‡å·
+    BOOL   RMTParaReadAllFlag;      //è¯»å…¨éƒ¨å‚æ•°æ ‡å¿—
+    INT16U RMTSectionNo;            //æš‚æ—¶å®šä¹‰ä¸€ä¸ªï¼Œåº”ä»˜å½“å‰åŒºå·ã€‚
+    INT16U RMTParaNum;              //è¯»æˆ–å†™çš„ä¸ªæ•°
     INT16U RMTParaInfo[RMT_RW_MAXNUM];
     float RMTParaValue[RMT_RW_MAXNUM];
-    INT16U RMTTimeOut;              //Ô¤ÖÃ±êÖ¾³¬Ê±´¦Àí
-    BOOL   RMTParaYZ;               //Ô¤ÖÃ±êÖ¾
-    INT8U  RMTReturnCot;            //¼ÇÂ¼·µ»ØµÄ´«ËÍÔ­Òò
-    INT8U  RMTReturnVsq;            //¼ÇÂ¼·µ»ØÊ¹ÓÃµÄvsq
+    INT16U RMTTimeOut;              //é¢„ç½®æ ‡å¿—è¶…æ—¶å¤„ç†
+    BOOL   RMTParaYZ;               //é¢„ç½®æ ‡å¿—
+    INT8U  RMTReturnCot;            //è®°å½•è¿”å›çš„ä¼ é€åŸå› 
+    INT8U  RMTReturnVsq;            //è®°å½•è¿”å›ä½¿ç”¨çš„vsq
     
-    INT8U  ProgramUpadateCot;      //Èí¼şÉı¼¶ÃüÁî·µ»ØCOT
+    INT8U  ProgramUpadateCot;      //è½¯ä»¶å‡çº§å‘½ä»¤è¿”å›COT
     INT8U  ProgramUpadateSE;
     
-    //¹ãÎ÷Ô¶³ÌÔËÎ¬
+    //å¹¿è¥¿è¿œç¨‹è¿ç»´
     INT8U Roi;
     INT8U Qpa;
     INT16U GXTimeOut;
-    BOOL   GXParaYZ;               //¹ãÎ÷Ô¤ÖÃ±êÖ¾
-    INT16U GXParaNum;              //¶Á»òĞ´µÄ¸öÊı
+    BOOL   GXParaYZ;               //å¹¿è¥¿é¢„ç½®æ ‡å¿—
+    INT16U GXParaNum;              //è¯»æˆ–å†™çš„ä¸ªæ•°
     BOOL  GXvsqflag;
     INT8U GXReturnCot;
     INT8U GXParaControl;
     INT16U GXParaInfo[GX_RW_MAXNUM];
     float GXParaValue[GX_RW_MAXNUM];
     
-    /****NEWÎÄ¼ş´«ÊäSTART***********/
+    /****NEWæ–‡ä»¶ä¼ è¾“START***********/
     struct FTFileTransfer_t  FtInfo;
     
     void ProcFileInit(void);
@@ -545,7 +545,7 @@ class	CSecAppSev
     void ProcFT_WriteFileAct(void);
     void ProcFT_WriteFileData(void);
     
-    /****NEWÎÄ¼ş´«ÊäEND***********/
+    /****NEWæ–‡ä»¶ä¼ è¾“END***********/
     void EnCodeFREvent(void);
     void CheckFREOnTime(void);  
     
@@ -592,33 +592,33 @@ class	CSecAppSev
     BOOL EnCodeBIENT_ALLDBI(void);
     BOOL EnCodeSOE_ALLDBI(void);
     
-    void ProcEncodeXSFileSynConf(void);//ÏßËğÎÄ¼şÍ¬²½µÄÈ·ÈÏèå»Ø¸´
-    void ProcEncodeXSFileSynFinish(void);//ÏßËğÎÄ¼şÍ¬²½µÄÈ·ÈÏèå»Ø¸´          
+    void ProcEncodeXSFileSynConf(void);//çº¿æŸæ–‡ä»¶åŒæ­¥çš„ç¡®è®¤æ¡¢å›å¤
+    void ProcEncodeXSFileSynFinish(void);//çº¿æŸæ–‡ä»¶åŒæ­¥çš„ç¡®è®¤æ¡¢å›å¤          
 
     void ProcData1(void);
     void ProcData2(void);
-    void ProcControl(void);  //´¦ÀíÒ£¿Ø
+    void ProcControl(void);  //å¤„ç†é¥æ§
     void ProcSetNVA(void);
     void ProcLCdataCall(void);
     void ProcAllDataCall(void);
     void ProcDDCall(void);
     void ProcTimeDelay(void);
-    void ProcClock(BOOL Conf); //´¦Àí¶ÔÖÓ
+    void ProcClock(BOOL Conf); //å¤„ç†å¯¹é’Ÿ
     void ProcReset(void);
     void ProcTest(void);
     void ProcReadData(void);
     void ProcParaSet(void);
     void EnCodeInitEnd(void);
-    void ProcTaskMsg(void);//´¦ÀíÒ£¿Ø·µĞ£ĞÅÏ¢
-    BOOL EnCodeCtrlRet(void);  //Ò£¿Ø·µĞ£
-    void EditYKTerm(void);//Ò£¿Ø½áÊø
+    void ProcTaskMsg(void);//å¤„ç†é¥æ§è¿”æ ¡ä¿¡æ¯
+    BOOL EnCodeCtrlRet(void);  //é¥æ§è¿”æ ¡
+    void EditYKTerm(void);//é¥æ§ç»“æŸ
     BOOL GetActDevIndexByAddr(INT16U Addr);
-    BOOL EnCodeBIENT(void);  //±à¼­COS  ½«À´ÕâÀïÒªÇø·Öµ¥µãË«µãyx
-    void EnCodeDBIENT(void);  //±à¼­Ë«µãÒ£ĞÅCOS   wjr
-    BOOL EnCodeSOE(void); //±à¼­SOE //ÔİÊ±²»¿¼ÂÇË«µãÒ£ĞÅ
-    void EnCodeDBISOE(void); //±à¼­Ë«µãÒ£ĞÅSOE  wjr
-    void EnCodeAllDataConf(void);//×ÜÕÙ»½È·ÈÏÖ¡
-    BOOL ProcAllData(void); //´¦ÀíÈ«Êı¾İ
+    BOOL EnCodeBIENT(void);  //ç¼–è¾‘COS  å°†æ¥è¿™é‡Œè¦åŒºåˆ†å•ç‚¹åŒç‚¹yx
+    void EnCodeDBIENT(void);  //ç¼–è¾‘åŒç‚¹é¥ä¿¡COS   wjr
+    BOOL EnCodeSOE(void); //ç¼–è¾‘SOE //æš‚æ—¶ä¸è€ƒè™‘åŒç‚¹é¥ä¿¡
+    void EnCodeDBISOE(void); //ç¼–è¾‘åŒç‚¹é¥ä¿¡SOE  wjr
+    void EnCodeAllDataConf(void);//æ€»å¬å”¤ç¡®è®¤å¸§
+    BOOL ProcAllData(void); //å¤„ç†å…¨æ•°æ®
     BOOL CheckAndModifyGroup(void);
     BOOL CheckDDGroup(void);
     INT8U EnCodeAllData(INT16U BeginNo,INT16U EndNo,INT16U *pNum);//zzw
@@ -646,17 +646,17 @@ class	CSecAppSev
 	void EnCodeActivatePara(INT16U DevIndex);
 	void EnCodeLCFaultOrProtectPara(INT16U DevIndex,INT8U qoi,INT16U LCInforAddr);
 	void EnCodeLCCommunicatePara(INT16U DevIndex,INT8U qoi,INT16U LCInforAddr);
-    void EnCodeGroupEnd(void);//½áÊøÖ¡
-    void EnCodeDDGroupEnd(void);//½áÊøÖ¡
-    BOOL GetNextDev(void); //µÃµ½ÏÂÒ»¸öÉè±¸
-    BOOL GetNextDDDev(void); //µÃµ½ÏÂÒ»¸öÉè±¸
-    BOOL EnCodeNVA(void);  //±à¼­±ä»¯Ò£²âÊı¾İ;
+    void EnCodeGroupEnd(void);//ç»“æŸå¸§
+    void EnCodeDDGroupEnd(void);//ç»“æŸå¸§
+    BOOL GetNextDev(void); //å¾—åˆ°ä¸‹ä¸€ä¸ªè®¾å¤‡
+    BOOL GetNextDDDev(void); //å¾—åˆ°ä¸‹ä¸€ä¸ªè®¾å¤‡
+    BOOL EnCodeNVA(void);  //ç¼–è¾‘å˜åŒ–é¥æµ‹æ•°æ®;
     void FreezeCounter(void);
     void EnCodeCounterConf(void);//
-    void ProcCounter(void) ;//´¦Àíµç¶Èzzw
-    INT8U EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum);//´ÓÊı¾İ¿âÈ¡µç¶È£¬´¦Àíºó£¬·¢µ½Á´Â·²ã¡£
+    void ProcCounter(void) ;//å¤„ç†ç”µåº¦zzw
+    INT8U EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum);//ä»æ•°æ®åº“å–ç”µåº¦ï¼Œå¤„ç†åï¼Œå‘åˆ°é“¾è·¯å±‚ã€‚
     void EnCodeTimeDelay(void);
-    void EnCodeClock(void);//·¢ËÍ×ÓÕ¾ÉèÖÃÊ±ÖÓÇ°µÄÏµÍ³Ê±ÖÓ
+    void EnCodeClock(void);//å‘é€å­ç«™è®¾ç½®æ—¶é’Ÿå‰çš„ç³»ç»Ÿæ—¶é’Ÿ
     void EnCodeReadData(void);
     void EnCodeReadDataCon(INT16U DevIndex,INT8U Cot);
     void EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr);
@@ -678,11 +678,11 @@ class	CSecAppSev
     void SendAllDataOnTime(void);
     
       
-    void ProcXSFileSyn(void); //ÏßËğÄ£¿éÎÄ¼şÍ¬²½´¦Àí CL 20180608
+    void ProcXSFileSyn(void); //çº¿æŸæ¨¡å—æ–‡ä»¶åŒæ­¥å¤„ç† CL 20180608
    
     INT16U EnCodeAllLastSoe(INT16U BeginNo);  
         
-    //ÎÄ¼şÉÏ´«
+    //æ–‡ä»¶ä¸Šä¼ 
     void ProcFileCall(void);
     void SendDir(void);
     void FileReady(void);
@@ -708,15 +708,15 @@ class	CSecAppSev
     void ProDealF6();   	
 	
 #ifdef INCLUDE_DA
-    //±£»¤¶¨Öµ
+    //ä¿æŠ¤å®šå€¼
     void SetProtect(void);
     void SendProtectCon(void);
     void CallProtect(void);
     void SendProtectData(void);
 #endif
 
-    void CheckUDataFlag(INT16U i,INT8U Flag);//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞSOE COS
-    void ClearMsg(void);    //ÔÚÖØĞÂ½¨Á¢Á´Â·ºó£¬ÇåÀíÏûÏ¢¶Ñ»ı¡£Ä¿Ç°ÏûÏ¢Ö»ÓĞÒ£¿Ø£¬ËùÒÔÈÎºÎÔ­ÒòÖØĞÂ½¨Á¢Á¬½Óºó£¬¶¼²»Ó¦È¥´¦Àí¹ıÊ±µÄÒ£¿Ø±¨ÎÄ¡£
+    void CheckUDataFlag(INT16U i,INT8U Flag);//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰SOE COS
+    void ClearMsg(void);    //åœ¨é‡æ–°å»ºç«‹é“¾è·¯åï¼Œæ¸…ç†æ¶ˆæ¯å †ç§¯ã€‚ç›®å‰æ¶ˆæ¯åªæœ‰é¥æ§ï¼Œæ‰€ä»¥ä»»ä½•åŸå› é‡æ–°å»ºç«‹è¿æ¥åï¼Œéƒ½ä¸åº”å»å¤„ç†è¿‡æ—¶çš„é¥æ§æŠ¥æ–‡ã€‚
     
     /***********************************************/
     #ifdef SFILETRANAPP101
@@ -746,45 +746,45 @@ class	CSecAppSev
     #endif
     /***********************************************/
 
-    //¶¨Ê±±£´æµç¶È
+    //å®šæ—¶ä¿å­˜ç”µåº¦
     //#ifdef	SAVEKWH
     struct SAVEDATABUF *hisDataPtr ;
     INT16U HisDDCycle;
     BOOL ReadKWHHistoryData(struct AbsTime_t absTime,long *KWH,INT16U KWHNum);
     //#endif
 public:
-    enum DLSECSTATUS APP_DLSecStatus;	//Á´Â·²ã´Ó¶¯Õ¾×´Ì¬,Ó¦ÓÃ²ã±êÖ¾  ll
-    enum DLPRISTATUS APP_DLPriStatus;	//Á´Â·²ãÆô¶¯Õ¾×´Ì¬,Ó¦ÓÃ²ã±êÖ¾  ll
-    INT8U  DLInitpreState;                    //AJ++180416 Á´Â·³õÊ¼»¯¹ı³Ì×´Ì¬»º´æ
-    BOOL   DLInitFinishFlag;            //Á´Â·³õÊ¼»¯¹ı³Ì½áÊø±êÖ¾  1-½áÊø 0-Î´½áÊø
+    enum DLSECSTATUS APP_DLSecStatus;	//é“¾è·¯å±‚ä»åŠ¨ç«™çŠ¶æ€,åº”ç”¨å±‚æ ‡å¿—  ll
+    enum DLPRISTATUS APP_DLPriStatus;	//é“¾è·¯å±‚å¯åŠ¨ç«™çŠ¶æ€,åº”ç”¨å±‚æ ‡å¿—  ll
+    INT8U  DLInitpreState;                    //AJ++180416 é“¾è·¯åˆå§‹åŒ–è¿‡ç¨‹çŠ¶æ€ç¼“å­˜
+    BOOL   DLInitFinishFlag;            //é“¾è·¯åˆå§‹åŒ–è¿‡ç¨‹ç»“æŸæ ‡å¿—  1-ç»“æŸ 0-æœªç»“æŸ
     
-    BOOL   GYKZ2015Flag;        //2015°æ101¹æÔ¼À©Õ¹ÌØÊâ¹æ¶¨´¦Àí
+    BOOL   GYKZ2015Flag;        //2015ç‰ˆ101è§„çº¦æ‰©å±•ç‰¹æ®Šè§„å®šå¤„ç†
     INT8U  SendCOS;
    
-    struct PDevInfo *DevList;//Éè±¸ĞÅÏ¢
+    struct PDevInfo *DevList;//è®¾å¤‡ä¿¡æ¯
     INT16U LCFlag;
     INT32U SaveKWHTimerID;
     INT16U CotLocation;
     INT16U PubAddrLocation;
-    BOOL TimeRightFlag;        //±íÃ÷Ö÷Õ¾·¢À´Ê±¼ä´íÎóÓë·ñµÄ±äÁ¿
+    BOOL TimeRightFlag;        //è¡¨æ˜ä¸»ç«™å‘æ¥æ—¶é—´é”™è¯¯ä¸å¦çš„å˜é‡
     CSecAppSev(INT16U AppID);
     ~CSecAppSev();
-    struct PSec101Pad Sec101Pad;    //¹æÔ¼Ãæ°å
+    struct PSec101Pad Sec101Pad;    //è§„çº¦é¢æ¿
     BOOL InitSecApp(void);
     void OnTimer(void);
     void SetUMsgFlag(void);
     void SetUDataFlag(void);
-    void ProcXSFileSynFinish(void);//ÏßËğÄ£¿éÎÄ¼şÍ¬²½ÖÕÖ¹´¦Àí CL 20180612
-    //SecAppProc£ºÁ´Â·½Ó¿Úº¯Êı
-    //ÊäÈë²ÎÊı£ºbufin:ÊäÈëµÄ»º³åÇøÊı¾İµØÖ·,´ÓÀàĞÍ±êÊ¶¿ªÊ¼£¬
-    //ÊäÈë²ÎÊı£ºlengthinÎªÓ¦ÓÃ²ãÊı¾İ³¤¶È£¬
-    //ÊäÈë²ÎÊı£ºdlcommandÎªÁ´Â·²ãµ½Ó¦ÓÃ²ã¼äµÄ¹¦ÄÜÂë
-    //Êä³ö²ÎÊı£ºbufout:Êä³öµÄ»º³åÇøÊı¾İµØÖ·£¬´ÓÀàĞÍ±êÊ¶¿ªÊ¼£¬
-    //Êä³ö²ÎÊı£ºlengthoutÎªÓ¦ÓÃ²ãÊı¾İ³¤¶È£¬
-    //Êä³ö²ÎÊı£ºappcommandÎªÓ¦ÓÃ²ãµ½Á´Â·²ãµÄÃüÁî
+    void ProcXSFileSynFinish(void);//çº¿æŸæ¨¡å—æ–‡ä»¶åŒæ­¥ç»ˆæ­¢å¤„ç† CL 20180612
+    //SecAppProcï¼šé“¾è·¯æ¥å£å‡½æ•°
+    //è¾“å…¥å‚æ•°ï¼šbufin:è¾“å…¥çš„ç¼“å†²åŒºæ•°æ®åœ°å€,ä»ç±»å‹æ ‡è¯†å¼€å§‹ï¼Œ
+    //è¾“å…¥å‚æ•°ï¼šlengthinä¸ºåº”ç”¨å±‚æ•°æ®é•¿åº¦ï¼Œ
+    //è¾“å…¥å‚æ•°ï¼šdlcommandä¸ºé“¾è·¯å±‚åˆ°åº”ç”¨å±‚é—´çš„åŠŸèƒ½ç 
+    //è¾“å‡ºå‚æ•°ï¼šbufout:è¾“å‡ºçš„ç¼“å†²åŒºæ•°æ®åœ°å€ï¼Œä»ç±»å‹æ ‡è¯†å¼€å§‹ï¼Œ
+    //è¾“å‡ºå‚æ•°ï¼šlengthoutä¸ºåº”ç”¨å±‚æ•°æ®é•¿åº¦ï¼Œ
+    //è¾“å‡ºå‚æ•°ï¼šappcommandä¸ºåº”ç”¨å±‚åˆ°é“¾è·¯å±‚çš„å‘½ä»¤
     void SecAppProc(INT8U *bufin,INT16U lengthin,INT16U dlcommand,
                     INT8U* bufout,INT16U* lengthout,INT16U*appcommand);
-    //³õÊ¼»¯NVRAMÀúÊ·µç¶ÈÇø
+    //åˆå§‹åŒ–NVRAMå†å²ç”µåº¦åŒº
     //#ifdef	SAVEKWH
     void InitHisDataBuf(void);
     BOOL SaveKWHToBuf(void);

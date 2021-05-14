@@ -2,9 +2,9 @@
 #include "secdlink.h"
 #include "procdef.h"
 
-//ÏßËğÎÄ¼şÍ¬²½  CL 20180504
+//çº¿æŸæ–‡ä»¶åŒæ­¥  CL 20180504
 #include "..\newhis\XSDataProc.h"
-//ÏßËğÎÄ¼şÍ¬²½  CL 20180504
+//çº¿æŸæ–‡ä»¶åŒæ­¥  CL 20180504
 
 extern struct DevConf_t *Device;
 extern INT8U LC_Flag;
@@ -18,7 +18,7 @@ void new101sec(INT16U AppID)
     INT32U	dwDLTimerID;
     INT32U	dwAPPTimerID;
     //taskDelay(3000);
-    //Éú³ÉAPP¶ÔÏó
+    //ç”ŸæˆAPPå¯¹è±¡
     CSecAppSev *pSecApp;
     pSecApp=new CSecAppSev(AppID);
     
@@ -27,7 +27,7 @@ void new101sec(INT16U AppID)
     if(!pSecApp)
     {
         #ifdef _CHINESE_
-        logSysMsgNoTime("101 Sec ÈÎÎñ´´½¨Ê§°Ü1",0,0,0,0);
+        logSysMsgNoTime("101 Sec ä»»åŠ¡åˆ›å»ºå¤±è´¥1",0,0,0,0);
         #else
         logSysMsgNoTime("101 Sec Delete Itself",0,0,0,0);
         #endif
@@ -36,7 +36,7 @@ void new101sec(INT16U AppID)
     else if(!pSecApp->InitSecApp())
     {
         #ifdef _CHINESE_
-        logSysMsgNoTime("101 Sec ÈÎÎñ´´½¨Ê§°Ü2",0,0,0,0);
+        logSysMsgNoTime("101 Sec ä»»åŠ¡åˆ›å»ºå¤±è´¥2",0,0,0,0);
         #else
         logSysMsgNoTime("101 Sec Delete Itself",0,0,0,0);
         #endif
@@ -44,14 +44,14 @@ void new101sec(INT16U AppID)
         myTaskSuspendItself();
     }
 
-    //Éú³ÉDL¶ÔÏó
+    //ç”ŸæˆDLå¯¹è±¡
     CSecDLink *pDLink;
     pDLink=new CSecDLink(AppID,pSecApp);
 
     if(!pDLink)
     {
         #ifdef _CHINESE_
-        logSysMsgNoTime("101 Sec ÈÎÎñ´´½¨Ê§°Ü3",0,0,0,0);
+        logSysMsgNoTime("101 Sec ä»»åŠ¡åˆ›å»ºå¤±è´¥3",0,0,0,0);
         #else
         logSysMsgNoTime("101 Sec Delete Itself",0,0,0,0);
         #endif
@@ -61,7 +61,7 @@ void new101sec(INT16U AppID)
     else if(!pDLink->InitSecDLink())
     {
         #ifdef _CHINESE_
-        logSysMsgNoTime("101 Sec ÈÎÎñ´´½¨Ê§°Ü4",0,0,0,0);
+        logSysMsgNoTime("101 Sec ä»»åŠ¡åˆ›å»ºå¤±è´¥4",0,0,0,0);
         #else
         logSysMsgNoTime("101 Sec Delete Itself",0,0,0,0);
         #endif
@@ -73,7 +73,7 @@ void new101sec(INT16U AppID)
     if(!MisiPortOpen(AppID,RX_AVAIL,TX_AVAIL,EX_STATE))
     {
         #ifdef _CHINESE_
-        logSysMsgNoTime("´®¿Ú´ò¿ª´íÎó£¬101 Sec ÈÎÎñÉ¾³ı",0,0,0,0);
+        logSysMsgNoTime("ä¸²å£æ‰“å¼€é”™è¯¯ï¼Œ101 Sec ä»»åŠ¡åˆ é™¤",0,0,0,0);
         #else
         logSysMsgNoTime("Serial Open Fail,101 Sec Delete",0,0,0,0);
         #endif
@@ -81,28 +81,28 @@ void new101sec(INT16U AppID)
         delete pDLink;
         myTaskSuspendItself();
     }
-    //ÉèÖÃ¶¨Ê±Æ÷
+    //è®¾ç½®å®šæ—¶å™¨
     tm_evevery(1*SYSCLOCKTICKS,APPTIMEFLAG,&dwAPPTimerID);
-    tm_evevery(1*SYSCLOCKTICKS,TIMERFLAG,&dwDLTimerID);     //Ãë¶¨Ê±Æ÷
+    tm_evevery(1*SYSCLOCKTICKS,TIMERFLAG,&dwDLTimerID);     //ç§’å®šæ—¶å™¨
     
-    //ÅĞ¶ÏÍ¨Ñ¶Ä£Ê½
-    //if((pDLink->BalanMode))  //Æ½ºâÄ£Ê½ÇÒ·ÇÖ§³ÖÀ©Õ¹¹æÔ¼Ê± Ë«Ïò½¨Á¢Á¬½Ó
+    //åˆ¤æ–­é€šè®¯æ¨¡å¼
+    //if((pDLink->BalanMode))  //å¹³è¡¡æ¨¡å¼ä¸”éæ”¯æŒæ‰©å±•è§„çº¦æ—¶ åŒå‘å»ºç«‹è¿æ¥
     //    myEventSend(myTaskIdSelf(),SCHEDULE);
         
     FlushBuf(AppID,1);
     FlushBuf(AppID,0);
-    //Õûµã´æµç¶ÈÊÂÏî
+    //æ•´ç‚¹å­˜ç”µåº¦äº‹é¡¹
     pSecApp->InitHisDataBuf();
     pSecApp->RebootCheckUDataFlag();
     pSecApp->PassSprValueToLink(&pDLink->En_LinkAddrSize,&pDLink->En_CotSize,&pDLink->En_PubAddrSize,&pDLink->En_InfoAddrSize);
     ////pDLink->InitEnSprParaData(pSecApp->LinkAddrSize,pSecApp->CotSize,pSecApp->PubAddrSize,pSecApp->InfoAddrSize);
-    //½øÈëÊÂÏî´¦ÀíÑ­»·
+    //è¿›å…¥äº‹é¡¹å¤„ç†å¾ªç¯
     for(;;)
     {
         myEventReceive(RX_AVAIL|TX_AVAIL|TIMERFLAG|APPTIMEFLAG|UDATAFLAG|UMSGFLAG|SCHEDULE|FORCESCHEDULE
                         |NEXTFRAME|SENDOVER|SAVEKWHFLAG|XSFILESYNFINISH,MY_EVENTS_WAIT_ANY ,WAIT_FOREVER ,&dwEvent);
 
-        if (dwEvent&SAVEKWHFLAG)//±£´æ¶¨Ê±µç¶È
+        if (dwEvent&SAVEKWHFLAG)//ä¿å­˜å®šæ—¶ç”µåº¦
         {
             pSecApp->SaveKWHToBuf();
         }
@@ -112,23 +112,23 @@ void new101sec(INT16U AppID)
             pDLink->SearchFrame();
         }
 
-        if(dwEvent&RX_AVAIL)//½ÓÊÕÊı¾İ
+        if(dwEvent&RX_AVAIL)//æ¥æ”¶æ•°æ®
         {
             pDLink->RecMISIData();
         }
 
-        if(dwEvent&TX_AVAIL)//·¢ËÍÊı¾İ
+        if(dwEvent&TX_AVAIL)//å‘é€æ•°æ®
         {
             pDLink->SendDataToMISI();
         }
 
-        if(dwEvent&SENDOVER)//·¢ËÍÊı¾İ
+        if(dwEvent&SENDOVER)//å‘é€æ•°æ®
         {
             if(pDLink->BalanMode)
                 pDLink->SendDataEnd();
         }
 
-        if (dwEvent&UMSGFLAG)//YKÏûÏ¢´¦Àí£¨µ÷ÓÃÓ¦ÓÃ²ã·şÎñ£©
+        if (dwEvent&UMSGFLAG)//YKæ¶ˆæ¯å¤„ç†ï¼ˆè°ƒç”¨åº”ç”¨å±‚æœåŠ¡ï¼‰
         {
             pSecApp->SetUMsgFlag();
 
@@ -136,7 +136,7 @@ void new101sec(INT16U AppID)
                 pDLink->CallUMsg();
         }
 
-        if(dwEvent&UDATAFLAG)//Êı¾İ¿âÊÂÏî´¦Àí£¨COS¡¢SOEÊÂÏîÉèÖÃ±êÖ¾£©
+        if(dwEvent&UDATAFLAG)//æ•°æ®åº“äº‹é¡¹å¤„ç†ï¼ˆCOSã€SOEäº‹é¡¹è®¾ç½®æ ‡å¿—ï¼‰
         {
             if(0 == pSecApp->LCFlag)
             {
@@ -146,17 +146,17 @@ void new101sec(INT16U AppID)
                 pDLink->CallUData();
         }
 
-        if(dwEvent&APPTIMEFLAG)//¶¨Ê±Æ÷£¨Ó¦ÓÃ²ã£©
+        if(dwEvent&APPTIMEFLAG)//å®šæ—¶å™¨ï¼ˆåº”ç”¨å±‚ï¼‰
         {
             pSecApp->OnTimer();
         }
 
-        if(dwEvent&TIMERFLAG)//¶¨Ê±Æ÷£¨Á´Â·²ã£©
+        if(dwEvent&TIMERFLAG)//å®šæ—¶å™¨ï¼ˆé“¾è·¯å±‚ï¼‰
         {
             pDLink->TimeOut();
         }
 
-        if (dwEvent&SCHEDULE)//Æô¶¯Á´Â·¹ı³Ì
+        if (dwEvent&SCHEDULE)//å¯åŠ¨é“¾è·¯è¿‡ç¨‹
         {
             pDLink->CallDLStatus();
         }
@@ -166,7 +166,7 @@ void new101sec(INT16U AppID)
         }
         if(dwEvent&XSFILESYNFINISH)
         {
-            pSecApp->ProcXSFileSynFinish(); //ÎÄ¼şÍ¬²½Í£Ö¹
+            pSecApp->ProcXSFileSynFinish(); //æ–‡ä»¶åŒæ­¥åœæ­¢
         }
     }
 }
@@ -187,7 +187,7 @@ BOOL CSecAppSev::InitSecApp(void)
     struct PortInfo_t *ppport;
     struct TaskInfo_t *pptask;
 
-    pRestType = (INT8U *)nvramMalloc(1);    //¸´Î»¹æÔ¼½ø³Ì×´Ì¬¼ÇÒä ll 2010/07/20   for ¹ãÎ÷¹æÔ¼²âÊÔ
+    pRestType = (INT8U *)nvramMalloc(1);    //å¤ä½è§„çº¦è¿›ç¨‹çŠ¶æ€è®°å¿† ll 2010/07/20   for å¹¿è¥¿è§„çº¦æµ‹è¯•
     
     
     if (GetTaskInfo(wAppID,&pptask)==TRUE)
@@ -204,9 +204,9 @@ BOOL CSecAppSev::InitSecApp(void)
         return FALSE;
     }
 
-    pMsg=new PMessage;//·ÖÅäÏûÏ¢»º³åÇø£¬¸ÃÈÎÎñÖ»ÓĞÒ»¸ö¡£
+    pMsg=new PMessage;//åˆ†é…æ¶ˆæ¯ç¼“å†²åŒºï¼Œè¯¥ä»»åŠ¡åªæœ‰ä¸€ä¸ªã€‚
 
-    if (GetPortInfo(MySelf.PortID,&ppport)==TRUE)//È¡¶Ë¿ÚĞÅÏ¢µØÖ·
+    if (GetPortInfo(MySelf.PortID,&ppport)==TRUE)//å–ç«¯å£ä¿¡æ¯åœ°å€
     {
         if ((ppport)->DevNum<=0)
         {
@@ -227,7 +227,7 @@ BOOL CSecAppSev::InitSecApp(void)
         else
         {
             #ifdef _CHINESE_
-            logSysMsgNoTime("iec101Sec ÎŞ¹æÔ¼Ãæ°å£¡ÇëÅäÖÃ",0,0,0,0);
+            logSysMsgNoTime("iec101Sec æ— è§„çº¦é¢æ¿ï¼è¯·é…ç½®",0,0,0,0);
             #else
             logSysMsgNoTime("iec101Sec No CodePad! Please Check. ",0,0,0,0);
             #endif
@@ -235,7 +235,7 @@ BOOL CSecAppSev::InitSecApp(void)
             SetDefaultPad();
         }
 
-        pDev->DevID=(ppport)->DevIDSet[0];  //ÉèÖÃÉè±¸ID
+        pDev->DevID=(ppport)->DevIDSet[0];  //è®¾ç½®è®¾å¤‡ID
 
         if(!SetDevInfo(pDev->DevID))
             return FALSE;
@@ -252,24 +252,24 @@ BOOL CSecAppSev::InitSecApp(void)
 
 void CSecAppSev::CheckPad(void)
 {
-    if (Sec101Pad.MaxALLen>ASDULEN)//Ó¦ÓÃ²ã×î´ó±¨ÎÄ³¤¶È³¬ÏŞ
+    if (Sec101Pad.MaxALLen>ASDULEN)//åº”ç”¨å±‚æœ€å¤§æŠ¥æ–‡é•¿åº¦è¶…é™
         Sec101Pad.MaxALLen=ASDULEN;
     else if(Sec101Pad.MaxALLen<16)
         Sec101Pad.MaxALLen=ASDULEN;
 
-    if ((Sec101Pad.ScanData2>3600))//¶ş¼¶Êı¾İÉ¨Ãè¼ä¸ô
+    if ((Sec101Pad.ScanData2>3600))//äºŒçº§æ•°æ®æ‰«æé—´éš”
         NvaInterval=SCANDATA2TIMER;
     else
         NvaInterval=Sec101Pad.ScanData2;
 
-    BackScanTime=Sec101Pad.BackScanTime*60;//·Ö£¬±³¾°Êı¾İÉ¨Ãè¼ä¸ô
-    CycScanTime=Sec101Pad.CycScanTime;//Ãë£¬ÖÜÆÚÑ­»·Êı¾İÉ¨Ãè¼ä¸ô
+    BackScanTime=Sec101Pad.BackScanTime*60;//åˆ†ï¼ŒèƒŒæ™¯æ•°æ®æ‰«æé—´éš”
+    CycScanTime=Sec101Pad.CycScanTime;//ç§’ï¼Œå‘¨æœŸå¾ªç¯æ•°æ®æ‰«æé—´éš”
 
     if(Sec101Pad.BalanceMode == 1)
         BalanMode=TRUE;
     else
         BalanMode=FALSE;
-    //ÀúÊ·µç¶È
+    //å†å²ç”µåº¦
     if(Sec101Pad.HistoryDDPermit == 1)
     {
         HisDDCycle=Sec101Pad.HistoryDDTime;
@@ -292,7 +292,7 @@ void CSecAppSev::CheckPad(void)
     if(Sec101Pad.TypeID[16]!=M_IT_TA)
         Sec101Pad.TypeID[16]=M_IT_NA;
         
-    if((Sec101Pad.LBIinfoaddr<LBI)||(Sec101Pad.LBIinfoaddr>HBI))        //Ò£ĞÅĞÅÏ¢ÌåµØÖ·¿ÉÉèÖÃ 2008.11.5  wjr
+    if((Sec101Pad.LBIinfoaddr<LBI)||(Sec101Pad.LBIinfoaddr>HBI))        //é¥ä¿¡ä¿¡æ¯ä½“åœ°å€å¯è®¾ç½® 2008.11.5  wjr
         LBIinfoaddr=LBI;
     else
         LBIinfoaddr=Sec101Pad.LBIinfoaddr;
@@ -304,9 +304,9 @@ void CSecAppSev::CheckPad(void)
     
 }
 /******************************************************************
-*º¯ÊıÃû:PassSprValueToLink
-*¹¦ÄÜ:½«ÀàµÄË½ÓĞ±äÁ¿ĞÅÏ¢´«µİÖÁÁ´Â·²ã
-*¿ª·¢ÈË:ÕÅÁ¼
+*å‡½æ•°å:PassSprValueToLink
+*åŠŸèƒ½:å°†ç±»çš„ç§æœ‰å˜é‡ä¿¡æ¯ä¼ é€’è‡³é“¾è·¯å±‚
+*å¼€å‘äºº:å¼ è‰¯
 *******************************************************************/
 void CSecAppSev::PassSprValueToLink(INT16U *eparaI,INT16U *eparaII,INT16U *eparaIII,INT16U *eparaIV)
 {
@@ -317,36 +317,36 @@ void CSecAppSev::PassSprValueToLink(INT16U *eparaI,INT16U *eparaII,INT16U *epara
     *eparaIV = InfoAddrSize;
 }
 
-void CSecAppSev::SetDefaultPad(void)//È±Ê¡ÉèÖÃ
+void CSecAppSev::SetDefaultPad(void)//ç¼ºçœè®¾ç½®
 {
     int i;
-    Sec101Pad.ControlPermit = 1;       //Ò£¿ØÔÊĞí 1-ÔÊĞí£¬0-²»ÔÊĞí È±Ê¡Îª1
-    Sec101Pad.SetTimePermit = 1;  //¶ÔÖÓÔÊĞí 1-ÔÊĞí£¬0-²»ÔÊĞí È±Ê¡Îª1
-    Sec101Pad.BalanceMode = 0;//Æ½ºâÄ£Ê½ 1-Æ½ºâÄ£Ê½ 0-·ÇÆ½ºâÄ£Ê½ È±Ê¡Îª0
-    Sec101Pad.SOEWithCP56Time = 1;//SOEÊ¹ÓÃ³¤Ê±±ê¸ñÊ½ 1-56Î»³¤Ê±±ê 0-24Î»¶ÌÊ±±ê  È±Ê¡Îª1
-    Sec101Pad.UseStandClock = 1;//Ê¹ÓÃ±ê×¼Ê±ÖÓ¸ñÊ½ 1-±ê×¼ 0-·Ç±ê×¼ È±Ê¡Îª1
-    Sec101Pad.MaxALLen = ASDULEN; //×î´óÓ¦ÓÃ²ã±¨ÎÄ³¤¶È È±Ê¡250
-    Sec101Pad.AIDeadValue = 3;//Ò£²âËÀÇøÖµ£¨Ç§·Ö±È£© È±Ê¡3
-    Sec101Pad.ScanData2 = SCANDATA2TIMER;//¶ş¼¶Êı¾İÉ¨Ãè¼ä¸ô£¨Ãë£© È±Ê¡3
-    Sec101Pad.TimeOut = 100;//³¬Ê±Ê±¼ä£¨*10ms£© È±Ê¡100
+    Sec101Pad.ControlPermit = 1;       //é¥æ§å…è®¸ 1-å…è®¸ï¼Œ0-ä¸å…è®¸ ç¼ºçœä¸º1
+    Sec101Pad.SetTimePermit = 1;  //å¯¹é’Ÿå…è®¸ 1-å…è®¸ï¼Œ0-ä¸å…è®¸ ç¼ºçœä¸º1
+    Sec101Pad.BalanceMode = 0;//å¹³è¡¡æ¨¡å¼ 1-å¹³è¡¡æ¨¡å¼ 0-éå¹³è¡¡æ¨¡å¼ ç¼ºçœä¸º0
+    Sec101Pad.SOEWithCP56Time = 1;//SOEä½¿ç”¨é•¿æ—¶æ ‡æ ¼å¼ 1-56ä½é•¿æ—¶æ ‡ 0-24ä½çŸ­æ—¶æ ‡  ç¼ºçœä¸º1
+    Sec101Pad.UseStandClock = 1;//ä½¿ç”¨æ ‡å‡†æ—¶é’Ÿæ ¼å¼ 1-æ ‡å‡† 0-éæ ‡å‡† ç¼ºçœä¸º1
+    Sec101Pad.MaxALLen = ASDULEN; //æœ€å¤§åº”ç”¨å±‚æŠ¥æ–‡é•¿åº¦ ç¼ºçœ250
+    Sec101Pad.AIDeadValue = 3;//é¥æµ‹æ­»åŒºå€¼ï¼ˆåƒåˆ†æ¯”ï¼‰ ç¼ºçœ3
+    Sec101Pad.ScanData2 = SCANDATA2TIMER;//äºŒçº§æ•°æ®æ‰«æé—´éš”ï¼ˆç§’ï¼‰ ç¼ºçœ3
+    Sec101Pad.TimeOut = 100;//è¶…æ—¶æ—¶é—´ï¼ˆ*10msï¼‰ ç¼ºçœ100
 
-    Sec101Pad.HistoryDDPermit = 0;//ÀúÊ·µç¶È±£´æÔÊĞí 1-ÔÊĞí 0-²»ÔÊĞí È±Ê¡0
-    Sec101Pad.HistoryDDTime = 60;//ÀúÊ·µç¶È±£´æÖÜÆÚ£¨·Ö£© È±Ê¡60
+    Sec101Pad.HistoryDDPermit = 0;//å†å²ç”µåº¦ä¿å­˜å…è®¸ 1-å…è®¸ 0-ä¸å…è®¸ ç¼ºçœ0
+    Sec101Pad.HistoryDDTime = 60;//å†å²ç”µåº¦ä¿å­˜å‘¨æœŸï¼ˆåˆ†ï¼‰ ç¼ºçœ60
 
 
-    BackScanTime=0;//·Ö£¬±³¾°Êı¾İÉ¨Ãè¼ä¸ô
-    CycScanTime=20;//Ãë£¬ÖÜÆÚÑ­»·Êı¾İÉ¨Ãè¼ä¸ô
+    BackScanTime=0;//åˆ†ï¼ŒèƒŒæ™¯æ•°æ®æ‰«æé—´éš”
+    CycScanTime=20;//ç§’ï¼Œå‘¨æœŸå¾ªç¯æ•°æ®æ‰«æé—´éš”
     HisDDCycle=TIMETOSAVEDATA;
 
     BalanMode=FALSE;
 
     for(i=0;i<8;i++)
-        Sec101Pad.TypeID[i]=M_PS_NA;//20;//¾ßÓĞ×´Ì¬±äÎ»¼ì³öµÄ³É×éµ¥µãĞÅÏ¢
+        Sec101Pad.TypeID[i]=M_PS_NA;//20;//å…·æœ‰çŠ¶æ€å˜ä½æ£€å‡ºçš„æˆç»„å•ç‚¹ä¿¡æ¯
     for(i=8;i<12;i++)
-        Sec101Pad.TypeID[i]=M_ME_NB;//11;////²âÁ¿Öµ£¬±ê¶È»¯Öµ
-    Sec101Pad.TypeID[12]=0;//¸Ã×éÎª¿Õ
-    Sec101Pad.TypeID[13]=M_ME_NB;//11;//¸Ã×éÎª²ÎÊı
-    Sec101Pad.TypeID[14]=M_ST_NA;//5;//¸Ã×éÎª²½Î»ÖÃĞÅÏ¢
+        Sec101Pad.TypeID[i]=M_ME_NB;//11;////æµ‹é‡å€¼ï¼Œæ ‡åº¦åŒ–å€¼
+    Sec101Pad.TypeID[12]=0;//è¯¥ç»„ä¸ºç©º
+    Sec101Pad.TypeID[13]=M_ME_NB;//11;//è¯¥ç»„ä¸ºå‚æ•°
+    Sec101Pad.TypeID[14]=M_ST_NA;//5;//è¯¥ç»„ä¸ºæ­¥ä½ç½®ä¿¡æ¯
     for(i=0;i<16;i++)
         Sec101Pad.GroupNum[i]=0;
 
@@ -357,7 +357,7 @@ void CSecAppSev::SetDefaultPad(void)//È±Ê¡ÉèÖÃ
     PubAddrSize=2;
     InfoAddrSize=2;
     
-    LBIinfoaddr=LBI;                     //Ò£ĞÅĞÅÏ¢ÌåµØÖ·¿ÉÉèÖÃ 2008.11.5  wjr
+    LBIinfoaddr=LBI;                     //é¥ä¿¡ä¿¡æ¯ä½“åœ°å€å¯è®¾ç½® 2008.11.5  wjr
     LDBIinfoaddr=LDBI;
 }
 
@@ -373,7 +373,7 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
     if(DevType < 0)
         return FALSE;
 
-    if (DevType == 2)//¶şÀàÂß¼­Éè±¸
+    if (DevType == 2)//äºŒç±»é€»è¾‘è®¾å¤‡
     {
         if(!SL_ReadBConf(DevID, wAppID, (INT8U *) &AppSLBConf))
             return FALSE;
@@ -393,7 +393,7 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         pDev->DevData.BCDNum=0;
         pDev->DevData.NvaNo=0;
 
-        //¹ÜÀíµÄÉè±¸ÊıÄ¿
+        //ç®¡ç†çš„è®¾å¤‡æ•°ç›®
         DevCount=AppSLBConf.DevNum;
         if (DevCount<=0)
             return(FALSE);
@@ -402,17 +402,17 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         if(!DevList)
             return(FALSE);
 
-        //È¡ËùÓĞÉè±¸ID
+        //å–æ‰€æœ‰è®¾å¤‡ID
         temp = (INT16U *)DBData;
         SL_ReadDevID(DevID, DevCount, temp);
         for(i=0;i<DevCount;i++)
             DevList[i].DevID=temp[i];
 
-        //È¡Éè±¸ĞÅÏ¢
+        //å–è®¾å¤‡ä¿¡æ¯
         for(i=0;i<DevCount;i++)
         {
             DevType = CheckDevType(DevList[i].DevID);
-            if(DevType == 1)//Êµ¼ÊÉè±¸
+            if(DevType == 1)//å®é™…è®¾å¤‡
             {
                 R_ReadBConf(DevList[i].DevID, wAppID,(INT8U *) &AppRBConf,1);
 
@@ -433,11 +433,11 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
                 DevList[i].pDbaseWin=NULL;
 
                 DevList[i].Data1.Flag=0;
-                DevList[i].Data1.SOENum=0;            //SOE·¢ËÍ¸öÊı
-                DevList[i].Data1.BIENTNum=0;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                DevList[i].Data1.SOENum=0;            //SOEå‘é€ä¸ªæ•°
+                DevList[i].Data1.BIENTNum=0;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                 DevList[i].Data1.FAProcNum=0;
             }
-            else if(DevType == 0)//IÀàÂß¼­Éè±¸
+            else if(DevType == 0)//Iç±»é€»è¾‘è®¾å¤‡
             {
                 L_ReadBConf(DevList[i].DevID, wAppID,(INT8U *) &AppLBConf);
 
@@ -458,8 +458,8 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
                 DevList[i].RealWin=NULL;
 
                 DevList[i].Data1.Flag=0;
-                DevList[i].Data1.SOENum=0;            //SOE·¢ËÍ¸öÊı
-                DevList[i].Data1.BIENTNum=0;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                DevList[i].Data1.SOENum=0;            //SOEå‘é€ä¸ªæ•°
+                DevList[i].Data1.BIENTNum=0;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                 DevList[i].Data1.FAProcNum=0;
             }
             else
@@ -539,13 +539,13 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
 
         YCGroupNo = new INT8U[pDev->DevData.AINum];
         YXGroupNo = new INT8U[pDev->DevData.BINum];
-        memset(YXGroupNo,1,pDev->DevData.BINum);//¶àÉè±¸¹ÜÀíÊ±²»·Ö×é£¬Ò£ĞÅÀàĞÍ±êÊ¶¶¼ÓÃµÚÒ»×éµÄ
-        memset(YCGroupNo,9,pDev->DevData.AINum);//Ò£²âÀàĞÍ±êÊ¶¶¼ÓÃµÚ¾Å×éµÄ£¬·ñÔò¾ÍÂÒÁË
+        memset(YXGroupNo,1,pDev->DevData.BINum);//å¤šè®¾å¤‡ç®¡ç†æ—¶ä¸åˆ†ç»„ï¼Œé¥ä¿¡ç±»å‹æ ‡è¯†éƒ½ç”¨ç¬¬ä¸€ç»„çš„
+        memset(YCGroupNo,9,pDev->DevData.AINum);//é¥æµ‹ç±»å‹æ ‡è¯†éƒ½ç”¨ç¬¬ä¹ç»„çš„ï¼Œå¦åˆ™å°±ä¹±äº†
         for(i=0;i<16;i++)
             Sec101Pad.GroupNum[i]=512;
         return(TRUE);
     }
-    else if (DevType == 0)//Ò»ÀàÂß¼­Éè±¸
+    else if (DevType == 0)//ä¸€ç±»é€»è¾‘è®¾å¤‡
     {
         L_ReadBConf(DevID, wAppID,(INT8U *) &AppLBConf);
 
@@ -555,7 +555,7 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         pDev->pDbaseWin=AppLBConf.DbaseWin;
         pDev->RealWin=NULL;
 
-        //¹ÜÀíµÄÉè±¸ÊıÄ¿
+        //ç®¡ç†çš„è®¾å¤‡æ•°ç›®
         DevCount=1;
 
         DevList=new PDevInfo[1];
@@ -568,7 +568,7 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         DevList[0].MAddr=AppLBConf.MAddress;
         DevList[0].DevData.AINum=AppLBConf.AINum;
         DevList[0].DevData.BINum=AppLBConf.BINum;
-        DevList[0].DevData.DBINum=AppLBConf.DBINum;              //wjrË«µãÒ£ĞÅ
+        DevList[0].DevData.DBINum=AppLBConf.DBINum;              //wjråŒç‚¹é¥ä¿¡
         DevList[0].DevData.CounterNum=AppLBConf.CounterNum;
         DevList[0].DevData.BONum=AppLBConf.BONum;
         //DevList[0].DevData.SPINum=AppLBConf.SPINum;
@@ -580,8 +580,8 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         DevList[0].RealWin=NULL;
           
         DevList[0].Data1.Flag=0;
-        DevList[0].Data1.SOENum=0;            //SOE·¢ËÍ¸öÊı
-        DevList[0].Data1.BIENTNum=0;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+        DevList[0].Data1.SOENum=0;            //SOEå‘é€ä¸ªæ•°
+        DevList[0].Data1.BIENTNum=0;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
         DevList[0].Data1.FAProcNum=0;
 
         if(DevList[0].DevData.CounterNum>MAXBCRNUM)
@@ -642,14 +642,14 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
             DevList[0].DevData.AIPara=NULL;
         }
 
-        //ÎªÃ¿¸öÒ£²âÒ£ĞÅÉèÖÃ×éºÅ
+        //ä¸ºæ¯ä¸ªé¥æµ‹é¥ä¿¡è®¾ç½®ç»„å·
         YCGroupNo = new INT8U[DevList[0].DevData.AINum];
         YXGroupNo = new INT8U[DevList[0].DevData.BINum];
         memset(YCGroupNo,9,DevList[0].DevData.AINum);
         memset(YXGroupNo,1,DevList[0].DevData.BINum);
 
         INT16U yc=0,yx=0;
-        /*Ôö¼ÓÅĞ¶Ï£¬Èç¹ûÒ£ĞÅ×é×ÜµÄÒ£ĞÅ¡¢Ò£²â¸öÊıºÍÊµ¼Ê¸öÊı¶ÔÓ¦²»ÆğÀ´ÔòÈÎÎñ¹ÒÆğ wjr*/
+        /*å¢åŠ åˆ¤æ–­ï¼Œå¦‚æœé¥ä¿¡ç»„æ€»çš„é¥ä¿¡ã€é¥æµ‹ä¸ªæ•°å’Œå®é™…ä¸ªæ•°å¯¹åº”ä¸èµ·æ¥åˆ™ä»»åŠ¡æŒ‚èµ· wjr*/
         for(i=0;i<16;i++)
         {
             if(i<8)
@@ -660,12 +660,12 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         }
         if((yx>DevList[0].DevData.BINum)||(yc>DevList[0].DevData.AINum))
         {
-        	logSysMsgNoTime("Ò£²â»òÒ£ĞÅ¸öÊıĞ¡ÓÚ×éÖĞ¸öÊı",0,0,0,0);
+        	logSysMsgNoTime("é¥æµ‹æˆ–é¥ä¿¡ä¸ªæ•°å°äºç»„ä¸­ä¸ªæ•°",0,0,0,0);
         	SetProtocalErr();
         	return(FALSE);
         }
         if((yx<DevList[0].DevData.BINum)||(yc<DevList[0].DevData.AINum))
-            logSysMsgNoTime("·Ö×éÒ£²â»òÒ£ĞÅ¸öÊıĞ¡ÓÚÂß¼­¿âÖĞ¸öÊı»áÒÅÂ©ºóÃæµÄÊı¾İ",0,0,0,0);
+            logSysMsgNoTime("åˆ†ç»„é¥æµ‹æˆ–é¥ä¿¡ä¸ªæ•°å°äºé€»è¾‘åº“ä¸­ä¸ªæ•°ä¼šé—æ¼åé¢çš„æ•°æ®",0,0,0,0);
             
         yc=0;
         yx=0;
@@ -708,19 +708,19 @@ BOOL CSecAppSev::SetDevInfo(INT16U DevID)
         #endif
         
         
-        if(yx<DevList[0].DevData.BINum)//ÏŞÖÆÊıÄ¿£¬±ÜÃâ×ÜÕÙ»½³öÎÊÌâ¡£×éµÄ×ÜºÍ²»ÄÜĞ¡ÓÚ·¢ËÍ±íÊıÄ¿¡£
+        if(yx<DevList[0].DevData.BINum)//é™åˆ¶æ•°ç›®ï¼Œé¿å…æ€»å¬å”¤å‡ºé—®é¢˜ã€‚ç»„çš„æ€»å’Œä¸èƒ½å°äºå‘é€è¡¨æ•°ç›®ã€‚
             DevList[0].DevData.BINum=yx;
 
         if(yc<DevList[0].DevData.AINum)
             DevList[0].DevData.AINum=yc;
 
-        return TRUE;//×îºó·µ»Ø
+        return TRUE;//æœ€åè¿”å›
     }
     else
         return FALSE;
 }
 
-void CSecAppSev::ReadAIMaxVal(INT16U DevIndex)  //¶ÁÒ£²âÂúÖµ¡ª¡ªÉèÖÃËÀÇøÖµ
+void CSecAppSev::ReadAIMaxVal(INT16U DevIndex)  //è¯»é¥æµ‹æ»¡å€¼â€”â€”è®¾ç½®æ­»åŒºå€¼
 {
     INT16U i;
     INT16U DevID;
@@ -735,7 +735,7 @@ void CSecAppSev::ReadAIMaxVal(INT16U DevIndex)  //¶ÁÒ£²âÂúÖµ¡ª¡ªÉèÖÃËÀÇøÖµ
 
     for (i=0;i<DevList[DevIndex].DevData.AINum;i++)
     {
-        if(DevList[DevIndex].Flag == 1)//=1Êµ¼ÊÉè±¸
+        if(DevList[DevIndex].Flag == 1)//=1å®é™…è®¾å¤‡
             val = SRSendMax_ReadAI(DevID,i);
         else
             val = SLMax_ReadAI(DevID,i);
@@ -744,25 +744,25 @@ void CSecAppSev::ReadAIMaxVal(INT16U DevIndex)  //¶ÁÒ£²âÂúÖµ¡ª¡ªÉèÖÃËÀÇøÖµ
         
         DevList[DevIndex].DevData.AIPara[i].porperty = SL_ReadAI_Porperty(DevID,i);
      
-        //ÖğµãÉèÖÃËÀÇøÖµ
+        //é€ç‚¹è®¾ç½®æ­»åŒºå€¼
         if(DevList[DevIndex].Flag == 1)
             deathval = SRDead_ReadAI(DevID,i);
         else
             deathval = SLDead_ReadAI(DevID,i);
             
-        if(deathval > 1)    //·Ç0£¬·Ç1¼´ÈÏÎªÓĞĞ§
+        if(deathval > 1)    //é0ï¼Œé1å³è®¤ä¸ºæœ‰æ•ˆ
         {
-            DevList[DevIndex].DevData.AIPara[i].DeadValue = deathval;   //²»ÊÇÇ§·Ö±Èµ¥Î»
+            DevList[DevIndex].DevData.AIPara[i].DeadValue = deathval;   //ä¸æ˜¯åƒåˆ†æ¯”å•ä½
         }
         else
         {
             ppty = DevList[DevIndex].DevData.AIPara[i].porperty;
             deathval = GetRmtDeathvalue(ppty);
-            if(deathval > 0)    //Ô¶³Ì²ÎÊıËÀÇøÖµ
+            if(deathval > 0)    //è¿œç¨‹å‚æ•°æ­»åŒºå€¼
             {
                 DevList[DevIndex].DevData.AIPara[i].DeadValue = ((INT32U)val*deathval)/1000;
             }
-            else //¹æÔ¼Ãæ°åËÀÇøÖµ
+            else //è§„çº¦é¢æ¿æ­»åŒºå€¼
             {
                  DevList[DevIndex].DevData.AIPara[i].DeadValue = ((INT32U)val*Sec101Pad.AIDeadValue)/1000;
             }
@@ -770,7 +770,7 @@ void CSecAppSev::ReadAIMaxVal(INT16U DevIndex)  //¶ÁÒ£²âÂúÖµ¡ª¡ªÉèÖÃËÀÇøÖµ
         
         DevList[DevIndex].DevData.AIPara[i].UpLimit = 0;
         DevList[DevIndex].DevData.AIPara[i].LowLimit = 0;
-        DevList[DevIndex].DevData.AIPara[i].type = SL_ReadAI_Type(DevID,i); //¶ÁÈ¡µ±Ç°Êı¾İµÄÀàĞÍ£¨ÓĞ·ûºÅ»¹ÊÇÎŞ·ûºÅ£©
+        DevList[DevIndex].DevData.AIPara[i].type = SL_ReadAI_Type(DevID,i); //è¯»å–å½“å‰æ•°æ®çš„ç±»å‹ï¼ˆæœ‰ç¬¦å·è¿˜æ˜¯æ— ç¬¦å·ï¼‰
         if (DevList[DevIndex].DevData.AIPara[i].DeadValue == 0)
             DevList[DevIndex].DevData.AIPara[i].DeadValue = 1;
     }
@@ -780,14 +780,14 @@ void CSecAppSev::ReadAIMaxVal(INT16U DevIndex)  //¶ÁÒ£²âÂúÖµ¡ª¡ªÉèÖÃËÀÇøÖµ
 void CSecAppSev::InitPara(void)
 {
     Data1.Flag=0;
-    Data1.SOENum=0;            //SOE·¢ËÍ¸öÊı
-    Data1.BIENTNum=0;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+    Data1.SOENum=0;            //SOEå‘é€ä¸ªæ•°
+    Data1.BIENTNum=0;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
 
     AllDataCount=0;
     CounterCount=0;
     WatchDogCount=0;
     NvaActDevNo=0;
-    ActDevIndex=0;    //wjrÔö¼Ó³õÊ¼»¯
+    ActDevIndex=0;    //wjrå¢åŠ åˆå§‹åŒ–
 
     Status=Polling;
     LastStatus=Polling;
@@ -809,7 +809,7 @@ void CSecAppSev::InitPara(void)
     if(Sec101Pad.control & CON_ALLDBI_101)
         bSendAllDBI = TRUE;
         
-    //Ö§³Ö"¹úÍø¹æÔ¼À©Õ¹"-2015°æ
+    //æ”¯æŒ"å›½ç½‘è§„çº¦æ‰©å±•"-2015ç‰ˆ
     GYKZ2015Flag = FALSE;
     SendCOS = 1;
     if(Sec101Pad.control & CON_101GYKZ)
@@ -820,7 +820,7 @@ void CSecAppSev::InitPara(void)
         {
             SendCOS = 1;
         }   
-        logSysMsgNoTime("101Ö§³ÖGY2015À©Õ¹",0,0,0,0);
+        logSysMsgNoTime("101æ”¯æŒGY2015æ‰©å±•",0,0,0,0);
     }
     
     APP_DLSecStatus = SECDISABLE;
@@ -829,7 +829,7 @@ void CSecAppSev::InitPara(void)
     DLInitFinishFlag = FALSE;
     DLInitpreState = FALSE;    //AJ++180418
     WaitCallAllDelay = WAIT_CALLALL_DELAY;
-    SetDevUseState();   //Ö÷ÒªÊÇ³õÊ¼»¯DLInitFinishFlag
+    SetDevUseState();   //ä¸»è¦æ˜¯åˆå§‹åŒ–DLInitFinishFlag
     
     ScanData2Count=0;
 
@@ -860,10 +860,10 @@ void CSecAppSev::InitPara(void)
 
     HisDDStatus=Start;
 
-    CotLocation=2;//COTÔÚASDUÖĞµÄÎ»ÖÃ
-    PubAddrLocation=CotLocation+CotSize;//PUBADDRÔÚASDUÖĞµÄÎ»ÖÃ
-    InfoAddrLocation=PubAddrLocation+PubAddrSize;//INFOADDRÔÚASDUÖĞµÄÎ»ÖÃ
-    AsduHeadLength=InfoAddrLocation+InfoAddrSize;//ASDUÍ·µÄ³¤¶È
+    CotLocation=2;//COTåœ¨ASDUä¸­çš„ä½ç½®
+    PubAddrLocation=CotLocation+CotSize;//PUBADDRåœ¨ASDUä¸­çš„ä½ç½®
+    InfoAddrLocation=PubAddrLocation+PubAddrSize;//INFOADDRåœ¨ASDUä¸­çš„ä½ç½®
+    AsduHeadLength=InfoAddrLocation+InfoAddrSize;//ASDUå¤´çš„é•¿åº¦
 
     if(PubAddrSize==1)
         BroadCastAddr=0xff;
@@ -873,7 +873,7 @@ void CSecAppSev::InitPara(void)
     RFaultFlag=0;   //beijing
     YKSetAlready = FALSE;
     
-    DBISOEnum=0;         //wjrË«µãÒ£ĞÅ
+    DBISOEnum=0;         //wjråŒç‚¹é¥ä¿¡
     DBICOSnum=0; 
     
     DDFreeze=FALSE;
@@ -882,7 +882,7 @@ void CSecAppSev::InitPara(void)
     
     RMTParaInit();
     GXParaInit();
-    //ĞÂÎÄ¼ş´«Êä²ÎÊı³õÊ¼»¯
+    //æ–°æ–‡ä»¶ä¼ è¾“å‚æ•°åˆå§‹åŒ–
     ProcFileInit();
 }
 void CSecAppSev::GXParaInit(void)
@@ -891,13 +891,13 @@ void CSecAppSev::GXParaInit(void)
 }
 void CSecAppSev::SendAllDataOnTime(void)
 {
-    //±³¾°Êı¾İ±êÖ¾£¨È«Êı¾İÒÔBACKÔ­Òò·¢ËÍ£©
+    //èƒŒæ™¯æ•°æ®æ ‡å¿—ï¼ˆå…¨æ•°æ®ä»¥BACKåŸå› å‘é€ï¼‰
     /*if(BackScanTime)
     {
         BackScanCount++;
         if(BackScanCount>=BackScanTime)
         {
-            if(Data1.Flag&CallAllData)//±ÜÃâ³åÍ»
+            if(Data1.Flag&CallAllData)//é¿å…å†²çª
             {
                 BackScanCount=0;
                 return;
@@ -910,11 +910,11 @@ void CSecAppSev::SendAllDataOnTime(void)
     
             GroupTrn.COT=BACK;
             GroupTrn.DevIndex=0;
-            GroupTrn.GroupNo=1;//×éºÅ´Ó1¿ªÊ¼
-            GroupTrn.InfoAddr=LBIinfoaddr;//ĞÅÏ¢ÌåµØÖ·´Ó0x1¿ªÊ¼   wjr2009.4.5  ¸ÄÎªË«µãÒ£ĞÅµÄÆğÊ¼µØÖ·£¬ÒòÎªË«µãÒ£ĞÅÔÚÇ°
+            GroupTrn.GroupNo=1;//ç»„å·ä»1å¼€å§‹
+            GroupTrn.InfoAddr=LBIinfoaddr;//ä¿¡æ¯ä½“åœ°å€ä»0x1å¼€å§‹   wjr2009.4.5  æ”¹ä¸ºåŒç‚¹é¥ä¿¡çš„èµ·å§‹åœ°å€ï¼Œå› ä¸ºåŒç‚¹é¥ä¿¡åœ¨å‰
         }
     }*/
-        //ÖÜÆÚÑ­»·Êı¾İ±êÖ¾£¨µÚ12×éÒ£²âÊı¾İ£¬ÎªÁËÓ¦¸¶²âÊÔ£©£¬²âÊÔÊ±½«´Ë´¦´ò¿ª
+        //å‘¨æœŸå¾ªç¯æ•°æ®æ ‡å¿—ï¼ˆç¬¬12ç»„é¥æµ‹æ•°æ®ï¼Œä¸ºäº†åº”ä»˜æµ‹è¯•ï¼‰ï¼Œæµ‹è¯•æ—¶å°†æ­¤å¤„æ‰“å¼€
         /*CycScanCount++;
         if(CycScanCount>=CycScanTime)
         {
@@ -926,18 +926,18 @@ void CSecAppSev::SendAllDataOnTime(void)
             Data2Flag|=PerCycData;
             GroupTrn.COT=PERCYC;
             GroupTrn.DevIndex=0;
-            GroupTrn.GroupNo=12;//×éºÅ12µÄĞÅÏ¢ÎªÖÜÆÚÑ­»·ĞÅÏ¢
-            GroupTrn.InfoAddr=LAI;//ĞÅÏ¢ÌåµØÖ·£¿£¿
+            GroupTrn.GroupNo=12;//ç»„å·12çš„ä¿¡æ¯ä¸ºå‘¨æœŸå¾ªç¯ä¿¡æ¯
+            GroupTrn.InfoAddr=LAI;//ä¿¡æ¯ä½“åœ°å€ï¼Ÿï¼Ÿ
         }*/
     
     
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCodeFREvent()
-º¯Êı¹¦ÄÜ£º  ¹ÊÕÏÊÂ¼şÉÏ´«
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  EnCodeFREvent()
+å‡½æ•°åŠŸèƒ½ï¼š  æ•…éšœäº‹ä»¶ä¸Šä¼ 
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::EnCodeFREvent(void)
 {
@@ -949,7 +949,7 @@ void CSecAppSev::EnCodeFREvent(void)
     INT8U *p, *pdd, aitype;
     
     
-    if(GWFREventRead(&frevent, DevList[NvaActDevNo].DevID) == FALSE)    //ÔİÊ±¶ÁÍê¾Í¸üĞÂrpÖ¸Õë
+    if(GWFREventRead(&frevent, DevList[NvaActDevNo].DevID) == FALSE)    //æš‚æ—¶è¯»å®Œå°±æ›´æ–°rpæŒ‡é’ˆ
         return ;
     
     TxMsg[0] = M_FT_NA;
@@ -959,10 +959,10 @@ void CSecAppSev::EnCodeFREvent(void)
     TxMsg[4] = LOBYTE(DevList[ActDevIndex].Addr);
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
-    //ÕâÀïÃ»ÓĞĞÅÏ¢ÌåµØÖ·
+    //è¿™é‡Œæ²¡æœ‰ä¿¡æ¯ä½“åœ°å€
     
-    TxMsg[6] = frevent.yxnum;   //Ò£ĞÅ¸öÊı
-    TxMsg[7] = 1;               //Ò£ĞÅÀàĞÍ µ¥µã 
+    TxMsg[6] = frevent.yxnum;   //é¥ä¿¡ä¸ªæ•°
+    TxMsg[7] = 1;               //é¥ä¿¡ç±»å‹ å•ç‚¹ 
     
     FramePos = 8;
     AbsTimeConvTo(&frevent.ActTime, (void*)&time, IEC101CLOCKTIME);
@@ -989,7 +989,7 @@ void CSecAppSev::EnCodeFREvent(void)
         
     }
     
-    TxMsg[FramePos++] = frevent.ycnum;   //Ò£ĞÅ¸öÊı
+    TxMsg[FramePos++] = frevent.ycnum;   //é¥ä¿¡ä¸ªæ•°
     aitype = Sec101Pad.TypeID[8];
     TxMsg[FramePos++] = aitype; 
     
@@ -1004,7 +1004,7 @@ void CSecAppSev::EnCodeFREvent(void)
         switch(aitype)
         {
          
-         case M_ME_NC: //¶Ì¸¡µãÊı
+         case M_ME_NC: //çŸ­æµ®ç‚¹æ•°
             //temp = (float)frevent.actvalue[i];
             temp = SL_ReadAI_S(DevList[NvaActDevNo].DevID, no-LAI, frevent.actvalue[i]);
             p = (INT8U*)(&temp);
@@ -1020,7 +1020,7 @@ void CSecAppSev::EnCodeFREvent(void)
             break;
          case M_ME_NA:   
          case M_ME_NB:  
-         default:   //M_ME_NA ¹éÒ»»¯Öµ
+         default:   //M_ME_NA å½’ä¸€åŒ–å€¼
             TxMsg[FramePos++]=LOBYTE(frevent.actvalue[i]);
             TxMsg[FramePos++]=HIBYTE(frevent.actvalue[i]);
             break;   
@@ -1037,10 +1037,10 @@ void CSecAppSev::EnCodeFREvent(void)
         
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  CheckFREOnTime()
-º¯Êı¹¦ÄÜ£º  ¶¨Ê±É¨Ãè¹ÊÕÏÊÂ¼şÉÏËÍ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  CheckFREOnTime()
+å‡½æ•°åŠŸèƒ½ï¼š  å®šæ—¶æ‰«ææ•…éšœäº‹ä»¶ä¸Šé€
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::CheckFREOnTime(void)
 {
@@ -1062,11 +1062,11 @@ void CSecAppSev::CheckFREOnTime(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  SetDevUseState()
-º¯Êı¹¦ÄÜ£º  ¼ì²âÍ¨Ñ¶×´Ì¬
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  SetDevUseState()
+å‡½æ•°åŠŸèƒ½ï¼š  æ£€æµ‹é€šè®¯çŠ¶æ€
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::SetDevUseState(void)
 {
@@ -1076,11 +1076,11 @@ void CSecAppSev::SetDevUseState(void)
         DLInitpreState = DLInitFinishFlag;
         if(DLInitFinishFlag==TRUE)
         {
-            ProgLogWrite2("¶Ë¿Ú%d 101´ÓÕ¾Á´½Ó½¨Á¢",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 1);
+            ProgLogWrite2("ç«¯å£%d 101ä»ç«™é“¾æ¥å»ºç«‹",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 1);
         }
         else
         {
-            ProgLogWrite2("¶Ë¿Ú%d 101´ÓÕ¾Á´½Ó¶Ï¿ª",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 0);
+            ProgLogWrite2("ç«¯å£%d 101ä»ç«™é“¾æ¥æ–­å¼€",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 0);
         }
         
     }
@@ -1104,10 +1104,10 @@ void CSecAppSev::OnTimer(void)
             }
         }
         else
-            DLInitFinishFlag = TRUE;    //Ö»ÒªÑÓ³Ùµ½0£¬Á´Â·³õÊ¼»¯¶¼ËãÍê³É,³õÊ¼»¯Íê³ÉÓ¦ÓÃ²ã¼´¿ÉÏòÍâ·¢ËÍÊı¾İ
+            DLInitFinishFlag = TRUE;    //åªè¦å»¶è¿Ÿåˆ°0ï¼Œé“¾è·¯åˆå§‹åŒ–éƒ½ç®—å®Œæˆ,åˆå§‹åŒ–å®Œæˆåº”ç”¨å±‚å³å¯å‘å¤–å‘é€æ•°æ®
         
    
-        if(WaitCallAllDelay)    //µÈ´ı×ÜÕĞ½áÊøÑÓÊ±
+        if(WaitCallAllDelay)    //ç­‰å¾…æ€»æ‹›ç»“æŸå»¶æ—¶
         {
             WaitCallAllDelay--;
             if(FirstCallAllData)
@@ -1119,9 +1119,9 @@ void CSecAppSev::OnTimer(void)
         
     }
     
-    if(APP_DLSecStatus==SECENABLE)  //Ö»Òª´Ó¶¯·½ÏòÁ´Â·ºÃÓÃ£¬¾Í¿ÉÒÔ½ÓÊÜ¸´Î»ÃüÁî
+    if(APP_DLSecStatus==SECENABLE)  //åªè¦ä»åŠ¨æ–¹å‘é“¾è·¯å¥½ç”¨ï¼Œå°±å¯ä»¥æ¥å—å¤ä½å‘½ä»¤
     {
-        if(ResetFlag==0xff)//ÊÕµ½¸´Î»ÃüÁîºóÉèÖÃ±êÖ¾£¬·¢³öÃüÁîÁ½ÃëÖÓºó¸´Î»
+        if(ResetFlag==0xff)//æ”¶åˆ°å¤ä½å‘½ä»¤åè®¾ç½®æ ‡å¿—ï¼Œå‘å‡ºå‘½ä»¤ä¸¤ç§’é’Ÿåå¤ä½
         {
             ResetCount++;
             if(ResetCount>=10)
@@ -1135,10 +1135,10 @@ void CSecAppSev::OnTimer(void)
     }
     
     
-    if(DLInitFinishFlag == FALSE)   //³õÊ¼»¯Î´Íê³É½ûÖ¹Æô¶¯¶¨Ê±ÈÎÎñ
+    if(DLInitFinishFlag == FALSE)   //åˆå§‹åŒ–æœªå®Œæˆç¦æ­¢å¯åŠ¨å®šæ—¶ä»»åŠ¡
         return;
     
-    if(FirstCallAllData != 0xff)    //³õÊ¼»¯Íê³Éºó£¬µÈ´ı×ÜÕĞ½áÊø£¨Èô×ÜÕĞÃ»ÓĞÔò30Ãë£©¡£
+    if(FirstCallAllData != 0xff)    //åˆå§‹åŒ–å®Œæˆåï¼Œç­‰å¾…æ€»æ‹›ç»“æŸï¼ˆè‹¥æ€»æ‹›æ²¡æœ‰åˆ™30ç§’ï¼‰ã€‚
         return;
     
     if((RFaultFlag==0xff)&&(!BalanMode)&&(Data1.Flag&HaveYK))
@@ -1152,7 +1152,7 @@ void CSecAppSev::OnTimer(void)
     RMTParaYzCheck();
     GXParaYzCheck();
     
-    //±ä»¯Ò£²â¶¨Ê±É¨Ãè
+    //å˜åŒ–é¥æµ‹å®šæ—¶æ‰«æ
     ScanData2Count++;
     if(ScanData2Count>=NvaInterval)
     {
@@ -1163,13 +1163,13 @@ void CSecAppSev::OnTimer(void)
 }
 
 
-//SecAppProc£ºÁ´Â·½Ó¿Úº¯Êı
-//ÊäÈë²ÎÊı£ºbufin:ÊäÈëµÄ»º³åÇøÊı¾İµØÖ·,´ÓÀàĞÍ±êÊ¶¿ªÊ¼£¬
-//ÊäÈë²ÎÊı£ºlengthinÎªÓ¦ÓÃ²ãÊı¾İ³¤¶È£¬
-//ÊäÈë²ÎÊı£ºdlcommandÎªÁ´Â·²ãµ½Ó¦ÓÃ²ã¼äµÄ¹¦ÄÜÂë
-//Êä³ö²ÎÊı£ºbufout:Êä³öµÄ»º³åÇøÊı¾İµØÖ·£¬´ÓÀàĞÍ±êÊ¶¿ªÊ¼£¬
-//Êä³ö²ÎÊı£ºlengthoutÎªÓ¦ÓÃ²ãÊı¾İ³¤¶È£¬
-//Êä³ö²ÎÊı£ºappcommandÎªÓ¦ÓÃ²ãµ½Á´Â·²ãµÄÃüÁî
+//SecAppProcï¼šé“¾è·¯æ¥å£å‡½æ•°
+//è¾“å…¥å‚æ•°ï¼šbufin:è¾“å…¥çš„ç¼“å†²åŒºæ•°æ®åœ°å€,ä»ç±»å‹æ ‡è¯†å¼€å§‹ï¼Œ
+//è¾“å…¥å‚æ•°ï¼šlengthinä¸ºåº”ç”¨å±‚æ•°æ®é•¿åº¦ï¼Œ
+//è¾“å…¥å‚æ•°ï¼šdlcommandä¸ºé“¾è·¯å±‚åˆ°åº”ç”¨å±‚é—´çš„åŠŸèƒ½ç 
+//è¾“å‡ºå‚æ•°ï¼šbufout:è¾“å‡ºçš„ç¼“å†²åŒºæ•°æ®åœ°å€ï¼Œä»ç±»å‹æ ‡è¯†å¼€å§‹ï¼Œ
+//è¾“å‡ºå‚æ•°ï¼šlengthoutä¸ºåº”ç”¨å±‚æ•°æ®é•¿åº¦ï¼Œ
+//è¾“å‡ºå‚æ•°ï¼šappcommandä¸ºåº”ç”¨å±‚åˆ°é“¾è·¯å±‚çš„å‘½ä»¤
 void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
             	INT8U*bufout,INT16U* lengthout,INT16U*appcommand)
 {
@@ -1196,10 +1196,10 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
     for(i=0;i<PubAddrSize;i++)
         RxPubAddr+=(RxMsg[PubAddrLocation+i]<<(8*i));
     
-    //logSysMsgNoTime("pubaddrloc=%d£¬ PubAddr=%d, r=%d, r2=%d",PubAddrLocation,RxPubAddr,RxMsg[PubAddrLocation],RxMsg[PubAddrLocation+1]); //debug
+    //logSysMsgNoTime("pubaddrloc=%dï¼Œ PubAddr=%d, r=%d, r2=%d",PubAddrLocation,RxPubAddr,RxMsg[PubAddrLocation],RxMsg[PubAddrLocation+1]); //debug
     
     RxInfoAddr=0;
-    for(i=0;i<2;i++)//InfoAddrSizeÈç¹ûÎª3£¬Ò²Ö»È¡Ç°2¸ö×Ö½Ú¡£
+    for(i=0;i<2;i++)//InfoAddrSizeå¦‚æœä¸º3ï¼Œä¹Ÿåªå–å‰2ä¸ªå­—èŠ‚ã€‚
         RxInfoAddr+=(RxMsg[InfoAddrLocation+i]<<(8*i));
 
     pTxTypeID=TxMsg;
@@ -1207,16 +1207,16 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
     pTxInfoAddr=(TxMsg+InfoAddrLocation);
     pTxData=(TxMsg+AsduHeadLength);
 
-    if(CotSize==2)//´«ËÍÔ­ÒòÎª2×Ö½ÚÊ±£¬¸ßÎ»¹Ì¶¨Îª0¡£
+    if(CotSize==2)//ä¼ é€åŸå› ä¸º2å­—èŠ‚æ—¶ï¼Œé«˜ä½å›ºå®šä¸º0ã€‚
         TxMsg[CotLocation+1]=0;
-    if(InfoAddrSize==3)//ĞÅÏ¢ÌåµØÖ·Îª3¸ö×Ö½ÚÊ±£¬×î¸ß×Ö½ÚÎª0
+    if(InfoAddrSize==3)//ä¿¡æ¯ä½“åœ°å€ä¸º3ä¸ªå­—èŠ‚æ—¶ï¼Œæœ€é«˜å­—èŠ‚ä¸º0
         TxMsg[InfoAddrLocation+2]=0;
 
-    if(DLCommand&DL_FCBOK)//·ÇÆ½ºâÄ£Ê½
+    if(DLCommand&DL_FCBOK)//éå¹³è¡¡æ¨¡å¼
     {
         DLCommand&=(~DL_FCBOK);
 
-        //FCB´¦Àí£¬·ÇÆ½ºâÄ£Ê½£¬COS¡¢SOE¡¢FA¡¢Ö¸ÕëÀÛ¼Ó¡£
+        //FCBå¤„ç†ï¼Œéå¹³è¡¡æ¨¡å¼ï¼ŒCOSã€SOEã€FAã€æŒ‡é’ˆç´¯åŠ ã€‚
         if ((LastFrame==BI)&&(BIFrame&BIETFRAME))
             ClearFlag(LastDevIndex,BIETFLAG);
         //if ((LastFrame==BI)&&(BIFrame&FAPROCFRAME))
@@ -1225,75 +1225,75 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
             ClearFlag(LastDevIndex,BIENTFLAG);
     }
 
-    if(LengthIn==0)//ÃüÁî´¦Àí
+    if(LengthIn==0)//å‘½ä»¤å¤„ç†
     {
         switch(DLCommand)
         {
-            case DL_LINKDISABLE://Á´Â·ÎŞĞ§
+            case DL_LINKDISABLE://é“¾è·¯æ— æ•ˆ
                 //MasterStatus=NOUSE;
                 APP_DLPriStatus = PRIWAITSTATUS;
                 DLInitFinishFlag = FALSE;
                 
-                Data1.Flag &= (HaveCOS|HaveSOE);   //Çåµô³ıSOEºÍcos±êÖ¾ÍâµÄÆäËûÊÂÏî
+                Data1.Flag &= (HaveCOS|HaveSOE);   //æ¸…æ‰é™¤SOEå’Œcosæ ‡å¿—å¤–çš„å…¶ä»–äº‹é¡¹
                 Data2Flag=0;
                 
-                if ((LastFrame==BI)&&(BIFrame&BIENTFRAME))//ÉÏ´Î·¢ËÍÊı¾İÎª±äÎ»YX
+                if ((LastFrame==BI)&&(BIFrame&BIENTFRAME))//ä¸Šæ¬¡å‘é€æ•°æ®ä¸ºå˜ä½YX
                 {
                     Data1.Flag|=(HaveCOS);
                     Data1.COT=SPONT;
                 }
-                if ((LastFrame==BI)&&(BIFrame&BIETFRAME))//ÉÏ´Î·¢ËÍÊı¾İÎªsoe
+                if ((LastFrame==BI)&&(BIFrame&BIETFRAME))//ä¸Šæ¬¡å‘é€æ•°æ®ä¸ºsoe
                 {
                     Data1.Flag|=(HaveSOE);
                     Data1.COT=SPONT;
                 }
                 
-                //ll ¼ì²âÍ¨Ñ¶ÖĞ¶Ï£¬³·ÏúÒ£¿Ø¡£Îª¹ãÖİ²âÊÔĞŞ¸Ä 2014-3-14
+                //ll æ£€æµ‹é€šè®¯ä¸­æ–­ï¼Œæ’¤é”€é¥æ§ã€‚ä¸ºå¹¿å·æµ‹è¯•ä¿®æ”¹ 2014-3-14
                 if(YkStatusForTest)
                 {
                     YkStatusForTest = 0;    
                     BspYkRelease();
-                    logSysMsgNoTime("101Í¨Ñ¶ÖĞ¶Ï³·ÏúÒ£¿Ø",0,0,0,0);
+                    logSysMsgNoTime("101é€šè®¯ä¸­æ–­æ’¤é”€é¥æ§",0,0,0,0);
                 }
 
                 LastFrame=Polling;
                 break;
-            case DL_RESETDL://Á´Â·ÊÕµ½¶Ô·½¸´Î»Á´Â·ÃüÁî£¬ÅĞ¶ÏÊÇ·ñÓĞ³õÊ¼»¯½áÊø
+            case DL_RESETDL://é“¾è·¯æ”¶åˆ°å¯¹æ–¹å¤ä½é“¾è·¯å‘½ä»¤ï¼Œåˆ¤æ–­æ˜¯å¦æœ‰åˆå§‹åŒ–ç»“æŸ
                 HaveJob=TRUE;
                 
                 APP_DLSecStatus = SECENABLE;
-                YkStatusForTest = 0;    //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24
+                YkStatusForTest = 0;    //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24
                 
                 RMTParaInit();
                 
-                if(BalanMode)//Æ½ºâÄ£Ê½
+                if(BalanMode)//å¹³è¡¡æ¨¡å¼
                 {
                     FirstCallAllData = 0;
                     WaitCallAllDelay = WAIT_CALLALL_DELAY;
                 }
                 else
                 {
-                    FirstCallAllData = 0xff;    //·ÇÆ½ºâÄ£Ê½²»Ö§³ÖµÚ1´Î×ÜÕĞ²»±»´ò¶Ï
-                    DLInitFinishFlag = TRUE;    //·ÇÆ½ºâÄ£Ê½ÏÂ£¬ÕâÊ±Á´Â·³õÊ¼»¯ÈÏÎªÒÑ¾­Íê³É£¬ÖÃÎ»³õÊ¼»¯½áÊø±êÖ¾
+                    FirstCallAllData = 0xff;    //éå¹³è¡¡æ¨¡å¼ä¸æ”¯æŒç¬¬1æ¬¡æ€»æ‹›ä¸è¢«æ‰“æ–­
+                    DLInitFinishFlag = TRUE;    //éå¹³è¡¡æ¨¡å¼ä¸‹ï¼Œè¿™æ—¶é“¾è·¯åˆå§‹åŒ–è®¤ä¸ºå·²ç»å®Œæˆï¼Œç½®ä½åˆå§‹åŒ–ç»“æŸæ ‡å¿—
                     
                     if(InitFlag == 0)
                     {
-                        if ((LastFrame==BI)&&(BIFrame&BIENTFRAME))//ÉÏ´Î·¢ËÍÊı¾İÎª±äÎ»YX
+                        if ((LastFrame==BI)&&(BIFrame&BIENTFRAME))//ä¸Šæ¬¡å‘é€æ•°æ®ä¸ºå˜ä½YX
                             Data1.Flag|=(HaveCOS);
-                        if ((LastFrame==BI)&&(BIFrame&BIETFRAME))//ÉÏ´Î·¢ËÍÊı¾İÎªsoe
+                        if ((LastFrame==BI)&&(BIFrame&BIETFRAME))//ä¸Šæ¬¡å‘é€æ•°æ®ä¸ºsoe
                             Data1.Flag|=(HaveSOE);
                         LastFrame=Polling;
                     }
                     
-                    Data1.Flag &= 0xf00;      //Çåµô³ıCOS¡¢SOE¡¢INITEND¡¢FAÖ®ÍâµÄÒ»¼¶Êı¾İ£¬±ÜÃâ³öÏÖÍ¨Ñ¶ÎÊÌâ¡£
-                    Data2Flag=0;            //Çåµô¶ş¼¶Êı¾İ±êÖ¾
+                    Data1.Flag &= 0xf00;      //æ¸…æ‰é™¤COSã€SOEã€INITENDã€FAä¹‹å¤–çš„ä¸€çº§æ•°æ®ï¼Œé¿å…å‡ºç°é€šè®¯é—®é¢˜ã€‚
+                    Data2Flag=0;            //æ¸…æ‰äºŒçº§æ•°æ®æ ‡å¿—
                     *LengthOut=0;
                 }
                 
                 JudgeSendInitEnd();
-                OnTimer();  //ÅĞ¶Ï³õÊ¼»¯ÊÇ·ñÍê³É¡£
+                OnTimer();  //åˆ¤æ–­åˆå§‹åŒ–æ˜¯å¦å®Œæˆã€‚
                 break;
-            case DL_LINKENABLE://Á´Â·ÓĞĞ§£¬Æ½ºâÄ£Ê½
+            case DL_LINKENABLE://é“¾è·¯æœ‰æ•ˆï¼Œå¹³è¡¡æ¨¡å¼
                 APP_DLPriStatus = PRIENABLE;
                 
                 JudgeSendInitEnd();
@@ -1307,10 +1307,10 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 }
                 
                 break;
-            case DL_SCAN1S://Æ½ºâÄ£Ê½£¬
+            case DL_SCAN1S://å¹³è¡¡æ¨¡å¼ï¼Œ
                 
                 HaveJob=TRUE;
-                if(HaveWrongData)   //ll Ôö¼Ó£¬¼ÓËÙÒì³£»Ø´ğµÄ»Ø´ğËÙ¶È
+                if(HaveWrongData)   //ll å¢åŠ ï¼ŒåŠ é€Ÿå¼‚å¸¸å›ç­”çš„å›ç­”é€Ÿåº¦
                 {
                     ProcData1();
                 }
@@ -1321,18 +1321,18 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 else
                     HaveJob=FALSE;
                 break;
-            case DL_CALLUDATA://È¡½ô¼±Êı¾İ£¬Æ½ºâÄ£Ê½
-            case DL_CALLDBMSG://È¡ÏûÏ¢£¬Æ½ºâÄ£Ê½
-            case DL_CALLDATA1://È¡Ò»¼¶Êı¾İ ·ÇÆ½ºâÄ£Ê½
+            case DL_CALLUDATA://å–ç´§æ€¥æ•°æ®ï¼Œå¹³è¡¡æ¨¡å¼
+            case DL_CALLDBMSG://å–æ¶ˆæ¯ï¼Œå¹³è¡¡æ¨¡å¼
+            case DL_CALLDATA1://å–ä¸€çº§æ•°æ® éå¹³è¡¡æ¨¡å¼
                 HaveJob=TRUE;
-                //logSysMsgNoTime("SEC Êı¾İ¿âÊÂÏî²úÉú%x",Data1.Flag,0,0,0);//  debug ll
+                //logSysMsgNoTime("SEC æ•°æ®åº“äº‹é¡¹äº§ç”Ÿ%x",Data1.Flag,0,0,0);//  debug ll
                 ProcData1();
                 break;
-            case DL_CALLDATA2://È¡¶ş¼¶Êı¾İ
+            case DL_CALLDATA2://å–äºŒçº§æ•°æ®
                 HaveJob=TRUE;
                 ProcData2();
                 break;
-            case DL_APPCON://Æ½ºâÄ£Ê½ÊÕµ½¶Ô03µÄÈ·ÈÏ,COS,SOE,FA,Ö¸ÕëÀÛ¼Ó¡£
+            case DL_APPCON://å¹³è¡¡æ¨¡å¼æ”¶åˆ°å¯¹03çš„ç¡®è®¤,COS,SOE,FA,æŒ‡é’ˆç´¯åŠ ã€‚
                 HaveJob=TRUE;
                 if ((LastFrame==BI)&&(BIFrame&BIETFRAME))
                     ClearFlag(LastDevIndex,BIETFLAG);
@@ -1341,29 +1341,29 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 if ((LastFrame==BI)&&(BIFrame&BIENTFRAME))
                     ClearFlag(LastDevIndex,BIENTFLAG);
                 
-                //logSysMsgNoTime("È·ÈÏÖ¡²éÑ¯Êı¾İ¿ªÊ¼%x",Data1.Flag,0,0,0);   //  debug ll
+                //logSysMsgNoTime("ç¡®è®¤å¸§æŸ¥è¯¢æ•°æ®å¼€å§‹%x",Data1.Flag,0,0,0);   //  debug ll
                 if(Data1.Flag & APP_DATA1_DEF)   //ll
                     ProcData1();
                 else if(Data2Flag || (Data1.Flag& APP_DATA2_DEF))
                     ProcData2();
                 else  
                     HaveJob=FALSE;
-                //logSysMsgNoTime("È·ÈÏÖ¡²éÑ¯Êı¾İ½áÊø%x",Data1.Flag,0,0,0);   //  debug ll
+                //logSysMsgNoTime("ç¡®è®¤å¸§æŸ¥è¯¢æ•°æ®ç»“æŸ%x",Data1.Flag,0,0,0);   //  debug ll
                 break;
             default:
                 HaveJob=FALSE;
                 break;
         }
     }
-    else//Êı¾İ´¦Àí
+    else//æ•°æ®å¤„ç†
     {
-        //logSysMsgNoTime("Ó¦ÓÃ²ãÊı¾İCot=%d, PubAddr=%x, TypeID=%x, len=%d",RxCot,RxPubAddr,RxTypeID,LengthIn); 
+        //logSysMsgNoTime("åº”ç”¨å±‚æ•°æ®Cot=%d, PubAddr=%x, TypeID=%x, len=%d",RxCot,RxPubAddr,RxTypeID,LengthIn); 
         RxTypeID=RxMsg[0];
         RxCot=RxMsg[2];
         pRxData=RxMsg+AsduHeadLength;
         RxVsq=RxMsg[1];
     
-        if((RxCot&COT_REASON)>47)//´«ËÍÔ­ÒòÓĞ´íÎó£¬·¢Á´Â·È·ÈÏ£¬¼ÇÂ¼´íÎóÊı¾İ
+        if((RxCot&COT_REASON)>47)//ä¼ é€åŸå› æœ‰é”™è¯¯ï¼Œå‘é“¾è·¯ç¡®è®¤ï¼Œè®°å½•é”™è¯¯æ•°æ®
         {
             HaveWrongData=TRUE;
             WrongDataLength=LengthIn;
@@ -1378,10 +1378,10 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
             *AppCommand|=APP_HAVEDATA1;
             return;
         }
-        if(!GetActDevIndexByAddr(RxPubAddr))//¹«¹²ÌåµØÖ·´íÎó£¬¿ÉÄÜÎª0xFF
+        if(!GetActDevIndexByAddr(RxPubAddr))//å…¬å…±ä½“åœ°å€é”™è¯¯ï¼Œå¯èƒ½ä¸º0xFF
         {
-            //logSysMsgNoTime("¹«¹²ÌåµØÖ·´íÎó =%d",RxPubAddr,0,0,0); //debug
-            if((RxTypeID!=C_IC_NA)&&(RxTypeID!=C_CI_NA)&&(RxTypeID!=C_CS_NA))//×ÜÕÙ»½»òµç¶ÈÕÙ»½¿ÉÒÔÎª0xFF
+            //logSysMsgNoTime("å…¬å…±ä½“åœ°å€é”™è¯¯ =%d",RxPubAddr,0,0,0); //debug
+            if((RxTypeID!=C_IC_NA)&&(RxTypeID!=C_CI_NA)&&(RxTypeID!=C_CS_NA))//æ€»å¬å”¤æˆ–ç”µåº¦å¬å”¤å¯ä»¥ä¸º0xFF
             {
                 HaveWrongData=TRUE;
                 WrongDataLength=LengthIn;
@@ -1399,18 +1399,18 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
         HaveJob=TRUE;
         switch(RxTypeID)
         {
-            case C_SC_NA://µ¥µãÒ£¿ØÃüÁî
-            case C_DC_NA://Ë«µãÒ£¿ØÃüÁî
-            case C_RC_NA://Éı½µÃüÁî
+            case C_SC_NA://å•ç‚¹é¥æ§å‘½ä»¤
+            case C_DC_NA://åŒç‚¹é¥æ§å‘½ä»¤
+            case C_RC_NA://å‡é™å‘½ä»¤
                 ProcControl();
                 break;
-            case C_SE_NA://Éè¶¨ÃüÁî£¬Ö»Ö§³Ö¹éÒ»»¯£¬ÎªÁË²âÊÔ
+            case C_SE_NA://è®¾å®šå‘½ä»¤ï¼Œåªæ”¯æŒå½’ä¸€åŒ–ï¼Œä¸ºäº†æµ‹è¯•
                   ProcSetNVA();
                 break;
-            case C_LC_CALL_YC_YX:          //¿ØÖÆ·½ÏòÒº¾§ÕÙ»½Ò£²âÒ£ĞÅÊı¾İ
-            case C_LC_CALL_SYSINFO_SOE:    //¿ØÖÆ·½ÏòÒº¾§ÕÙ»½ÏµÍ³ĞÅÏ¢¼°SOE
-            case C_LC_CALL_NAME_VER_CLOCK: //¿ØÖÆ·½ÏòÒº¾§ÕÙ»½Ò£ĞÅÃû³Æ¡¢Ò£²âÃû³Æ¡¢°æ±¾ĞÅÏ¢¡¢Ê±ÖÓĞÅÏ¢
-            //case C_LC_FAULT_RESET:         //Òº¾§¸´Î»¹ÊÕÏÃüÁî
+            case C_LC_CALL_YC_YX:          //æ§åˆ¶æ–¹å‘æ¶²æ™¶å¬å”¤é¥æµ‹é¥ä¿¡æ•°æ®
+            case C_LC_CALL_SYSINFO_SOE:    //æ§åˆ¶æ–¹å‘æ¶²æ™¶å¬å”¤ç³»ç»Ÿä¿¡æ¯åŠSOE
+            case C_LC_CALL_NAME_VER_CLOCK: //æ§åˆ¶æ–¹å‘æ¶²æ™¶å¬å”¤é¥ä¿¡åç§°ã€é¥æµ‹åç§°ã€ç‰ˆæœ¬ä¿¡æ¯ã€æ—¶é’Ÿä¿¡æ¯
+            //case C_LC_FAULT_RESET:         //æ¶²æ™¶å¤ä½æ•…éšœå‘½ä»¤
             case C_LC_SUMMON_PARA:
                 
                 LCFlag = 1;
@@ -1419,7 +1419,7 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 
                 if(!(RxVsq & 0x80))
                 {
-                	for(i=0;i<2;i++)//InfoAddrSizeÈç¹ûÎª3£¬Ò²Ö»È¡Ç°2¸ö×Ö½Ú¡£
+                	for(i=0;i<2;i++)//InfoAddrSizeå¦‚æœä¸º3ï¼Œä¹Ÿåªå–å‰2ä¸ªå­—èŠ‚ã€‚
                     {
                     	LCAmount+=(RxMsg[7+i]<<(8*i));
                     }
@@ -1431,7 +1431,7 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 	int num = RxVsq & 0x0F;
                 	int i,j;
                 	
-                	Qoi = pRxData[2 * num];     //Î´ĞŞ¸ÄnumÇ°²éÕÒQoi
+                	Qoi = pRxData[2 * num];     //æœªä¿®æ”¹numå‰æŸ¥æ‰¾Qoi
                     
                     num = (num > 9 ? 9 : num);
                 	LCAmount = num;
@@ -1452,11 +1452,11 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 
                 ProcLCdataCall();
                 break;
-            case C_IC_NA://×ÜÕÙ»½»ò·Ö×éÕÙ»½
+            case C_IC_NA://æ€»å¬å”¤æˆ–åˆ†ç»„å¬å”¤
                 ProcAllDataCall();
                 break;
-            case C_CI_NA://µç¶È×ÜÕÙ»½»ò·Ö×éÕÙ»½
-            //	if((RxMsg[AsduHeadLength]&0xc0)==0)//wjr  Èç¹ûµç¶ÈÃ»ÓĞÏÈ½øĞĞ¶³½á¾ÍÕÙ»½ÈÏÎª´íÎó
+            case C_CI_NA://ç”µåº¦æ€»å¬å”¤æˆ–åˆ†ç»„å¬å”¤
+            //	if((RxMsg[AsduHeadLength]&0xc0)==0)//wjr  å¦‚æœç”µåº¦æ²¡æœ‰å…ˆè¿›è¡Œå†»ç»“å°±å¬å”¤è®¤ä¸ºé”™è¯¯
                 //if(((RxMsg[AsduHeadLength]&0xc0)==0)&&((Sec101Pad.control&CON_101GYKZ)==0))  //AJ++170829
                 if(((RxMsg[AsduHeadLength]&0xc0)==0)&&(GYKZ2015Flag == FALSE))
                 {
@@ -1472,19 +1472,19 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                         *LengthOut=0;
                         *AppCommand=APP_APPCON;
                         *AppCommand|=APP_HAVEDATA1;
-                        //logSysMsgNoTime("SEC µç¶ÈÎ´¶³½á%d",*AppCommand,0,0,0);//  debug ll
+                        //logSysMsgNoTime("SEC ç”µåº¦æœªå†»ç»“%d",*AppCommand,0,0,0);//  debug ll
                         break;
                     }
                     
                 }
                 ProcDDCall();
                 break;
-            case C_CD_NA://ÑÓÊ±»ñµÃÃüÁî
+            case C_CD_NA://å»¶æ—¶è·å¾—å‘½ä»¤
                 ProcTimeDelay();
                 break;
-            case C_CS_NA://¶ÔÖÓÃüÁî
+            case C_CS_NA://å¯¹é’Ÿå‘½ä»¤
                 
-                /*¶ÔÖÓĞŞ¸Ä£¬Èç¹ûÁ´Â·ÃüÁîÎª04²»ĞèÒªÈ·ÈÏÔò²»½øĞĞÈ·ÈÏ£¬Èç¹ûÎª03Ôò½øĞĞÈ·ÈÏ  wjr*/
+                /*å¯¹é’Ÿä¿®æ”¹ï¼Œå¦‚æœé“¾è·¯å‘½ä»¤ä¸º04ä¸éœ€è¦ç¡®è®¤åˆ™ä¸è¿›è¡Œç¡®è®¤ï¼Œå¦‚æœä¸º03åˆ™è¿›è¡Œç¡®è®¤  wjr*/
                 if(DLCommand==DL_SENDNOCON)//   
                 {
                     ProcClock(FALSE);
@@ -1505,7 +1505,7 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                     ProcSummonInfoOnBoot();    
                  }
              	break;
-             case C_LC_SET_PARA://Òº¾§Éè¶¨²ÎÊıÃüÁî
+             case C_LC_SET_PARA://æ¶²æ™¶è®¾å®šå‚æ•°å‘½ä»¤
                 
                 
                 if(DLCommand==DL_SENDNOCON)//   
@@ -1516,7 +1516,7 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 else
                     ProcLCSetPara(TRUE);
                 break;
-              case C_LC_ACTIVATE_PARA://Òº¾§¼¤»î²ÎÊıÃüÁî
+              case C_LC_ACTIVATE_PARA://æ¶²æ™¶æ¿€æ´»å‚æ•°å‘½ä»¤
                 
                 
                 if(DLCommand==DL_SENDNOCON)//   
@@ -1527,18 +1527,18 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 else
                     ProcActivatePara(TRUE);
                 break;
-            case C_RP_NA://¸´Î»½ø³ÌÃüÁî
+            case C_RP_NA://å¤ä½è¿›ç¨‹å‘½ä»¤
                 ProcReset();
                 break;
-            case C_RD_NA://¶ÁÊı¾İÃüÁî
+            case C_RD_NA://è¯»æ•°æ®å‘½ä»¤
                 //EnCodeReadData();
                 ProcReadData();
                 break;
-            case C_TS_NA://²âÊÔÃüÁî
+            case C_TS_NA://æµ‹è¯•å‘½ä»¤
                 ProcTest();
                 break;
             
-            //¹ã¶«Ô¶³Ì²ÎÊı
+            //å¹¿ä¸œè¿œç¨‹å‚æ•°
             case GD_MUTIPARA_READ:
                 //if(IsRMTforGuangdong())
                 ProcReadParaGD();
@@ -1546,38 +1546,38 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
             case GD_MUTIPARA_WRITE:
                 ProcWritePara_GD();
                 break;
-            //¹ãÎ÷Ô¶³ÌÔËÎ¬
-            /*case P_RS_NA_1_GX:              //¹ãÎ÷Ö÷Õ¾¶Á²ÎÊı
+            //å¹¿è¥¿è¿œç¨‹è¿ç»´
+            /*case P_RS_NA_1_GX:              //å¹¿è¥¿ä¸»ç«™è¯»å‚æ•°
                 ProcReadParaGX();
                 break;
-            case P_ME_NA_1_GX:               //¹ãÎ÷Ö÷Õ¾Ô¤ÖÃ²ÎÊı
+            case P_ME_NA_1_GX:               //å¹¿è¥¿ä¸»ç«™é¢„ç½®å‚æ•°
                 ProcSetParaGX();
                 break;
-            case P_AC_NA_1_GX:               //¹ãÎ÷Ö÷Õ¾¼¤»î²ÎÊı
+            case P_AC_NA_1_GX:               //å¹¿è¥¿ä¸»ç«™æ¿€æ´»å‚æ•°
                 ProcActivateParaGX();
                 break;*/
-            //2016 ĞÂ¹æÔ¼À©Õ¹    
-            case C_SR_NA:   //ÇĞ»»¶¨ÖµÇøºÅ
+            //2016 æ–°è§„çº¦æ‰©å±•    
+            case C_SR_NA:   //åˆ‡æ¢å®šå€¼åŒºå·
                 ProcSetSectionNo();
                 break; 
             case C_RR_NA:
-                ProcReadSectionNo();    //¶Á¶¨ÖµÇøºÅ
+                ProcReadSectionNo();    //è¯»å®šå€¼åŒºå·
                 break; 
-            case C_RS_NA:       //¶Á²ÎÊıÇø
+            case C_RS_NA:       //è¯»å‚æ•°åŒº
                 ProcReadPara();
                 break;  
-            case C_WS_NA:       //Ğ´²ÎÊıÇø
+            case C_WS_NA:       //å†™å‚æ•°åŒº
                 ProcWritePara();
                 break;
                    
             case F_FR_NA_N:
-                ProcFileTran(); //ÎÄ¼ş´«Êä
+                ProcFileTran(); //æ–‡ä»¶ä¼ è¾“
                 break; 
             case F_SR_NA_N:
                 ProcFT_ProgramUpdate();
                 break;   
-            //end 2016 ĞÂ¹æÔ¼À©Õ¹
-            case F_FS_NA_N:    //ÎÄ¼şÍ¬²½  
+            //end 2016 æ–°è§„çº¦æ‰©å±•
+            case F_FS_NA_N:    //æ–‡ä»¶åŒæ­¥  
                 ProcXSFileSyn();
                 break;
                             
@@ -1668,15 +1668,15 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 
                 
 #ifdef INCLUDE_DA
-            case C_PF_NA://±£»¤¶¨ÖµÉè¶¨
+            case C_PF_NA://ä¿æŠ¤å®šå€¼è®¾å®š
                 SetProtect();
                 break;
-            case P_PF_NA://±£»¤¶¨ÖµÕÙ»½
+            case P_PF_NA://ä¿æŠ¤å®šå€¼å¬å”¤
                 CallProtect();
                 break;
 #endif
 
-            default://ÀàĞÍ±êÊ¶ÓĞ´íÎó»ò²»Ö§³Ö
+            default://ç±»å‹æ ‡è¯†æœ‰é”™è¯¯æˆ–ä¸æ”¯æŒ
                 HaveJob=TRUE;
                 HaveWrongData=TRUE;
                 WrongDataLength=LengthIn;
@@ -1689,7 +1689,7 @@ void CSecAppSev::SecAppProc(INT8U*bufin,INT16U lengthin,INT16U dlcommand,
                 *AppCommand|=APP_HAVEDATA1;
                 break;
         }
-    }//end of else//Êı¾İ´¦Àí
+    }//end of else//æ•°æ®å¤„ç†
 
     if((!HaveJob))
     {
@@ -1712,12 +1712,12 @@ void CSecAppSev::ClearMsg(void)
     }
     
 }
-//Ò»¼¶Êı¾İ´¦Àí£ºÓÅÏÈ¼¶°²ÅÅ»ù±¾°´ÕÕ±ê×¼ÒªÇó
+//ä¸€çº§æ•°æ®å¤„ç†ï¼šä¼˜å…ˆçº§å®‰æ’åŸºæœ¬æŒ‰ç…§æ ‡å‡†è¦æ±‚
 void CSecAppSev::ProcData1(void)
 {
     BOOL rc;
     
-    if(DLInitFinishFlag == FALSE)   //³õÊ¼»¯Î´Íê³É½ûÖ¹Ó¦ÓÃ²ãÆô¶¯
+    if(DLInitFinishFlag == FALSE)   //åˆå§‹åŒ–æœªå®Œæˆç¦æ­¢åº”ç”¨å±‚å¯åŠ¨
         return;
              
     if(HaveWrongData)
@@ -1729,10 +1729,10 @@ void CSecAppSev::ProcData1(void)
         *AppCommand=APP_SENDDATA;
         if(BalanMode)                   //ll
             *AppCommand=APP_SENDCON;
-        //Èç¹ûÓĞºóĞøÒ»¼¶Êı¾İ£¬¼ÌĞø½«ACDÉèÖÃÎª1
+        //å¦‚æœæœ‰åç»­ä¸€çº§æ•°æ®ï¼Œç»§ç»­å°†ACDè®¾ç½®ä¸º1
         if(Data1.Flag&APP_DATA1_DEF)
             *AppCommand|=APP_HAVEDATA1;
-        //logSysMsgNoTime("·¢ËÍ´íÎóÃüÁî%d",WrongDataLength,0,0,0);   //  debug ll
+        //logSysMsgNoTime("å‘é€é”™è¯¯å‘½ä»¤%d",WrongDataLength,0,0,0);   //  debug ll
         return;
     }
     
@@ -1749,16 +1749,16 @@ void CSecAppSev::ProcData1(void)
         return;
     }
     
-    //´Ó¶¯·½ÏòÖØĞÂ½¨Á¢Á´Â·ºóµÚ1´Î×ÜÕĞ£¬²»Ó¦±»´ò¶Ï£¬ll Ìí¼Ó
+    //ä»åŠ¨æ–¹å‘é‡æ–°å»ºç«‹é“¾è·¯åç¬¬1æ¬¡æ€»æ‹›ï¼Œä¸åº”è¢«æ‰“æ–­ï¼Œll æ·»åŠ 
     if((Data1.Flag&CallAllData) 
         && (APP_DATA1_DEF&CallAllData) 
-        && (FirstCallAllData==0))//Õ¾ÕÙ»½
+        && (FirstCallAllData==0))//ç«™å¬å”¤
     {
-        //logSysMsgNoTime("SEC×ÜÕĞÏìÓ¦,FLAG=%x",FirstCallAllData,0,0,0);    //dubug ll
+        //logSysMsgNoTime("SECæ€»æ‹›å“åº”,FLAG=%x",FirstCallAllData,0,0,0);    //dubug ll
         if(EditAllDataCon==0xff)
         {
             EditAllDataCon=0;
-            EnCodeAllDataConf();    //·¢ËÍ×ÜÕĞÈ·ÈÏ
+            EnCodeAllDataConf();    //å‘é€æ€»æ‹›ç¡®è®¤
             
         }
         else
@@ -1772,17 +1772,17 @@ void CSecAppSev::ProcData1(void)
         return;
     }
     
-    if((FirstCallAllData == 0)&&(BalanMode))    //ÔÚÕâÀï¸Õ¿ªÊ¼½¨Á¢Á´½ÓµÚ1´Î×ÜÕĞ²»ÄÜ±»´ò¶ÏµÄ´¦ÀíÊ±£¬Ó¦¸ÃÔÚÆ½ºâÄ£Ê½ÏÂ£¬·ÇÆ½ºâÄ£Ê½²»ÊÊºÏ¡£
+    if((FirstCallAllData == 0)&&(BalanMode))    //åœ¨è¿™é‡Œåˆšå¼€å§‹å»ºç«‹é“¾æ¥ç¬¬1æ¬¡æ€»æ‹›ä¸èƒ½è¢«æ‰“æ–­çš„å¤„ç†æ—¶ï¼Œåº”è¯¥åœ¨å¹³è¡¡æ¨¡å¼ä¸‹ï¼Œéå¹³è¡¡æ¨¡å¼ä¸é€‚åˆã€‚
     {
-        return; //µÈ´ıµÚ1´Î×ÜÕĞ½áÊø£¬ÔÙ·¢ËÍÆäËûÊı¾İ
+        return; //ç­‰å¾…ç¬¬1æ¬¡æ€»æ‹›ç»“æŸï¼Œå†å‘é€å…¶ä»–æ•°æ®
     
     }
     
     if((Data1.Flag&HaveYK) && (APP_DATA1_DEF&HaveYK))
     {
-        //logSysMsgNoTime("SEC Ò£¿Ø±¨ÎÄ·¢ËÍ",0,0,0,0);    //dubug ll
+        //logSysMsgNoTime("SEC é¥æ§æŠ¥æ–‡å‘é€",0,0,0,0);    //dubug ll
         Data1.Flag&=(~HaveYK);
-        if(YKStatus==YKTERM)//Ò£¿Ø½áÊø
+        if(YKStatus==YKTERM)//é¥æ§ç»“æŸ
         {
             YKStatus=NOTUSE;
             EditYKTerm();
@@ -1799,7 +1799,7 @@ void CSecAppSev::ProcData1(void)
     
     if((Data1.Flag&HaveCOS) && (APP_DATA1_DEF&HaveCOS))
     {
-        //logSysMsgNoTime("SEC procdata1 COS´¦Àíº¯Êı",0,0,0,0);    //dubug ll
+        //logSysMsgNoTime("SEC procdata1 COSå¤„ç†å‡½æ•°",0,0,0,0);    //dubug ll
         if(bSendAllDBI)
             rc = EnCodeBIENT_ALLDBI();
         else
@@ -1844,7 +1844,7 @@ void CSecAppSev::ProcData1(void)
         {
             Data1.Flag &= (~HaveSOE);
             if(Data1.Flag&APP_DATA1_DEF)
-                *AppCommand|=APP_HAVEDATA1;     //¼ì²âÈ¥µôSOEºó£¬ÊÇ·ñ»¹ÓĞÒ»¼¶Êı¾İ
+                *AppCommand|=APP_HAVEDATA1;     //æ£€æµ‹å»æ‰SOEåï¼Œæ˜¯å¦è¿˜æœ‰ä¸€çº§æ•°æ®
         }
         
         if(*LengthOut != 0)
@@ -1852,7 +1852,7 @@ void CSecAppSev::ProcData1(void)
         
         
     }
-    if((Data1.Flag&CallAllData) && (APP_DATA1_DEF&CallAllData))//Õ¾ÕÙ»½
+    if((Data1.Flag&CallAllData) && (APP_DATA1_DEF&CallAllData))//ç«™å¬å”¤
     {
         if(EditAllDataCon==0xff)
         {
@@ -1882,7 +1882,7 @@ void CSecAppSev::ProcData1(void)
     
     
 #ifdef INCLUDE_DA
-    if(Data1.Flag&ProtectCon)//±£»¤¶¨Öµ¾µÏñÈ·ÈÏ
+    if(Data1.Flag&ProtectCon)//ä¿æŠ¤å®šå€¼é•œåƒç¡®è®¤
     {
         Data1.Flag&=(~ProtectCon);
         SendProtectCon();
@@ -1912,7 +1912,7 @@ void CSecAppSev::ProcData1(void)
         return;
     }
 
-    if((Data1.Flag&CallSetNVA) && (APP_DATA1_DEF&CallSetNVA))//Éè¶¨ÃüÁî£¬Ö»Ğè¹éÒ»»¯
+    if((Data1.Flag&CallSetNVA) && (APP_DATA1_DEF&CallSetNVA))//è®¾å®šå‘½ä»¤ï¼Œåªéœ€å½’ä¸€åŒ–
     {
         Data1.Flag&=(~CallSetNVA);
         EnCodeSetNVA();
@@ -1921,7 +1921,7 @@ void CSecAppSev::ProcData1(void)
             *AppCommand|=APP_HAVEDATA1;
         return;
     }
-    if((Data1.Flag&CallTest) && (APP_DATA1_DEF&CallTest)) //²âÊÔ¹ı³Ì
+    if((Data1.Flag&CallTest) && (APP_DATA1_DEF&CallTest)) //æµ‹è¯•è¿‡ç¨‹
     {
         Data1.Flag&=(~CallTest);
         EnCodeTest();
@@ -1931,7 +1931,7 @@ void CSecAppSev::ProcData1(void)
         return;
     }
 
-    if((Data1.Flag&CallReset) && (APP_DATA1_DEF&CallReset))//¸´Î»½ø³Ì
+    if((Data1.Flag&CallReset) && (APP_DATA1_DEF&CallReset))//å¤ä½è¿›ç¨‹
     {
         Data1.Flag&=(~CallReset);
         EnCodeReset();
@@ -1941,7 +1941,7 @@ void CSecAppSev::ProcData1(void)
         return;
     }
 
-    if((Data1.Flag&CallParaSet) && (APP_DATA1_DEF&CallParaSet))//²ÎÊıÉè¶¨
+    if((Data1.Flag&CallParaSet) && (APP_DATA1_DEF&CallParaSet))//å‚æ•°è®¾å®š
     {
         Data1.Flag&=(~CallParaSet);
         ParaSetCon();
@@ -1953,7 +1953,7 @@ void CSecAppSev::ProcData1(void)
 
     
 
-    if((Data1.Flag&FreezeDD) && (APP_DATA1_DEF&FreezeDD))//¶³½áµç¶È
+    if((Data1.Flag&FreezeDD) && (APP_DATA1_DEF&FreezeDD))//å†»ç»“ç”µåº¦
     {
         Data1.Flag&=(~FreezeDD);
         if(EditDDCon==0xFF)
@@ -1967,7 +1967,7 @@ void CSecAppSev::ProcData1(void)
         return;
     }
 
-    if((Data1.Flag&CallDD) && (APP_DATA1_DEF&CallDD))//´«ËÍµç¶È
+    if((Data1.Flag&CallDD) && (APP_DATA1_DEF&CallDD))//ä¼ é€ç”µåº¦
     {
         if(EditDDCon==0xFF)
         {
@@ -2026,7 +2026,7 @@ void CSecAppSev::ProcData1(void)
             *AppCommand|=APP_HAVEDATA1;
         return;
     }
-    //±ä»¯Ò£²â£¬Èç¹ûÊı¾İ±ä»¯Æµ·±»áÓ°ÏìÆäËûÊı¾İ´«Êä£¬ËùÒÔ·ÅÔÚºóÃæ¡£
+    //å˜åŒ–é¥æµ‹ï¼Œå¦‚æœæ•°æ®å˜åŒ–é¢‘ç¹ä¼šå½±å“å…¶ä»–æ•°æ®ä¼ è¾“ï¼Œæ‰€ä»¥æ”¾åœ¨åé¢ã€‚
     if((Data1.Flag&HaveNVA) && (APP_DATA1_DEF&HaveNVA))
     {
         if(EnCodeNVA())
@@ -2040,12 +2040,12 @@ void CSecAppSev::ProcData1(void)
             Data1.Flag&=(~HaveNVA);
     }
     
-    //ÎŞÒ»¼¶Êı¾İ
+    //æ— ä¸€çº§æ•°æ®
     *LengthOut=0;
     *AppCommand=APP_NODATA;
 }
 
-//¶ş¼¶Êı¾İ´¦Àí£º°üÀ¨±³¾°Êı¾İ¡¢Ñ­»·ÖÜÆÚÊı¾İ
+//äºŒçº§æ•°æ®å¤„ç†ï¼šåŒ…æ‹¬èƒŒæ™¯æ•°æ®ã€å¾ªç¯å‘¨æœŸæ•°æ®
 void CSecAppSev::ProcData2(void)
 {
     
@@ -2053,10 +2053,10 @@ void CSecAppSev::ProcData2(void)
     BOOL    rc = FALSE;
     INT16U  len;
 #endif    
-    if(DLInitFinishFlag == FALSE)   //³õÊ¼»¯Î´Íê³É½ûÖ¹Ó¦ÓÃ²ãÆô¶¯
+    if(DLInitFinishFlag == FALSE)   //åˆå§‹åŒ–æœªå®Œæˆç¦æ­¢åº”ç”¨å±‚å¯åŠ¨
         return;
     
-    //Ê±ÖÓ±¨ÎÄ
+    //æ—¶é’ŸæŠ¥æ–‡
     if((Data1.Flag&CallClock) && (APP_DATA2_DEF&CallClock))
     {
         Data1.Flag&=(~CallClock);
@@ -2066,9 +2066,9 @@ void CSecAppSev::ProcData2(void)
         return;
     }
     
-    if((Data1.Flag&CallTest) && (APP_DATA2_DEF&CallTest)) //²âÊÔ¹ı³Ì
+    if((Data1.Flag&CallTest) && (APP_DATA2_DEF&CallTest)) //æµ‹è¯•è¿‡ç¨‹
     {
-        //logSysMsgNoTime("SEC 2¼¶Êı¾İ²âÊÔÓ¦´ğ",0,0,0,0);   //  debug ll
+        //logSysMsgNoTime("SEC 2çº§æ•°æ®æµ‹è¯•åº”ç­”",0,0,0,0);   //  debug ll
         Data1.Flag&=(~CallTest);
         EnCodeTest();
         if(Data1.Flag&APP_DATA1_DEF)
@@ -2078,7 +2078,7 @@ void CSecAppSev::ProcData2(void)
         
     
     
-    if((Data1.Flag&CallReset) && (APP_DATA2_DEF&CallReset))//¸´Î»½ø³Ì
+    if((Data1.Flag&CallReset) && (APP_DATA2_DEF&CallReset))//å¤ä½è¿›ç¨‹
     {
         
         Data1.Flag&=(~CallReset);
@@ -2087,7 +2087,7 @@ void CSecAppSev::ProcData2(void)
                 *AppCommand|=APP_HAVEDATA1;
         return;
     }
-    //¹ã¶«Ô¶³ÌÔËÎ¬
+    //å¹¿ä¸œè¿œç¨‹è¿ç»´
     if((Data2Flag&DATA2_RMT_READPARA_GD) && (APP_DATA2_DEF&DATA2_RMT_READPARA_GD))
     {
         if(ProcEncodeRMTReadPara_gd())
@@ -2103,7 +2103,7 @@ void CSecAppSev::ProcData2(void)
            
         return; 
     }
-    //¹ã¶«Ô¶³ÌÔËÎ¬-Ğ´²ÎÊıÓ¦´ğÖ¡
+    //å¹¿ä¸œè¿œç¨‹è¿ç»´-å†™å‚æ•°åº”ç­”å¸§
     if((Data2Flag&DATA2_RMT_WRITEPARA_GD) && (APP_DATA2_DEF&DATA2_RMT_WRITEPARA_GD))
     {
         Data2Flag &= (~DATA2_RMT_WRITEPARA_GD);
@@ -2112,16 +2112,16 @@ void CSecAppSev::ProcData2(void)
         if(Data1.Flag & APP_DATA1_DEF)
             *AppCommand|=APP_HAVEDATA1;
 
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
     
-    //¹ãÎ÷Ô¶³ÌÔËÎ¬
+    //å¹¿è¥¿è¿œç¨‹è¿ç»´
     if((Data2Flag&DATA2_GX_READPARA) && (APP_DATA2_DEF&DATA2_GX_READPARA))
     {
         if(EditReadParaCon == 0xff)
         {
             EditReadParaCon=1;
-            EnCodeGXReadParaConf();    //·¢ËÍ¶Á²ÎÊıÈ·ÈÏ
+            EnCodeGXReadParaConf();    //å‘é€è¯»å‚æ•°ç¡®è®¤
         }
         else if(EditReadParaCon==1)
         {
@@ -2142,7 +2142,7 @@ void CSecAppSev::ProcData2(void)
             Data2Flag &= (~DATA2_GX_READPARA);
         }
            
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
     
     if((Data2Flag&DATA2_GX_SETPARA) && (APP_DATA2_DEF&DATA2_GX_SETPARA))
@@ -2155,7 +2155,7 @@ void CSecAppSev::ProcData2(void)
         }
  
         Data2Flag &= (~DATA2_GX_SETPARA);    
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
     
     if((Data2Flag&DATA2_GX_ACTIVATEPARA) && (APP_DATA2_DEF&DATA2_GX_ACTIVATEPARA))
@@ -2187,10 +2187,10 @@ void CSecAppSev::ProcData2(void)
         }
  
             
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
-    //¶ÁÎÄ¼şÄ¿Â¼
-    if((Data2Flag&DATA2_FT_DIR) && (APP_DATA2_DEF&DATA2_FT_DIR))//¶ÁÎÄ¼şÄ¿Â¼
+    //è¯»æ–‡ä»¶ç›®å½•
+    if((Data2Flag&DATA2_FT_DIR) && (APP_DATA2_DEF&DATA2_FT_DIR))//è¯»æ–‡ä»¶ç›®å½•
     {
         if(ProcFT_EncodeReadDir())
         {
@@ -2202,11 +2202,11 @@ void CSecAppSev::ProcData2(void)
         else
             Data2Flag &= (~DATA2_FT_DIR);
         
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤
         
     }
-    //¶ÁÎÄ¼ş¼¤»îÈ·ÈÏÖ¡
-    if((Data2Flag&DATA2_FT_FILEACT) && (APP_DATA2_DEF&DATA2_FT_FILEACT))//¶ÁÎÄ¼şÄ¿Â¼
+    //è¯»æ–‡ä»¶æ¿€æ´»ç¡®è®¤å¸§
+    if((Data2Flag&DATA2_FT_FILEACT) && (APP_DATA2_DEF&DATA2_FT_FILEACT))//è¯»æ–‡ä»¶ç›®å½•
     {
         Data2Flag &= (~DATA2_FT_FILEACT);
         ProcFT_EncodeFileActConf();
@@ -2216,8 +2216,8 @@ void CSecAppSev::ProcData2(void)
             
         return;
     }
-    //¶ÁÎÄ¼şÄÚÈİ
-    if((Data2Flag&DATA2_FT_FILEDATA) && (APP_DATA2_DEF&DATA2_FT_FILEDATA))//¶ÁÎÄ¼şÄ¿Â¼
+    //è¯»æ–‡ä»¶å†…å®¹
+    if((Data2Flag&DATA2_FT_FILEDATA) && (APP_DATA2_DEF&DATA2_FT_FILEDATA))//è¯»æ–‡ä»¶ç›®å½•
     {
         if(ProcFT_EncodeFileData())
         {
@@ -2229,11 +2229,11 @@ void CSecAppSev::ProcData2(void)
         else
             Data2Flag &= (~DATA2_FT_FILEDATA);
             
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´    
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤    
     }
     
-    //Ğ´ÎÄ¼ş¼¤»îÈ·ÈÏÖ¡
-    if((Data2Flag&DATA2_FT_WTFILEACT) && (APP_DATA2_DEF&DATA2_FT_WTFILEACT))//¶ÁÎÄ¼şÄ¿Â¼
+    //å†™æ–‡ä»¶æ¿€æ´»ç¡®è®¤å¸§
+    if((Data2Flag&DATA2_FT_WTFILEACT) && (APP_DATA2_DEF&DATA2_FT_WTFILEACT))//è¯»æ–‡ä»¶ç›®å½•
     {
         Data2Flag &= (~DATA2_FT_WTFILEACT);
         ProcFT_EncodeWriteFileActConf();
@@ -2244,8 +2244,8 @@ void CSecAppSev::ProcData2(void)
         return;
     }
     
-    //ÎÄ¼ş´«ÊäÊı¾İ½áÊøÈ·ÈÏÖ¡
-    if((Data2Flag&DATA2_FT_WTDATAACT) && (APP_DATA2_DEF&DATA2_FT_WTDATAACT))//¶ÁÎÄ¼şÄ¿Â¼
+    //æ–‡ä»¶ä¼ è¾“æ•°æ®ç»“æŸç¡®è®¤å¸§
+    if((Data2Flag&DATA2_FT_WTDATAACT) && (APP_DATA2_DEF&DATA2_FT_WTDATAACT))//è¯»æ–‡ä»¶ç›®å½•
     {
         Data2Flag &= (~DATA2_FT_WTDATAACT);
         ProcFT_EncodeWriteFileDataConf();
@@ -2256,8 +2256,8 @@ void CSecAppSev::ProcData2(void)
         return;
     }
     
-    //ÇĞ»»¶¨ÖµÇøÈ·ÈÏÖ¡
-    if((Data2Flag&DATA2_RMT_SETSEC) && (APP_DATA2_DEF&DATA2_RMT_SETSEC))//¶ÁÎÄ¼şÄ¿Â¼
+    //åˆ‡æ¢å®šå€¼åŒºç¡®è®¤å¸§
+    if((Data2Flag&DATA2_RMT_SETSEC) && (APP_DATA2_DEF&DATA2_RMT_SETSEC))//è¯»æ–‡ä»¶ç›®å½•
     {
         Data2Flag &= (~DATA2_RMT_SETSEC);
         ProcEncodeSetSectionNo();
@@ -2268,8 +2268,8 @@ void CSecAppSev::ProcData2(void)
         return;
     }
     
-    //¶Á¶¨ÖµÇøÈ·ÈÏÖ¡
-    if((Data2Flag&DATA2_RMT_READSEC) && (APP_DATA2_DEF&DATA2_RMT_READSEC))//¶ÁÎÄ¼şÄ¿Â¼
+    //è¯»å®šå€¼åŒºç¡®è®¤å¸§
+    if((Data2Flag&DATA2_RMT_READSEC) && (APP_DATA2_DEF&DATA2_RMT_READSEC))//è¯»æ–‡ä»¶ç›®å½•
     {
         Data2Flag &= (~DATA2_RMT_READSEC);
         ProcEnCodeReadSectionNo();
@@ -2279,8 +2279,8 @@ void CSecAppSev::ProcData2(void)
             
         return;
     }
-    //¶Á²ÎÊıÓ¦´ğÖ¡
-    if((Data2Flag&DATA2_RMT_READPARA) && (APP_DATA2_DEF&DATA2_RMT_READPARA))//¶ÁÎÄ¼şÄ¿Â¼
+    //è¯»å‚æ•°åº”ç­”å¸§
+    if((Data2Flag&DATA2_RMT_READPARA) && (APP_DATA2_DEF&DATA2_RMT_READPARA))//è¯»æ–‡ä»¶ç›®å½•
     {
         
         if(ProcEncodeRMTReadPara())
@@ -2294,10 +2294,10 @@ void CSecAppSev::ProcData2(void)
             Data2Flag &= (~DATA2_RMT_READPARA);
         }
            
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
     
-    //Ğ´²ÎÊıÓ¦´ğÖ¡
+    //å†™å‚æ•°åº”ç­”å¸§
     if((Data2Flag&DATA2_RMT_SETPARA) && (APP_DATA2_DEF&DATA2_RMT_SETPARA))
     {
         Data2Flag &= (~DATA2_RMT_SETPARA);
@@ -2306,12 +2306,12 @@ void CSecAppSev::ProcData2(void)
         if(Data1.Flag & APP_DATA1_DEF)
             *AppCommand|=APP_HAVEDATA1;
 
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
     
     
-    //Ô¶³ÌÉı¼¶Ó¦´ğÖ¡
-    if((Data2Flag&DATA2_PUP_PROGUP) && (APP_DATA2_DEF&DATA2_PUP_PROGUP))//¶ÁÎÄ¼şÄ¿Â¼
+    //è¿œç¨‹å‡çº§åº”ç­”å¸§
+    if((Data2Flag&DATA2_PUP_PROGUP) && (APP_DATA2_DEF&DATA2_PUP_PROGUP))//è¯»æ–‡ä»¶ç›®å½•
     {
         Data2Flag &= (~DATA2_PUP_PROGUP);
         ProcEncodePUPupdateConf();
@@ -2319,34 +2319,34 @@ void CSecAppSev::ProcData2(void)
         if(Data1.Flag & APP_DATA1_DEF)
             *AppCommand|=APP_HAVEDATA1;
 
-        return;     //ÕâÀï·µ»Ø´¦Àí¸úÇ°Ãæ²»Ò»Ñù£¬µ÷ÊÔÊ±×¢Òâ¡£ÎŞÂÛfalse»¹ÊÇtrue¶¼ÓĞ±¨ÎÄĞèÒª»Ø¸´£¬Òò´ËĞèÒªreturn
+        return;     //è¿™é‡Œè¿”å›å¤„ç†è·Ÿå‰é¢ä¸ä¸€æ ·ï¼Œè°ƒè¯•æ—¶æ³¨æ„ã€‚æ— è®ºfalseè¿˜æ˜¯trueéƒ½æœ‰æŠ¥æ–‡éœ€è¦å›å¤ï¼Œå› æ­¤éœ€è¦return
     }
     
-    //ÏßËğÎÄ¼şÍ¬²½¼¤»îÈ·ÈÏèå   CL  20180607
+    //çº¿æŸæ–‡ä»¶åŒæ­¥æ¿€æ´»ç¡®è®¤æ¡¢   CL  20180607
     if((Data2Flag&DATA2_XSFT_SYNACT) && (APP_DATA2_DEF&DATA2_XSFT_SYNACT))
     {
         Data2Flag &= (~DATA2_XSFT_SYNACT);
-        ProcEncodeXSFileSynConf();   //ÏßËğÎÄ¼şÍ¬²½¼¤»îÈ·ÈÏÓ¦´ğèå
+        ProcEncodeXSFileSynConf();   //çº¿æŸæ–‡ä»¶åŒæ­¥æ¿€æ´»ç¡®è®¤åº”ç­”æ¡¢
         
-        if(Data1.Flag & APP_DATA1_DEF)   //ÓÅÏÈ½øĞĞÒ»¼¶Êı¾İµÄ·ÃÎÊ
+        if(Data1.Flag & APP_DATA1_DEF)   //ä¼˜å…ˆè¿›è¡Œä¸€çº§æ•°æ®çš„è®¿é—®
             *AppCommand|=APP_HAVEDATA1;
 
         return;     
     }
-   //ÏßËğÎÄ¼şÍ¬²½¼¤»îÈ·ÈÏèå   CL  20180607
+   //çº¿æŸæ–‡ä»¶åŒæ­¥æ¿€æ´»ç¡®è®¤æ¡¢   CL  20180607
    if((Data2Flag&DATA2_XSFT_SYNACTFINISH) && (APP_DATA2_DEF&DATA2_XSFT_SYNACTFINISH))
     {
         Data2Flag &= (~DATA2_XSFT_SYNACTFINISH);
-        ProcEncodeXSFileSynFinish();   //ÏßËğÎÄ¼şÍ¬²½ÖÕÖ¹Ó¦´ğèå
+        ProcEncodeXSFileSynFinish();   //çº¿æŸæ–‡ä»¶åŒæ­¥ç»ˆæ­¢åº”ç­”æ¡¢
         
-        if(Data1.Flag & APP_DATA1_DEF)   //ÓÅÏÈ½øĞĞÒ»¼¶Êı¾İµÄ·ÃÎÊ
+        if(Data1.Flag & APP_DATA1_DEF)   //ä¼˜å…ˆè¿›è¡Œä¸€çº§æ•°æ®çš„è®¿é—®
             *AppCommand|=APP_HAVEDATA1;
 
         return;    
     }
-   //ÏßËğÎÄ¼şÍ¬²½¼¤»îÍ£Ö¹È·ÈÏèå CL 20180612   
+   //çº¿æŸæ–‡ä»¶åŒæ­¥æ¿€æ´»åœæ­¢ç¡®è®¤æ¡¢ CL 20180612   
     
-    //±ä»¯Ò£²â£¬Èç¹ûÊı¾İ±ä»¯Æµ·±»áÓ°ÏìÆäËûÊı¾İ´«Êä£¬ËùÒÔ·ÅÔÚºóÃæ¡£
+    //å˜åŒ–é¥æµ‹ï¼Œå¦‚æœæ•°æ®å˜åŒ–é¢‘ç¹ä¼šå½±å“å…¶ä»–æ•°æ®ä¼ è¾“ï¼Œæ‰€ä»¥æ”¾åœ¨åé¢ã€‚
     if((Data1.Flag&HaveNVA) && (APP_DATA2_DEF&HaveNVA))
     {
         if(EnCodeNVA())
@@ -2408,7 +2408,7 @@ void CSecAppSev::ProcData2(void)
 #endif
 
 #ifdef INCLUDE_DA
-    if(Data2Flag&ProtectData)//±£»¤¶¨ÖµÊı¾İ
+    if(Data2Flag&ProtectData)//ä¿æŠ¤å®šå€¼æ•°æ®
     {
         Data2Flag&=(~ProtectData);
         SendProtectData();
@@ -2419,7 +2419,7 @@ void CSecAppSev::ProcData2(void)
     }
 #endif
 
-    if((Data2Flag&BackData)||(Data2Flag&PerCycData))//¸Ã±êÖ¾ÔÚ¶¨Ê±Æ÷ÖĞÉèÖÃ£¬·¢ËÍÍêÊı¾İºóÇåµô
+    if((Data2Flag&BackData)||(Data2Flag&PerCycData))//è¯¥æ ‡å¿—åœ¨å®šæ—¶å™¨ä¸­è®¾ç½®ï¼Œå‘é€å®Œæ•°æ®åæ¸…æ‰
     {
         if(ProcAllData())
         {
@@ -2430,9 +2430,9 @@ void CSecAppSev::ProcData2(void)
         }
     }
 
-    if(Data2Flag&UpLoadFile)//ÎÄ¼ş²Ù×÷£¬°´ÕÕ±ê×¼ÒªÇóÓ¦±ÈÖÜÆÚÊı¾İ¼¶±ğ»¹µÍ¡£
+    if(Data2Flag&UpLoadFile)//æ–‡ä»¶æ“ä½œï¼ŒæŒ‰ç…§æ ‡å‡†è¦æ±‚åº”æ¯”å‘¨æœŸæ•°æ®çº§åˆ«è¿˜ä½ã€‚
     {
-        //´¦Àíº¯Êı
+        //å¤„ç†å‡½æ•°
         switch(FileStep)
         {
             case PCallDir:
@@ -2466,12 +2466,12 @@ void CSecAppSev::ProcData2(void)
         return;
     }
 
-    //ÕÙ»½¶ş¼¶Êı¾İÊ±£¬ÎŞ¶ş¼¶Êı¾İ¿ÉÄÜÒÔÒ»¼¶Êı¾İÓ¦´ğ¡£¶¼Ã»ÓĞÒÔÎŞÊı¾İÓ¦´ğ¡£
+    //å¬å”¤äºŒçº§æ•°æ®æ—¶ï¼Œæ— äºŒçº§æ•°æ®å¯èƒ½ä»¥ä¸€çº§æ•°æ®åº”ç­”ã€‚éƒ½æ²¡æœ‰ä»¥æ— æ•°æ®åº”ç­”ã€‚
     ProcData1();
 }
 
 //OK
-void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢ÏûÏ¢¡£
+void CSecAppSev::ProcControl(void)  //å¤„ç†é¥æ§ï¼Œé¥æ§ä¸å…è®¸æˆ–å…¬å…±ä½“åœ°å€é”™ï¼Œä¸å‘æ¶ˆæ¯ã€‚
 {
     INT8U sco,dco,OnOff;
     INT16U InfoAddr,SwitchNo;
@@ -2482,13 +2482,13 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
     SwitchNoTemp = SwitchNo;
     YKTypeID=RxTypeID;
     
-    //LogYkInfoRec(DevList[ActDevIndex].DevID, RxTypeID, *pRxData, RxInfoAddr, RxCot);  //¼ÇÂ¼Ö÷Õ¾·¢ËÍµÄËùÓĞÒ£¿ØĞÅÏ¢
+    //LogYkInfoRec(DevList[ActDevIndex].DevID, RxTypeID, *pRxData, RxInfoAddr, RxCot);  //è®°å½•ä¸»ç«™å‘é€çš„æ‰€æœ‰é¥æ§ä¿¡æ¯
     
     
-    if (GetActDevIndexByAddr(RxPubAddr))//¸ù¾İ¹«¹²ÌåµØÖ·²éÉè±¸ĞòºÅ¡£
+    if (GetActDevIndexByAddr(RxPubAddr))//æ ¹æ®å…¬å…±ä½“åœ°å€æŸ¥è®¾å¤‡åºå·ã€‚
     {
         BODevIndex=ActDevIndex;
-        if((SwitchNoTemp-1)*2==DevList[ActDevIndex].DevData.BONum)                     //Ğîµç³ØÎ¬»¤
+        if((SwitchNoTemp-1)*2==DevList[ActDevIndex].DevData.BONum)                     //è“„ç”µæ± ç»´æŠ¤
         
     
         /*if(MyConfig.type ==DEVTYPE_DF9311A1)
@@ -2505,14 +2505,14 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
             *AppCommand|=APP_HAVEDATA1;
             DcoTemp=*pRxData;
             ScoTemp=*pRxData;
-            if(((*pRxData)&DCO_SE)==0)  //Ö´ĞĞ
+            if(((*pRxData)&DCO_SE)==0)  //æ‰§è¡Œ
             {
-                if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                     startCellMaint();
             }
             return;
         }
-        else if((SwitchNoTemp-1)*2==DevList[ActDevIndex].DevData.BONum+2)    //¸´¹é¼¶ÁªÉè±¸
+        else if((SwitchNoTemp-1)*2==DevList[ActDevIndex].DevData.BONum+2)    //å¤å½’çº§è”è®¾å¤‡
         {
             YKStatus=YKSETCON;
             Data1.Flag|=HaveYK;
@@ -2521,12 +2521,12 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
             *AppCommand|=APP_HAVEDATA1;
             DcoTemp=*pRxData;
             ScoTemp=*pRxData;
-            if(((*pRxData)&DCO_SE)==0)  //Ö´ĞĞ
+            if(((*pRxData)&DCO_SE)==0)  //æ‰§è¡Œ
             {
-                if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                 { 
                     ResetFaultInfoForCall_FaultCheck();
-                    logSysMsgNoTime("¸´¹é¼¶ÁªÉè±¸",0,0,0,0);
+                    logSysMsgNoTime("å¤å½’çº§è”è®¾å¤‡",0,0,0,0);
                 }
             }
               return;
@@ -2534,15 +2534,15 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
     }
     switch (RxTypeID)
     {
-        case C_SC_NA:    //µ¥µãÒ£¿ØÃüÁî
+        case C_SC_NA:    //å•ç‚¹é¥æ§å‘½ä»¤
             ScoTemp = sco = *pRxData;
 
-            if ((sco & SCO_SCS) == 0)       //·Ö
+            if ((sco & SCO_SCS) == 0)       //åˆ†
                 OnOff = 2;
-            else if ((sco & SCO_SCS) == 1)  //ºÏ
+            else if ((sco & SCO_SCS) == 1)  //åˆ
                 OnOff = 1;
 
-            if(Sec101Pad.ControlPermit == 0)//²ÎÊıÉèÖÃÎª²»ÔÊĞíÒ£¿Ø
+            if(Sec101Pad.ControlPermit == 0)//å‚æ•°è®¾ç½®ä¸ºä¸å…è®¸é¥æ§
             {
                 HaveWrongData=TRUE;
                 WrongDataLength=LengthIn;
@@ -2555,7 +2555,7 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
                 *AppCommand|=APP_HAVEDATA1;
                 return;
             }
-            if (GetActDevIndexByAddr(RxPubAddr))//¸ù¾İ¹«¹²ÌåµØÖ·²éÉè±¸ĞòºÅ¡£
+            if (GetActDevIndexByAddr(RxPubAddr))//æ ¹æ®å…¬å…±ä½“åœ°å€æŸ¥è®¾å¤‡åºå·ã€‚
             {
                 BODevIndex=ActDevIndex;
             }
@@ -2585,35 +2585,35 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
                 *AppCommand|=APP_HAVEDATA1;
                 return;
             }
-            if ((RxCot&COT_REASON)==ACT)//6£¬¼¤»î
+            if ((RxCot&COT_REASON)==ACT)//6ï¼Œæ¿€æ´»
             {
-                if ((sco & SCO_SE) == SCO_SE)   //1£¬select
+                if ((sco & SCO_SE) == SCO_SE)   //1ï¼Œselect
                 {
                     
                     YKStatus=YKSETCON;
-                    if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                    if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                         SetYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
                 }
-                else//0£¬Ö´ĞĞ
+                else//0ï¼Œæ‰§è¡Œ
                 {
-                    if(YkStatusForTest ==0) //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24
+                    if(YkStatusForTest ==0) //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24
                     {
                         return;
                     }
-                    YkStatusForTest =  0;    //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24   
+                    YkStatusForTest =  0;    //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24   
                     
                     YKStatus=YKEXECON;
-                    if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                    if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                         ExecuteYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
                     
                 }
             }
-            else//³·Ïû
+            else//æ’¤æ¶ˆ
             {
                 if ((RxCot&COT_REASON)==DEACT)
                 {
                 	YKStatus=YKCANCELCON;
-                	if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                	if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                         CancelYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
                 }
                 else
@@ -2632,14 +2632,14 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
             }
 
             break;
-        case C_DC_NA:   //Ë«µãÒ£¿ØÃüÁî
-        case C_RC_NA:    //²½µ÷½Ú
+        case C_DC_NA:   //åŒç‚¹é¥æ§å‘½ä»¤
+        case C_RC_NA:    //æ­¥è°ƒèŠ‚
             dco = *pRxData;
             DcoTemp = dco;
 
-            if ((dco&DCO_DCS)==1)        //·Ö
+            if ((dco&DCO_DCS)==1)        //åˆ†
                 OnOff = 2;
-            else if ((dco&DCO_DCS)==2)  //ºÏ
+            else if ((dco&DCO_DCS)==2)  //åˆ
                 OnOff = 1;
             else
             {
@@ -2668,7 +2668,7 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
                 *AppCommand|=APP_HAVEDATA1;
                 return;
             }
-            if (GetActDevIndexByAddr(RxPubAddr))//¸ù¾İ¹«¹²ÌåµØÖ·²éÉè±¸ĞòºÅ¡£
+            if (GetActDevIndexByAddr(RxPubAddr))//æ ¹æ®å…¬å…±ä½“åœ°å€æŸ¥è®¾å¤‡åºå·ã€‚
             {
                 BODevIndex=ActDevIndex;
             }
@@ -2698,23 +2698,23 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
                 *AppCommand|=APP_HAVEDATA1;
                 return;
             }
-            if ((RxCot&COT_REASON)==ACT)//6£¬¼¤»î
+            if ((RxCot&COT_REASON)==ACT)//6ï¼Œæ¿€æ´»
             {
-                if ((dco&DCO_SE) == DCO_SE)   //1£¬select
+                if ((dco&DCO_SE) == DCO_SE)   //1ï¼Œselect
                 {
                     
                     YKStatus=YKSETCON;
-                    if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                    if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                         SetYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
-                    if((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2))//±±¾©¹ÊÕÏ¸´¹é£¬×îºóÒ»¸öÒ£¿ØµÄºÏ
+                    if((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2))//åŒ—äº¬æ•…éšœå¤å½’ï¼Œæœ€åä¸€ä¸ªé¥æ§çš„åˆ
                     {
                         YKSetAlready = TRUE;
                     }
                 }
-                else//0£¬Ö´ĞĞ
+                else//0ï¼Œæ‰§è¡Œ
                 {
                     
-                    if(YkStatusForTest ==0)    //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24 
+                    if(YkStatusForTest ==0)    //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24 
                     {
                         
                         HaveWrongData=TRUE;
@@ -2728,10 +2728,10 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
                         *AppCommand|=APP_HAVEDATA1;
                         return;
                     }
-                    YkStatusForTest =  0;    //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24 
+                    YkStatusForTest =  0;    //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24 
                     
                     YKStatus=YKEXECON;
-                    if((YKSetAlready == FALSE)&&((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2)))//±±¾©¹ÊÕÏ¸´¹é£¬×îºóÒ»¸öÒ£¿ØµÄºÏ
+                    if((YKSetAlready == FALSE)&&((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2)))//åŒ—äº¬æ•…éšœå¤å½’ï¼Œæœ€åä¸€ä¸ªé¥æ§çš„åˆ
                     {
                         RFaultFlag=0xff;
                         SetYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
@@ -2740,17 +2740,17 @@ void CSecAppSev::ProcControl(void)  //´¦ÀíÒ£¿Ø£¬Ò£¿Ø²»ÔÊĞí»ò¹«¹²ÌåµØÖ·´í£¬²»·¢Ïû
                     {
                         if(YKSetAlready == TRUE)
                             YKSetAlready = FALSE;
-                        if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                        if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                             ExecuteYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
                     }
                 }
             }
-            else//³·Ïû
+            else//æ’¤æ¶ˆ
             {
                 if ((RxCot&COT_REASON)==DEACT)
                 {
                     YKStatus=YKCANCELCON;
-                    if((RxCot&COT_TEST)==0)//Õı³£ÃüÁî£¬£¨²âÊÔÎ»Îª1Ôò²»ÄÜÊµ¼Ê²Ù×÷Ò£¿Ø£©
+                    if((RxCot&COT_TEST)==0)//æ­£å¸¸å‘½ä»¤ï¼Œï¼ˆæµ‹è¯•ä½ä¸º1åˆ™ä¸èƒ½å®é™…æ“ä½œé¥æ§ï¼‰
                         CancelYK(wAppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
                 }
                 else
@@ -2819,33 +2819,33 @@ void CSecAppSev::ProcAllDataCall(void)
     Data1.Flag|=CallAllData;
     EditAllDataCon=0xff;
 
-    Data2Flag&=(~BackData);//Data2Flag=0;//Çåµô¶ş¼¶Êı¾İ±êÖ¾
+    Data2Flag&=(~BackData);//Data2Flag=0;//æ¸…æ‰äºŒçº§æ•°æ®æ ‡å¿—
 
     GroupTrn.TypeID=C_IC_NA;
-    GroupTrn.COT=RxMsg[AsduHeadLength];//×ÜÕÙ»½ÏŞ¶¨´Ê ´«ËÍÔ­Òò,
+    GroupTrn.COT=RxMsg[AsduHeadLength];//æ€»å¬å”¤é™å®šè¯ ä¼ é€åŸå› ,
     GroupTrn.PubAddr=RxPubAddr;
     GroupTrn.HaveSendDBI = FALSE;
 
-    if (GroupTrn.PubAddr==BroadCastAddr)//¹ã²¥£¬ÕÙ»½ËùÓĞÉè±¸Êı¾İ
+    if (GroupTrn.PubAddr==BroadCastAddr)//å¹¿æ’­ï¼Œå¬å”¤æ‰€æœ‰è®¾å¤‡æ•°æ®
     {
-        GroupTrn.DevIndex=0;//×ÜÕÙ»½Êı¾İ´ÓÉè±¸ĞòºÅ0¿ªÊ¼
+        GroupTrn.DevIndex=0;//æ€»å¬å”¤æ•°æ®ä»è®¾å¤‡åºå·0å¼€å§‹
     }
-    else//ÕÙ»½Ä³Ò»Éè±¸Êı¾İ
+    else//å¬å”¤æŸä¸€è®¾å¤‡æ•°æ®
     {
-        if (GetActDevIndexByAddr(GroupTrn.PubAddr))//¸ù¾İ¹«¹²ÌåµØÖ·²éÉè±¸ĞòºÅ¡£
+        if (GetActDevIndexByAddr(GroupTrn.PubAddr))//æ ¹æ®å…¬å…±ä½“åœ°å€æŸ¥è®¾å¤‡åºå·ã€‚
         {
             GroupTrn.DevIndex=ActDevIndex;
         }
-        else//Ã»ÓĞ¶ÔÓ¦¸Ã¹«¹²ÌåµØÖ·µÄÉè±¸
+        else//æ²¡æœ‰å¯¹åº”è¯¥å…¬å…±ä½“åœ°å€çš„è®¾å¤‡
         {
             
-            GroupTrn.DevIndex=0;//×ÜÕÙ»½Êı¾İ´ÓÉè±¸ĞòºÅ0¿ªÊ¼
+            GroupTrn.DevIndex=0;//æ€»å¬å”¤æ•°æ®ä»è®¾å¤‡åºå·0å¼€å§‹
         }
     }
     
-    if(GroupTrn.COT == INTRO16)    //×é16 µ¥¶À´¦Àí ¹ãÎ÷ĞŞ¸Ä
+    if(GroupTrn.COT == INTRO16)    //ç»„16 å•ç‹¬å¤„ç† å¹¿è¥¿ä¿®æ”¹
     {
-        logSysMsgWithTime("101ÊÕµ½×é16ÃüÁî",0,0,0,0);
+        logSysMsgWithTime("101æ”¶åˆ°ç»„16å‘½ä»¤",0,0,0,0);
         GroupTrn.TypeID = C_IC_NA;
         GroupTrn.COT    =INTRO16;
         GroupTrn.PubAddr=RxPubAddr;
@@ -2857,15 +2857,15 @@ void CSecAppSev::ProcAllDataCall(void)
     }
     else if(GroupTrn.COT==INTROGEN)
     {
-        GroupTrn.GroupNo=1;//×éºÅ´Ó1¿ªÊ¼
-        GroupTrn.InfoAddr=LBIinfoaddr;//ĞÅÏ¢ÌåµØÖ·´Ó0x1¿ªÊ¼  
+        GroupTrn.GroupNo=1;//ç»„å·ä»1å¼€å§‹
+        GroupTrn.InfoAddr=LBIinfoaddr;//ä¿¡æ¯ä½“åœ°å€ä»0x1å¼€å§‹  
     }
     else
     {
         GroupTrn.GroupNo=RxMsg[AsduHeadLength]-INTROGEN;
-        GroupTrn.InfoAddr=LBIinfoaddr;//ĞÅÏ¢ÌåµØÖ·´Ó0x1¿ªÊ¼£¬¸ÃÊıÖµÓĞĞ£Õı¡£ 
+        GroupTrn.InfoAddr=LBIinfoaddr;//ä¿¡æ¯ä½“åœ°å€ä»0x1å¼€å§‹ï¼Œè¯¥æ•°å€¼æœ‰æ ¡æ­£ã€‚ 
     }
-    //logSysMsgNoTime("×ÜÕĞno=%d",GroupTrn.GroupNo,0,0,0);   //  debug ll
+    //logSysMsgNoTime("æ€»æ‹›no=%d",GroupTrn.GroupNo,0,0,0);   //  debug ll
     *LengthOut=0;
     *AppCommand=APP_APPCON;
     *AppCommand|=APP_HAVEDATA1;
@@ -2878,63 +2878,63 @@ void CSecAppSev::ProcDDCall(void)
     GroupTrnDD.PubAddr=RxPubAddr;
     GroupTrnDD.Description=RxMsg[AsduHeadLength];
     
-    if((RxMsg[AsduHeadLength]&0x3f)==5)//µç¶È×ÜÕÙ»½
+    if((RxMsg[AsduHeadLength]&0x3f)==5)//ç”µåº¦æ€»å¬å”¤
     {
         GroupTrnDD.COT=REQCOGCN;
     }
-    else//·Ö×éÕÙ»½
+    else//åˆ†ç»„å¬å”¤
     {
         GroupTrnDD.COT=REQCOGCN+((RxMsg[AsduHeadLength])&0x3f);
     }
 
-    if(RxMsg[AsduHeadLength]&0xc0)//¶³½áµç¶È
+    if(RxMsg[AsduHeadLength]&0xc0)//å†»ç»“ç”µåº¦
     {
         Data1.Flag|=FreezeDD;
         EditDDCon=0xff;
         FreezeCounter();
         DDFreeze=TRUE;
     }
-    else//¶Áµç¶È
+    else//è¯»ç”µåº¦
     {
         Data1.Flag|=CallDD;
         EditDDCon=0xff;
     }
 
-    if (GroupTrnDD.PubAddr==BroadCastAddr)//¹ã²¥£¬ÕÙ»½ËùÓĞÉè±¸Êı¾İ
+    if (GroupTrnDD.PubAddr==BroadCastAddr)//å¹¿æ’­ï¼Œå¬å”¤æ‰€æœ‰è®¾å¤‡æ•°æ®
     {
-        GroupTrnDD.DevIndex=0;//×ÜÕÙ»½Êı¾İ´ÓÉè±¸ĞòºÅ0¿ªÊ¼
+        GroupTrnDD.DevIndex=0;//æ€»å¬å”¤æ•°æ®ä»è®¾å¤‡åºå·0å¼€å§‹
     }
-    else//ÕÙ»½Ä³Ò»Éè±¸Êı¾İ
+    else//å¬å”¤æŸä¸€è®¾å¤‡æ•°æ®
     {
-        if (GetActDevIndexByAddr(GroupTrnDD.PubAddr))//¸ù¾İ¹«¹²ÌåµØÖ·²éÉè±¸ĞòºÅ¡£
+        if (GetActDevIndexByAddr(GroupTrnDD.PubAddr))//æ ¹æ®å…¬å…±ä½“åœ°å€æŸ¥è®¾å¤‡åºå·ã€‚
         {
             GroupTrnDD.DevIndex=ActDevIndex;
         }
-        else//Ã»ÓĞ¶ÔÓ¦¸Ã¹«¹²ÌåµØÖ·µÄÉè±¸
+        else//æ²¡æœ‰å¯¹åº”è¯¥å…¬å…±ä½“åœ°å€çš„è®¾å¤‡
         {
-            GroupTrnDD.DevIndex=0;//×ÜÕÙ»½Êı¾İ´ÓÉè±¸ĞòºÅ0¿ªÊ¼
+            GroupTrnDD.DevIndex=0;//æ€»å¬å”¤æ•°æ®ä»è®¾å¤‡åºå·0å¼€å§‹
         }
     }
 
-    if(GroupTrnDD.COT==REQCOGCN)//µç¶È×ÜÕÙ»½
+    if(GroupTrnDD.COT==REQCOGCN)//ç”µåº¦æ€»å¬å”¤
     {
-        GroupTrnDD.GroupNo=1;//×éºÅ´Ó1¿ªÊ¼
-        GroupTrnDD.InfoAddr=LBCR;//ĞÅÏ¢ÌåµØÖ·´Ó¿ªÊ¼
+        GroupTrnDD.GroupNo=1;//ç»„å·ä»1å¼€å§‹
+        GroupTrnDD.InfoAddr=LBCR;//ä¿¡æ¯ä½“åœ°å€ä»å¼€å§‹
     }
     else
     {
         GroupTrnDD.GroupNo=GroupTrnDD.COT-REQCOGCN;
-        GroupTrnDD.InfoAddr=LBCR;//ĞÅÏ¢ÌåµØÖ·´Ó¿ªÊ¼£¬¸ÃÊıÖµÓĞĞ£Õı¡£
+        GroupTrnDD.InfoAddr=LBCR;//ä¿¡æ¯ä½“åœ°å€ä»å¼€å§‹ï¼Œè¯¥æ•°å€¼æœ‰æ ¡æ­£ã€‚
     }
     *LengthOut=0;
     *AppCommand=APP_APPCON;
     *AppCommand|=APP_HAVEDATA1;
-    //logSysMsgNoTime("DDCall ×é=%d, DDCon=%x,flag=%x",GroupTrnDD.GroupNo,EditDDCon,Data1.Flag,0);   //  debug ll
+    //logSysMsgNoTime("DDCall ç»„=%d, DDCon=%x,flag=%x",GroupTrnDD.GroupNo,EditDDCon,Data1.Flag,0);   //  debug ll
 }
 //OK
 void CSecAppSev::ProcTimeDelay(void)
 {
-    if ((RxCot&COT_REASON)==ACT)//6£¬¼¤»î
+    if ((RxCot&COT_REASON)==ACT)//6ï¼Œæ¿€æ´»
     {
         if (GetSysTime((void*)(&SecSysTimeR),ABSTIME))
         {
@@ -2944,12 +2944,12 @@ void CSecAppSev::ProcTimeDelay(void)
             ReadTimeFlag=0;
         SDTTime=MAKEWORD(pRxData[0],pRxData[1]);
 
-        Data1.Flag|=CallTimeDelay;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+        Data1.Flag|=CallTimeDelay;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
         *LengthOut=0;
         *AppCommand=APP_APPCON;
         *AppCommand|=APP_HAVEDATA1;
     }
-    else if ((RxCot&COT_REASON)==SPONT)//3£¬ÉèÖÃÑÓ³ÙÊ±¼ä
+    else if ((RxCot&COT_REASON)==SPONT)//3ï¼Œè®¾ç½®å»¶è¿Ÿæ—¶é—´
     {
         TimeDelay=MAKEWORD(pRxData[0],pRxData[1]);
         *LengthOut=0;
@@ -2958,7 +2958,7 @@ void CSecAppSev::ProcTimeDelay(void)
 }
 void CSecAppSev::ProcSummonLightStatus()
 {
-	Data1.Flag|=CallLightStatus;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+	Data1.Flag|=CallLightStatus;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
     *LengthOut=0;
     *AppCommand=APP_APPCON;
     if(APP_DATA1_DEF & CallLightStatus)   //ll
@@ -2966,24 +2966,24 @@ void CSecAppSev::ProcSummonLightStatus()
 }
 void CSecAppSev::ProcSummonInfoOnBoot()
 {
-	Data1.Flag|=SummonInfoOnBoot;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+	Data1.Flag|=SummonInfoOnBoot;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
     *LengthOut=0;
     *AppCommand=APP_APPCON;
     if(APP_DATA1_DEF & SummonInfoOnBoot)   //ll
         *AppCommand|=APP_HAVEDATA1;
 }
 //OK
-void CSecAppSev::ProcClock(BOOL Conf) //´¦Àí¶ÔÖÓ
+void CSecAppSev::ProcClock(BOOL Conf) //å¤„ç†å¯¹é’Ÿ
 {
     struct Iec101ClockTime_t Time;
     struct AbsTime_t AbsTime;
     TimeRightFlag = FALSE;
-    GetSysTime((void*)(&OldSysTime),ABSTIME);//¼ÇÂ¼¶ÔÖÓÇ°µÄÏµÍ³Ê±¼ä
+    GetSysTime((void*)(&OldSysTime),ABSTIME);//è®°å½•å¯¹é’Ÿå‰çš„ç³»ç»Ÿæ—¶é—´
     
-    if((pRxData[6]==0) && (pRxData[5]==0) && (pRxData[4]==0))  //ÅĞ¶ÏÄêÔÂÈÕÎª0
+    if((pRxData[6]==0) && (pRxData[5]==0) && (pRxData[4]==0))  //åˆ¤æ–­å¹´æœˆæ—¥ä¸º0
     {
-        //¶ÁÊ±ÖÓ
-        Data1.Flag|=CallClock;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+        //è¯»æ—¶é’Ÿ
+        Data1.Flag|=CallClock;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
         *LengthOut=0;
         *AppCommand=APP_APPCON;
         if(APP_DATA1_DEF & CallClock)   
@@ -3004,7 +3004,7 @@ void CSecAppSev::ProcClock(BOOL Conf) //´¦Àí¶ÔÖÓ
         TimeRightFlag = IEC101TimeIsOK(&Time);
         if(TimeRightFlag)
         {
-            if (RxPubAddr!=0xFF) //·Ç¹ã²¥¶ÔÖÓ£¬Òª¼ÓÑÓ³ÙÊ±¼ä
+            if (RxPubAddr!=0xFF) //éå¹¿æ’­å¯¹é’Ÿï¼Œè¦åŠ å»¶è¿Ÿæ—¶é—´
             {
                 if(Sec101Pad.UseStandClock == 1)
                     ConvToAbsTime((void*)&Time,&AbsTime,IEC101CLOCKTIME);
@@ -3018,7 +3018,7 @@ void CSecAppSev::ProcClock(BOOL Conf) //´¦Àí¶ÔÖÓ
                     AbsTime.MSecond=(long)AbsTime.MSecond+TimeDelay-60000;
                     AbsTime.Minute++;
                 }
-                //SetSysTime(&AbsTime,ABSTIME);//Õâ¸öº¯Êı²»ºÃÓÃ¡£
+                //SetSysTime(&AbsTime,ABSTIME);//è¿™ä¸ªå‡½æ•°ä¸å¥½ç”¨ã€‚
                 if(Sec101Pad.UseStandClock == 1)
                 {
                     AbsTimeConvTo(&AbsTime,(void*)&Time,IEC101CLOCKTIME);
@@ -3030,7 +3030,7 @@ void CSecAppSev::ProcClock(BOOL Conf) //´¦Àí¶ÔÖÓ
                     SetSysTime(&Time,IEC101EXTCLOCKTIME);
                 }
             }
-            else//¹ã²¥¶ÔÖÓ
+            else//å¹¿æ’­å¯¹é’Ÿ
             {
                 if(Sec101Pad.UseStandClock == 1)
                     SetSysTime(&Time,IEC101CLOCKTIME);
@@ -3039,9 +3039,9 @@ void CSecAppSev::ProcClock(BOOL Conf) //´¦Àí¶ÔÖÓ
             }
         }
     }
-    if (Conf)                   //ĞèÒªÈ·ÈÏ
+    if (Conf)                   //éœ€è¦ç¡®è®¤
     {
-        Data1.Flag|=CallClock;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+        Data1.Flag|=CallClock;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
         *LengthOut=0;
         *AppCommand=APP_APPCON;
         if(APP_DATA1_DEF & CallClock)   //ll
@@ -3053,16 +3053,16 @@ void CSecAppSev::ProcClock(BOOL Conf) //´¦Àí¶ÔÖÓ
         *AppCommand=APP_NOJOB;
     }
 }
-void CSecAppSev::ProcLCSetPara(BOOL Conf) //´¦ÀíÒº¾§Éè¶¨²ÎÊı±¨ÎÄ
+void CSecAppSev::ProcLCSetPara(BOOL Conf) //å¤„ç†æ¶²æ™¶è®¾å®šå‚æ•°æŠ¥æ–‡
 {
 	INT16U Addr,ParaLength;
     int i;
     INT8U *pData,Bound;
 	INT8U *pParaBuf;
-    Bound=RxVsq&VSQ_NUM;//ĞÅÏ¢ÔªËØÊıÄ¿
-    Addr=RxInfoAddr; //ÆğÊ¼ĞÅÏ¢ÌåµØÖ·
+    Bound=RxVsq&VSQ_NUM;//ä¿¡æ¯å…ƒç´ æ•°ç›®
+    Addr=RxInfoAddr; //èµ·å§‹ä¿¡æ¯ä½“åœ°å€
     pData=pRxData;
-    paramirrorbuf[0] = *(pRxData-2);                       //paramirrorbuf±£´æ´«¹ıÀ´µÄ²ÎÊı£¬½«À´×÷Îª¾µÏñ´«ËÍ»ØÈ¥¡£
+    paramirrorbuf[0] = *(pRxData-2);                       //paramirrorbufä¿å­˜ä¼ è¿‡æ¥çš„å‚æ•°ï¼Œå°†æ¥ä½œä¸ºé•œåƒä¼ é€å›å»ã€‚
     paramirrorbuf[1] = *(pRxData-1);
     pParaBuf = &paramirrorbuf[2];
     totallength_m = 0;
@@ -3071,7 +3071,7 @@ void CSecAppSev::ProcLCSetPara(BOOL Conf) //´¦ÀíÒº¾§Éè¶¨²ÎÊı±¨ÎÄ
     {
         ParaLength=pData[0];
         totallength_m += ParaLength + 2;
-        memcpy((void*)pParaBuf,pData,ParaLength + 2); //¼Ó2ÊÇÒòÎª°üº¬ÁË³¤¶ÈºÍQoiÁ½×Ö½Ú
+        memcpy((void*)pParaBuf,pData,ParaLength + 2); //åŠ 2æ˜¯å› ä¸ºåŒ…å«äº†é•¿åº¦å’ŒQoiä¸¤å­—èŠ‚
         Qoi = pData[ParaLength + 1];
         WriteParaFile(Addr,ParaLength,Qoi,&pData[1]);
         pData+=ParaLength+2;
@@ -3082,14 +3082,14 @@ void CSecAppSev::ProcLCSetPara(BOOL Conf) //´¦ÀíÒº¾§Éè¶¨²ÎÊı±¨ÎÄ
         {
         	pParaBuf[2] = pData[2];
         }
-        Addr=MAKEWORD(pData[0],pData[1]);//ÏÂÒ»¸öĞÅÏ¢ÔªËØµÄĞÅÏ¢ÌåµØÖ·£¬ĞÅÏ¢ÌåµØÖ·ÓĞĞ§Î»Ö»ÓĞ2¸ö×Ö½Ú
-        pData+=InfoAddrSize;//Ö¸Ïò´ı´¦ÀíµÄĞÅÏ¢ÔªËØÊı¾İ£¬Èç¹ûĞÅÏ¢ÌåµØÖ·Îª3×Ö½Ú£¬Ô½¹ı¸ß×Ö½Ú¡£  
+        Addr=MAKEWORD(pData[0],pData[1]);//ä¸‹ä¸€ä¸ªä¿¡æ¯å…ƒç´ çš„ä¿¡æ¯ä½“åœ°å€ï¼Œä¿¡æ¯ä½“åœ°å€æœ‰æ•ˆä½åªæœ‰2ä¸ªå­—èŠ‚
+        pData+=InfoAddrSize;//æŒ‡å‘å¾…å¤„ç†çš„ä¿¡æ¯å…ƒç´ æ•°æ®ï¼Œå¦‚æœä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚ï¼Œè¶Šè¿‡é«˜å­—èŠ‚ã€‚  
         pParaBuf += InfoAddrSize;  
         totallength_m += InfoAddrSize;
     }
-    if (Conf)                   //ĞèÒªÈ·ÈÏ
+    if (Conf)                   //éœ€è¦ç¡®è®¤
     {
-        Data1.Flag|=LCSetPara;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+        Data1.Flag|=LCSetPara;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
         *LengthOut=0;
         *AppCommand=APP_APPCON;
         if(APP_DATA1_DEF & LCSetPara)   //ll
@@ -3101,11 +3101,11 @@ void CSecAppSev::ProcLCSetPara(BOOL Conf) //´¦ÀíÒº¾§Éè¶¨²ÎÊı±¨ÎÄ
         *AppCommand=APP_NOJOB;
     }
 }
-void CSecAppSev::ProcActivatePara(BOOL Conf) //´¦ÀíÒº¾§Éè¶¨²ÎÊı±¨ÎÄ
+void CSecAppSev::ProcActivatePara(BOOL Conf) //å¤„ç†æ¶²æ™¶è®¾å®šå‚æ•°æŠ¥æ–‡
 {    
-    if (Conf)                   //ĞèÒªÈ·ÈÏ
+    if (Conf)                   //éœ€è¦ç¡®è®¤
     {
-        Data1.Flag|=LCActivatePara;//ÎªÁËÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+        Data1.Flag|=LCActivatePara;//ä¸ºäº†è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
         *LengthOut=0;
         *AppCommand=APP_APPCON;
         if(APP_DATA1_DEF & LCActivatePara)   //ll
@@ -3201,7 +3201,7 @@ void CSecAppSev::ProcTest(void)
     //*AppCommand=APP_APPCON;
     if(APP_DATA1_DEF & CallTest)
         *AppCommand|=APP_HAVEDATA1;
-    //logSysMsgNoTime("proctest£¬ÃüÁî=%d",*AppCommand,0,0,0);   //  debug ll    
+    //logSysMsgNoTime("proctestï¼Œå‘½ä»¤=%d",*AppCommand,0,0,0);   //  debug ll    
 }
 
 //OK
@@ -3216,9 +3216,9 @@ void CSecAppSev::ProcReadData(void)
 }
 
 //OK
-//²ÎÊıÉè¶¨ËµÃ÷£ºĞÅÏ¢ÌåµØÖ·´Ó0X5001¿ªÊ¼£¬Ã¿¸öÒ£²âÕ¼ÓÃ3¸öĞÅÏ¢ÌåµØÖ·
-//Ã¿¸öÒ£²â²ÎÊıµÄË³ĞòÊÇ£ºÃÅÏŞÖµ¡¢ÉÏÏŞ¡¢ÏÂÏŞ¡£
-//²ÎÊıÉè¶¨Ê±£¬ĞÅÏ¢ÌåµØÖ·/3ÎªÒ£²âĞòºÅ£¬ÏŞ¶¨´ÊÈ·¶¨ÃÅÏŞ¡¢ÉÏÏŞ¡¢ÏÂÏŞ¡£
+//å‚æ•°è®¾å®šè¯´æ˜ï¼šä¿¡æ¯ä½“åœ°å€ä»0X5001å¼€å§‹ï¼Œæ¯ä¸ªé¥æµ‹å ç”¨3ä¸ªä¿¡æ¯ä½“åœ°å€
+//æ¯ä¸ªé¥æµ‹å‚æ•°çš„é¡ºåºæ˜¯ï¼šé—¨é™å€¼ã€ä¸Šé™ã€ä¸‹é™ã€‚
+//å‚æ•°è®¾å®šæ—¶ï¼Œä¿¡æ¯ä½“åœ°å€/3ä¸ºé¥æµ‹åºå·ï¼Œé™å®šè¯ç¡®å®šé—¨é™ã€ä¸Šé™ã€ä¸‹é™ã€‚
 void CSecAppSev::ProcParaSet(void)
 {
     INT16U No;
@@ -3247,7 +3247,7 @@ void CSecAppSev::ProcParaSet(void)
     ParaTypeID=RxTypeID;
 
     //No=(ParaPubAddr-LPARA)/3;
-    No=(ParaInfoAddr-LPARA)/3;        //wjr  2009.4.5  ´Ë´¦Ó¦¸ÃÈ¡ĞÅÏ¢ÌåµØÖ·¶ø²»ÊÇ¹«¹²ÌåµØÖ·
+    No=(ParaInfoAddr-LPARA)/3;        //wjr  2009.4.5  æ­¤å¤„åº”è¯¥å–ä¿¡æ¯ä½“åœ°å€è€Œä¸æ˜¯å…¬å…±ä½“åœ°å€
     if(No>=DevList[ActDevIndex].DevData.AINum)
     {
         *LengthOut=0;
@@ -3257,41 +3257,41 @@ void CSecAppSev::ProcParaSet(void)
 
     switch(RxTypeID)
     {
-        case P_ME_NA:    //¹éÒ»»¯
+        case P_ME_NA:    //å½’ä¸€åŒ–
             ParaWord=MAKEWORD(pRxData[0],pRxData[1]);
             ParaQPM=RxMsg[AsduHeadLength+2];
             temp=(long)ParaWord*(long)DevList[ActDevIndex].DevData.AIMaxVal[No]/0x3FFF;
             switch(ParaQPM&0x3F)
             {
-                case 1://ÃÅÏŞ
+                case 1://é—¨é™
                     
                     DevList[ActDevIndex].DevData.AIPara[No].DeadValue=(short)temp;
                     break;
-                case 3://ÏÂÏŞ
+                case 3://ä¸‹é™
                     DevList[ActDevIndex].DevData.AIPara[No].LowLimit=(short)temp;
                     break;
-                case 4://ÉÏÏŞ
+                case 4://ä¸Šé™
                     DevList[ActDevIndex].DevData.AIPara[No].UpLimit=(short)temp;
                     break;
             }
             break;
-        case P_ME_NB:    //±ê¶È»¯
+        case P_ME_NB:    //æ ‡åº¦åŒ–
             ParaWord=MAKEWORD(pRxData[0],pRxData[1]);  
             ParaQPM=RxMsg[AsduHeadLength+2];
             switch(ParaQPM&0x3F)
             {
-                case 1://ÃÅÏŞ
+                case 1://é—¨é™
                     DevList[ActDevIndex].DevData.AIPara[No].DeadValue=ParaWord;
                     break;
-                case 3://ÏÂÏŞ
+                case 3://ä¸‹é™
                     DevList[ActDevIndex].DevData.AIPara[No].LowLimit=ParaWord;
                     break;
-                case 4://ÉÏÏŞ
+                case 4://ä¸Šé™
                     DevList[ActDevIndex].DevData.AIPara[No].UpLimit=ParaWord;
                     break;
             }
             break;
-        case P_ME_NC:    //¶Ì¸¡µãÊı
+        case P_ME_NC:    //çŸ­æµ®ç‚¹æ•°
             //ParaFloat=*((float*)(pRxData));
             INT32U dd;
             dd = MAKEDWORD(MAKEWORD(pRxData[0],pRxData[1]),MAKEWORD(pRxData[2],pRxData[3]));    //ll
@@ -3301,14 +3301,14 @@ void CSecAppSev::ProcParaSet(void)
             
             switch(ParaQPM&0x3F)
             {
-                case 1://ÃÅÏŞ
+                case 1://é—¨é™
                     DevList[ActDevIndex].DevData.AIPara[No].DeadValue=(short)ParaFloat;
                     
                     break;
-                case 3://ÏÂÏŞ
+                case 3://ä¸‹é™
                     DevList[ActDevIndex].DevData.AIPara[No].LowLimit=(short)ParaFloat;
                     break;
-                case 4://ÉÏÏŞ
+                case 4://ä¸Šé™
                     DevList[ActDevIndex].DevData.AIPara[No].UpLimit=(short)ParaFloat;
                     break;
             }
@@ -3337,10 +3337,10 @@ void CSecAppSev::EnCodeInitEnd(void)
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
 
-    //³õÊ¼»¯Ô­Òò
+    //åˆå§‹åŒ–åŸå› 
     *pTxData=0;
     
-    if(*pRestType == 0xee)  //¸´Î»¹æÔ¼½ø³Ì×´Ì¬¼ÇÒä ll 2010/07/20   for ¹ãÎ÷¹æÔ¼²âÊÔ
+    if(*pRestType == 0xee)  //å¤ä½è§„çº¦è¿›ç¨‹çŠ¶æ€è®°å¿† ll 2010/07/20   for å¹¿è¥¿è§„çº¦æµ‹è¯•
     {
         *pTxData = 2;
         *pRestType = 0;   
@@ -3351,19 +3351,19 @@ void CSecAppSev::EnCodeInitEnd(void)
     if(BalanMode)
     {    
         *AppCommand=APP_SENDCON;
-        //MasterStatus=INUSE;     //Æ½ºâÄ£Ê½ÏÂ£¬Ö»Òª·¢ËÍÁË³õÊ¼»¯½áÊøÖ¡¾ÍÈÏÎªÁ´Â·ÊÇ¿ÉÓÃµÄ  wjr 2009.6.3
+        //MasterStatus=INUSE;     //å¹³è¡¡æ¨¡å¼ä¸‹ï¼Œåªè¦å‘é€äº†åˆå§‹åŒ–ç»“æŸå¸§å°±è®¤ä¸ºé“¾è·¯æ˜¯å¯ç”¨çš„  wjr 2009.6.3
     }   
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  RebootCheckUDataFlag()
-º¯Êı¹¦ÄÜ£º  µôµç¼ì²éÊÇ·ñĞèÒª´«ËÍSOE
-ÊäÈëËµÃ÷£º   
-Êä³öËµÃ÷£º  
-±¸×¢£º     
+å‡½æ•°åç§°ï¼š  RebootCheckUDataFlag()
+å‡½æ•°åŠŸèƒ½ï¼š  æ‰ç”µæ£€æŸ¥æ˜¯å¦éœ€è¦ä¼ é€SOE
+è¾“å…¥è¯´æ˜ï¼š   
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š     
 /------------------------------------------------------------------*/
 void CSecAppSev::RebootCheckUDataFlag(void)
 {
-    if(GYKZ2015Flag)    //¹úÍøÒªÇóÉÏµçÇå»º´æ
+    if(GYKZ2015Flag)    //å›½ç½‘è¦æ±‚ä¸Šç”µæ¸…ç¼“å­˜
     {
         for(int i=0;i<DevCount;i++)
         {
@@ -3386,17 +3386,17 @@ void CSecAppSev::RebootCheckUDataFlag(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  SetUDataFlag()
-º¯Êı¹¦ÄÜ£º  ¼ì²âÊÇ·ñÓĞSOE/COSĞèÒª·¢ËÍ£¬ÓĞÔòÖÃÎ»·¢ËÍSOE/COS±êÖ¾
-ÊäÈëËµÃ÷£º   
-Êä³öËµÃ÷£º  
-±¸×¢£º      test_flagÊÇÌ½²âÊÇ·ñÓĞĞèÒª·¢ËÍµÄsoe
+å‡½æ•°åç§°ï¼š  SetUDataFlag()
+å‡½æ•°åŠŸèƒ½ï¼š  æ£€æµ‹æ˜¯å¦æœ‰SOE/COSéœ€è¦å‘é€ï¼Œæœ‰åˆ™ç½®ä½å‘é€SOE/COSæ ‡å¿—
+è¾“å…¥è¯´æ˜ï¼š   
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      test_flagæ˜¯æ¢æµ‹æ˜¯å¦æœ‰éœ€è¦å‘é€çš„soe
 /------------------------------------------------------------------*/
 void CSecAppSev::SetUDataFlag(void)
 {
     BOOL rc;
 
-    //²éÑ¯¼ìĞŞÑ¹°å×´Ì¬£¬¼ìĞŞÑ¹°åÍ¶£¬Ôò²»·¢ËÍsoeºÍcos
+    //æŸ¥è¯¢æ£€ä¿®å‹æ¿çŠ¶æ€ï¼Œæ£€ä¿®å‹æ¿æŠ•ï¼Œåˆ™ä¸å‘é€soeå’Œcos
     rc = appGetJXStatus();
     if(rc)
     {
@@ -3420,7 +3420,7 @@ void CSecAppSev::SetUDataFlag(void)
     }
 }
 
-//¼ì²âÆäËûÉè±¸ÓĞÎŞCOS¡¢SOE
+//æ£€æµ‹å…¶ä»–è®¾å¤‡æœ‰æ— COSã€SOE
 void CSecAppSev::CheckUDataFlag(INT16U DevNo,INT8U Flag)
 {
     INT16U i;
@@ -3454,7 +3454,7 @@ void CSecAppSev::SetUMsgFlag(void)
 }
 
 //OK
-void CSecAppSev::ProcTaskMsg(void)//´¦ÀíÒ£¿Ø·µĞ£ĞÅÏ¢
+void CSecAppSev::ProcTaskMsg(void)//å¤„ç†é¥æ§è¿”æ ¡ä¿¡æ¯
 {
     INT32U rc;
     INT8U jj;
@@ -3465,7 +3465,7 @@ void CSecAppSev::ProcTaskMsg(void)//´¦ÀíÒ£¿Ø·µĞ£ĞÅÏ¢
         bonum = 8;
     else
         bonum = DevList[BODevIndex].DevData.BONum;*/
-    if ( ((SwitchNoTemp-1)*2==DevList[BODevIndex].DevData.BONum) || ((SwitchNoTemp - 1) * 2 == (DevList[BODevIndex].DevData.BONum + 2)))    //Ğîµç³ØÎ¬»¤ºÍ¸´¹é¼¶ÁªÉè±¸
+    if ( ((SwitchNoTemp-1)*2==DevList[BODevIndex].DevData.BONum) || ((SwitchNoTemp - 1) * 2 == (DevList[BODevIndex].DevData.BONum + 2)))    //è“„ç”µæ± ç»´æŠ¤å’Œå¤å½’çº§è”è®¾å¤‡
     //if((SwitchNoTemp-1)*2== bonum)
     {
         
@@ -3501,7 +3501,7 @@ void CSecAppSev::ProcTaskMsg(void)//´¦ÀíÒ£¿Ø·µĞ£ĞÅÏ¢
     }
 }
 //
-BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
+BOOL CSecAppSev::EnCodeCtrlRet(void)  //é¥æ§è¿”æ ¡
 {
     int jj;
     INT8U OnOff;
@@ -3526,23 +3526,23 @@ BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
     {
         switch(RetNo)
         {
-            case 1://1-Ò£¿ØÔ¤ÖÃ³É¹¦
+            case 1://1-é¥æ§é¢„ç½®æˆåŠŸ
                 Cmd = SELECT;
-                YkStatusForTest = 1;    //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24
+                YkStatusForTest = 1;    //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24
                 break;
-            case 2://2-Ò£¿ØÔ¤ÖÃÊ§°Ü
+            case 2://2-é¥æ§é¢„ç½®å¤±è´¥
                 Cmd = SELECT;
                 break;
-            case 3://3-Ò£¿ØÖ´ĞĞ³É¹¦
+            case 3://3-é¥æ§æ‰§è¡ŒæˆåŠŸ
                 Cmd = OPERATE;
                 break;
-            case 4://4-Ò£¿ØÖ´ĞĞÊ§°Ü
+            case 4://4-é¥æ§æ‰§è¡Œå¤±è´¥
                 Cmd = OPERATE;
                 break;
-            case 5://5-Ò£¿Ø³·Ïû³É¹¦
+            case 5://5-é¥æ§æ’¤æ¶ˆæˆåŠŸ
                 Cmd = SELECT;
                 break;
-            case 6://6-Ò£¿Ø³·ÏûÊ§°Ü
+            case 6://6-é¥æ§æ’¤æ¶ˆå¤±è´¥
                 Cmd = SELECT;
                 break;
             default:
@@ -3574,7 +3574,7 @@ BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
 
     if (Cmd == SELECT)
     {
-        if((RetNo == 1)&&(RFaultFlag==0xff)&&(OnOff == 1)&&(SwitchNo==DevList[BODevIndex].DevData.BONum/2))//±±¾©¹ÊÕÏ¸´¹éÖ´ĞĞ
+        if((RetNo == 1)&&(RFaultFlag==0xff)&&(OnOff == 1)&&(SwitchNo==DevList[BODevIndex].DevData.BONum/2))//åŒ—äº¬æ•…éšœå¤å½’æ‰§è¡Œ
         {
             Data1.Flag&=(~HaveYK);
             RFaultFlag=0;
@@ -3584,7 +3584,7 @@ BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
             return  FALSE;
         }
 
-        if((RetNo == 5)||(RetNo == 6))//³·Ïû
+        if((RetNo == 5)||(RetNo == 6))//æ’¤æ¶ˆ
         {
             TxMsg[CotLocation]=DEACTCON;
             YKStatus=YKTERM;
@@ -3595,7 +3595,7 @@ BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
         }
 
         if(YKTypeID==C_SC_NA)
-            sco |= SCO_SE;//0x80 Ô¤ÖÃ±êÖ¾Î»
+            sco |= SCO_SE;//0x80 é¢„ç½®æ ‡å¿—ä½
         else
             dco |= DCO_SE;
     }
@@ -3609,18 +3609,18 @@ BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
         YKStatus=YKTERM;
     }
 
-    if ((RetNo & 1) == 0)//2,4,6 Ê§°Ü
+    if ((RetNo & 1) == 0)//2,4,6 å¤±è´¥
     {
         if(GetYKRYBState() == TRUE)
             TxMsg[CotLocation]|=0x40;
         else
         {
-            TxMsg[CotLocation] = COT_YKRYBERR;    //·µ»ØÒ£¿ØÈíÑ¹°å´íÎó ll 
+            TxMsg[CotLocation] = COT_YKRYBERR;    //è¿”å›é¥æ§è½¯å‹æ¿é”™è¯¯ ll 
             TxMsg[CotLocation] |= COT_PONO;
         }
         
     }
-    else//1,3,5³É¹¦
+    else//1,3,5æˆåŠŸ
         TxMsg[CotLocation]&=(~0x40);
 
     for(jj=0;jj<PubAddrSize;jj++)
@@ -3666,7 +3666,7 @@ BOOL CSecAppSev::EnCodeCtrlRet(void)  //Ò£¿Ø·µĞ£
 
 }
 //
-void CSecAppSev::EditYKTerm(void)//Ò£¿Ø½áÊø
+void CSecAppSev::EditYKTerm(void)//é¥æ§ç»“æŸ
 {
     int jj;
     
@@ -3706,7 +3706,7 @@ BOOL CSecAppSev::GetActDevIndexByAddr(INT16U Addr)
 {
     for (INT16U i=0;i<DevCount;i++)
     {
-        if (DevList[i].Addr==Addr)//±¾»úµØÖ·×÷Îª¹«¹²ÌåµØÖ·¡£
+        if (DevList[i].Addr==Addr)//æœ¬æœºåœ°å€ä½œä¸ºå…¬å…±ä½“åœ°å€ã€‚
         {
             ActDevIndex=i;
             return(TRUE);
@@ -3721,8 +3721,8 @@ void CSecAppSev::EnCodeDBIENT(void)
     INT16U i,j,jj,Len,Length,Num,SendNum;
     short FramePos;
     struct BIEWithoutTimeData_t *p;
-    //logSysMsgNoTime("SEC ±à¼­Ë«µãCOS¿ªÊ¼",0,0,0,0);//  debug ll
-    TxMsg[0]=M_DP_NA;   //3£¬²»´øÊ±±êµÄË«µãĞÅÏ¢
+    //logSysMsgNoTime("SEC ç¼–è¾‘åŒç‚¹COSå¼€å§‹",0,0,0,0);//  debug ll
+    TxMsg[0]=M_DP_NA;   //3ï¼Œä¸å¸¦æ—¶æ ‡çš„åŒç‚¹ä¿¡æ¯
     (*pTxVSQ) &= ~VSQ_SQ;
 
     if(BalanMode==TRUE)//zzw
@@ -3735,7 +3735,7 @@ void CSecAppSev::EnCodeDBIENT(void)
     SendNum=0;
     FramePos=0-InfoAddrSize;
     p=(struct BIEWithoutTimeData_t *)DBICOSDBData;
-    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
 
     for(j=0;j<DBICOSnum;j++)
     {
@@ -3750,25 +3750,25 @@ void CSecAppSev::EnCodeDBIENT(void)
         }
         else
         {
-            pTxData[FramePos]   = LOBYTE(p->No+LDBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-            pTxData[FramePos+1] = HIBYTE(p->No+LDBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+            pTxData[FramePos]   = LOBYTE(p->No+LDBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+            pTxData[FramePos+1] = HIBYTE(p->No+LDBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
             if(InfoAddrSize == 3)
-                pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
         }
         FramePos+=InfoAddrSize;;
         
         //logSysMsgNoTime("p->Status=%x",p->Status,0,0,0);   //  debug ll
         if((p->Status&BIACTIVEFLAG)==0)
-            pTxData[FramePos]=Status1|Status0|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+            pTxData[FramePos]=Status1|Status0|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
         else
-            pTxData[FramePos]=Status1|Status0;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+            pTxData[FramePos]=Status1|Status0;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
             
         if(p->Status&SUBSTITUTEDFLAG)
-            pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+            pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
         
         
         FramePos++;        
-        SendNum++;//·¢ËÍ¸öÊı
+        SendNum++;//å‘é€ä¸ªæ•°
         p++;
         if(FramePos>=Length)
             break;
@@ -3776,11 +3776,11 @@ void CSecAppSev::EnCodeDBIENT(void)
     
     if(SendNum>0)
     {
-        Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+        Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
         //LastFrame=BI;
         //LastDevIndex=DBICOSDevIndex;
         //BIFrame|=BIENTFRAME;
-        //DevList[DBICOSDevIndex].Data1.BIENTNum=SendNum;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+        //DevList[DBICOSDevIndex].Data1.BIENTNum=SendNum;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
         *pTxVSQ=SendNum;
         
         Num=SendNum;
@@ -3805,17 +3805,17 @@ void CSecAppSev::EnCodeDBIENT(void)
          else
              *AppCommand=APP_SENDDATA;  
     }
-    //logSysMsgNoTime("SEC ±à¼­Ë«µãCOS½áÊø",0,0,0,0);//  debug ll  
+    //logSysMsgNoTime("SEC ç¼–è¾‘åŒç‚¹COSç»“æŸ",0,0,0,0);//  debug ll  
     
 }
 
-BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
+BOOL CSecAppSev::EnCodeBIENT(void)  //ç¼–è¾‘COS
 {
     INT8U Status;
     INT16U i,j,jj,Len,Length,WritePtr,SendNum;
     short FramePos,Num;
     struct BIEWithoutTimeData_t *p;
-    BOOL HaveData=FALSE;    //ÊÇ·ñÓĞºóĞøÊı¾İ TRUE ÓĞ
+    BOOL HaveData=FALSE;    //æ˜¯å¦æœ‰åç»­æ•°æ® TRUE æœ‰
  
        
 
@@ -3824,8 +3824,8 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
     {
         if (!test_flag(DevList[i].DevID,BIENTFLAG))
             continue;
-        //logSysMsgNoTime("SEC EnCodeBIENTÖĞ¼ä1Ì¬",0,0,0,0);//  debug ll
-        TxMsg[0]=M_SP_NA;//1£¬²»´øÊ±±êµÄµ¥µãĞÅÏ¢
+        //logSysMsgNoTime("SEC EnCodeBIENTä¸­é—´1æ€",0,0,0,0);//  debug ll
+        TxMsg[0]=M_SP_NA;//1ï¼Œä¸å¸¦æ—¶æ ‡çš„å•ç‚¹ä¿¡æ¯
         (*pTxVSQ) = 0;
 
         if(BalanMode==TRUE)//zzw
@@ -3839,13 +3839,13 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
             Num=RSend_ReadSBIENT(DevList[i].DevID,DevList[i].RealWin->BIENTimRP,80,(struct BIEWithoutTimeData_t *)DBData,&WritePtr);
         else
             Num=L_ReadSBIENT(DevList[i].DevID,DevList[i].pDbaseWin->BIENTimRP,80,(struct BIEWithoutTimeData_t *)DBData,&WritePtr);
-        //logSysMsgNoTime("SEC EnCodeBIENTÖĞ¼ä2Ì¬%d",Num,0,0,0);//  debug ll
+        //logSysMsgNoTime("SEC EnCodeBIENTä¸­é—´2æ€%d",Num,0,0,0);//  debug ll
         if (Num>0)
         {
             SendNum=0;
             FramePos=0-InfoAddrSize;
             p=(struct BIEWithoutTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+            Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
             
             j=0;
             while(j<Num)
@@ -3876,23 +3876,23 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                         }
                         else
                         {
-                            pTxData[FramePos]   = LOBYTE(p->No-DevList[i].DevData.DBINum+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-                            pTxData[FramePos+1] = HIBYTE(p->No-DevList[i].DevData.DBINum+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+                            pTxData[FramePos]   = LOBYTE(p->No-DevList[i].DevData.DBINum+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+                            pTxData[FramePos+1] = HIBYTE(p->No-DevList[i].DevData.DBINum+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
                             if(InfoAddrSize == 3)
-                                pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                                pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                         }
                         FramePos+=InfoAddrSize;;
         
                         if((p->Status&BIACTIVEFLAG)==0)
-                            pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         else
-                            pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         
                         FramePos++;
-                        SendNum++;//·¢ËÍ¸öÊı
+                        SendNum++;//å‘é€ä¸ªæ•°
                         p++;
                         j++;
                         if(FramePos>=Length)
@@ -3901,7 +3901,7 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                 }
                 else
                 {
-                    if(p->Status & BIDBI_STATUSE)   //¼ì²âµ½ÓĞË«µãÒ£ĞÅ£¬·Åµ½»º³åÇøµ¥¶À´¦Àí
+                    if(p->Status & BIDBI_STATUSE)   //æ£€æµ‹åˆ°æœ‰åŒç‚¹é¥ä¿¡ï¼Œæ”¾åˆ°ç¼“å†²åŒºå•ç‹¬å¤„ç†
                     {
                         DBICOSDBData[DBICOSnum] = (struct BIEWithoutTimeData_t)*p;
                         DBICOSnum++;
@@ -3922,23 +3922,23 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                         }
                         else
                         {
-                            pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-                            pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+                            pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+                            pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
                             if(InfoAddrSize == 3)
-                                pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                                pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                         }
                         FramePos+=InfoAddrSize;;
         
                         if((p->Status&BIACTIVEFLAG)==0)
-                            pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         else
-                            pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         
                         FramePos++;
-                        SendNum++;//·¢ËÍ¸öÊı
+                        SendNum++;//å‘é€ä¸ªæ•°
                         p++;
                         j++;
                         if(FramePos>=Length)
@@ -3948,14 +3948,14 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
             }
             if(DBICOSnum>0)
                 DBICOSDevIndex=i;
-            //logSysMsgNoTime("SEC EnCodeBIENTÖĞ¼ä3Ì¬%d dbi=%d",SendNum,DBICOSnum,0,0);//  debug ll
+            //logSysMsgNoTime("SEC EnCodeBIENTä¸­é—´3æ€%d dbi=%d",SendNum,DBICOSnum,0,0);//  debug ll
             if(SendNum>0)
             {
-                Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+                Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
                 LastFrame=BI;
                 LastDevIndex=i;
                 BIFrame|=BIENTFRAME;
-                DevList[i].Data1.BIENTNum=j;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                DevList[i].Data1.BIENTNum=j;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                 *pTxVSQ=SendNum;
                 
                 *LengthOut=Len;
@@ -3970,7 +3970,7 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveCOS);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 else
@@ -3979,7 +3979,7 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveCOS);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 
@@ -4001,7 +4001,7 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                     LastDevIndex=i;
                     BIFrame|=BIENTFRAME;
                     HaveData=TRUE;
-                    DevList[i].Data1.BIENTNum=j;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                    DevList[i].Data1.BIENTNum=j;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                     
                     if(DevList[i].Flag)
                     {
@@ -4029,7 +4029,7 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
                     *LengthOut = 0;
                 	if(j>0)
                     {
-                    	DevList[i].Data1.BIENTNum=j;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                    	DevList[i].Data1.BIENTNum=j;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                     	ClearFlag(i,BIENTFLAG);
                     	
                     }
@@ -4049,20 +4049,20 @@ BOOL CSecAppSev::EnCodeBIENT(void)  //±à¼­COS
     return(HaveData);
 }
 
-BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //±à¼­COS,È«²¿´¦Àí³ÉË«µãÒ£ĞÅ
+BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //ç¼–è¾‘COS,å…¨éƒ¨å¤„ç†æˆåŒç‚¹é¥ä¿¡
 {
     INT8U Status;
     INT16U i,j,jj,Len,Length,WritePtr,SendNum;
     short FramePos,Num;
     struct BIEWithoutTimeData_t *p;
-    BOOL HaveData=FALSE;    //ÊÇ·ñÓĞºóĞøÊı¾İ TRUE ÓĞ
+    BOOL HaveData=FALSE;    //æ˜¯å¦æœ‰åç»­æ•°æ® TRUE æœ‰
  
     *LengthOut = 0;
     for(i=0;i<DevCount;i++)
     {
         if (!test_flag(DevList[i].DevID,BIENTFLAG))
             continue;
-        //logSysMsgNoTime("SEC EnCodeBIENTÖĞ¼ä1Ì¬",0,0,0,0);//  debug ll
+        //logSysMsgNoTime("SEC EnCodeBIENTä¸­é—´1æ€",0,0,0,0);//  debug ll
         TxMsg[0]=M_DP_NA; 
         (*pTxVSQ) = 0;
 
@@ -4077,13 +4077,13 @@ BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //±à¼­COS,È«²¿´¦Àí³ÉË«µãÒ£ĞÅ
             Num=RSend_ReadSBIENT(DevList[i].DevID,DevList[i].RealWin->BIENTimRP,80,(struct BIEWithoutTimeData_t *)DBData,&WritePtr);
         else
             Num=L_ReadSBIENT(DevList[i].DevID,DevList[i].pDbaseWin->BIENTimRP,80,(struct BIEWithoutTimeData_t *)DBData,&WritePtr);
-        //logSysMsgNoTime("SEC EnCodeBIENTÖĞ¼ä2Ì¬%d",Num,0,0,0);//  debug ll
+        //logSysMsgNoTime("SEC EnCodeBIENTä¸­é—´2æ€%d",Num,0,0,0);//  debug ll
         if (Num>0)
         {
             SendNum=0;
-            FramePos=0-InfoAddrSize;    //ÒòÎªpTxDataÖ¸ÏòĞÅÏ¢ÌåÖ®ºó£¬ËùÒÔµÚÒ»¸öĞÅÏ¢ÌåµØÖ·Ã»·¨Ìî£¬Ó¦¸ÃÓÃTxMsg²»¸ÃÓÃpTxData£¬ÕâÑù¾Í²»´æÔÚÕâÑùµÄÎÊÌâÁË ll
+            FramePos=0-InfoAddrSize;    //å› ä¸ºpTxDataæŒ‡å‘ä¿¡æ¯ä½“ä¹‹åï¼Œæ‰€ä»¥ç¬¬ä¸€ä¸ªä¿¡æ¯ä½“åœ°å€æ²¡æ³•å¡«ï¼Œåº”è¯¥ç”¨TxMsgä¸è¯¥ç”¨pTxDataï¼Œè¿™æ ·å°±ä¸å­˜åœ¨è¿™æ ·çš„é—®é¢˜äº† ll
             p=(struct BIEWithoutTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+            Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
             
             j=0;
             while(j<Num)
@@ -4100,37 +4100,37 @@ BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //±à¼­COS,È«²¿´¦Àí³ÉË«µãÒ£ĞÅ
                 }
                 else
                 {
-                    pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-                    pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+                    pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+                    pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
                     if(InfoAddrSize == 3)
-                        pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                        pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                 }
                 FramePos+=InfoAddrSize;
 
                 if((p->Status&BIACTIVEFLAG)==0)
-                    pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                    pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                 else
-                    pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                    pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                     
                 if(p->Status&SUBSTITUTEDFLAG)
-                    pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                    pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                 
                 FramePos++;
-                SendNum++;//·¢ËÍ¸öÊı
+                SendNum++;//å‘é€ä¸ªæ•°
                 p++;
                 j++;
                 if(FramePos>=Length)
                     break;
             }
            
-            //logSysMsgNoTime("SEC EnCodeBIENTÖĞ¼ä3Ì¬%d dbi=%d",SendNum,DBICOSnum,0,0);//  debug ll
+            //logSysMsgNoTime("SEC EnCodeBIENTä¸­é—´3æ€%d dbi=%d",SendNum,DBICOSnum,0,0);//  debug ll
             if(SendNum>0)
             {
-                Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+                Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
                 LastFrame=BI;
                 LastDevIndex=i;
                 BIFrame|=BIENTFRAME;
-                DevList[i].Data1.BIENTNum=j;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                DevList[i].Data1.BIENTNum=j;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                 *pTxVSQ=SendNum;
                 
                 *LengthOut=Len;
@@ -4145,7 +4145,7 @@ BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //±à¼­COS,È«²¿´¦Àí³ÉË«µãÒ£ĞÅ
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveCOS);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 else
@@ -4154,7 +4154,7 @@ BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //±à¼­COS,È«²¿´¦Àí³ÉË«µãÒ£ĞÅ
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveCOS);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 
@@ -4166,7 +4166,7 @@ BOOL CSecAppSev::EnCodeBIENT_ALLDBI(void)  //±à¼­COS,È«²¿´¦Àí³ÉË«µãÒ£ĞÅ
                 *LengthOut = 0;
             	if(j>0)
                 {
-                	DevList[i].Data1.BIENTNum=j;      //±äÎ»Ò£ĞÅ·¢ËÍ¸öÊı
+                	DevList[i].Data1.BIENTNum=j;      //å˜ä½é¥ä¿¡å‘é€ä¸ªæ•°
                 	ClearFlag(i,BIENTFLAG);
                 }
                 
@@ -4184,9 +4184,9 @@ void CSecAppSev::EnCodeDBISOE(void)
     struct BIEWithTimeData_t *p;
     struct Iec101ClockTime_t time;
     
-    TxMsg[0]=M_DP_TA;   //´øÊ±±êµÄË«µãĞÅÏ¢
+    TxMsg[0]=M_DP_TA;   //å¸¦æ—¶æ ‡çš„åŒç‚¹ä¿¡æ¯
     if(Sec101Pad.SOEWithCP56Time == 1)
-        TxMsg[0]=M_DP_TB;   //´ø³¤Ê±±êµÄË«µãĞÅÏ¢
+        TxMsg[0]=M_DP_TB;   //å¸¦é•¿æ—¶æ ‡çš„åŒç‚¹ä¿¡æ¯
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DBIDevIndex].Addr>>(8*jj);
     (*pTxVSQ) &= ~VSQ_SQ;
@@ -4200,7 +4200,7 @@ void CSecAppSev::EnCodeDBISOE(void)
     SendNum=0;
     FramePos=0-InfoAddrSize;
     p=(struct BIEWithTimeData_t *)DBIDBData;
-    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
 
     for(j=0;j<DBISOEnum;j++)
     {
@@ -4208,7 +4208,7 @@ void CSecAppSev::EnCodeDBISOE(void)
         Status0 = 0;
         Status1 = (p->Status&0x60)>>5;
         
-         //Ğ´ĞÅÏ¢ÌåµØÖ·
+         //å†™ä¿¡æ¯ä½“åœ°å€
         if(FramePos < 0)
         {
             *pTxInfoAddr    =LOBYTE((p->No+LDBIinfoaddr));
@@ -4216,30 +4216,30 @@ void CSecAppSev::EnCodeDBISOE(void)
         }
         else
         {
-             pTxData[FramePos]   = LOBYTE(p->No+LDBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-             pTxData[FramePos+1] = HIBYTE(p->No+LDBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+             pTxData[FramePos]   = LOBYTE(p->No+LDBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+             pTxData[FramePos+1] = HIBYTE(p->No+LDBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
              if(InfoAddrSize == 3)
-                 pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                 pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
          }
          FramePos+=InfoAddrSize;;
-         //Ğ´×´Ì¬
+         //å†™çŠ¶æ€
          if((p->Status&BIACTIVEFLAG)==0)
-             pTxData[FramePos]=Status1|Status0|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+             pTxData[FramePos]=Status1|Status0|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
          else
-             pTxData[FramePos]=Status1|Status0;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+             pTxData[FramePos]=Status1|Status0;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
         
          if(p->Status&SUBSTITUTEDFLAG)
-             pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+             pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
              
          FramePos++;
-            //Ğ´Ê±¼ä
+            //å†™æ—¶é—´
          AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
 
          pTxData[FramePos++] = LOBYTE(time.MSecond);
          pTxData[FramePos++] = HIBYTE(time.MSecond);
          pTxData[FramePos++] = time.Minute;
 
-         if(TxMsg[0]==M_DP_TB)//³¤Ê±±ê
+         if(TxMsg[0]==M_DP_TB)//é•¿æ—¶æ ‡
          {
              pTxData[FramePos++] = time.Hour;
              pTxData[FramePos++] = time.Day;
@@ -4247,7 +4247,7 @@ void CSecAppSev::EnCodeDBISOE(void)
              pTxData[FramePos++] = time.Year;
          }
 
-         SendNum++;//·¢ËÍ¸öÊı
+         SendNum++;//å‘é€ä¸ªæ•°
          p++;
          
          if(FramePos>=Length)
@@ -4255,11 +4255,11 @@ void CSecAppSev::EnCodeDBISOE(void)
      }
      if(SendNum>0)
      {
-         Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+         Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
          //LastDevIndex=DBIDevIndex;
          //LastFrame=BI;
          //BIFrame|=BIETFRAME;
-         //DevList[DBIDevIndex].Data1.SOENum=SendNum;   //ÕâÀï²»ÔÙ±ê¼Ç£¬ÒòÎªÇ°Ãæµ¥µãÒ£ĞÅÒÑ¾­±ê¼Ç¹ıÁË
+         //DevList[DBIDevIndex].Data1.SOENum=SendNum;   //è¿™é‡Œä¸å†æ ‡è®°ï¼Œå› ä¸ºå‰é¢å•ç‚¹é¥ä¿¡å·²ç»æ ‡è®°è¿‡äº†
          *pTxVSQ=SendNum;
          
          Num = SendNum;
@@ -4289,14 +4289,14 @@ void CSecAppSev::EnCodeDBISOE(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCodeSOE()
-º¯Êı¹¦ÄÜ£º  ±à¼­SOE±¨ÎÄ¡£ÔÚ1¼¶Êı¾İÖĞµ÷ÓÃ
-ÊäÈëËµÃ÷£º   
-Êä³öËµÃ÷£º  TRUE ±íÊ¾ÓĞºóĞøÊı¾İ  FALSE ÎŞºóĞøÊı¾İ  llĞŞ¸Ä 2017-8-8
-±¸×¢£º      ·¢ËÍ²ßÂÔ£¬ÏÈ·¢ËÍµ¥µãSOE£¬ÔÙ·¢ËÍDBIsoe¡£
-            µ±µ¥µãSOE³¬¹ı20Ê±£¬ĞèÒª¶àÖ¡·¢ËÍ£¬ÔÙËùÓĞµ¥µãSOE·¢ËÍÍê³Éºó£¬ÔÙ·¢ËÍDBIsoe¡£
+å‡½æ•°åç§°ï¼š  EnCodeSOE()
+å‡½æ•°åŠŸèƒ½ï¼š  ç¼–è¾‘SOEæŠ¥æ–‡ã€‚åœ¨1çº§æ•°æ®ä¸­è°ƒç”¨
+è¾“å…¥è¯´æ˜ï¼š   
+è¾“å‡ºè¯´æ˜ï¼š  TRUE è¡¨ç¤ºæœ‰åç»­æ•°æ®  FALSE æ— åç»­æ•°æ®  llä¿®æ”¹ 2017-8-8
+å¤‡æ³¨ï¼š      å‘é€ç­–ç•¥ï¼Œå…ˆå‘é€å•ç‚¹SOEï¼Œå†å‘é€DBIsoeã€‚
+            å½“å•ç‚¹SOEè¶…è¿‡20æ—¶ï¼Œéœ€è¦å¤šå¸§å‘é€ï¼Œå†æ‰€æœ‰å•ç‚¹SOEå‘é€å®Œæˆåï¼Œå†å‘é€DBIsoeã€‚
 /------------------------------------------------------------------*/
-BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
+BOOL CSecAppSev::EnCodeSOE(void) //ç¼–è¾‘SOE
 {
     INT8U Status;
     INT16U i,j,jj,Len,Length,WritePtr,SendNum;
@@ -4304,7 +4304,7 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
     struct BIEWithTimeData_t *p;
     struct Iec101ClockTime_t time;
     
-    BOOL HaveData=FALSE;        //ºóĞøÊÇ·ñÓĞÊı¾İ
+    BOOL HaveData=FALSE;        //åç»­æ˜¯å¦æœ‰æ•°æ®
     
     *LengthOut = 0;
     for (i=0;i<DevCount;i++)
@@ -4312,10 +4312,10 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
         if (!test_flag(DevList[i].DevID,BIETFLAG))
             continue;
         
-        //logSysMsgNoTime("SEC ±à¼­µ¥µãSOE¿ªÊ¼",0,0,0,0);//  debug ll
-        TxMsg[0]=M_SP_TA;   //´øÊ±±êµÄµ¥µãĞÅÏ¢
+        //logSysMsgNoTime("SEC ç¼–è¾‘å•ç‚¹SOEå¼€å§‹",0,0,0,0);//  debug ll
+        TxMsg[0]=M_SP_TA;   //å¸¦æ—¶æ ‡çš„å•ç‚¹ä¿¡æ¯
         if(Sec101Pad.SOEWithCP56Time == 1)
-            TxMsg[0]=M_SP_TB;   //´ø³¤Ê±±êµÄµ¥µãĞÅÏ¢
+            TxMsg[0]=M_SP_TB;   //å¸¦é•¿æ—¶æ ‡çš„å•ç‚¹ä¿¡æ¯
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
         (*pTxVSQ) = 0;
@@ -4336,7 +4336,7 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
             SendNum=0;
             FramePos = 0-InfoAddrSize;
             p=(struct BIEWithTimeData_t *)DBData;
-            Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+            Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
             
             j=0;
             while(j<Num)
@@ -4355,12 +4355,12 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                     }
                     else
                     {
-                        //×´Ì¬×ª»»£ºÊı¾İ¿âÖĞµÄÒ£ĞÅD7Îª×´Ì¬£¬¹æÔ¼ÖĞD0Îª×´Ì¬
+                        //çŠ¶æ€è½¬æ¢ï¼šæ•°æ®åº“ä¸­çš„é¥ä¿¡D7ä¸ºçŠ¶æ€ï¼Œè§„çº¦ä¸­D0ä¸ºçŠ¶æ€
                         if(p->Status&0x80)
                             Status=1;
                         else
                             Status=0;
-                        //Ğ´ĞÅÏ¢ÌåµØÖ·
+                        //å†™ä¿¡æ¯ä½“åœ°å€
                         if(FramePos < 0)
                         {
                             *pTxInfoAddr    =LOBYTE((p->No+LBIinfoaddr-DevList[i].DevData.DBINum));
@@ -4368,39 +4368,39 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                         }
                         else
                         {
-                            pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr-DevList[i].DevData.DBINum);//ĞÅÏ¢ÌåµØÖ·
-                            pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr-DevList[i].DevData.DBINum);//ĞÅÏ¢ÌåµØÖ·
+                            pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr-DevList[i].DevData.DBINum);//ä¿¡æ¯ä½“åœ°å€
+                            pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr-DevList[i].DevData.DBINum);//ä¿¡æ¯ä½“åœ°å€
                             if(InfoAddrSize == 3)
-                                pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                                pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                         }
                         FramePos+=InfoAddrSize;;
-                        //Ğ´×´Ì¬
+                        //å†™çŠ¶æ€
                         if((p->Status&BIACTIVEFLAG)==0)
-                            pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         else
-                            pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         
                             
                         FramePos++;
                     
-                        //Ğ´Ê±¼ä
+                        //å†™æ—¶é—´
                         AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
                     
                         pTxData[FramePos++] = LOBYTE(time.MSecond);
                         pTxData[FramePos++] = HIBYTE(time.MSecond);
                         pTxData[FramePos++] = time.Minute;
                     
-                        if(TxMsg[0]==M_SP_TB)//³¤Ê±±ê
+                        if(TxMsg[0]==M_SP_TB)//é•¿æ—¶æ ‡
                         {
                             pTxData[FramePos++] = time.Hour;
                             pTxData[FramePos++] = time.Day;
                             pTxData[FramePos++] = time.Month;
                             pTxData[FramePos++] = time.Year;
                         }
-                        SendNum++;//·¢ËÍ¸öÊı
+                        SendNum++;//å‘é€ä¸ªæ•°
                         p++;
                         j++;
                         if(FramePos>=Length)
@@ -4409,7 +4409,7 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                 }
                 else
                 {
-                    if(p->Status & BIDBI_STATUSE)    //SOEµÄ×´Ì¬Î»BIDBI_STATUSE£¨0x10£©±íÊ¾ÊÇË«µãÒ£ĞÅ
+                    if(p->Status & BIDBI_STATUSE)    //SOEçš„çŠ¶æ€ä½BIDBI_STATUSEï¼ˆ0x10ï¼‰è¡¨ç¤ºæ˜¯åŒç‚¹é¥ä¿¡
                     {
                         DBIDBData[DBISOEnum]=(struct BIEWithTimeData_t)(*p);
                         DBISOEnum++;
@@ -4418,13 +4418,13 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                     }
                     else
                     {
-                        //×´Ì¬×ª»»£ºÊı¾İ¿âÖĞµÄÒ£ĞÅD7Îª×´Ì¬£¬¹æÔ¼ÖĞD0Îª×´Ì¬
+                        //çŠ¶æ€è½¬æ¢ï¼šæ•°æ®åº“ä¸­çš„é¥ä¿¡D7ä¸ºçŠ¶æ€ï¼Œè§„çº¦ä¸­D0ä¸ºçŠ¶æ€
                         if(p->Status&0x80)
                             Status=1;
                         else
                             Status=0;
                         
-                        //Ğ´ĞÅÏ¢ÌåµØÖ·
+                        //å†™ä¿¡æ¯ä½“åœ°å€
                         if(FramePos < 0)
                         {
                             *pTxInfoAddr    =LOBYTE((p->No+LBIinfoaddr));
@@ -4432,33 +4432,33 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                         }
                         else
                         {
-                            pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-                            pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+                            pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+                            pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
                             if(InfoAddrSize == 3)
-                                pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                                pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                         }
                         FramePos += InfoAddrSize;
                         
-                        //Ğ´×´Ì¬
+                        //å†™çŠ¶æ€
                         if((p->Status&BIACTIVEFLAG)==0)
-                            pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         else
-                            pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                            pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         
                             
                         FramePos++;
         
-                        //Ğ´Ê±¼ä
+                        //å†™æ—¶é—´
                         AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
         
                         pTxData[FramePos++] = LOBYTE(time.MSecond);
                         pTxData[FramePos++] = HIBYTE(time.MSecond);
                         pTxData[FramePos++] = time.Minute;
         
-                        if(TxMsg[0]==M_SP_TB)//³¤Ê±±ê
+                        if(TxMsg[0]==M_SP_TB)//é•¿æ—¶æ ‡
                         {
                             pTxData[FramePos++] = time.Hour;
                             pTxData[FramePos++] = time.Day;
@@ -4466,7 +4466,7 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                             pTxData[FramePos++] = time.Year;
                         }
         
-                        SendNum++;//·¢ËÍ¸öÊı
+                        SendNum++;//å‘é€ä¸ªæ•°
                         p++;
                         j++;
                         
@@ -4483,11 +4483,11 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
             if(SendNum>0)
             {
                 
-                Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+                Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
                 LastDevIndex=i;
                 LastFrame=BI;
                 BIFrame|=BIETFRAME;
-                DevList[i].Data1.SOENum = j;       //DevList[i].Data1.SOENum ÊÇ±ê¼ÇÒÑ¾­·¢ËÍµÄ¸öÊı(»òÕßÒÑ¾­´¦ÀíµÄ¸öÊı£©£¬ÓÃÓÚ¶ÔSOE¶ÁÖ¸Õë½øĞĞ¿ØÖÆ
+                DevList[i].Data1.SOENum = j;       //DevList[i].Data1.SOENum æ˜¯æ ‡è®°å·²ç»å‘é€çš„ä¸ªæ•°(æˆ–è€…å·²ç»å¤„ç†çš„ä¸ªæ•°ï¼‰ï¼Œç”¨äºå¯¹SOEè¯»æŒ‡é’ˆè¿›è¡Œæ§åˆ¶
                 *pTxVSQ=SendNum;
 
                 *LengthOut = Len;      
@@ -4496,14 +4496,14 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                 else
                     *AppCommand=APP_SENDDATA;
 
-                //ÅĞ¶ÏÊÇ·ñÓĞºóĞøÊı¾İÒª·¢ËÍ
+                //åˆ¤æ–­æ˜¯å¦æœ‰åç»­æ•°æ®è¦å‘é€
                 if(DevList[i].Flag)
                 {
                     if(WritePtr != DevList[i].RealWin->BIETimRP+j)
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveSOE);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 else
@@ -4512,13 +4512,13 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveSOE);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 
                 if(HaveData == FALSE)
                 {
-                    //µ¥µãÒ£ĞÅ¶¼´¦ÀíÍêÁË£¬ÔÙ´¦ÀíË«µãÒ£ĞÅ¡£ÕâÊ±Èç¹ûË«µãÒ£ĞÅ³öÏÖÎÊÌâ£¬ÈİÒ×ËÍ²»µ½Ö÷Õ¾
+                    //å•ç‚¹é¥ä¿¡éƒ½å¤„ç†å®Œäº†ï¼Œå†å¤„ç†åŒç‚¹é¥ä¿¡ã€‚è¿™æ—¶å¦‚æœåŒç‚¹é¥ä¿¡å‡ºç°é—®é¢˜ï¼Œå®¹æ˜“é€ä¸åˆ°ä¸»ç«™
                     if(DBISOEnum >0)
                     {
                         HaveData = TRUE;
@@ -4538,7 +4538,7 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                     BIFrame|=BIETFRAME;
                     DevList[i].Data1.SOENum=j;   
                     
-                    //ÅĞ¶ÏÊÇ·ñÓĞºóĞøÊı¾İÒª·¢ËÍ
+                    //åˆ¤æ–­æ˜¯å¦æœ‰åç»­æ•°æ®è¦å‘é€
                     if(DevList[i].Flag)
                     {
                         if(WritePtr != DevList[i].RealWin->BIETimRP+j)
@@ -4562,8 +4562,8 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
                 }
                 else
                 {
-                    //×ßµ½ÕâÀïÊôÓÚÒì³£Çé¿ö
-                    *LengthOut = 0;     //±íÊ¾Ã»ÓĞÊı¾İĞèÒª·¢ËÍ
+                    //èµ°åˆ°è¿™é‡Œå±äºå¼‚å¸¸æƒ…å†µ
+                    *LengthOut = 0;     //è¡¨ç¤ºæ²¡æœ‰æ•°æ®éœ€è¦å‘é€
                 	if(j>0)
                     {
                     	DevList[i].Data1.SOENum=j;
@@ -4576,7 +4576,7 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
     
     if((DBISOEnum>0) && (*LengthOut==0))
     {
-        //ÏÈ·¢ËÍµ¥µã£¬ËùÓĞµ¥µã¶¼·¢ËÍÍêÁË£¬ÔÙ·¢ËÍDBI³öÈ¥¡£
+        //å…ˆå‘é€å•ç‚¹ï¼Œæ‰€æœ‰å•ç‚¹éƒ½å‘é€å®Œäº†ï¼Œå†å‘é€DBIå‡ºå»ã€‚
         EnCodeDBISOE(); 
         
         if(DBISOEnum > 0)
@@ -4587,14 +4587,14 @@ BOOL CSecAppSev::EnCodeSOE(void) //±à¼­SOE
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCodeSOE_ALLDBI()
-º¯Êı¹¦ÄÜ£º  ±à¼­SOE±¨ÎÄ¡£ÔÚ1¼¶Êı¾İÖĞµ÷ÓÃ
-ÊäÈëËµÃ÷£º   
-Êä³öËµÃ÷£º  TRUE ±íÊ¾ÓĞºóĞøÊı¾İ  FALSE ÎŞºóĞøÊı¾İ  llĞŞ¸Ä 2017-8-8
-±¸×¢£º      ·¢ËÍ²ßÂÔ£¬ÏÈ·¢ËÍµ¥µãSOE£¬ÔÙ·¢ËÍDBIsoe¡£
-            µ±µ¥µãSOE³¬¹ı20Ê±£¬ĞèÒª¶àÖ¡·¢ËÍ£¬ÔÙËùÓĞµ¥µãSOE·¢ËÍÍê³Éºó£¬ÔÙ·¢ËÍDBIsoe¡£
+å‡½æ•°åç§°ï¼š  EnCodeSOE_ALLDBI()
+å‡½æ•°åŠŸèƒ½ï¼š  ç¼–è¾‘SOEæŠ¥æ–‡ã€‚åœ¨1çº§æ•°æ®ä¸­è°ƒç”¨
+è¾“å…¥è¯´æ˜ï¼š   
+è¾“å‡ºè¯´æ˜ï¼š  TRUE è¡¨ç¤ºæœ‰åç»­æ•°æ®  FALSE æ— åç»­æ•°æ®  llä¿®æ”¹ 2017-8-8
+å¤‡æ³¨ï¼š      å‘é€ç­–ç•¥ï¼Œå…ˆå‘é€å•ç‚¹SOEï¼Œå†å‘é€DBIsoeã€‚
+            å½“å•ç‚¹SOEè¶…è¿‡20æ—¶ï¼Œéœ€è¦å¤šå¸§å‘é€ï¼Œå†æ‰€æœ‰å•ç‚¹SOEå‘é€å®Œæˆåï¼Œå†å‘é€DBIsoeã€‚
 /------------------------------------------------------------------*/
-BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
+BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //ç¼–è¾‘SOE
 {
     INT8U Status;
     INT16U i,j,jj,Len,Length,WritePtr,SendNum;
@@ -4602,7 +4602,7 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
     struct BIEWithTimeData_t *p;
     struct Iec101ClockTime_t time;
     
-    BOOL HaveData=FALSE;        //ºóĞøÊÇ·ñÓĞÊı¾İ
+    BOOL HaveData=FALSE;        //åç»­æ˜¯å¦æœ‰æ•°æ®
     
     *LengthOut = 0;
     for (i=0;i<DevCount;i++)
@@ -4610,8 +4610,8 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
         if (!test_flag(DevList[i].DevID,BIETFLAG))
             continue;
         
-        //logSysMsgNoTime("SEC ±à¼­µ¥µãSOE¿ªÊ¼",0,0,0,0);//  debug ll
-        TxMsg[0]=M_DP_TB;   //´øÊ±±êµÄµ¥µãĞÅÏ¢
+        //logSysMsgNoTime("SEC ç¼–è¾‘å•ç‚¹SOEå¼€å§‹",0,0,0,0);//  debug ll
+        TxMsg[0]=M_DP_TB;   //å¸¦æ—¶æ ‡çš„å•ç‚¹ä¿¡æ¯
         
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
@@ -4633,18 +4633,18 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
             SendNum=0;
             FramePos = 0-InfoAddrSize;
             p=(struct BIEWithTimeData_t *)DBData;
-            Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+            Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
             
             j=0;
             while(j<Num)      
             {
-                //×´Ì¬×ª»»£ºÊı¾İ¿âÖĞµÄÒ£ĞÅD7Îª×´Ì¬£¬¹æÔ¼ÖĞD0Îª×´Ì¬
+                //çŠ¶æ€è½¬æ¢ï¼šæ•°æ®åº“ä¸­çš„é¥ä¿¡D7ä¸ºçŠ¶æ€ï¼Œè§„çº¦ä¸­D0ä¸ºçŠ¶æ€
                 if(p->Status&0x80)
                     Status=(BIDBI_YXH>>5);
                 else
                     Status=(BIDBI_YXF>>5);
                 
-                //Ğ´ĞÅÏ¢ÌåµØÖ·
+                //å†™ä¿¡æ¯ä½“åœ°å€
                 if(FramePos < 0)
                 {
                     *pTxInfoAddr    =LOBYTE((p->No+LBIinfoaddr));
@@ -4652,26 +4652,26 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
                 }
                 else
                 {
-                    pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-                    pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+                    pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+                    pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
                     if(InfoAddrSize == 3)
-                        pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                        pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                 }
                 FramePos += InfoAddrSize;
                 
-                //Ğ´×´Ì¬
+                //å†™çŠ¶æ€
                 if((p->Status&BIACTIVEFLAG)==0)
-                    pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                    pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                 else
-                    pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                    pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                     
                 if(p->Status&SUBSTITUTEDFLAG)
-                    pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                    pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                 
                     
                 FramePos++;
 
-                //Ğ´Ê±¼ä
+                //å†™æ—¶é—´
                 AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
 
                 pTxData[FramePos++] = LOBYTE(time.MSecond);
@@ -4682,7 +4682,7 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
                 pTxData[FramePos++] = time.Month;
                 pTxData[FramePos++] = time.Year;
                 
-                SendNum++;//·¢ËÍ¸öÊı
+                SendNum++;//å‘é€ä¸ªæ•°
                 p++;
                 j++;
                 
@@ -4693,11 +4693,11 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
             if(SendNum>0)
             {
                 
-                Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+                Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
                 LastDevIndex=i;
                 LastFrame=BI;
                 BIFrame|=BIETFRAME;
-                DevList[i].Data1.SOENum = j;       //DevList[i].Data1.SOENum ÊÇ±ê¼ÇÒÑ¾­·¢ËÍµÄ¸öÊı(»òÕßÒÑ¾­´¦ÀíµÄ¸öÊı£©£¬ÓÃÓÚ¶ÔSOE¶ÁÖ¸Õë½øĞĞ¿ØÖÆ
+                DevList[i].Data1.SOENum = j;       //DevList[i].Data1.SOENum æ˜¯æ ‡è®°å·²ç»å‘é€çš„ä¸ªæ•°(æˆ–è€…å·²ç»å¤„ç†çš„ä¸ªæ•°ï¼‰ï¼Œç”¨äºå¯¹SOEè¯»æŒ‡é’ˆè¿›è¡Œæ§åˆ¶
                 *pTxVSQ=SendNum;
 
                 *LengthOut = Len;      
@@ -4706,14 +4706,14 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
                 else
                     *AppCommand=APP_SENDDATA;
 
-                //ÅĞ¶ÏÊÇ·ñÓĞºóĞøÊı¾İÒª·¢ËÍ
+                //åˆ¤æ–­æ˜¯å¦æœ‰åç»­æ•°æ®è¦å‘é€
                 if(DevList[i].Flag)
                 {
                     if(WritePtr != DevList[i].RealWin->BIETimRP+j)
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveSOE);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 else
@@ -4722,15 +4722,15 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
                     {
                         HaveData = TRUE;
                         //Data1.Flag&=(~HaveSOE);
-                        //SetUDataFlag();//¼ì²âÆäËûÉè±¸ÊÇ·ñÓĞCOS¡¢SOEµÈ //ll feng 2012-6-6 ½â¾ö·¢ËÍ×îºóÒ»ÌõSOEÊ±ÖÃÎ»ACD±êÖ¾£¬µ«ÊÇÖ÷Õ¾Ñ¯ÎÊÒ»¼¶Êı¾İÊ±£¬ÓÖ»Ø´ğÎŞÊı¾İ
+                        //SetUDataFlag();//æ£€æµ‹å…¶ä»–è®¾å¤‡æ˜¯å¦æœ‰COSã€SOEç­‰ //ll feng 2012-6-6 è§£å†³å‘é€æœ€åä¸€æ¡SOEæ—¶ç½®ä½ACDæ ‡å¿—ï¼Œä½†æ˜¯ä¸»ç«™è¯¢é—®ä¸€çº§æ•°æ®æ—¶ï¼Œåˆå›ç­”æ— æ•°æ®
                     }
                 }
                 
             }
             else
             {
-                //×ßµ½ÕâÀïÊôÓÚÒì³£Çé¿ö
-                *LengthOut = 0;     //±íÊ¾Ã»ÓĞÊı¾İĞèÒª·¢ËÍ
+                //èµ°åˆ°è¿™é‡Œå±äºå¼‚å¸¸æƒ…å†µ
+                *LengthOut = 0;     //è¡¨ç¤ºæ²¡æœ‰æ•°æ®éœ€è¦å‘é€
             	if(j>0)
                 {
                 	DevList[i].Data1.SOENum=j;
@@ -4744,11 +4744,11 @@ BOOL CSecAppSev::EnCodeSOE_ALLDBI(void) //±à¼­SOE
     return(HaveData);
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCodeGXReadParaConf
-º¯Êı¹¦ÄÜ£º  »Ø¸´ÕÙ»½²ÎÊı±¨ÎÄ¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      Ö÷Õ¾ÕÙ»½²ÎÊıÊ±£¬ÏÈ»Ø¸´´Ë±¨ÎÄ£¬Ö®ºóÔÙ×éÖ¯²ÎÊıÉÏËÍ±¨ÎÄ¡£
+å‡½æ•°åç§°ï¼š  EnCodeGXReadParaConf
+å‡½æ•°åŠŸèƒ½ï¼š  å›å¤å¬å”¤å‚æ•°æŠ¥æ–‡ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      ä¸»ç«™å¬å”¤å‚æ•°æ—¶ï¼Œå…ˆå›å¤æ­¤æŠ¥æ–‡ï¼Œä¹‹åå†ç»„ç»‡å‚æ•°ä¸Šé€æŠ¥æ–‡ã€‚
 /------------------------------------------------------------------*/
 void CSecAppSev::EnCodeGXReadParaConf(void)
 {
@@ -4777,11 +4777,11 @@ void CSecAppSev::EnCodeGXReadParaConf(void)
         *AppCommand=APP_SENDCON;
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCodeGXReadParaEnd
-º¯Êı¹¦ÄÜ£º  ¶Á²ÎÊı½áÊø¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      ½«²ÎÊı·¢ËÍÍê±Ïºó£¬ÒÔ´ËÖ¡±¨ÎÄ½áÊø¡£
+å‡½æ•°åç§°ï¼š  EnCodeGXReadParaEnd
+å‡½æ•°åŠŸèƒ½ï¼š  è¯»å‚æ•°ç»“æŸã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      å°†å‚æ•°å‘é€å®Œæ¯•åï¼Œä»¥æ­¤å¸§æŠ¥æ–‡ç»“æŸã€‚
 /------------------------------------------------------------------*/
 void CSecAppSev::EnCodeGXReadParaEnd(void)
 {
@@ -4805,7 +4805,7 @@ void CSecAppSev::EnCodeGXReadParaEnd(void)
     if(BalanMode)
         *AppCommand=APP_SENDCON;
 }
-void CSecAppSev::EnCodeAllDataConf(void)//×ÜÕÙ»½È·ÈÏÖ¡
+void CSecAppSev::EnCodeAllDataConf(void)//æ€»å¬å”¤ç¡®è®¤å¸§
 {
     TxMsg[0]=C_IC_NA;
 
@@ -4819,7 +4819,7 @@ void CSecAppSev::EnCodeAllDataConf(void)//×ÜÕÙ»½È·ÈÏÖ¡
     *(pTxInfoAddr+1)=0;
     TxMsg[CotLocation]=ACTCON;
 
-    *pTxData=GroupTrn.COT;//INTROGEN=20£¬ÏìÓ¦×ÜÕÙ»½¡ª¡ª×ÜÕÙ»½ÏŞ¶¨´Ê»ò·Ö×éÏŞ¶¨´Ê
+    *pTxData=GroupTrn.COT;//INTROGEN=20ï¼Œå“åº”æ€»å¬å”¤â€”â€”æ€»å¬å”¤é™å®šè¯æˆ–åˆ†ç»„é™å®šè¯
     *LengthOut=AsduHeadLength+1;
     *AppCommand=APP_SENDDATA;
     *AppCommand|=APP_HAVEDATA1;
@@ -4828,18 +4828,18 @@ void CSecAppSev::EnCodeAllDataConf(void)//×ÜÕÙ»½È·ÈÏÖ¡
 }
 
 
-BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
+BOOL CSecAppSev::ProcAllData(void) //å¤„ç†å…¨æ•°æ®
 {
     INT16U BeginNo,EndNo,Num,i,Len;
     INT16U yx=0;
     INT16U yc=0;
-    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))//1¡ª¡ª8×é£¬Ò£ĞÅ
+    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))//1â€”â€”8ç»„ï¼Œé¥ä¿¡
     {
-        if (CheckAndModifyGroup())  //¼ì²âĞÅÏ¢ÌåµØÖ·£¬×éºÅ
+        if (CheckAndModifyGroup())  //æ£€æµ‹ä¿¡æ¯ä½“åœ°å€ï¼Œç»„å·
         {
-            BeginNo=GroupTrn.InfoAddr-LBIinfoaddr;  //ÆğÊ¼µãºÅ0
+            BeginNo=GroupTrn.InfoAddr-LBIinfoaddr;  //èµ·å§‹ç‚¹å·0
 
-            for(i=0;i<GroupTrn.GroupNo;i++)     //yx = ÒÑ·¢ËÍºÍ×¼±¸·¢ËÍ×éµÄ×Ü¸öÊı
+            for(i=0;i<GroupTrn.GroupNo;i++)     //yx = å·²å‘é€å’Œå‡†å¤‡å‘é€ç»„çš„æ€»ä¸ªæ•°
                 yx+=Sec101Pad.GroupNum[i];
             EndNo=yx-1;
             
@@ -4847,38 +4847,38 @@ BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
                 EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1;
                 
             Len=EnCodeAllData(BeginNo,EndNo,&Num);
-            if (Len!=0)//´ÓÊı¾İ¿âÈ¡Êı¾İ£¬²¢·¢µ½Á´Â·²ã¡£NumÎªÊµ¼Ê·¢ËÍµÄÊı¾İµ¥Ôª¡£
+            if (Len!=0)//ä»æ•°æ®åº“å–æ•°æ®ï¼Œå¹¶å‘åˆ°é“¾è·¯å±‚ã€‚Numä¸ºå®é™…å‘é€çš„æ•°æ®å•å…ƒã€‚
             {
                 GroupTrn.First=FALSE;
-                BeginNo+=Num;//ÆğÊ¼µãºÅºóÒÆ£¬NumÎªÒÑ¾­·¢ËÍµÄÊıÄ¿¡£
+                BeginNo+=Num;//èµ·å§‹ç‚¹å·åç§»ï¼ŒNumä¸ºå·²ç»å‘é€çš„æ•°ç›®ã€‚
                 GroupTrn.InfoAddr=BeginNo+LBIinfoaddr;
 
-                if(BeginNo < DevList[GroupTrn.DevIndex].DevData.BINum)  //BeginNoÔÚÈ«²¿·¢ËÍÍê»á³¬¹ıBINum£¬ËùÒÔÒªÊ×ÏÈÅĞ¶ÏBeginNoºÏ·¨ĞÔ
+                if(BeginNo < DevList[GroupTrn.DevIndex].DevData.BINum)  //BeginNoåœ¨å…¨éƒ¨å‘é€å®Œä¼šè¶…è¿‡BINumï¼Œæ‰€ä»¥è¦é¦–å…ˆåˆ¤æ–­BeginNoåˆæ³•æ€§
                 {
-                    if(YXGroupNo[BeginNo] != GroupTrn.GroupNo)//Ç°Ò»×é·¢Íê£¬ÕâÀï¿ØÖÆ°´×é·¢ËÍ
+                    if(YXGroupNo[BeginNo] != GroupTrn.GroupNo)//å‰ä¸€ç»„å‘å®Œï¼Œè¿™é‡Œæ§åˆ¶æŒ‰ç»„å‘é€
                     {
                         GroupTrn.GroupNo = YXGroupNo[BeginNo];
-                        if ((GroupTrn.COT!=INTROGEN) && (GroupTrn.COT!=BACK))//Èç¹ûÊÇ·Ö×éÕÙ»½£¬ÔòËµÃ÷Ö÷Õ¾ÕÙ»½µÄÄÇ×éÊı¾İÒÑ¾­·¢Íê¡£
+                        if ((GroupTrn.COT!=INTROGEN) && (GroupTrn.COT!=BACK))//å¦‚æœæ˜¯åˆ†ç»„å¬å”¤ï¼Œåˆ™è¯´æ˜ä¸»ç«™å¬å”¤çš„é‚£ç»„æ•°æ®å·²ç»å‘å®Œã€‚
                         {
-                            GroupTrn.GroupNo=17;//·¢½áÊøÖ¡
+                            GroupTrn.GroupNo=17;//å‘ç»“æŸå¸§
                         }
                     }
                 }
 
                 return TRUE;
             }
-            else//Ã»ÓĞ·¢Êı¾İ£¬»òÒ£ĞÅÊı¾İÒÑ¾­·¢Íê¡£
+            else//æ²¡æœ‰å‘æ•°æ®ï¼Œæˆ–é¥ä¿¡æ•°æ®å·²ç»å‘å®Œã€‚
             {
-                if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//±³¾°Êı¾İ»ò×ÜÕÙ»½£¬½«ÏÂÒ»×éºÅÉèÖÃÎª9¡ª¡ªÒ£²â
+                if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//èƒŒæ™¯æ•°æ®æˆ–æ€»å¬å”¤ï¼Œå°†ä¸‹ä¸€ç»„å·è®¾ç½®ä¸º9â€”â€”é¥æµ‹
                     GroupTrn.GroupNo=9;
-                else//·ñÔòÉèÖÃÎª17¡ª¡ª±¸ÓÃ¡£
+                else//å¦åˆ™è®¾ç½®ä¸º17â€”â€”å¤‡ç”¨ã€‚
                     GroupTrn.GroupNo=17;
 
             }
         }
     }
 
-    if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=12))//9¡ª¡ª12×é£¬Ò£²â£»×¢ÊÍ²Î¿¼ÉÏÃæÒ£ĞÅµÄ
+    if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=12))//9â€”â€”12ç»„ï¼Œé¥æµ‹ï¼›æ³¨é‡Šå‚è€ƒä¸Šé¢é¥ä¿¡çš„
     {
         if (CheckAndModifyGroup())
         {
@@ -4898,25 +4898,25 @@ BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
                 if (GroupTrn.GroupNo!=YCGroupNo[GroupTrn.InfoAddr-LAI]&&(BeginNo<DevList[GroupTrn.DevIndex].DevData.AINum))
                 {
                     GroupTrn.GroupNo=YCGroupNo[GroupTrn.InfoAddr-LAI];
-                    if ((GroupTrn.COT!=INTROGEN)&&(GroupTrn.COT!=BACK))//·Ö×éÕÙ»½
+                    if ((GroupTrn.COT!=INTROGEN)&&(GroupTrn.COT!=BACK))//åˆ†ç»„å¬å”¤
                         GroupTrn.GroupNo=17;
                 }
                 return TRUE;
             }
             else
             {
-                if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//±³¾°Êı¾İ»ò×ÜÕÙ»½
+                if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//èƒŒæ™¯æ•°æ®æˆ–æ€»å¬å”¤
                     GroupTrn.GroupNo=17;
                 else
                     GroupTrn.GroupNo=17;
             }
         }
     }
-    if(GroupTrn.GroupNo==13)//²ÎÊıĞÅÏ¢£¬Ã»ÓĞ¸Ä×éÊı¾İwjr2009.8.31
+    if(GroupTrn.GroupNo==13)//å‚æ•°ä¿¡æ¯ï¼Œæ²¡æœ‰æ”¹ç»„æ•°æ®wjr2009.8.31
     {
         GroupTrn.GroupNo=17;    
     }    
-    if (GroupTrn.GroupNo==14)//²ÎÊıĞÅÏ¢£¬Ö»ÓĞ·Ö×éÕÙ»½
+    if (GroupTrn.GroupNo==14)//å‚æ•°ä¿¡æ¯ï¼Œåªæœ‰åˆ†ç»„å¬å”¤
     {
         if (CheckAndModifyGroup())
         {
@@ -4939,7 +4939,7 @@ BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
         }
     }
 
-    if (GroupTrn.GroupNo==15)//²½Î»ÖÃĞÅÏ¢
+    if (GroupTrn.GroupNo==15)//æ­¥ä½ç½®ä¿¡æ¯
     {
         if (CheckAndModifyGroup())
         {
@@ -4963,10 +4963,10 @@ BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
         }
     }
 
-    if (GroupTrn.GroupNo==16)//×ÓÕ¾Ô¶¶¯ÖÕ¶Ë×´Ì¬
+    if (GroupTrn.GroupNo==16)//å­ç«™è¿œåŠ¨ç»ˆç«¯çŠ¶æ€
     {
                 
-        //Ôö¼Ó¹ãÎ÷ÒªÇóµÄËÍsoe
+        //å¢åŠ å¹¿è¥¿è¦æ±‚çš„é€soe
         if (CheckAndModifyGroup())
         {
             if(EnCodeAllData(GroupTrn.SoeStartPtr,0,&Num) )
@@ -4978,9 +4978,9 @@ BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
             GroupTrn.GroupNo=17;
     }
 
-    if (GroupTrn.GroupNo>=17)//½áÊø´¦Àí
+    if (GroupTrn.GroupNo>=17)//ç»“æŸå¤„ç†
     {
-        if (GroupTrn.COT==BACK)//±³¾°Êı¾İ£¬ÎŞ½áÊøÖ¡
+        if (GroupTrn.COT==BACK)//èƒŒæ™¯æ•°æ®ï¼Œæ— ç»“æŸå¸§
         {
             GroupTrn.DevIndex++;
             if(GroupTrn.DevIndex>=DevCount)
@@ -4990,21 +4990,21 @@ BOOL CSecAppSev::ProcAllData(void) //´¦ÀíÈ«Êı¾İ
             }
             return FALSE;
         }
-        if(GroupTrn.COT==PERCYC)//µÚ12×é¿ÉÄÜÒÔÖÜÆÚÑ­»·Êı¾İ·¢ËÍ
+        if(GroupTrn.COT==PERCYC)//ç¬¬12ç»„å¯èƒ½ä»¥å‘¨æœŸå¾ªç¯æ•°æ®å‘é€
         {
             Data2Flag&=(~PerCycData);
             return FALSE;
         }
 
-        //×ÜÕÙ»½»ò·Ö×éÕÙ»½£¬Æ½ºâ·ÇÆ½ºâÄ£Ê½×ÜÕÙ»½¹ı³Ì´¦ÀíÒ»ÖÂ¡£
-        //if((GroupTrn.COT>=INTROGEN)&&(GroupTrn.COT<=INTRO16))//ÕâÑùµÄÅĞ¶ÏÔÚ×éºÅ·Ç·¨Ê±ÓĞÒş»¼¡£
+        //æ€»å¬å”¤æˆ–åˆ†ç»„å¬å”¤ï¼Œå¹³è¡¡éå¹³è¡¡æ¨¡å¼æ€»å¬å”¤è¿‡ç¨‹å¤„ç†ä¸€è‡´ã€‚
+        //if((GroupTrn.COT>=INTROGEN)&&(GroupTrn.COT<=INTRO16))//è¿™æ ·çš„åˆ¤æ–­åœ¨ç»„å·éæ³•æ—¶æœ‰éšæ‚£ã€‚
         {
             Data1.Flag&=(~CallAllData);
-            EnCodeGroupEnd();//·¢ËÍ½áÊø
+            EnCodeGroupEnd();//å‘é€ç»“æŸ
             
             FirstCallAllData = 0xff;
 
-            if (GetNextDev())   //£¿£¿£¿£¿ÔõÃ´»¹»áÓĞÆäËûÖÕ¶ËÄØ ll
+            if (GetNextDev())   //ï¼Ÿï¼Ÿï¼Ÿï¼Ÿæ€ä¹ˆè¿˜ä¼šæœ‰å…¶ä»–ç»ˆç«¯å‘¢ ll
             {
                 EditAllDataCon=0xff;
                 Data1.Flag|=CallAllData;
@@ -5024,29 +5024,29 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
     INT16U yx=0;
     INT16U wptr;
     
-    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))//1¡ª¡ª8×éÎªÒ£ĞÅ
+    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))//1â€”â€”8ç»„ä¸ºé¥ä¿¡
     {
         
         for(i=0;i<GroupTrn.GroupNo;i++)
-            yx+=Sec101Pad.GroupNum[i];      //yx = ÒÑ·¢ËÍºÍ×¼±¸·¢ËÍ×éµÄ×Ü¸öÊı
+            yx+=Sec101Pad.GroupNum[i];      //yx = å·²å‘é€å’Œå‡†å¤‡å‘é€ç»„çš„æ€»ä¸ªæ•°
         
         
-        if(GroupTrn.InfoAddr<(yx-Sec101Pad.GroupNum[GroupTrn.GroupNo-1]+LBIinfoaddr))       //·Ö×éÕÙ»½¡£yxÊÇËùÓĞ×éµÄºÍ£¬¼õÈ¥×îºóÒ»×éµÄÒ£ĞÅ¸öÊı
+        if(GroupTrn.InfoAddr<(yx-Sec101Pad.GroupNum[GroupTrn.GroupNo-1]+LBIinfoaddr))       //åˆ†ç»„å¬å”¤ã€‚yxæ˜¯æ‰€æœ‰ç»„çš„å’Œï¼Œå‡å»æœ€åä¸€ç»„çš„é¥ä¿¡ä¸ªæ•°
             GroupTrn.InfoAddr=(yx-Sec101Pad.GroupNum[GroupTrn.GroupNo-1]+LBIinfoaddr);
-        else if(GroupTrn.InfoAddr > (yx-1+LBIinfoaddr))   //ÕâÀïÊÇÆôÊ²Ã´×÷ÓÃ£¿
+        else if(GroupTrn.InfoAddr > (yx-1+LBIinfoaddr))   //è¿™é‡Œæ˜¯å¯ä»€ä¹ˆä½œç”¨ï¼Ÿ
         {
             if(GroupTrn.InfoAddr < DevList[GroupTrn.DevIndex].DevData.BINum+LBIinfoaddr)
                 GroupTrn.GroupNo=YXGroupNo[GroupTrn.InfoAddr-LBIinfoaddr];
         }
 
         Num = GroupTrn.InfoAddr-LBIinfoaddr+1;
-        if ((Num>DevList[GroupTrn.DevIndex].DevData.BINum)||(GroupTrn.InfoAddr>HBI))//Èç¹ûÃ»ÓĞÒ£ĞÅ£¬»òÈÏÎª¸ÃÉè±¸Ò£ĞÅÒÑ¾­·¢ËÍÍê
+        if ((Num>DevList[GroupTrn.DevIndex].DevData.BINum)||(GroupTrn.InfoAddr>HBI))//å¦‚æœæ²¡æœ‰é¥ä¿¡ï¼Œæˆ–è®¤ä¸ºè¯¥è®¾å¤‡é¥ä¿¡å·²ç»å‘é€å®Œ
         {
-            if(GetDBINum()) //¼ì²âÊÇ·ñÅäÖÃË«µãÒ£ĞÅ
+            if(GetDBINum()) //æ£€æµ‹æ˜¯å¦é…ç½®åŒç‚¹é¥ä¿¡
             {
                 if((GroupTrn.COT==INTROGEN) && (GroupTrn.HaveSendDBI==FALSE))
                 {
-                    //Èç¹ûÊÇ×ÜÕĞÇÒË«µãÒ£ĞÅÃ»ËÍ£¬Ôò×éÖ¯Ë«µãÒ£ĞÅ¡£·Ö×éÕÙ»½²»ËÍË«µãÒ£ĞÅ
+                    //å¦‚æœæ˜¯æ€»æ‹›ä¸”åŒç‚¹é¥ä¿¡æ²¡é€ï¼Œåˆ™ç»„ç»‡åŒç‚¹é¥ä¿¡ã€‚åˆ†ç»„å¬å”¤ä¸é€åŒç‚¹é¥ä¿¡
                     GroupTrn.InfoAddr = LBIinfoaddr;
                     GroupTrn.GroupNo = 1;
                     GroupTrn.HaveSendDBI = TRUE;
@@ -5055,17 +5055,17 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
                 }
                 
             }
-            if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//Èç¹ûÊÇÑ­»··¢ËÍ»òÏìÓ¦×ÜÕÙ»½½«×éºÅË³ÑÓ
-                GroupTrn.GroupNo=9;//ÉèÖÃÎªÒ£²âÆğÊ¼×éºÅ
+            if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//å¦‚æœæ˜¯å¾ªç¯å‘é€æˆ–å“åº”æ€»å¬å”¤å°†ç»„å·é¡ºå»¶
+                GroupTrn.GroupNo=9;//è®¾ç½®ä¸ºé¥æµ‹èµ·å§‹ç»„å·
             else
-                GroupTrn.GroupNo=17;//µÚ17×éÎª±¸ÓÃ
+                GroupTrn.GroupNo=17;//ç¬¬17ç»„ä¸ºå¤‡ç”¨
 
             return(FALSE);
         }
         return(TRUE);
     }
 
-    if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=12))//9¡ª¡ª12×éÎªÒ£²â
+    if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=12))//9â€”â€”12ç»„ä¸ºé¥æµ‹
     {
         for(i=8;i<GroupTrn.GroupNo;i++)
             yc+=Sec101Pad.GroupNum[i];
@@ -5076,10 +5076,10 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
             GroupTrn.GroupNo=YCGroupNo[GroupTrn.InfoAddr-LAI];
 
         Num=GroupTrn.InfoAddr-LAI+1;
-        if ((Num>DevList[GroupTrn.DevIndex].DevData.AINum)||(GroupTrn.InfoAddr>HAI))//Ò£²âÒÑ¾­·¢ËÍÍê,
+        if ((Num>DevList[GroupTrn.DevIndex].DevData.AINum)||(GroupTrn.InfoAddr>HAI))//é¥æµ‹å·²ç»å‘é€å®Œ,
         {
-            if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//Èç¹ûÊÇ±³¾°Êı¾İ»òÏìÓ¦×ÜÕÙ»½½«×éºÅË³ÑÓ
-                GroupTrn.GroupNo=17;    //Ìø×ªµ½½áÊø
+            if ((GroupTrn.COT==BACK)||(GroupTrn.COT==INTROGEN))//å¦‚æœæ˜¯èƒŒæ™¯æ•°æ®æˆ–å“åº”æ€»å¬å”¤å°†ç»„å·é¡ºå»¶
+                GroupTrn.GroupNo=17;    //è·³è½¬åˆ°ç»“æŸ
             else
                 GroupTrn.GroupNo=17;
             return(FALSE);
@@ -5087,13 +5087,13 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
         return(TRUE);
     }
 
-    if (GroupTrn.GroupNo==14)//14×é¡ª¡ª²ÎÊıÒ£²âµÄÃÅÏŞÖµ£¬ÉÏÏÂÏŞ£»·Ö×éÕÙ»½Ê±·¢ËÍ£¬×ÜÕÙ»½»ò±³¾°Êı¾İ²»·¢¡£
+    if (GroupTrn.GroupNo==14)//14ç»„â€”â€”å‚æ•°é¥æµ‹çš„é—¨é™å€¼ï¼Œä¸Šä¸‹é™ï¼›åˆ†ç»„å¬å”¤æ—¶å‘é€ï¼Œæ€»å¬å”¤æˆ–èƒŒæ™¯æ•°æ®ä¸å‘ã€‚
     {
-        //²ÎÊıĞÅÏ¢ÌåµØÖ·¼ì²â
+        //å‚æ•°ä¿¡æ¯ä½“åœ°å€æ£€æµ‹
         if (GroupTrn.InfoAddr<LPARA)//LPARA=0x5001
             GroupTrn.InfoAddr=LPARA;
         Num=GroupTrn.InfoAddr-LPARA+1;
-        if ((Num>DevList[GroupTrn.DevIndex].DevData.AINum*3)||(GroupTrn.InfoAddr>HPARA))//Ã¿¸öÒ£²â3¸ö²ÎÊı£ºÃÅÏŞ¡¢ÉÏÏŞ¡¢ÏÂÏŞ
+        if ((Num>DevList[GroupTrn.DevIndex].DevData.AINum*3)||(GroupTrn.InfoAddr>HPARA))//æ¯ä¸ªé¥æµ‹3ä¸ªå‚æ•°ï¼šé—¨é™ã€ä¸Šé™ã€ä¸‹é™
         {
             GroupTrn.GroupNo=17;
             return(FALSE);
@@ -5101,7 +5101,7 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
         return(TRUE);
     }
 
-    if (GroupTrn.GroupNo==15)//15×é¡ª¡ª²½Î»ÖÃĞÅÏ¢
+    if (GroupTrn.GroupNo==15)//15ç»„â€”â€”æ­¥ä½ç½®ä¿¡æ¯
     {
         if (GroupTrn.InfoAddr<LSPI)//LSPI=0x6601
             GroupTrn.InfoAddr=LSPI;
@@ -5118,7 +5118,7 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
         return(TRUE);
     }
 
-    if (GroupTrn.GroupNo==16)//16×é¡ª¡ª×ÓÕ¾×´Ì¬
+    if (GroupTrn.GroupNo==16)//16ç»„â€”â€”å­ç«™çŠ¶æ€
     {
         if(GroupTrn.First == TRUE)
         {
@@ -5130,7 +5130,7 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
                 if(wptr > Num)
                 {
                     wptr = wptr%Num;
-                    //×î½ü100Ìõ
+                    //æœ€è¿‘100æ¡
                     if(wptr >100) 
                         GroupTrn.SoeStartPtr = wptr-100;
                     else
@@ -5145,12 +5145,12 @@ BOOL CSecAppSev::CheckAndModifyGroup(void)
 
                 }
                 
-                logSysMsgNoTime("101soeÕÙ»½µ÷ÊÔ start=%d, wptr=%d,max=%d",GroupTrn.SoeStartPtr,wptr,Num,0);
+                logSysMsgNoTime("101soeå¬å”¤è°ƒè¯• start=%d, wptr=%d,max=%d",GroupTrn.SoeStartPtr,wptr,Num,0);
             }
             else
             {
-                //´íÎó
-                logSysMsgNoTime("101soeÕÙ»½´íÎó wptr=%d,max=%d",wptr,Num,0,0);
+                //é”™è¯¯
+                logSysMsgNoTime("101soeå¬å”¤é”™è¯¯ wptr=%d,max=%d",wptr,Num,0,0);
                 return FALSE;
             }
             
@@ -5196,38 +5196,38 @@ INT8U CSecAppSev::EnCodeAllData(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     *pTxInfoAddr    =LOBYTE((GroupTrn.InfoAddr));
     *(pTxInfoAddr+1)=HIBYTE((GroupTrn.InfoAddr));
 
-    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))   //Ò£ĞÅ
+    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))   //é¥ä¿¡
     {
-        Len=EnCodeAllYX(GroupTrn.DevIndex,BeginNo,EndNo,pNum);//´ÓÊı¾İ¿âÈ¡Êı¾İ²¢×éÖ¯·¢ÏòÁ´Â·²ãµÄÏûÏ¢¡£·µ»ØÓ¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È£¬pNumÎªÊµ¼Ê·¢³öµÄÊı¾İµ¥ÔªÊıÄ¿¡£
+        Len=EnCodeAllYX(GroupTrn.DevIndex,BeginNo,EndNo,pNum);//ä»æ•°æ®åº“å–æ•°æ®å¹¶ç»„ç»‡å‘å‘é“¾è·¯å±‚çš„æ¶ˆæ¯ã€‚è¿”å›åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦ï¼ŒpNumä¸ºå®é™…å‘å‡ºçš„æ•°æ®å•å…ƒæ•°ç›®ã€‚
         //return(Len);
     }
-    else if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=12))    //Ò£²â
+    else if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=12))    //é¥æµ‹
     {
         Len=EnCodeAllYC(GroupTrn.DevIndex,BeginNo,EndNo,pNum);
         //return(Len);
     }
-    else if (GroupTrn.GroupNo==14)//²ÎÊıP_ME_NA\P_ME_NB\P_ME_NC
+    else if (GroupTrn.GroupNo==14)//å‚æ•°P_ME_NA\P_ME_NB\P_ME_NC
     {
         Len=EnCodeAllPara(GroupTrn.DevIndex,BeginNo,EndNo,pNum);
         //return(Len);
     }
     else if (GroupTrn.GroupNo==15)         //
     {
-        TxMsg[0]=M_ST_NA;  //5£¬²½Î»ÖÃĞÅÏ¢¡£
+        TxMsg[0]=M_ST_NA;  //5ï¼Œæ­¥ä½ç½®ä¿¡æ¯ã€‚
         (*pTxVSQ) &= ~VSQ_SQ;
 
-        //Len=EditTestSPI();//ÕâÌõÓï¾äºÍÏÂ±ßµÄifÓï¾ä²âÊÔÊ±´ò¿ª       ¸ù¾İcoverity¸ü¸Ä
+        //Len=EditTestSPI();//è¿™æ¡è¯­å¥å’Œä¸‹è¾¹çš„ifè¯­å¥æµ‹è¯•æ—¶æ‰“å¼€       æ ¹æ®coverityæ›´æ”¹
         /*if (Len)
         {
             *LengthOut=Len;
-            if (BalanMode)////Æ½ºâÄ£Ê½
+            if (BalanMode)////å¹³è¡¡æ¨¡å¼
             {
-                if(GroupTrn.COT==BACK)//±³¾°Êı¾İ
+                if(GroupTrn.COT==BACK)//èƒŒæ™¯æ•°æ®
                     *AppCommand=APP_SENDNOCON;
-                else//×ÜÕÙ»½»ò·Ö×é
+                else//æ€»å¬å”¤æˆ–åˆ†ç»„
                     *AppCommand=APP_SENDCON;
             }
-            else//·ÇÆ½ºâ·Ö×é»ò×ÜÕÙ»½»ò±³¾°
+            else//éå¹³è¡¡åˆ†ç»„æˆ–æ€»å¬å”¤æˆ–èƒŒæ™¯
             {
                 *AppCommand=APP_SENDDATA;
                 if(GroupTrn.COT!=BACK)//
@@ -5238,7 +5238,7 @@ INT8U CSecAppSev::EnCodeAllData(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     }
     else if (GroupTrn.GroupNo==16)         //
     {
-        Len = EnCodeAllLastSoe(BeginNo);  //ÕÙ»½×î½ü100ÌõSOE  Len ±íÊ¾±¾´ÎÊÇ·ñÓĞÊı¾İ·¢ËÍ
+        Len = EnCodeAllLastSoe(BeginNo);  //å¬å”¤æœ€è¿‘100æ¡SOE  Len è¡¨ç¤ºæœ¬æ¬¡æ˜¯å¦æœ‰æ•°æ®å‘é€
         
     }
     
@@ -5246,13 +5246,13 @@ INT8U CSecAppSev::EnCodeAllData(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCodeLastSoe()
-º¯Êı¹¦ÄÜ£º  ÉÏËÍ×î½üµÄ100ÌõSOE£¨¹ãÎ÷Ô¶³ÌÎ¬»¤£©
-ÊäÈëËµÃ÷£º  BeginNo soeÆğÊ¼Ö¸Õë
+å‡½æ•°åç§°ï¼š  EnCodeLastSoe()
+å‡½æ•°åŠŸèƒ½ï¼š  ä¸Šé€æœ€è¿‘çš„100æ¡SOEï¼ˆå¹¿è¥¿è¿œç¨‹ç»´æŠ¤ï¼‰
+è¾“å…¥è¯´æ˜ï¼š  BeginNo soeèµ·å§‹æŒ‡é’ˆ
             
-Êä³öËµÃ÷£º  FALSE ±íÊ¾Ã»Êı¾İÁË£¬Çå±êÖ¾£¬ 
-            TRUE ±íÊ¾»¹ÓĞÊı¾İÒª·¢ËÍ
-±¸×¢£º      BeginNo ³õÊ¼»¯Ê±È·¶¨ºÃÁË£¬±¾º¯Êı´ÓBeginNo·¢ËÍµ½½áÊø¼´¿É£¬Ã¿Ö¡×î¶à18Ö¡
+è¾“å‡ºè¯´æ˜ï¼š  FALSE è¡¨ç¤ºæ²¡æ•°æ®äº†ï¼Œæ¸…æ ‡å¿—ï¼Œ 
+            TRUE è¡¨ç¤ºè¿˜æœ‰æ•°æ®è¦å‘é€
+å¤‡æ³¨ï¼š      BeginNo åˆå§‹åŒ–æ—¶ç¡®å®šå¥½äº†ï¼Œæœ¬å‡½æ•°ä»BeginNoå‘é€åˆ°ç»“æŸå³å¯ï¼Œæ¯å¸§æœ€å¤š18å¸§
 /------------------------------------------------------------------*/
 INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
 {
@@ -5262,16 +5262,16 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
     struct BIEWithTimeData_t *p;
     struct Iec101ClockTime_t time;
     
-    BOOL HaveData=FALSE;        //ºóĞøÊÇ·ñÓĞÊı¾İ
+    BOOL HaveData=FALSE;        //åç»­æ˜¯å¦æœ‰æ•°æ®
     
     *LengthOut = 0;
     for (i=0;i<DevCount;i++)
     {
                 
-        //logSysMsgNoTime("SEC ±à¼­µ¥µãSOE¿ªÊ¼",0,0,0,0);//  debug ll
-        TxMsg[0]=M_SP_TA;   //´øÊ±±êµÄµ¥µãĞÅÏ¢
+        //logSysMsgNoTime("SEC ç¼–è¾‘å•ç‚¹SOEå¼€å§‹",0,0,0,0);//  debug ll
+        TxMsg[0]=M_SP_TA;   //å¸¦æ—¶æ ‡çš„å•ç‚¹ä¿¡æ¯
         if(Sec101Pad.SOEWithCP56Time == 1)
-            TxMsg[0]=M_SP_TB;   //´ø³¤Ê±±êµÄµ¥µãĞÅÏ¢
+            TxMsg[0]=M_SP_TB;   //å¸¦é•¿æ—¶æ ‡çš„å•ç‚¹ä¿¡æ¯
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
         (*pTxVSQ) = 0;
@@ -5289,27 +5289,27 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
             SendNum=0;
             FramePos = 0-InfoAddrSize;
             p=(struct BIEWithTimeData_t *)DBData;
-            Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+            Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
             
             j=0;
             while(j<Num)
             {
-                /*if(p->Status & BIDBI_STATUSE)    //SOEµÄ×´Ì¬Î»BIDBI_STATUSE£¨0x10£©±íÊ¾ÊÇË«µãÒ£ĞÅ
+                /*if(p->Status & BIDBI_STATUSE)    //SOEçš„çŠ¶æ€ä½BIDBI_STATUSEï¼ˆ0x10ï¼‰è¡¨ç¤ºæ˜¯åŒç‚¹é¥ä¿¡
                 {
                     DBIDBData[DBISOEnum]=(struct BIEWithTimeData_t)(*p);
                     DBISOEnum++;
                 	j++;
                 	p++;
                 }
-                else*/  //ÔİÊ±²»Ö§³ÖË«µãÒ£ĞÅ£¬Èç¹ûÒªÖ§³ÖÔÙ¿¼ÂÇ´ò¿ª
+                else*/  //æš‚æ—¶ä¸æ”¯æŒåŒç‚¹é¥ä¿¡ï¼Œå¦‚æœè¦æ”¯æŒå†è€ƒè™‘æ‰“å¼€
                 {
-                    //×´Ì¬×ª»»£ºÊı¾İ¿âÖĞµÄÒ£ĞÅD7Îª×´Ì¬£¬¹æÔ¼ÖĞD0Îª×´Ì¬
+                    //çŠ¶æ€è½¬æ¢ï¼šæ•°æ®åº“ä¸­çš„é¥ä¿¡D7ä¸ºçŠ¶æ€ï¼Œè§„çº¦ä¸­D0ä¸ºçŠ¶æ€
                     if(p->Status&0x80)
                         Status=1;
                     else
                         Status=0;
                     
-                    //Ğ´ĞÅÏ¢ÌåµØÖ·
+                    //å†™ä¿¡æ¯ä½“åœ°å€
                     if(FramePos < 0)
                     {
                         *pTxInfoAddr    =LOBYTE((p->No+LBIinfoaddr));
@@ -5317,31 +5317,31 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
                     }
                     else
                     {
-                        pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
-                        pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ĞÅÏ¢ÌåµØÖ·
+                        pTxData[FramePos]   = LOBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
+                        pTxData[FramePos+1] = HIBYTE(p->No+LBIinfoaddr);//ä¿¡æ¯ä½“åœ°å€
                         if(InfoAddrSize == 3)
-                            pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×îºÃ×Ö½ÚÎª0
+                            pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€å¥½å­—èŠ‚ä¸º0
                     }
                     FramePos += InfoAddrSize;
                     
-                    //Ğ´×´Ì¬
+                    //å†™çŠ¶æ€
                     if((p->Status&BIACTIVEFLAG)==0)
-                        pTxData[FramePos]=Status|P101_IV;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                        pTxData[FramePos]=Status|P101_IV;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                     else
-                        pTxData[FramePos]=Status;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                        pTxData[FramePos]=Status;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                         
                     if(p->Status&SUBSTITUTEDFLAG)
-                        pTxData[FramePos]|=P101_SB;//ÉèÖÃÒ£ĞÅ×´Ì¬×Ö½Ú
+                        pTxData[FramePos]|=P101_SB;//è®¾ç½®é¥ä¿¡çŠ¶æ€å­—èŠ‚
                     
                     FramePos++;
-                    //Ğ´Ê±¼ä
+                    //å†™æ—¶é—´
                     AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
     
                     pTxData[FramePos++] = LOBYTE(time.MSecond);
                     pTxData[FramePos++] = HIBYTE(time.MSecond);
                     pTxData[FramePos++] = time.Minute;
     
-                    if(TxMsg[0]==M_SP_TB)//³¤Ê±±ê
+                    if(TxMsg[0]==M_SP_TB)//é•¿æ—¶æ ‡
                     {
                         pTxData[FramePos++] = time.Hour;
                         pTxData[FramePos++] = time.Day;
@@ -5349,7 +5349,7 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
                         pTxData[FramePos++] = time.Year;
                     }
     
-                    SendNum++;//·¢ËÍ¸öÊı
+                    SendNum++;//å‘é€ä¸ªæ•°
                     p++;
                     j++;
                     
@@ -5366,10 +5366,10 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
             if(SendNum>0)
             {
                 
-                Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+                Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
                 LastDevIndex=i;
                 LastFrame=Polling;
-                DevList[i].Data1.SOENum = 0;       //DevList[i].Data1.SOENum ÊÇ±ê¼ÇÒÑ¾­·¢ËÍµÄ¸öÊı(»òÕßÒÑ¾­´¦ÀíµÄ¸öÊı£©£¬ÓÃÓÚ¶ÔSOE¶ÁÖ¸Õë½øĞĞ¿ØÖÆ
+                DevList[i].Data1.SOENum = 0;       //DevList[i].Data1.SOENum æ˜¯æ ‡è®°å·²ç»å‘é€çš„ä¸ªæ•°(æˆ–è€…å·²ç»å¤„ç†çš„ä¸ªæ•°ï¼‰ï¼Œç”¨äºå¯¹SOEè¯»æŒ‡é’ˆè¿›è¡Œæ§åˆ¶
                 *pTxVSQ=SendNum;
                                 
                 *LengthOut = Len;      
@@ -5378,14 +5378,14 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
                 else
                     *AppCommand=APP_SENDDATA;
 
-                //ÅĞ¶ÏÊÇ·ñÓĞºóĞøÊı¾İÒª·¢ËÍ
+                //åˆ¤æ–­æ˜¯å¦æœ‰åç»­æ•°æ®è¦å‘é€
                 GroupTrn.SoeStartPtr +=  SendNum;
                 
                 HaveData = TRUE;
                 
                 /*if(HaveData == FALSE)
                 {
-                    //µ¥µãÒ£ĞÅ¶¼´¦ÀíÍêÁË£¬ÔÙ´¦ÀíË«µãÒ£ĞÅ¡£ÕâÊ±Èç¹ûË«µãÒ£ĞÅ³öÏÖÎÊÌâ£¬ÈİÒ×ËÍ²»µ½Ö÷Õ¾
+                    //å•ç‚¹é¥ä¿¡éƒ½å¤„ç†å®Œäº†ï¼Œå†å¤„ç†åŒç‚¹é¥ä¿¡ã€‚è¿™æ—¶å¦‚æœåŒç‚¹é¥ä¿¡å‡ºç°é—®é¢˜ï¼Œå®¹æ˜“é€ä¸åˆ°ä¸»ç«™
                     if(DBISOEnum >0)
                     {
                         HaveData = TRUE;
@@ -5400,7 +5400,7 @@ INT16U CSecAppSev::EnCodeAllLastSoe(INT16U BeginNo)
     
     /*if((DBISOEnum>0) && (*LengthOut==0))
     {
-        //ÏÈ·¢ËÍµ¥µã£¬ËùÓĞµ¥µã¶¼·¢ËÍÍêÁË£¬ÔÙ·¢ËÍDBI³öÈ¥¡£
+        //å…ˆå‘é€å•ç‚¹ï¼Œæ‰€æœ‰å•ç‚¹éƒ½å‘é€å®Œäº†ï¼Œå†å‘é€DBIå‡ºå»ã€‚
         EnCodeDBISOE(); 
         
         if(DBISOEnum > 0)
@@ -5413,7 +5413,7 @@ void CSecAppSev::EnCodeLC()
 {
     switch(StoreRxTypeID)
     {
-        case C_LC_CALL_YC_YX:    //¿ØÖÆ·½ÏòÒº¾§ÕÙ»½Ò£²âÒ£ĞÅÊı¾İ
+        case C_LC_CALL_YC_YX:    //æ§åˆ¶æ–¹å‘æ¶²æ™¶å¬å”¤é¥æµ‹é¥ä¿¡æ•°æ®
             switch(Qoi)
             {
                 case SUMMON_YX:
@@ -5440,7 +5440,7 @@ void CSecAppSev::EnCodeLC()
                     break;          
             }
             break;
-        case C_LC_CALL_SYSINFO_SOE:  //¿ØÖÆ·½ÏòÒº¾§ÕÙ»½ÏµÍ³ĞÅÏ¢¼°SOE
+        case C_LC_CALL_SYSINFO_SOE:  //æ§åˆ¶æ–¹å‘æ¶²æ™¶å¬å”¤ç³»ç»Ÿä¿¡æ¯åŠSOE
             switch(Qoi)
             {
                 case SUMMON_SYS_INFO:
@@ -5453,7 +5453,7 @@ void CSecAppSev::EnCodeLC()
                     break;    
             }
             break;
-        case C_LC_CALL_NAME_VER_CLOCK:  //¿ØÖÆ·½ÏòÒº¾§ÕÙ»½Ò£ĞÅÃû³Æ¡¢Ò£²âÃû³Æ¡¢°æ±¾ĞÅÏ¢¡¢Ê±ÖÓĞÅÏ¢
+        case C_LC_CALL_NAME_VER_CLOCK:  //æ§åˆ¶æ–¹å‘æ¶²æ™¶å¬å”¤é¥ä¿¡åç§°ã€é¥æµ‹åç§°ã€ç‰ˆæœ¬ä¿¡æ¯ã€æ—¶é’Ÿä¿¡æ¯
             switch(Qoi)
             {
                 case SUMMON_YX_NAME:
@@ -5486,7 +5486,7 @@ void CSecAppSev::EnCodeLC()
                     break;   
             }
             break;
-        /*case C_LC_FAULT_RESET:     //Òº¾§¸´Î»¹ÊÕÏÃüÁî
+        /*case C_LC_FAULT_RESET:     //æ¶²æ™¶å¤ä½æ•…éšœå‘½ä»¤
             switch(Qoi)
             {
                 case FAULT_RESET:
@@ -5539,9 +5539,9 @@ INT8U CSecAppSev::EnCodeLCSysInfo(INT16U DevIndex,WORD OffSet,WORD Num)
     struct ErrorInfoMsg_t *pErrMsg;
     TempWriPtr = ErrorBuf->WriPtr;
     TempError =  ErrorBuf->Error;   
-    TxMsg[0] = C_LC_CALL_SYSINFO_SOE;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_SYSINFO_SOE;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = VSQ_SQ;
-    //logSysMsgNoTime("ÕÙ»½ÏµÍ³ĞÅÏ¢",0,0,0,0);
+    //logSysMsgNoTime("å¬å”¤ç³»ç»Ÿä¿¡æ¯",0,0,0,0);
     TxMsg[CotLocation]=0x07;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);    
@@ -5597,7 +5597,7 @@ INT8U CSecAppSev::EnCodeLCSysInfo(INT16U DevIndex,WORD OffSet,WORD Num)
     
     Len = (num == 0 ? 1 : num) * ERRORMSGLEN + AsduHeadLength;
     *LengthOut=Len;
-    if (!BalanMode)//Æ½ºâÄ£Ê½
+    if (!BalanMode)//å¹³è¡¡æ¨¡å¼
     {
         *AppCommand=APP_SENDDATA;
     }
@@ -5619,7 +5619,7 @@ INT8U CSecAppSev::EnCodeLCSOE(INT16U DevIndex,WORD OffSet,WORD Num)
     if(LC_LBuf_ReadSBIET(DevList[DevIndex].DevID,OffSet,Num,(struct BIEWithTimeData_t *)LCBuf,&InfoAddr) == -1)
         return(Len);
         
-    TxMsg[0] = C_LC_CALL_SYSINFO_SOE;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_SYSINFO_SOE;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = VSQ_SQ;
 
     TxMsg[CotLocation]=0x07;
@@ -5632,7 +5632,7 @@ INT8U CSecAppSev::EnCodeLCSOE(INT16U DevIndex,WORD OffSet,WORD Num)
     jj = 0;
     for(i = 0;i < Num;i++)
     {
-        //SOEµãºÅ
+        //SOEç‚¹å·
         if(TempBuf->Status == 0 && TempBuf->No == 0 && TempBuf->Time.Minute == 0 && TempBuf->Time.MSecond == 0)
         { 
             TempBuf++;
@@ -5644,9 +5644,9 @@ INT8U CSecAppSev::EnCodeLCSOE(INT16U DevIndex,WORD OffSet,WORD Num)
             *(pTxData + i * 10 + 1) =HIBYTE(TempBuf->No + 1);
             jj++;
         }
-        //SOE×´Ì¬
+        //SOEçŠ¶æ€
         *(pTxData + i * 10 + 2) = TempBuf->Status;
-        //SOEÊ±±ê
+        //SOEæ—¶æ ‡
         if(TempBuf->Time.Minute == 0 && TempBuf->Time.MSecond == 0)
             memset(&time,0,sizeof(struct Iec101ClockTime_t));
         else
@@ -5677,7 +5677,7 @@ INT8U CSecAppSev::EnCodeLCSOE(INT16U DevIndex,WORD OffSet,WORD Num)
     
     Len = (jj == 0 ? 1 : jj) * 10 + AsduHeadLength;
     *LengthOut=Len;
-    if (!BalanMode)//Æ½ºâÄ£Ê½
+    if (!BalanMode)//å¹³è¡¡æ¨¡å¼
     {
         *AppCommand=APP_SENDDATA;
     }
@@ -5699,7 +5699,7 @@ INT8U CSecAppSev::EnCodeLCCOS(INT16U DevIndex,WORD OffSet,WORD Num)
     if(LC_LBuf_ReadSBIENT(DevList[DevIndex].DevID,OffSet,Num,(struct BIEWithoutTimeData_t *)LCBuf,&InfoAddr) == -1)
         return(Len);
     
-    TxMsg[0] = C_LC_CALL_SYSINFO_SOE;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_SYSINFO_SOE;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = VSQ_SQ;
 
     TxMsg[CotLocation]=0x07;
@@ -5712,7 +5712,7 @@ INT8U CSecAppSev::EnCodeLCCOS(INT16U DevIndex,WORD OffSet,WORD Num)
     jj = 0;
     for(i = 0;i < Num;i++)
     {
-        //SOEµãºÅ
+        //SOEç‚¹å·
         if(TempBuf->Status == 0 && TempBuf->No == 0)
         {
             TempBuf++;
@@ -5725,7 +5725,7 @@ INT8U CSecAppSev::EnCodeLCCOS(INT16U DevIndex,WORD OffSet,WORD Num)
         {
             *(pTxData + i * 3) = LOBYTE(TempBuf->No + 1);
             *(pTxData + i * 3 + 1) =HIBYTE(TempBuf->No + 1);
-        //SOE×´Ì¬
+        //SOEçŠ¶æ€
             *(pTxData + i * 3 + 2) = TempBuf->Status;
             jj++;
         }
@@ -5748,7 +5748,7 @@ INT8U CSecAppSev::EnCodeLCCOS(INT16U DevIndex,WORD OffSet,WORD Num)
     
     Len = (jj == 0 ? 1 : jj) * 3 + AsduHeadLength;
     *LengthOut=Len;
-    if (!BalanMode)//Æ½ºâÄ£Ê½
+    if (!BalanMode)//å¹³è¡¡æ¨¡å¼
     {
         *AppCommand=APP_SENDDATA;
     }
@@ -5763,7 +5763,7 @@ INT8U CSecAppSev::EnCodeLCYcName_Discrete(INT16U DevIndex,INT16U Amount,INT16U *
     INT16U i,jj,Len = 0;
     INT8U *pTemp;
     INT16U num = 0;
-    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = 0x00;
 
     TxMsg[CotLocation]=0x07;
@@ -5810,7 +5810,7 @@ INT8U CSecAppSev::EnCodeLCYcName(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amo
     INT16U i,jj,Len = 0;
     INT8U *pTemp;
     INT16U num = 0;
-    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = 0x80;
 
     TxMsg[CotLocation]=0x07;
@@ -5855,7 +5855,7 @@ INT8U CSecAppSev::EnCodeLCYxName_Discrete(INT16U DevIndex,INT16U Amount,INT16U *
     INT16U i,jj,Len = 0;
     INT8U *pTemp;
     INT16U num = 0;
-    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = 0x00;
 
     TxMsg[CotLocation]=07;
@@ -5902,7 +5902,7 @@ INT8U CSecAppSev::EnCodeLCYxName(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amo
     INT16U i,jj,Len = 0;
     INT8U *pTemp;
     INT16U num = 0;
-    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = C_LC_CALL_NAME_VER_CLOCK;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = 0x80;
 
     TxMsg[CotLocation]=07;
@@ -5965,11 +5965,11 @@ INT8U CSecAppSev::EnCodeLCYX_Discrete(INT16U DevIndex,INT16U Amount,INT16U *YX_A
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
 
     devid=DevList[DevIndex].DevID;
-    //×éÖ¡·¢ËÍ
+    //ç»„å¸§å‘é€
     FramePos=0;
     SendNum=0;
     YxNum=0;
-    //Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    //Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
     
     for(i=0;i<Amount;i++)
     {
@@ -5979,12 +5979,12 @@ INT8U CSecAppSev::EnCodeLCYX_Discrete(INT16U DevIndex,INT16U Amount,INT16U *YX_A
     	EndNo = BeginNo;
     	CLBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
     	if((DBData[0]&BIACTIVEFLAG)==0)
-            pTxInfoObjectTemp[FramePos]=((DBData[0]&0x80)>>7)|P101_IV;//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬,ÖÃÎŞĞ§Î»
+            pTxInfoObjectTemp[FramePos]=((DBData[0]&0x80)>>7)|P101_IV;//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€,ç½®æ— æ•ˆä½
         else
-            pTxInfoObjectTemp[FramePos]=((DBData[0]&0x80)>>7);//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬
+            pTxInfoObjectTemp[FramePos]=((DBData[0]&0x80)>>7);//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€
             
         if(DBData[0]&SUBSTITUTEDFLAG)
-            pTxInfoObjectTemp[FramePos]|=P101_SB;//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬,ÖÃÎŞĞ§Î»
+            pTxInfoObjectTemp[FramePos]|=P101_SB;//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€,ç½®æ— æ•ˆä½
         
             
         FramePos++;
@@ -6013,7 +6013,7 @@ INT8U CSecAppSev::EnCodeLCYX(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
     short ByteNum,Length,SendNum,FramePos,YxNum;
     INT16U BeginNo = FirstInfoAddr - 1;
     INT16U EndNo = BeginNo + Amount - 1;
-    TxMsg[0]= M_SP_NA;//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0]= M_SP_NA;//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = VSQ_SQ;
 
     TxMsg[CotLocation]=0x07;
@@ -6028,18 +6028,18 @@ INT8U CSecAppSev::EnCodeLCYX(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
     FramePos=0;
     SendNum=0;
     YxNum=0;
-    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
         
     ByteNum=CLBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
     for(i=0;i<ByteNum;i++)
     {
         if((DBData[i]&BIACTIVEFLAG)==0)
-            pTxData[FramePos]=((DBData[i]&0x80)>>7)|P101_IV;//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬,ÖÃÎŞĞ§Î»
+            pTxData[FramePos]=((DBData[i]&0x80)>>7)|P101_IV;//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€,ç½®æ— æ•ˆä½
         else
-            pTxData[FramePos]=((DBData[i]&0x80)>>7);//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬
+            pTxData[FramePos]=((DBData[i]&0x80)>>7);//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€
             
         if(DBData[i]&SUBSTITUTEDFLAG)
-            pTxData[FramePos]|=P101_SB;//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬,ÖÃÎŞĞ§Î»
+            pTxData[FramePos]|=P101_SB;//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€,ç½®æ— æ•ˆä½
         
             
         FramePos++;    
@@ -6080,8 +6080,8 @@ INT8U CSecAppSev::EnCodeLCYC_Discrete(INT16U DevIndex,INT16U Amount,INT16U *YC_A
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
 
     devid=DevList[DevIndex].DevID;
-    //×éÖ¡·¢ËÍ
-    //Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    //ç»„å¸§å‘é€
+    //Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
     FramePos=0;
     for(i = 0;i < Amount;i++)
     {
@@ -6099,10 +6099,10 @@ INT8U CSecAppSev::EnCodeLCYC_Discrete(INT16U DevIndex,INT16U Amount,INT16U *YC_A
 
     *pTxVSQ |= Amount;
 
-    Len=FramePos+AsduHeadLength-2;//Ó¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È
+    Len=FramePos+AsduHeadLength-2;//åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦
     if (Len)
     {
-        //Len=FramePos+AsduHeadLength-2;//Ó¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È
+        //Len=FramePos+AsduHeadLength-2;//åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦
         *LengthOut=Len;
          if(!BalanMode)
         {
@@ -6135,7 +6135,7 @@ INT8U CSecAppSev::EnCodeLCYC(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
 
     FramePos=0;
 
-    //È¡³öÊı¾İ
+    //å–å‡ºæ•°æ®
     No=BeginNo;
     while (No<=EndNo)
     {
@@ -6160,8 +6160,8 @@ INT8U CSecAppSev::EnCodeLCYC(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
         }
     }//end of (while (No<=EndNo))
 
-    //×éÖ¡·¢ËÍ
-    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    //ç»„å¸§å‘é€
+    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
     FramePos=0;
     No=BeginNo;
     while ((FramePos<Length)&&(!Stop))
@@ -6179,7 +6179,7 @@ INT8U CSecAppSev::EnCodeLCYC(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
         No++;
         if(No>EndNo)
             Stop=TRUE;
-        if (Num>=127)//Ã¿Ö¡²»³¬¹ı127¸öÊı¾İµ¥Ôª
+        if (Num>=127)//æ¯å¸§ä¸è¶…è¿‡127ä¸ªæ•°æ®å•å…ƒ
             Stop=TRUE;
     }
     if (FramePos<=0)
@@ -6187,10 +6187,10 @@ INT8U CSecAppSev::EnCodeLCYC(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
 
     *pTxVSQ |= Num;
 
-    Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È
+    Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦
     if (Len)
     {
-        Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È
+        Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦
         *LengthOut=Len;
          if(!BalanMode)
         {
@@ -6201,11 +6201,11 @@ INT8U CSecAppSev::EnCodeLCYC(INT16U DevIndex,INT16U FirstInfoAddr,INT16U Amount)
 }
 /*------------------------------------------------------------------------
 Procedure:     EnCodeLCFaultOrProtectPara
-Purpose:       ¸ù¾İÕÙ»½²ÎÊı½øĞĞ×éÖ¡
-Input:         DevIndex£¬Éè±¸µÄË÷ÒıºÅ£¬qoi±íÃ÷ÕÙ»½µÄ²ÎÊıÀàĞÍ£¬LCInforAddrÕÙ»½²ÎÊıÎÄ¼şµÄµØÖ·
-Output:ÎŞ            
+Purpose:       æ ¹æ®å¬å”¤å‚æ•°è¿›è¡Œç»„å¸§
+Input:         DevIndexï¼Œè®¾å¤‡çš„ç´¢å¼•å·ï¼Œqoiè¡¨æ˜å¬å”¤çš„å‚æ•°ç±»å‹ï¼ŒLCInforAddrå¬å”¤å‚æ•°æ–‡ä»¶çš„åœ°å€
+Output:æ—             
 Author:        lw
-Date:          2018.9.04¸ÄĞ´
+Date:          2018.9.04æ”¹å†™
 ------------------------------------------------------------------------*/
 void CSecAppSev::EnCodeLCFaultOrProtectPara(INT16U DevIndex,INT8U qoi,INT16U LCInforAddr)
 {
@@ -6279,9 +6279,9 @@ void CSecAppSev::EnCodeLCCommunicatePara(INT16U DevIndex,INT8U qoi,INT16U LCInfo
 }
 void CSecAppSev::EnCodeParaMirror(INT16U DevIndex,INT8U Length)
 {
-	TxMsg[0]=C_LC_SET_PARA;//151,Òº¾§Éè¶¨²ÎÊı
+	TxMsg[0]=C_LC_SET_PARA;//151,æ¶²æ™¶è®¾å®šå‚æ•°
     TxMsg[1]=filenum;
-    TxMsg[CotLocation]=07;//6£¬¼¤»î
+    TxMsg[CotLocation]=07;//6ï¼Œæ¿€æ´»
     
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
@@ -6296,9 +6296,9 @@ void CSecAppSev::EnCodeParaMirror(INT16U DevIndex,INT8U Length)
 }
 void CSecAppSev::EnCodeActivatePara(INT16U DevIndex)
 {
-	TxMsg[0]=C_LC_ACTIVATE_PARA;//103£¬Ê±ÖÓÍ¬²½
+	TxMsg[0]=C_LC_ACTIVATE_PARA;//103ï¼Œæ—¶é’ŸåŒæ­¥
     TxMsg[1]=1;
-    TxMsg[CotLocation]=07;//6£¬¼¤»î
+    TxMsg[CotLocation]=07;//6ï¼Œæ¿€æ´»
     
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
@@ -6314,9 +6314,9 @@ void CSecAppSev::EnCodeActivatePara(INT16U DevIndex)
 void CSecAppSev::EnCodeLightStatus(INT16U DevIndex)
 {
 	INT8U length;
-	TxMsg[0]=C_LC_PANEL_DRIVER;//103£¬Ê±ÖÓÍ¬²½
+	TxMsg[0]=C_LC_PANEL_DRIVER;//103ï¼Œæ—¶é’ŸåŒæ­¥
     TxMsg[1]=1;
-    TxMsg[CotLocation]=07;//6£¬¼¤»î
+    TxMsg[CotLocation]=07;//6ï¼Œæ¿€æ´»
     
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
@@ -6336,9 +6336,9 @@ void CSecAppSev::EnCodeLightStatus(INT16U DevIndex)
 void CSecAppSev::EnCodeSummonInfoOnBoot(INT16U DevIndex)
 {
 	INT8U length;
-	TxMsg[0]=C_LC_PANEL_DRIVER;//103£¬Ê±ÖÓÍ¬²½
+	TxMsg[0]=C_LC_PANEL_DRIVER;//103ï¼Œæ—¶é’ŸåŒæ­¥
     TxMsg[1]=1;
-    TxMsg[CotLocation]=07;//6£¬¼¤»î
+    TxMsg[CotLocation]=07;//6ï¼Œæ¿€æ´»
     
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
@@ -6359,9 +6359,9 @@ void CSecAppSev::EnCodeLCClock(INT16U DevIndex)
 {
     struct Iec101ClockTime_t time;
 
-    TxMsg[0]=C_LC_CALL_NAME_VER_CLOCK;//103£¬Ê±ÖÓÍ¬²½
+    TxMsg[0]=C_LC_CALL_NAME_VER_CLOCK;//103ï¼Œæ—¶é’ŸåŒæ­¥
     TxMsg[1]=1;
-    TxMsg[CotLocation]=07;//6£¬¼¤»î
+    TxMsg[CotLocation]=07;//6ï¼Œæ¿€æ´»
     
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DevIndex].Addr>>(8*jj);
@@ -6421,7 +6421,7 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
     INT8U Status;
     INT16U yxSendno;
 
-    TxMsg[0] = Sec101Pad.TypeID[GroupTrn.GroupNo-1];//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0] = Sec101Pad.TypeID[GroupTrn.GroupNo-1];//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     TxMsg[1] = VSQ_SQ;
     
     if(GroupTrn.HaveSendDBI == TRUE)
@@ -6445,8 +6445,8 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
     FramePos=0;
     SendNum=0;
     YxNum=0;
-    Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
-    if(TxMsg[0] == M_PS_NA)//20-³É×éµÄbit
+    Length = ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
+    if(TxMsg[0] == M_PS_NA)//20-æˆç»„çš„bit
     {
         if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBIT_ReadSBI(devid,BeginNo,EndNo,DBData, &SBINum);
@@ -6469,7 +6469,7 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
                 break;
         }
     }
-    else if(TxMsg[0]==M_SP_NA)//1-µ¥µãbyte
+    else if(TxMsg[0]==M_SP_NA)//1-å•ç‚¹byte
     {
         if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
@@ -6479,12 +6479,12 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
         for(i=0;i<ByteNum;i++)
         {
             SendNum++;
-            if((DBData[i] & BIDBI_STATUSE) == 0)    //·ÇË«µãÒ£ĞÅ£¬Ôò°´µ¥µãÒ£ĞÅ·¢ËÍ
+            if((DBData[i] & BIDBI_STATUSE) == 0)    //éåŒç‚¹é¥ä¿¡ï¼Œåˆ™æŒ‰å•ç‚¹é¥ä¿¡å‘é€
             {
                 if((DBData[i]&BIACTIVEFLAG)==0)
-                    pTxData[FramePos]=((DBData[i]&0x80)>>7)|P101_IV;//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬,ÖÃÎŞĞ§Î»
+                    pTxData[FramePos]=((DBData[i]&0x80)>>7)|P101_IV;//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€,ç½®æ— æ•ˆä½
                 else
-                    pTxData[FramePos]=((DBData[i]&0x80)>>7);//Êı¾İ¿âD7ÎªÒ£ĞÅ×´Ì¬
+                    pTxData[FramePos]=((DBData[i]&0x80)>>7);//æ•°æ®åº“D7ä¸ºé¥ä¿¡çŠ¶æ€
                     
                 if(DBData[i]&SUBSTITUTEDFLAG)
                     pTxData[FramePos]|=P101_SB;
@@ -6493,7 +6493,7 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
                 
                 YxNum++;
                 
-                if(YxNum == 1)  //¼ì²âµ½µÚ1¸öµ¥µãÒ£ĞÅ£¬ÔòĞŞÕıĞÅÏ¢ÌåµØÖ·£¨ÒòÎªÓĞ¿ÉÄÜµÚ1¸öÊÇË«µãÒ£ĞÅ£©
+                if(YxNum == 1)  //æ£€æµ‹åˆ°ç¬¬1ä¸ªå•ç‚¹é¥ä¿¡ï¼Œåˆ™ä¿®æ­£ä¿¡æ¯ä½“åœ°å€ï¼ˆå› ä¸ºæœ‰å¯èƒ½ç¬¬1ä¸ªæ˜¯åŒç‚¹é¥ä¿¡ï¼‰
                 {
                     TxMsg[InfoAddrLocation] = LOBYTE(GroupTrn.InfoAddr+i);
                     TxMsg[InfoAddrLocation+1] = HIBYTE(GroupTrn.InfoAddr+i);
@@ -6502,7 +6502,7 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
             }
             else
             {
-                if(YxNum)   //¼ì²âµ½Ë«µãÒ£ĞÅºó£¬ÔòÍ£Ö¹ºóĞø·¢ËÍ£¨ÒòÎª²»Á¬Ğø£©
+                if(YxNum)   //æ£€æµ‹åˆ°åŒç‚¹é¥ä¿¡åï¼Œåˆ™åœæ­¢åç»­å‘é€ï¼ˆå› ä¸ºä¸è¿ç»­ï¼‰
                     break;
             }
             
@@ -6511,17 +6511,17 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
         }
         
     }
-    else if(TxMsg[0]==M_DP_NA)  //3-Ë«µãbyte     
+    else if(TxMsg[0]==M_DP_NA)  //3-åŒç‚¹byte     
     {
-        TxMsg[1]= 0;    //·ÇË³ĞòÔªËØ
+        TxMsg[1]= 0;    //éé¡ºåºå…ƒç´ 
         
-    	EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1;     //Èç¹ûÒ£ĞÅ¸öÊı¹ı´ó£¬³¬¹ıDBData»º³åÇø£¬ÄÇÃ´ĞèÒªÑ­»·¶Á
+    	EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1;     //å¦‚æœé¥ä¿¡ä¸ªæ•°è¿‡å¤§ï¼Œè¶…è¿‡DBDataç¼“å†²åŒºï¼Œé‚£ä¹ˆéœ€è¦å¾ªç¯è¯»
     	if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         else
             ByteNum=CLBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         
-        FramePos = InfoAddrLocation;    //µ÷Õûµ½ĞÅÏ¢ÌåµØÖ·Î»ÖÃ
+        FramePos = InfoAddrLocation;    //è°ƒæ•´åˆ°ä¿¡æ¯ä½“åœ°å€ä½ç½®
         for(i=0;i<(ByteNum);i++)
         {
             SendNum ++;
@@ -6529,8 +6529,8 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
             if(DBData[i] & BIDBI_STATUSE)
             {
             
-                yxSendno = GroupTrn.InfoAddr+i-LBIinfoaddr;   //¼ÆËã±¾´ÎµÄÒ£ĞÅ·¢ËÍĞòºÅ£¬´Ó0¿ªÊ¼¼ÆËã£¨GroupTrn.InfoAddrÄ¿Ç°ÊÇ¼ÇÂ¼µÄ´ÓLBIinfoaddr¿ªÊ¼µÄĞòºÅ£¬ÓÃÓÚ¿ØÖÆ´«ËÍÒ£ĞÅµÄµ±Ç°Î»ÖÃ£© ll 21-03-28
-                TxMsg[FramePos++] = LOBYTE((yxSendno+LDBIinfoaddr));//ĞÅÏ¢ÌåµØÖ·
+                yxSendno = GroupTrn.InfoAddr+i-LBIinfoaddr;   //è®¡ç®—æœ¬æ¬¡çš„é¥ä¿¡å‘é€åºå·ï¼Œä»0å¼€å§‹è®¡ç®—ï¼ˆGroupTrn.InfoAddrç›®å‰æ˜¯è®°å½•çš„ä»LBIinfoaddrå¼€å§‹çš„åºå·ï¼Œç”¨äºæ§åˆ¶ä¼ é€é¥ä¿¡çš„å½“å‰ä½ç½®ï¼‰ ll 21-03-28
+                TxMsg[FramePos++] = LOBYTE((yxSendno+LDBIinfoaddr));//ä¿¡æ¯ä½“åœ°å€
                 TxMsg[FramePos++] = HIBYTE((yxSendno+LDBIinfoaddr));
                 if((DBData[i]&BIACTIVEFLAG)==0)
                     TxMsg[FramePos] = ((DBData[i]&0x60)>>5)|P101_IV;
@@ -6547,20 +6547,20 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
             }
         }
         
-        FramePos -= AsduHeadLength; //Îª¼æÈİµ¥µãÒ£ĞÅ³ÌĞò£¬µ÷ÕûFramePosµÄ´óĞ¡ÎªÈ¥µôAsduHeadLength´óĞ¡
+        FramePos -= AsduHeadLength; //ä¸ºå…¼å®¹å•ç‚¹é¥ä¿¡ç¨‹åºï¼Œè°ƒæ•´FramePosçš„å¤§å°ä¸ºå»æ‰AsduHeadLengthå¤§å°
         
     }
-    else if(TxMsg[0] == M_DP_NA_ALLDBI)  //¹ã¶«ÒªÇóµÄÈ«Ë«µãÒ£ĞÅ·¢ËÍ£¬ÌØÊâ´¦Àí
+    else if(TxMsg[0] == M_DP_NA_ALLDBI)  //å¹¿ä¸œè¦æ±‚çš„å…¨åŒç‚¹é¥ä¿¡å‘é€ï¼Œç‰¹æ®Šå¤„ç†
     {
         TxMsg[0] = M_DP_NA;
                 
-    	EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1;     //Èç¹ûÒ£ĞÅ¸öÊı¹ı´ó£¬³¬¹ıDBData»º³åÇø£¬ÄÇÃ´ĞèÒªÑ­»·¶Á
+    	EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1;     //å¦‚æœé¥ä¿¡ä¸ªæ•°è¿‡å¤§ï¼Œè¶…è¿‡DBDataç¼“å†²åŒºï¼Œé‚£ä¹ˆéœ€è¦å¾ªç¯è¯»
     	if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         else
             ByteNum=CLBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         
-        //FramePos = InfoAddrLocation;    //µ÷Õûµ½ĞÅÏ¢ÌåµØÖ·Î»ÖÃ
+        //FramePos = InfoAddrLocation;    //è°ƒæ•´åˆ°ä¿¡æ¯ä½“åœ°å€ä½ç½®
         for(i=0;i<(ByteNum);i++)
         {
             SendNum ++;
@@ -6597,28 +6597,28 @@ INT8U CSecAppSev::EnCodeAllYX(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
             Len = FramePos+AsduHeadLength;
             *LengthOut = Len;
             
-            if (BalanMode)//Æ½ºâÄ£Ê½
+            if (BalanMode)//å¹³è¡¡æ¨¡å¼
             {
                 if(GroupTrn.COT==BACK)
                     *AppCommand=APP_SENDNOCON;
                 else
                     *AppCommand=APP_SENDCON;
             }
-            else//·ÇÆ½ºâ£¬¿ÉÄÜÊÇ×ÜÕÙ»½¡¢·Ö×é¡¢±³¾°Êı¾İ
+            else//éå¹³è¡¡ï¼Œå¯èƒ½æ˜¯æ€»å¬å”¤ã€åˆ†ç»„ã€èƒŒæ™¯æ•°æ®
             {
                 *AppCommand=APP_SENDDATA;
-                if(GroupTrn.COT!=BACK)//±³¾°Êı¾İ²»ÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+                if(GroupTrn.COT!=BACK)//èƒŒæ™¯æ•°æ®ä¸è®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
                     *AppCommand|=APP_HAVEDATA1;
             }
         }
         else
         {
             *LengthOut = 0;
-            Len = SendNum;    //·µ»ØÕæÖµÏÂ²½¼ÌĞø´¦Àí
+            Len = SendNum;    //è¿”å›çœŸå€¼ä¸‹æ­¥ç»§ç»­å¤„ç†
             *AppCommand = APP_NOJOB;
             if(BalanMode)
             {
-                myEventSend(myTaskIdSelf(),FORCESCHEDULE);  //ÓÉÓÚÃ»·¢ÈÎºÎÊı¾İ£¬µ÷¶È½øĞĞÏÂÒ»´Î·¢ËÍ
+                myEventSend(myTaskIdSelf(),FORCESCHEDULE);  //ç”±äºæ²¡å‘ä»»ä½•æ•°æ®ï¼Œè°ƒåº¦è¿›è¡Œä¸‹ä¸€æ¬¡å‘é€
             }
         }
         
@@ -6637,7 +6637,7 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
     INT32U dd;
     BOOL Stop = FALSE;
 
-    TxMsg[0]=Sec101Pad.TypeID[GroupTrn.GroupNo-1];//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0]=Sec101Pad.TypeID[GroupTrn.GroupNo-1];//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = VSQ_SQ;
 
     TxMsg[CotLocation]=GroupTrn.COT;
@@ -6651,7 +6651,7 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
 
     FramePos=0;
 
-    //È¡³öÊı¾İ
+    //å–å‡ºæ•°æ®
     No=BeginNo;
     while (No<=EndNo)
     {
@@ -6668,15 +6668,15 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
             Value=pAIValue->Value;
             switch(TxMsg[0])
             {
-                case M_ME_NA:     //9²âÁ¿Öµ£¬¹æÒ»»¯Öµ
+                case M_ME_NA:     //9æµ‹é‡å€¼ï¼Œè§„ä¸€åŒ–å€¼
                 case M_ME_ND:
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Flag=pAIValue->Flag;
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Value=Value;
                     //Value=(long)Value*0x3FFF/(long)DevList[GroupTrn.DevIndex].DevData.AIMaxVal[No];
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue=Value;
                     break;
-                case M_ME_NB:     //11²âÁ¿Öµ£¬±ê¶ÈÖµ
-                case M_ME_NC:    //13²âÁ¿Öµ£¬¶Ì¸¡µãÊı
+                case M_ME_NB:     //11æµ‹é‡å€¼ï¼Œæ ‡åº¦å€¼
+                case M_ME_NC:    //13æµ‹é‡å€¼ï¼ŒçŸ­æµ®ç‚¹æ•°
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Flag=pAIValue->Flag;
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue=Value;
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Value=Value;
@@ -6687,8 +6687,8 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
         }
     }//end of (while (No<=EndNo))
 
-    //×éÖ¡·¢ËÍ
-    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    //ç»„å¸§å‘é€
+    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
     FramePos=0;
     No=BeginNo;
     *pNum=0;
@@ -6696,8 +6696,8 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
     {
         switch(TxMsg[0])
         {
-            case M_ME_NA:     //9²âÁ¿Öµ£¬¹æÒ»»¯Öµ
-            case M_ME_NB:     //11²âÁ¿Öµ£¬±ê¶ÈÖµ
+            case M_ME_NA:     //9æµ‹é‡å€¼ï¼Œè§„ä¸€åŒ–å€¼
+            case M_ME_NB:     //11æµ‹é‡å€¼ï¼Œæ ‡åº¦å€¼
                 Value = (short)SL_ReadAI_S(DevList[GroupTrn.DevIndex].DevID, No, DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue);
                 //Value=DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue;
                 pTxData[FramePos++]=LOBYTE(Value);
@@ -6713,7 +6713,7 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
                 (*pNum)++;
 
                 break;
-            case M_ME_NC:    //13²âÁ¿Öµ£¬¶Ì¸¡µãÊı
+            case M_ME_NC:    //13æµ‹é‡å€¼ï¼ŒçŸ­æµ®ç‚¹æ•°
                 temp = SL_ReadAI_S(DevList[GroupTrn.DevIndex].DevID, No, DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue);
                 //temp = (float)DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue;
                 p = (INT8U*)(&temp);
@@ -6749,7 +6749,7 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
         No++;
         if(No>EndNo)
             Stop=TRUE;
-        if (*pNum>=127)//Ã¿Ö¡²»³¬¹ı127¸öÊı¾İµ¥Ôª
+        if (*pNum>=127)//æ¯å¸§ä¸è¶…è¿‡127ä¸ªæ•°æ®å•å…ƒ
             Stop=TRUE;
     }
     if (FramePos<=0)
@@ -6757,18 +6757,18 @@ INT8U CSecAppSev::EnCodeAllYC(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT16U
 
     *pTxVSQ |= (*pNum);
 
-    Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È
+    Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦
     if (Len)
     {
         *LengthOut=Len;
-        if (BalanMode)//Æ½ºâÄ£Ê½,×ÜÕÙ»½»òÖÜÆÚÑ­»·¡¢»ò±³¾°Êı¾İ
+        if (BalanMode)//å¹³è¡¡æ¨¡å¼,æ€»å¬å”¤æˆ–å‘¨æœŸå¾ªç¯ã€æˆ–èƒŒæ™¯æ•°æ®
         {
             if((GroupTrn.COT==BACK)||(GroupTrn.COT==PERCYC))
                 *AppCommand=APP_SENDNOCON;
             else
                 *AppCommand=APP_SENDCON;
         }
-        else//·Ö×é»ò×ÜÕÙ»½£¬
+        else//åˆ†ç»„æˆ–æ€»å¬å”¤ï¼Œ
         {
             *AppCommand=APP_SENDDATA;
             if((GroupTrn.COT!=PERCYC)&&(GroupTrn.COT!=BACK))
@@ -6786,10 +6786,10 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
     INT32U dd;
     BOOL Stop=FALSE;
 
-    TxMsg[0]=Sec101Pad.TypeID[GroupTrn.GroupNo-1];//ÉèÖÃĞèÒª·¢ËÍµÄÊı¾İÀàĞÍ
+    TxMsg[0]=Sec101Pad.TypeID[GroupTrn.GroupNo-1];//è®¾ç½®éœ€è¦å‘é€çš„æ•°æ®ç±»å‹
     (*pTxVSQ) = VSQ_SQ;
 
-    Length=ASDULEN-AsduHeadLength-15;//250-6-15=229ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È;15ÊÇ3¸ö¸¡µãÊı²ÎÊıµÄ×Ö½ÚÊı¡£
+    Length=ASDULEN-AsduHeadLength-15;//250-6-15=229ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦;15æ˜¯3ä¸ªæµ®ç‚¹æ•°å‚æ•°çš„å­—èŠ‚æ•°ã€‚
     FramePos=0;
     No=BeginNo;
     *pNum=0;
@@ -6797,7 +6797,7 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
     {
         switch(TxMsg[0])
         {
-            case M_ME_NA:     //9²âÁ¿Öµ£¬¹æÒ»»¯Öµ
+            case M_ME_NA:     //9æµ‹é‡å€¼ï¼Œè§„ä¸€åŒ–å€¼
                 Value=DevList[GroupTrn.DevIndex].DevData.AIPara[No].DeadValue;
                 //Value=(long)Value*0x3FFF/(long)DevList[GroupTrn.DevIndex].DevData.AIMaxVal[No];
                 pTxData[FramePos++]=LOBYTE(Value);
@@ -6820,7 +6820,7 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
                 (*pNum)++;
 
                 break;
-            case M_ME_NB:     //11²âÁ¿Öµ£¬±ê¶ÈÖµ
+            case M_ME_NB:     //11æµ‹é‡å€¼ï¼Œæ ‡åº¦å€¼
                 Value=DevList[GroupTrn.DevIndex].DevData.AIPara[No].DeadValue;
                 pTxData[FramePos++]=LOBYTE(Value);
                 pTxData[FramePos++]=HIBYTE(Value);
@@ -6840,7 +6840,7 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
                 (*pNum)++;
 
                 break;
-            case M_ME_NC:    //13²âÁ¿Öµ£¬¶Ì¸¡µãÊı
+            case M_ME_NC:    //13æµ‹é‡å€¼ï¼ŒçŸ­æµ®ç‚¹æ•°
                 temp = (float)DevList[GroupTrn.DevIndex].DevData.AIPara[No].DeadValue;
                 p = (INT8U*)(&temp);
                 pdd = (INT8U*)(&dd);
@@ -6884,7 +6884,7 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
                 (*pNum)++;
 
                 break;
-            case M_ME_ND:    //21²»´øÆ·ÖÊ£¬¹éÒ»»¯
+            case M_ME_ND:    //21ä¸å¸¦å“è´¨ï¼Œå½’ä¸€åŒ–
                 Value=DevList[GroupTrn.DevIndex].DevData.AIPara[No].DeadValue;
                 //Value=(long)Value*0x3FFF/(long)DevList[GroupTrn.DevIndex].DevData.AIMaxVal[No];
                 pTxData[FramePos++]=LOBYTE(Value);
@@ -6908,7 +6908,7 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
         No++;
         if(No>=EndNo)
             Stop=TRUE;
-        if (*pNum>=127)//Ã¿Ö¡²»³¬¹ı128¸öÊı¾İµ¥Ôª
+        if (*pNum>=127)//æ¯å¸§ä¸è¶…è¿‡128ä¸ªæ•°æ®å•å…ƒ
             Stop=TRUE;
     }
     if (FramePos<=0)
@@ -6916,8 +6916,8 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
 
     (*pTxVSQ) |= (*pNum);
 
-    Len=FramePos+AsduHeadLength;//Ó¦ÓÃ²ã±¨ÎÄµÄ×Ü³¤¶È
-    if (Len)//Ö»ÓĞ·Ö×éÕÙ»½£¬Æ½ºâ»ò·ÇÆ½ºâÒ»Ñù
+    Len=FramePos+AsduHeadLength;//åº”ç”¨å±‚æŠ¥æ–‡çš„æ€»é•¿åº¦
+    if (Len)//åªæœ‰åˆ†ç»„å¬å”¤ï¼Œå¹³è¡¡æˆ–éå¹³è¡¡ä¸€æ ·
     {
         *LengthOut=Len;
         *AppCommand=APP_SENDDATA;
@@ -6927,7 +6927,7 @@ INT8U CSecAppSev::EnCodeAllPara(INT16U DevIndex,INT16U BeginNo,INT16U EndNo,INT1
 }
 
 //
-void CSecAppSev::EnCodeGroupEnd(void)//½áÊøÖ¡
+void CSecAppSev::EnCodeGroupEnd(void)//ç»“æŸå¸§
 {
     int jj;
     TxMsg[0]=GroupTrn.TypeID;
@@ -6939,7 +6939,7 @@ void CSecAppSev::EnCodeGroupEnd(void)//½áÊøÖ¡
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
 
-    if (TxMsg[0]==C_IC_NA) //×ÜÕÙ»½
+    if (TxMsg[0]==C_IC_NA) //æ€»å¬å”¤
         *pTxData=GroupTrn.COT;//INTROGEN;
     else                             //counter
     {
@@ -6949,13 +6949,13 @@ void CSecAppSev::EnCodeGroupEnd(void)//½áÊøÖ¡
     *LengthOut=AsduHeadLength+1;
     if (BalanMode)
         *AppCommand=APP_SENDCON;
-    else//·Ö×é»ò×ÜÕÙ»½
+    else//åˆ†ç»„æˆ–æ€»å¬å”¤
     {
         *AppCommand=APP_SENDDATA;
     }
 }
 
-void CSecAppSev::EnCodeDDGroupEnd(void)//½áÊøÖ¡
+void CSecAppSev::EnCodeDDGroupEnd(void)//ç»“æŸå¸§
 {
     int jj;
     TxMsg[0]=GroupTrnDD.TypeID;
@@ -6971,16 +6971,16 @@ void CSecAppSev::EnCodeDDGroupEnd(void)//½áÊøÖ¡
     *pTxData=GroupTrnDD.Description;
 
     *LengthOut=AsduHeadLength+1;
-    if (BalanMode)//Æ½ºâÄ£Ê½
+    if (BalanMode)//å¹³è¡¡æ¨¡å¼
         *AppCommand=APP_SENDCON;
-    else//·ÇÆ½ºâ
+    else//éå¹³è¡¡
     {
         *AppCommand=APP_SENDDATA;
     }
 }
 
 //OK
-BOOL CSecAppSev::GetNextDev(void) //µÃµ½ÏÂÒ»¸öÉè±¸
+BOOL CSecAppSev::GetNextDev(void) //å¾—åˆ°ä¸‹ä¸€ä¸ªè®¾å¤‡
 {
     if (GroupTrn.PubAddr==BroadCastAddr)
     {
@@ -7006,7 +7006,7 @@ BOOL CSecAppSev::GetNextDev(void) //µÃµ½ÏÂÒ»¸öÉè±¸
         return(FALSE);
 }
 
-BOOL CSecAppSev::GetNextDDDev(void) //µÃµ½ÏÂÒ»¸öÉè±¸
+BOOL CSecAppSev::GetNextDDDev(void) //å¾—åˆ°ä¸‹ä¸€ä¸ªè®¾å¤‡
 {
     if (GroupTrnDD.PubAddr==BroadCastAddr)
     {
@@ -7025,7 +7025,7 @@ BOOL CSecAppSev::GetNextDDDev(void) //µÃµ½ÏÂÒ»¸öÉè±¸
 }
 
 //OK
-BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
+BOOL CSecAppSev::EnCodeNVA(void)  //ç¼–è¾‘å˜åŒ–é¥æµ‹æ•°æ®;
 {
     BOOL Stop=FALSE;
     BOOL Over=FALSE;
@@ -7039,7 +7039,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
     struct RealAI_t *pAIValue;
     INT16U NvaVal;
 
-    for (j=0;j<DevCount;j++)//Ã¿ÕÙ»½Ò»´Î±ä»¯Ò£²âÊı¾İ£¬Ö»·¢Ò»Ö¡£¨²»¹ÜÊÇ·ñ·¢Íê£¬Èç¹ûÎ´·¢ÍêÏÂ´ÎÕÙ»½Ê±ÔÙ·¢ËÍ£©
+    for (j=0;j<DevCount;j++)//æ¯å¬å”¤ä¸€æ¬¡å˜åŒ–é¥æµ‹æ•°æ®ï¼Œåªå‘ä¸€å¸§ï¼ˆä¸ç®¡æ˜¯å¦å‘å®Œï¼Œå¦‚æœæœªå‘å®Œä¸‹æ¬¡å¬å”¤æ—¶å†å‘é€ï¼‰
     {
         FramePos=0-InfoAddrSize;
         (*pTxVSQ) = 0;
@@ -7059,7 +7059,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
         NvaNum=0;
 
         devid=DevList[NvaActDevNo].DevID;
-        while (No<=(int)(DevList[NvaActDevNo].DevData.AINum-1))//È¡Ò£²âÖµ£¬ÉèÖÃ·¢ËÍ±êÖ¾
+        while (No<=(int)(DevList[NvaActDevNo].DevData.AINum-1))//å–é¥æµ‹å€¼ï¼Œè®¾ç½®å‘é€æ ‡å¿—
         {
             if(DevList[NvaActDevNo].Flag==1)
                 AINum=CRFSend_ReadAI(devid,No,No+511,(struct RealAI_t *)DBData);
@@ -7082,9 +7082,9 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
                     NvaVal = abs(DevList[NvaActDevNo].DevData.AIData[No].Value-value);
                 }
                 
-                if (NvaVal >= DevList[NvaActDevNo].DevData.AIPara[No].DeadValue)//±È½Ï±ä»¯ÖµÓëËÀÇøÖµ´óĞ¡
+                if (NvaVal >= DevList[NvaActDevNo].DevData.AIPara[No].DeadValue)//æ¯”è¾ƒå˜åŒ–å€¼ä¸æ­»åŒºå€¼å¤§å°
                 {
-                    DevList[NvaActDevNo].DevData.AIData[No].WillSend=TRUE;//ÉèÖÃ·¢ËÍ±êÖ¾
+                    DevList[NvaActDevNo].DevData.AIData[No].WillSend=TRUE;//è®¾ç½®å‘é€æ ‡å¿—
                     NvaNum++;
                 }
                 DevList[NvaActDevNo].DevData.AIData[No].Flag=pAIValue->Flag;
@@ -7094,22 +7094,22 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
             }
         }
 
-        No=DevList[NvaActDevNo].DevData.NvaNo; //´ÓÉÏ´Î·¢ÍêµÄÒ£²âĞòºÅ¿ªÊ¼·¢ËÍ
-        Length=Sec101Pad.MaxALLen-AsduHeadLength-5-sizeof(INT16U);//¿ÉÒÔ·¢ËÍÊı¾İµÄ±¨ÎÄ³¤¶È
+        No=DevList[NvaActDevNo].DevData.NvaNo; //ä»ä¸Šæ¬¡å‘å®Œçš„é¥æµ‹åºå·å¼€å§‹å‘é€
+        Length=Sec101Pad.MaxALLen-AsduHeadLength-5-sizeof(INT16U);//å¯ä»¥å‘é€æ•°æ®çš„æŠ¥æ–‡é•¿åº¦
           
-        while ((FramePos<Length)&&(!Stop))//×é·¢ËÍÊı¾İÖ¡
+        while ((FramePos<Length)&&(!Stop))//ç»„å‘é€æ•°æ®å¸§
         {
             if (DevList[NvaActDevNo].DevData.AIData[No].WillSend)
             {
                 if (FramePos < 0)
                 {
-                    TxMsg[0]=Sec101Pad.TypeID[YCGroupNo[No]-1];//¼ÇÂ¼¸ÃÖ¡Ò£²âµÄÀàĞÍ
+                    TxMsg[0]=Sec101Pad.TypeID[YCGroupNo[No]-1];//è®°å½•è¯¥å¸§é¥æµ‹çš„ç±»å‹
                     *pTxInfoAddr    =LOBYTE((No+LAI));
                     *(pTxInfoAddr+1)=HIBYTE((No+LAI));
                 }
                 else
                 {
-                    if(Sec101Pad.TypeID[YCGroupNo[No]-1]==TxMsg[0])//ºóĞøÊı¾İ±ØĞëÓëÇ°ÃæµÄÀàĞÍÒ»ÖÂ
+                    if(Sec101Pad.TypeID[YCGroupNo[No]-1]==TxMsg[0])//åç»­æ•°æ®å¿…é¡»ä¸å‰é¢çš„ç±»å‹ä¸€è‡´
                     {
                         pTxData[FramePos]=LOBYTE(No+LAI);
                         pTxData[FramePos+1]=HIBYTE(No+LAI);
@@ -7126,7 +7126,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
                 {
                     switch (TxMsg[0])
                     {
-                        case M_ME_NA:     //9²âÁ¿Öµ£¬¹æÒ»»¯Öµ
+                        case M_ME_NA:     //9æµ‹é‡å€¼ï¼Œè§„ä¸€åŒ–å€¼
                             value = (short)SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                             //value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             //value=(long)value*0x3FFF/(long)DevList[NvaActDevNo].DevData.AIMaxVal[No];
@@ -7143,7 +7143,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
                             DevList[NvaActDevNo].DevData.AIData[No].Value
                                           =DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             break;
-                        case M_ME_NB:     //11²âÁ¿Öµ£¬±ê¶È»¯
+                        case M_ME_NB:     //11æµ‹é‡å€¼ï¼Œæ ‡åº¦åŒ–
                             value = (short)SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                             //value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             pTxData[FramePos++]=LOBYTE(value);
@@ -7158,7 +7158,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
 
                             DevList[NvaActDevNo].DevData.AIData[No].Value = DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             break;
-                        case M_ME_NC:    //13²âÁ¿Öµ£¬¶Ì¸¡µãÊı
+                        case M_ME_NC:    //13æµ‹é‡å€¼ï¼ŒçŸ­æµ®ç‚¹æ•°
                             temp = SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                             //temp = (float)DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             p = (INT8U*)&temp;
@@ -7182,7 +7182,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
                             DevList[NvaActDevNo].DevData.AIData[No].Value
                                            =DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             break;
-                        case M_ME_ND:        //21²»´øÆ·ÖÊÃèÊöµÄ²âÁ¿Öµ£¬¹éÒ»»¯
+                        case M_ME_ND:        //21ä¸å¸¦å“è´¨æè¿°çš„æµ‹é‡å€¼ï¼Œå½’ä¸€åŒ–
                             value = (short)SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                             //value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                             //value=(long)value*0x3FFF/(long)DevList[NvaActDevNo].DevData.AIMaxVal[No]; //  ll
@@ -7194,7 +7194,7 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
                             break;
                     }
                     (*pTxVSQ) ++;
-                    if (*pTxVSQ >= 127)//²»ÄÜ³¬¹ı127¡£
+                    if (*pTxVSQ >= 127)//ä¸èƒ½è¶…è¿‡127ã€‚
                         Stop=TRUE;
                 }
             }
@@ -7202,9 +7202,9 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
             if ((No >= DevList[NvaActDevNo].DevData.AINum)||(*pTxVSQ >= NvaNum))
             {
                 No=0;
-                NvaActDevNo++;//Éè±¸ĞòºÅÔÚ·¢ËÍÒ»Ö¡ºóÀÛ¼Ó¡£
+                NvaActDevNo++;//è®¾å¤‡åºå·åœ¨å‘é€ä¸€å¸§åç´¯åŠ ã€‚
                 Stop=TRUE;
-                if (NvaActDevNo>=DevCount)//ËùÓĞÉè±¸±ä»¯Ò£²â¶¼·¢ËÍÒ»±é¡£
+                if (NvaActDevNo>=DevCount)//æ‰€æœ‰è®¾å¤‡å˜åŒ–é¥æµ‹éƒ½å‘é€ä¸€éã€‚
                 {
                     NvaActDevNo=0;
                     Data1.Flag&=(~HaveNVA);
@@ -7213,22 +7213,22 @@ BOOL CSecAppSev::EnCodeNVA(void)  //±à¼­±ä»¯Ò£²âÊı¾İ;
             }
         }  //end of while ((FramePos<i)&&(!Stop))
 
-        DevList[NvaActDevNo].DevData.NvaNo=No;       //¼ÇÂ¼ÏÂ´Î·¢ËÍ±ä»¯Ò£²âµÄ¿ªÊ¼ĞòºÅ¡£
+        DevList[NvaActDevNo].DevData.NvaNo=No;       //è®°å½•ä¸‹æ¬¡å‘é€å˜åŒ–é¥æµ‹çš„å¼€å§‹åºå·ã€‚
         if (FramePos>0)
         {
             *LengthOut=FramePos+AsduHeadLength;
             *AppCommand=APP_SENDDATA;
-            if(!Over)//±ä»¯Ò£²âÃ»·¢Íê£¬ÉèÖÃÒ»¼¶Êı¾İ±êÖ¾
+            if(!Over)//å˜åŒ–é¥æµ‹æ²¡å‘å®Œï¼Œè®¾ç½®ä¸€çº§æ•°æ®æ ‡å¿—
                 *AppCommand|=APP_HAVEDATA1;
             if(BalanMode)
                 *AppCommand=APP_SENDCON;
-            return(TRUE);//Ã¿´ÎÖ»·¢Ò»Ö¡
+            return(TRUE);//æ¯æ¬¡åªå‘ä¸€å¸§
         }
     }//end of for
     return(FALSE);
 }
 
-BOOL CSecAppSev::CheckNVA(void)  //¼ì²â±ä»¯Ò£²âÊı¾İ;
+BOOL CSecAppSev::CheckNVA(void)  //æ£€æµ‹å˜åŒ–é¥æµ‹æ•°æ®;
 {
     INT16U i,j,No;
     short Value,AINum;
@@ -7239,7 +7239,7 @@ BOOL CSecAppSev::CheckNVA(void)  //¼ì²â±ä»¯Ò£²âÊı¾İ;
     for (j=0;j<DevCount;j++)
     {
         No=0;
-        while (No<=(int)(DevList[NvaActDevNo].DevData.AINum-1))//È¡Ò£²âÖµ£¬ÉèÖÃ·¢ËÍ±êÖ¾
+        while (No<=(int)(DevList[NvaActDevNo].DevData.AINum-1))//å–é¥æµ‹å€¼ï¼Œè®¾ç½®å‘é€æ ‡å¿—
         {
             if(DevList[NvaActDevNo].Flag==1)
                 AINum=CRSend_ReadAI(DevList[NvaActDevNo].DevID,No,No+511,(struct RealAINFlag_t *)DBData);
@@ -7262,7 +7262,7 @@ BOOL CSecAppSev::CheckNVA(void)  //¼ì²â±ä»¯Ò£²âÊı¾İ;
                     temp = abs(DevList[NvaActDevNo].DevData.AIData[No].Value-Value);
                 }
                 
-                if (temp >= DevList[NvaActDevNo].DevData.AIPara[No].DeadValue)//±È½Ï±ä»¯ÖµÓëËÀÇøÖµ´óĞ¡
+                if (temp >= DevList[NvaActDevNo].DevData.AIPara[No].DeadValue)//æ¯”è¾ƒå˜åŒ–å€¼ä¸æ­»åŒºå€¼å¤§å°
                 {
                     return TRUE;
                 }
@@ -7279,15 +7279,15 @@ BOOL CSecAppSev::CheckNVA(void)  //¼ì²â±ä»¯Ò£²âÊı¾İ;
 }
 
 
-//¶³½áµç¶È
-void CSecAppSev::FreezeCounter(void)    //¶³½áµç¶È£¬µ±QCC 7Î»Îª1Ê±
+//å†»ç»“ç”µåº¦
+void CSecAppSev::FreezeCounter(void)    //å†»ç»“ç”µåº¦ï¼Œå½“QCC 7ä½ä¸º1æ—¶
 {
     INT16U GetBeginNo,GetEndNo,i,j;
     struct RealCounter_t *q;
     short CountNum;
     INT32U value,*p;
 
-    GetSysTime((void*)(&CounterTime),ABSTIME);//¼ÇÂ¼¶³½áµç¶ÈµÄÏµÍ³Ê±¼ä
+    GetSysTime((void*)(&CounterTime),ABSTIME);//è®°å½•å†»ç»“ç”µåº¦çš„ç³»ç»Ÿæ—¶é—´
 
     for (i=0;i<DevCount;i++)
     {
@@ -7309,7 +7309,7 @@ void CSecAppSev::FreezeCounter(void)    //¶³½áµç¶È£¬µ±QCC 7Î»Îª1Ê±
             {
                 value=*p;
                 q=&DevList[i].DevData.CounterData[GetBeginNo+j];
-                if (GroupTrnDD.Description&FREEZENORESET)//¶³½á²»¸´Î»
+                if (GroupTrnDD.Description&FREEZENORESET)//å†»ç»“ä¸å¤ä½
                 {
                     q->Value=value;
                     q->Flag=0;
@@ -7328,24 +7328,24 @@ void CSecAppSev::FreezeCounter(void)    //¶³½áµç¶È£¬µ±QCC 7Î»Îª1Ê±
     }//end of for
     
     
-    //ÊÕµ½0x45ÊÕµ½µçÄÜÁ¿  ¸øµ±Ç°Éè±¸µÄÖ§³ÖÏßËğÄ£¿éĞÂ±ê×¼µÄ¾ù·¢ËÍevent£¬´¥·¢ÏßËğÄ£¿é½øĞĞË²Ê±¶³½áÎÄ¼şÉú³É  CL 20180801
-    if((RxMsg[AsduHeadLength]&0xc0) == 0x40)  //FRZ=1 ¶³½á²»´ø¸´Î»¹¦ÄÜ
+    //æ”¶åˆ°0x45æ”¶åˆ°ç”µèƒ½é‡  ç»™å½“å‰è®¾å¤‡çš„æ”¯æŒçº¿æŸæ¨¡å—æ–°æ ‡å‡†çš„å‡å‘é€eventï¼Œè§¦å‘çº¿æŸæ¨¡å—è¿›è¡Œç¬æ—¶å†»ç»“æ–‡ä»¶ç”Ÿæˆ  CL 20180801
+    if((RxMsg[AsduHeadLength]&0xc0) == 0x40)  //FRZ=1 å†»ç»“ä¸å¸¦å¤ä½åŠŸèƒ½
     {
-        SetFileSynInfoTaskIDSubstation(MySelf.AppTID);  //×÷ÎªÆô¶¯101Ö÷Õ¾ÈÎÎñ¿ªÊ¼µÄÁ¿
-        if(XSFileSynInfo.TaskIDPri101[0]!=0)//´ú±íµÚÒ»¸öÏßËğÄ£¿éÆğµÄÈÎÎñ
+        SetFileSynInfoTaskIDSubstation(MySelf.AppTID);  //ä½œä¸ºå¯åŠ¨101ä¸»ç«™ä»»åŠ¡å¼€å§‹çš„é‡
+        if(XSFileSynInfo.TaskIDPri101[0]!=0)//ä»£è¡¨ç¬¬ä¸€ä¸ªçº¿æŸæ¨¡å—èµ·çš„ä»»åŠ¡
         {
-            myEventSend(GetFileSynInfoTaskID101(0),XSFREEZE);//¸ø101Ö÷Õ¾ÈÎÎñ·¢ËÍÏûÏ¢ ÔİÊ±ÏÈ·¢¸øµÚÒ»¸ö101ÈÎÎñ£¬ºóĞøÊÇÍ¨¹ıÎ¬»¤Èí¼şÃæ°å²ÎÊıÈ·ÈÏµÄ¡£
+            myEventSend(GetFileSynInfoTaskID101(0),XSFREEZE);//ç»™101ä¸»ç«™ä»»åŠ¡å‘é€æ¶ˆæ¯ æš‚æ—¶å…ˆå‘ç»™ç¬¬ä¸€ä¸ª101ä»»åŠ¡ï¼Œåç»­æ˜¯é€šè¿‡ç»´æŠ¤è½¯ä»¶é¢æ¿å‚æ•°ç¡®è®¤çš„ã€‚
         }
         else
         {
-            //logSysMsgWithTime("ÎŞÖ§³Ö2018±ê×¼µÄÏßËğÄ£¿é£¡",0,0,0,0);
+            //logSysMsgWithTime("æ— æ”¯æŒ2018æ ‡å‡†çš„çº¿æŸæ¨¡å—ï¼",0,0,0,0);
         }
-        if(XSFileSynInfo.TaskIDPri101[1]!=0)//´ú±íÓĞµÚ¶ş¸öÏßËğÄ£¿éÆğµÄÈÎÎñ
+        if(XSFileSynInfo.TaskIDPri101[1]!=0)//ä»£è¡¨æœ‰ç¬¬äºŒä¸ªçº¿æŸæ¨¡å—èµ·çš„ä»»åŠ¡
         {
             myEventSend(GetFileSynInfoTaskID101(1),XSFREEZE);
         }    
     } 
-    //ÊÕµ½0x45ÊÕµ½µçÄÜÁ¿  ¸øµ±Ç°Éè±¸µÄÖ§³ÖÏßËğÄ£¿éĞÂ±ê×¼µÄ¾ù·¢ËÍevent£¬´¥·¢ÏßËğÄ£¿é½øĞĞË²Ê±¶³½áÎÄ¼şÉú³É  CL 20180801
+    //æ”¶åˆ°0x45æ”¶åˆ°ç”µèƒ½é‡  ç»™å½“å‰è®¾å¤‡çš„æ”¯æŒçº¿æŸæ¨¡å—æ–°æ ‡å‡†çš„å‡å‘é€eventï¼Œè§¦å‘çº¿æŸæ¨¡å—è¿›è¡Œç¬æ—¶å†»ç»“æ–‡ä»¶ç”Ÿæˆ  CL 20180801
 }
 
 //
@@ -7361,10 +7361,10 @@ void CSecAppSev::EnCodeCounterConf(void)//
     *(pTxInfoAddr+1)=0;
     TxMsg[CotLocation]=ACTCON;
     *pTxData=GroupTrnDD.Description;
-    //logSysMsgNoTime("DD·¢ËÍÈ·ÈÏÖ¡",0,0,0,0);   //  debug ll
+    //logSysMsgNoTime("DDå‘é€ç¡®è®¤å¸§",0,0,0,0);   //  debug ll
     *LengthOut=AsduHeadLength+1;
     *AppCommand=APP_SENDDATA;
-    if((GroupTrnDD.Description&0xc0)==0)//ÊÇ¶Ô¶Áµç¶ÈÃüÁîµÄÓ¦´ğ£¬·ñÔòÊÇ¶Ô¶³½áÃüÁîµÄÓ¦´ğ
+    if((GroupTrnDD.Description&0xc0)==0)//æ˜¯å¯¹è¯»ç”µåº¦å‘½ä»¤çš„åº”ç­”ï¼Œå¦åˆ™æ˜¯å¯¹å†»ç»“å‘½ä»¤çš„åº”ç­”
         *AppCommand|=APP_HAVEDATA1;
     if(BalanMode)
     {
@@ -7372,7 +7372,7 @@ void CSecAppSev::EnCodeCounterConf(void)//
     }      
 }
 
-void CSecAppSev::ProcCounter(void) //´¦Àíµç¶Èzzw
+void CSecAppSev::ProcCounter(void) //å¤„ç†ç”µåº¦zzw
 {
     INT16U BeginNo,EndNo,Num;
     INT8U GroupNo;
@@ -7387,17 +7387,17 @@ void CSecAppSev::ProcCounter(void) //´¦Àíµç¶Èzzw
             if (EnCodeCounter(BeginNo,EndNo,&Num))
             {
                 GroupTrnDD.First=FALSE;
-                BeginNo+=Num;//¸üĞÂÆğÊ¼µãºÅ£¬¼´ÏÂÒ»´Î·¢ËÍÊı¾İµÄÆğÊ¼µãºÅ
+                BeginNo+=Num;//æ›´æ–°èµ·å§‹ç‚¹å·ï¼Œå³ä¸‹ä¸€æ¬¡å‘é€æ•°æ®çš„èµ·å§‹ç‚¹å·
 
                 GroupTrnDD.InfoAddr=BeginNo%MAXBCRNUM+LBCR;
                 GroupNo=GroupTrnDD.InfoAddr-LBCR;                  
                 GroupNo/=GROUPBCRNUM;
                 GroupNo++;
 
-                if (GroupTrnDD.GroupNo!=GroupNo)//¸Ã×éÊı¾İ·¢ËÍÍê±Ï
+                if (GroupTrnDD.GroupNo!=GroupNo)//è¯¥ç»„æ•°æ®å‘é€å®Œæ¯•
                 {
                     GroupTrnDD.GroupNo=GroupNo;
-                    if (GroupTrnDD.COT>REQCOGCN)//·Ö×éÕÙ»½£¬½áÊø·¢ËÍÊı¾İ¡£wjr  2009.8.25 ´«ËÍÔ­ÒòÅĞ¶Ï´íÎó£¬Ô­ÎªÇëÇó±»ÇëÇó
+                    if (GroupTrnDD.COT>REQCOGCN)//åˆ†ç»„å¬å”¤ï¼Œç»“æŸå‘é€æ•°æ®ã€‚wjr  2009.8.25 ä¼ é€åŸå› åˆ¤æ–­é”™è¯¯ï¼ŒåŸä¸ºè¯·æ±‚è¢«è¯·æ±‚
                         GroupTrnDD.GroupNo=5;
                 }
                 return;
@@ -7409,9 +7409,9 @@ void CSecAppSev::ProcCounter(void) //´¦Àíµç¶Èzzw
     if (GroupTrnDD.GroupNo>=5)
     {
         Data1.Flag&=(~CallDD);
-        EnCodeDDGroupEnd();//·¢ËÍ½áÊø
+        EnCodeDDGroupEnd();//å‘é€ç»“æŸ
         DDFreeze=FALSE;
-        if(GetNextDDDev())//Èç¹û»¹ÓĞÏÂ¸öÂß¼­Éè±¸µÄµç¶ÈÃ»·¢¹ı£¬ÔÙÉèÖÃµç¶È±êÖ¾¡£
+        if(GetNextDDDev())//å¦‚æœè¿˜æœ‰ä¸‹ä¸ªé€»è¾‘è®¾å¤‡çš„ç”µåº¦æ²¡å‘è¿‡ï¼Œå†è®¾ç½®ç”µåº¦æ ‡å¿—ã€‚
         {
             EditDDCon=0xff;
             Data1.Flag|=CallDD;
@@ -7420,7 +7420,7 @@ void CSecAppSev::ProcCounter(void) //´¦Àíµç¶Èzzw
     }
 }
 
-INT8U CSecAppSev::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)//´ÓÊı¾İ¿âÈ¡µç¶È£¬´¦Àíºó£¬·¢µ½Á´Â·²ã¡£
+INT8U CSecAppSev::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)//ä»æ•°æ®åº“å–ç”µåº¦ï¼Œå¤„ç†åï¼Œå‘åˆ°é“¾è·¯å±‚ã€‚
 {
     int jj;
     INT8U Len;
@@ -7438,7 +7438,7 @@ INT8U CSecAppSev::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)//´ÓÊı¾
     {
         TxMsg[0] = Sec101Pad.TypeID[16];      
     }
-    *pTxVSQ = 0;/*µç¶È¶¼²ÉÓÃÀëÉ¢ĞòÁĞºÅ*/
+    *pTxVSQ = 0;/*ç”µåº¦éƒ½é‡‡ç”¨ç¦»æ•£åºåˆ—å·*/
     
     TxMsg[CotLocation]=GroupTrnDD.COT;
     
@@ -7451,9 +7451,9 @@ INT8U CSecAppSev::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)//´ÓÊı¾
     FramePos=0-InfoAddrSize;
     SendNum=0;
     Len=0;
-    Length=ASDULEN-AsduHeadLength-10-sizeof(INT16U);//250-6-10-2=232ÎªÓ¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+    Length=ASDULEN-AsduHeadLength-10-sizeof(INT16U);//250-6-10-2=232ä¸ºåº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
     
-	/* AJ++170829 ¶Áµç¶ÈÊı¾İ¿â.ÔÚ2015À©Õ¹¹æÔ¼ÏÂ£¬µç¶ÈÎŞĞè¶³½áÖ±½Ó¶ÁÊı¾İ¿â */
+	/* AJ++170829 è¯»ç”µåº¦æ•°æ®åº“.åœ¨2015æ‰©å±•è§„çº¦ä¸‹ï¼Œç”µåº¦æ— éœ€å†»ç»“ç›´æ¥è¯»æ•°æ®åº“ */
     //if((Sec101Pad.control&CON_101GYKZ)) 
     if(GYKZ2015Flag)                                     
     {
@@ -7475,18 +7475,18 @@ INT8U CSecAppSev::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)//´ÓÊı¾
 	for(i=0;i<=EndNo-BeginNo;i++)
     {
     //    value=DevList[GroupTrnDD.DevIndex].DevData.CounterData[No].Value;
-        //if((Sec101Pad.control&CON_101GYKZ))		//AJ++170829 ´«ÊäÊµÊ±Öµ   
+        //if((Sec101Pad.control&CON_101GYKZ))		//AJ++170829 ä¼ è¾“å®æ—¶å€¼   
         if(GYKZ2015Flag)                                   
         {
             value = *p;
             p ++;   
         }
-        else									//´«Êä¶³½áÖµ
+        else									//ä¼ è¾“å†»ç»“å€¼
         {
             value=DevList[GroupTrnDD.DevIndex].DevData.CounterData[No].Value;   
         }
 
-        //Ğ´ĞÅÏ¢ÌåµØÖ·
+        //å†™ä¿¡æ¯ä½“åœ°å€
         if(FramePos<0)
         {
             *pTxInfoAddr    =LOBYTE((No+LBCR));
@@ -7494,21 +7494,21 @@ INT8U CSecAppSev::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)//´ÓÊı¾
         }
         else
         {
-            pTxData[FramePos]   = LOBYTE((No+LBCR));//ĞÅÏ¢ÌåµØÖ·
-            pTxData[FramePos+1] = HIBYTE((No+LBCR));//ĞÅÏ¢ÌåµØÖ·
+            pTxData[FramePos]   = LOBYTE((No+LBCR));//ä¿¡æ¯ä½“åœ°å€
+            pTxData[FramePos+1] = HIBYTE((No+LBCR));//ä¿¡æ¯ä½“åœ°å€
             if(InfoAddrSize == 3)
-                pTxData[FramePos+2] = 0;//ĞÅÏ¢ÌåµØÖ·Îª3×Ö½ÚÊ±£¬×î¸ß×Ö½ÚÎª0
+                pTxData[FramePos+2] = 0;//ä¿¡æ¯ä½“åœ°å€ä¸º3å­—èŠ‚æ—¶ï¼Œæœ€é«˜å­—èŠ‚ä¸º0
         }
         FramePos+=InfoAddrSize;
-        //Ğ´µç¶ÈÖµ
+        //å†™ç”µåº¦å€¼
         pTxData[FramePos]=LOBYTE(LOWORD(value));
         pTxData[FramePos+1]=HIBYTE(LOWORD(value));
         pTxData[FramePos+2]=LOBYTE(HIWORD(value));
         pTxData[FramePos+3]=HIBYTE(HIWORD(value));
-        pTxData[FramePos+4]=i;//Ë³ĞòºÅ
+        pTxData[FramePos+4]=i;//é¡ºåºå·
         FramePos+=5;
-        //Ğ´Ê±±ê
-        if(TxMsg[0] == M_IT_TA)//16´øÊ±±êµÄµç¶È
+        //å†™æ—¶æ ‡
+        if(TxMsg[0] == M_IT_TA)//16å¸¦æ—¶æ ‡çš„ç”µåº¦
         {
             pTxData[FramePos]=LOBYTE(CounterTime.MSecond);
             pTxData[FramePos+1]=HIBYTE(CounterTime.MSecond);
@@ -7544,7 +7544,7 @@ void CSecAppSev::EnCodeTimeDelay(void)
 {
     INT16U ms;
     int jj;
-    TrTime=100;//·ÀÖ¹Å¼È»¶Á²»³öÊ±ÖÓ£¬³öÏÖÊ±¼ä»ìÂÒ¡£
+    TrTime=100;//é˜²æ­¢å¶ç„¶è¯»ä¸å‡ºæ—¶é’Ÿï¼Œå‡ºç°æ—¶é—´æ··ä¹±ã€‚
     if (GetSysTime((void*)(&SecSysTimeT),ABSTIME))
     {
         if(ReadTimeFlag==0xff)
@@ -7557,7 +7557,7 @@ void CSecAppSev::EnCodeTimeDelay(void)
         }
     }
 
-    TxMsg[0]=M_CD_NA;//106£¬ÑÓÊ±»ñµÃ
+    TxMsg[0]=M_CD_NA;//106ï¼Œå»¶æ—¶è·å¾—
 
     (*pTxVSQ) = 1;
 
@@ -7576,13 +7576,13 @@ void CSecAppSev::EnCodeTimeDelay(void)
     *pTxData=LOBYTE(ms);
     *(pTxData+1)=HIBYTE(ms);
 
-    *LengthOut=AsduHeadLength+2;//Ö»·¢ËÍ2×Ö½Úms¡£
+    *LengthOut=AsduHeadLength+2;//åªå‘é€2å­—èŠ‚msã€‚
     *AppCommand=APP_SENDDATA;
     if(BalanMode)
         *AppCommand=APP_SENDCON;
 }
 
-void CSecAppSev::EnCodeClock(void)//·¢ËÍ×ÓÕ¾ÉèÖÃÊ±ÖÓÇ°µÄÏµÍ³Ê±ÖÓ
+void CSecAppSev::EnCodeClock(void)//å‘é€å­ç«™è®¾ç½®æ—¶é’Ÿå‰çš„ç³»ç»Ÿæ—¶é’Ÿ
 {
     int jj;
     struct Iec101ClockTime_t time;
@@ -7600,7 +7600,7 @@ void CSecAppSev::EnCodeClock(void)//·¢ËÍ×ÓÕ¾ÉèÖÃÊ±ÖÓÇ°µÄÏµÍ³Ê±ÖÓ
         }
         else
         {
-        	TxMsg[CotLocation]=ACTCON | 0x40;                       //´ÓÕ¾²»ÔÊĞí¶ÔÖÓ»òÕß¶ÔÖÓÊ±¼ä´íÎó·¢ËÍ´«ËÍÔ­ÒòÎª0x47
+        	TxMsg[CotLocation]=ACTCON | 0x40;                       //ä»ç«™ä¸å…è®¸å¯¹é’Ÿæˆ–è€…å¯¹é’Ÿæ—¶é—´é”™è¯¯å‘é€ä¼ é€åŸå› ä¸º0x47
         }
     }
     else if((RxCot&COT_REASON)==REQ)
@@ -7619,7 +7619,7 @@ void CSecAppSev::EnCodeClock(void)//·¢ËÍ×ÓÕ¾ÉèÖÃÊ±ÖÓÇ°µÄÏµÍ³Ê±ÖÓ
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
 
-    if(OldSysTime.MSecond>=TimeDelay)//¼õµôÏßÂ·ÑÓ³Ù
+    if(OldSysTime.MSecond>=TimeDelay)//å‡æ‰çº¿è·¯å»¶è¿Ÿ
         OldSysTime.MSecond-=TimeDelay;
     else
     {
@@ -7654,7 +7654,7 @@ void CSecAppSev::EnCodeReadData(void)
     RDPubAddr=RxPubAddr;
     RDInfoAddr=RxInfoAddr;
     
-    if (GetActDevIndexByAddr(RDPubAddr))//¸ù¾İ¹«¹²ÌåµØÖ·²éÉè±¸ĞòºÅ¡£
+    if (GetActDevIndexByAddr(RDPubAddr))//æ ¹æ®å…¬å…±ä½“åœ°å€æŸ¥è®¾å¤‡åºå·ã€‚
     {
         GroupTrn.DevIndex=ActDevIndex;
         GroupTrnDD.DevIndex = ActDevIndex;
@@ -7674,11 +7674,11 @@ void CSecAppSev::EnCodeReadData(void)
     }
     
     
-    if ((RDInfoAddr>=LDBIinfoaddr)&&(RDInfoAddr<=HBI))        //wjr 2009.4.5  Ó¦ÎªĞÅÏ¢ÌåµØÖ·¶ø²»ÊÇ¹«¹²ÌåµØÖ·
+    if ((RDInfoAddr>=LDBIinfoaddr)&&(RDInfoAddr<=HBI))        //wjr 2009.4.5  åº”ä¸ºä¿¡æ¯ä½“åœ°å€è€Œä¸æ˜¯å…¬å…±ä½“åœ°å€
     {
         GroupTrn.TypeID=C_IC_NA;
         GroupTrn.InfoAddr=RDInfoAddr;                    //wjr 2009.4.5  
-        if(GroupTrn.InfoAddr>=(LDBIinfoaddr+DevList[GroupTrn.DevIndex].DevData.DBINum/2))   /*¶ÁµÄÊı¾İÎªµ¥µãÒ£ĞÅÔò   wjr2009.8.25*/
+        if(GroupTrn.InfoAddr>=(LDBIinfoaddr+DevList[GroupTrn.DevIndex].DevData.DBINum/2))   /*è¯»çš„æ•°æ®ä¸ºå•ç‚¹é¥ä¿¡åˆ™   wjr2009.8.25*/
         {
             if((GroupTrn.InfoAddr<LBIinfoaddr) || (GroupTrn.InfoAddr>=LBIinfoaddr+DevList[GroupTrn.DevIndex].DevData.BINum))
             {
@@ -7700,13 +7700,13 @@ void CSecAppSev::EnCodeReadData(void)
                 GroupTrn.InfoAddr += DevList[GroupTrn.DevIndex].DevData.DBINum;
             }
         }    
-        else                                                                             /*¶ÁµÄÊı¾İÎªË«µãÒ£ĞÅ  wjr2009.8.25*/
+        else                                                                             /*è¯»çš„æ•°æ®ä¸ºåŒç‚¹é¥ä¿¡  wjr2009.8.25*/
             No=GroupTrn.InfoAddr-LDBIinfoaddr;
         GroupTrn.GroupNo=YXGroupNo[No];
     }
     else if ((RDInfoAddr>=LAI)&&(RDInfoAddr<LAI+DevList[GroupTrn.DevIndex].DevData.AINum))         //wjr 2009.4.5
     {
-        //¶ÁÒ£²â
+        //è¯»é¥æµ‹
         GroupTrn.TypeID=C_IC_NA;
         GroupTrn.InfoAddr=RDInfoAddr;                   //wjr 2009.4.5
         No=GroupTrn.InfoAddr-LAI;
@@ -7719,14 +7719,14 @@ void CSecAppSev::EnCodeReadData(void)
     }
     else if ((RDInfoAddr>=LSPI)&&(RDInfoAddr<=HSPI))     //wjr 2009.4.5
     {
-        //¶Á²½Î»ÖÃĞÅÏ¢
+        //è¯»æ­¥ä½ç½®ä¿¡æ¯
         GroupTrn.TypeID=C_IC_NA;
         GroupTrn.GroupNo=15;
-        GroupTrn.InfoAddr = RDInfoAddr;         // ll Ôö¼Ó£¬GroupTrn.InfoAddrÃ»¸³Öµ¾Í½øĞĞ¼õ²Ù×÷ÊÇ´íÎóµÄ
+        GroupTrn.InfoAddr = RDInfoAddr;         // ll å¢åŠ ï¼ŒGroupTrn.InfoAddræ²¡èµ‹å€¼å°±è¿›è¡Œå‡æ“ä½œæ˜¯é”™è¯¯çš„
         No=GroupTrn.InfoAddr-LSPI;
     }
     //else if (GroupTrn.InfoAddr==RTUSTATUS)
-    else if (RDInfoAddr==RTUSTATUS)     //ll ĞŞ¸Ä
+    else if (RDInfoAddr==RTUSTATUS)     //ll ä¿®æ”¹
     {
         GroupTrn.TypeID=C_IC_NA;
         GroupTrn.GroupNo=16;
@@ -7734,11 +7734,11 @@ void CSecAppSev::EnCodeReadData(void)
     }
     else if ((RDInfoAddr>=LBCR)&&(RDInfoAddr<LBCR+DevList[GroupTrn.DevIndex].DevData.CounterNum))          //wjr 2009.4.5
     {
-        //¶Áµç¶È
+        //è¯»ç”µåº¦
         GroupTrn.TypeID=C_CI_NA;
         GroupTrnDD.GroupNo=(GroupTrnDD.InfoAddr-LBCR)/GROUPBCRNUM+1;
         GroupTrnDD.COT = REQ;
-        GroupTrnDD.InfoAddr = RDInfoAddr;         // ll Ôö¼Ó£¬GroupTrnDD.InfoAddrÃ»¸³Öµ¾Í½øĞĞ¼õ²Ù×÷ÊÇ´íÎóµÄ
+        GroupTrnDD.InfoAddr = RDInfoAddr;         // ll å¢åŠ ï¼ŒGroupTrnDD.InfoAddræ²¡èµ‹å€¼å°±è¿›è¡Œå‡æ“ä½œæ˜¯é”™è¯¯çš„
         No=GroupTrnDD.InfoAddr-LBCR;
     }
     else
@@ -7757,7 +7757,7 @@ void CSecAppSev::EnCodeReadData(void)
     
     if ((No>=0)&&(GroupTrn.TypeID==C_IC_NA))
     {
-        Len=EnCodeAllData((INT16U)No,(INT16U)No,&Num);//·µ»ØÓ¦ÓÃ²ã±¨ÎÄ×Ü³¤¶È
+        Len=EnCodeAllData((INT16U)No,(INT16U)No,&Num);//è¿”å›åº”ç”¨å±‚æŠ¥æ–‡æ€»é•¿åº¦
         
         (*pTxVSQ) = 1;
         TxMsg[CotLocation]=REQ;
@@ -7785,7 +7785,7 @@ void CSecAppSev::EnCodeReadData(void)
     
 }
 
-//¹«¹²ÌåµØÖ·»òĞÅÏ¢ÌåµØÖ·´íÎó
+//å…¬å…±ä½“åœ°å€æˆ–ä¿¡æ¯ä½“åœ°å€é”™è¯¯
 void CSecAppSev::EnCodeReadDataCon(INT16U DevIndex,INT8U Cot)
 {
     int jj;
@@ -7805,12 +7805,12 @@ void CSecAppSev::EnCodeReadDataCon(INT16U DevIndex,INT8U Cot)
         *AppCommand=APP_SENDCON;
 }
 
-//Ò»´ÎÖ»¶ÁÈ¡Ò»¸ö²ÎÊı
+//ä¸€æ¬¡åªè¯»å–ä¸€ä¸ªå‚æ•°
 void CSecAppSev::EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr)
 {
     INT16U No;
     INT8U Len=0;
-    short val = 0;         //»ùÓÚcoverity¸ü¸Ä
+    short val = 0;         //åŸºäºcoverityæ›´æ”¹
     float temp;
     INT8U *p, *pdd;
     int jj;
@@ -7824,21 +7824,21 @@ void CSecAppSev::EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr)
     *(pTxInfoAddr+1)=HIBYTE((RDInfoAddr));
 
     No=(InfoAddr-LPARA)/3;  
-    TxMsg[0]=Sec101Pad.TypeID[13];//°´ÕÕµÚ14×éÉèÖÃµÄÀàĞÍ·¢²ÎÊı
+    TxMsg[0]=Sec101Pad.TypeID[13];//æŒ‰ç…§ç¬¬14ç»„è®¾ç½®çš„ç±»å‹å‘å‚æ•°
 
     switch(TxMsg[0])
     {
-        case M_ME_NA:     //9²âÁ¿Öµ£¬¹æÒ»»¯Öµ
+        case M_ME_NA:     //9æµ‹é‡å€¼ï¼Œè§„ä¸€åŒ–å€¼
             switch((InfoAddr-LPARA)%3)
             {
-                case 0://ÃÅÏŞ
+                case 0://é—¨é™
                     
                     val=DevList[DevIndex].DevData.AIPara[No].DeadValue;
                     break;
-                case 1://ÉÏÏŞ
+                case 1://ä¸Šé™
                     val=DevList[DevIndex].DevData.AIPara[No].UpLimit;
                     break;
-                case 2://ÏÂÏŞ
+                case 2://ä¸‹é™
                     val=DevList[DevIndex].DevData.AIPara[No].LowLimit;
                     break;
             }
@@ -7850,7 +7850,7 @@ void CSecAppSev::EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr)
             *(pTxData+2)=0;
             Len=3;
             break;
-        case M_ME_NB:     //11²âÁ¿Öµ£¬±ê¶ÈÖµ
+        case M_ME_NB:     //11æµ‹é‡å€¼ï¼Œæ ‡åº¦å€¼
             switch((InfoAddr-LPARA)%3)
             {
                 case 0:
@@ -7868,7 +7868,7 @@ void CSecAppSev::EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr)
             *(pTxData+2)=0;
             Len=3;
             break;
-        case M_ME_NC:    //13²âÁ¿Öµ£¬¶Ì¸¡µãÊı
+        case M_ME_NC:    //13æµ‹é‡å€¼ï¼ŒçŸ­æµ®ç‚¹æ•°
             switch((InfoAddr-LPARA)%3)
             {
                 case 0:
@@ -7894,7 +7894,7 @@ void CSecAppSev::EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr)
             *(pTxData+4)=0;
             Len=5;
             break;
-        case M_ME_ND:    //21²»´øÆ·ÖÊ£¬¹éÒ»»¯
+        case M_ME_ND:    //21ä¸å¸¦å“è´¨ï¼Œå½’ä¸€åŒ–
             switch((InfoAddr-LPARA)%3)
             {
                 case 0:
@@ -7921,7 +7921,7 @@ void CSecAppSev::EnCodeReadPara(INT16U DevIndex,INT16U InfoAddr)
 
 void CSecAppSev::ParaSetCon(void)
 {
-    INT8U Len = 0;                  //¸ù¾İcoverity¾²Ì¬¼ì²â½á¹û¸ü¸Ä
+    INT8U Len = 0;                  //æ ¹æ®coverityé™æ€æ£€æµ‹ç»“æœæ›´æ”¹
     float tempfloat;
     int jj;
     INT8U *p,*pdd;
@@ -7938,17 +7938,17 @@ void CSecAppSev::ParaSetCon(void)
 
     switch(TxMsg[0])
     {
-        case P_ME_NA:    //¹éÒ»»¯
-        case P_ME_NB:    //±ê¶È»¯
+        case P_ME_NA:    //å½’ä¸€åŒ–
+        case P_ME_NB:    //æ ‡åº¦åŒ–
             *pTxData=LOBYTE(ParaWord);
             *(pTxData+1)=HIBYTE(ParaWord);
             *(pTxData+2)=ParaQPM;
             Len=3;
             break;
-        case P_ME_NC:    //¶Ì¸¡µãÊı
-            //tempfloat = (float)ParaWord;  //ll ĞŞ¸Ä£¬´íÎóÓÃÖµ
+        case P_ME_NC:    //çŸ­æµ®ç‚¹æ•°
+            //tempfloat = (float)ParaWord;  //ll ä¿®æ”¹ï¼Œé”™è¯¯ç”¨å€¼
             tempfloat = (float)ParaFloat;
-            //logSysMsgNoTime("SEC ¶Ì¸¡µãÊıf=%x,f2=%x",tempfloat,ParaFloat,0,0);   //  debug ll
+            //logSysMsgNoTime("SEC çŸ­æµ®ç‚¹æ•°f=%x,f2=%x",tempfloat,ParaFloat,0,0);   //  debug ll
             p = (INT8U*)(&tempfloat);
             pdd = (INT8U*)(&dd);
             *(pdd++) = *(p++);
@@ -7984,7 +7984,7 @@ void CSecAppSev::EnCodeReset(void)
     
     if(ResetGRP==1)
     {
-        *pRestType = 0xee;  //¸´Î»¹æÔ¼½ø³Ì×´Ì¬¼ÇÒä ll 2010/07/20   for ¹ãÎ÷¹æÔ¼²âÊÔ
+        *pRestType = 0xee;  //å¤ä½è§„çº¦è¿›ç¨‹çŠ¶æ€è®°å¿† ll 2010/07/20   for å¹¿è¥¿è§„çº¦æµ‹è¯•
         
         ResetFlag=0xff;
         ResetCount=7;
@@ -8041,7 +8041,7 @@ BOOL CSecAppSev::ClearFlag(INT16U DevIndex,INT16U Flag)//
     switch (Flag)
     {
         case BIETFLAG:
-            myTaskLock();//½ûÖ¹ÇÀÕ¼µ÷¶È
+            myTaskLock();//ç¦æ­¢æŠ¢å è°ƒåº¦
             if(DevList[DevIndex].Flag)
                 DevList[DevIndex].RealWin->BIETimRP+=DevList[DevIndex].Data1.SOENum;
             else
@@ -8050,7 +8050,7 @@ BOOL CSecAppSev::ClearFlag(INT16U DevIndex,INT16U Flag)//
 
             BIFrame&=(~BIETFRAME);
             DevList[DevIndex].Data1.SOENum=0;
-            myTaskUnlock();//ÔÊĞíÇÀÕ¼µ÷¶È
+            myTaskUnlock();//å…è®¸æŠ¢å è°ƒåº¦
 
             break;
         /*case FAPROCFLAG:
@@ -8102,11 +8102,11 @@ void CSecAppSev::ProcFileInit(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_EncodeReadDir()
-º¯Êı¹¦ÄÜ£º  ¶ÔÄ¿Â¼µÄ´«Êä×éÖ¯·¢ËÍÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º TRUE   ÓĞºóĞø±¨ÎÄ   FALSE Ã»ÓĞºóĞø±¨ÎÄ
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_EncodeReadDir()
+å‡½æ•°åŠŸèƒ½ï¼š  å¯¹ç›®å½•çš„ä¼ è¾“ç»„ç»‡å‘é€å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š TRUE   æœ‰åç»­æŠ¥æ–‡   FALSE æ²¡æœ‰åç»­æŠ¥æ–‡
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::ProcFT_EncodeReadDir(void)
 {
@@ -8117,30 +8117,30 @@ BOOL CSecAppSev::ProcFT_EncodeReadDir(void)
         
     len = 0;
     
-    //¸ù¾İÄ¿Â¼ID»òÄ¿Â¼Ãû³Æ£¬×éÖ¯Ä¿Â¼ÄÚÎÄ¼şµÄ´«Êä.´ÓÎÄ¼şÊıÁ¿¿ªÊ¼ÌîĞ´
+    //æ ¹æ®ç›®å½•IDæˆ–ç›®å½•åç§°ï¼Œç»„ç»‡ç›®å½•å†…æ–‡ä»¶çš„ä¼ è¾“.ä»æ–‡ä»¶æ•°é‡å¼€å§‹å¡«å†™
     
     rc = FT_ReadDirectory(&FtInfo, &len);
        
-    //len = 0 »Ø·ñ¶¨»Ø´ğ£¬rc=true±íÊ¾ÓĞÎŞºóĞø
+    //len = 0 å›å¦å®šå›ç­”ï¼Œrc=trueè¡¨ç¤ºæœ‰æ— åç»­
     TxMsg[0] = F_FR_NA_N;
     TxMsg[1] = 1;   //VSQ
     TxMsg[CotLocation]=REQ;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength;   
          
-    TxMsg[FramePos++] = 2;         //¸½¼ÓÊı¾İ°üÀàĞÍ
+    TxMsg[FramePos++] = 2;         //é™„åŠ æ•°æ®åŒ…ç±»å‹
     TxMsg[FramePos++] = FR_RD_DIR_CON;
     
     if(len)    
-        TxMsg[FramePos++] = 0;    //¶ÁÈ¡Ä¿Â¼³É¹¦
+        TxMsg[FramePos++] = 0;    //è¯»å–ç›®å½•æˆåŠŸ
     else
-        TxMsg[FramePos++] = 1;    //¶ÁÈ¡Ä¿Â¼Ê§°Ü
+        TxMsg[FramePos++] = 1;    //è¯»å–ç›®å½•å¤±è´¥
         
     TxMsg[FramePos++] = LLBYTE(FtInfo.dirid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.dirid);
@@ -8148,10 +8148,10 @@ BOOL CSecAppSev::ProcFT_EncodeReadDir(void)
     TxMsg[FramePos++] = HHBYTE(FtInfo.dirid);
     
     if(rc)
-        TxMsg[FramePos++] = 1;    //ÓĞºóĞø
+        TxMsg[FramePos++] = 1;    //æœ‰åç»­
     else
     {
-        TxMsg[FramePos++] = 0;    //ÎŞºóĞø
+        TxMsg[FramePos++] = 0;    //æ— åç»­
     }
     
     if(len)
@@ -8161,7 +8161,7 @@ BOOL CSecAppSev::ProcFT_EncodeReadDir(void)
     }
     else
     {
-        TxMsg[FramePos++] = 0;    //ÎÄ¼şÊıÁ¿=0
+        TxMsg[FramePos++] = 0;    //æ–‡ä»¶æ•°é‡=0
     }
     
     EnCode101DLMsg(FramePos, APP_SENDDATA);
@@ -8170,10 +8170,10 @@ BOOL CSecAppSev::ProcFT_EncodeReadDir(void)
 
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_ReadDir()
-º¯Êı¹¦ÄÜ£º  ´¦ÀíÎÄ¼ş´«Êä¶ÁÄ¿Â¼ÃüÁî¡£
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º      
+å‡½æ•°åç§°ï¼š  ProcFT_ReadDir()
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†æ–‡ä»¶ä¼ è¾“è¯»ç›®å½•å‘½ä»¤ã€‚
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_ReadDir(void)
 {
@@ -8188,31 +8188,31 @@ void CSecAppSev::ProcFT_ReadDir(void)
     memset(FtInfo.tempname, 0, 40);
     if(namelen>=40)
         namelen = 39;
-    memcpy(FtInfo.tempname,&pRxData[7],namelen);    //FtInfo.tempnameÖĞÁÙÊ±´æ·Å£¬ÓÃÓÚ´òÓ¡ĞÅÏ¢
+    memcpy(FtInfo.tempname,&pRxData[7],namelen);    //FtInfo.tempnameä¸­ä¸´æ—¶å­˜æ”¾ï¼Œç”¨äºæ‰“å°ä¿¡æ¯
     for(i = 0; i < namelen; i++)
     {
         FtInfo.tempname[i] = tolower(FtInfo.tempname[i]);
     }
     
-    FtInfo.dirid = FT_GetDirID(&FtInfo);    //¸ù¾İÄ¿Â¼Ãû·µ»ØÄ¿Â¼ID DirIDÔİÊ±²»Ê¹ÓÃ liuwei20170307
+    FtInfo.dirid = FT_GetDirID(&FtInfo);    //æ ¹æ®ç›®å½•åè¿”å›ç›®å½•ID DirIDæš‚æ—¶ä¸ä½¿ç”¨ liuwei20170307
     
-    pRx = &pRxData[7]+namelen;  //°ÑÕÙ»½±êÖ¾Î»ÖÃµÄÖ¸Õë¸³Öµ¸øpRx    
-    CallFlag = pRx[0];  //ÕÙ»½±êÖ¾
+    pRx = &pRxData[7]+namelen;  //æŠŠå¬å”¤æ ‡å¿—ä½ç½®çš„æŒ‡é’ˆèµ‹å€¼ç»™pRx    
+    CallFlag = pRx[0];  //å¬å”¤æ ‡å¿—
     
     FtInfo.callflag = CallFlag;
     
-    logSysMsgNoTime("ÕÙ»½Ä¿Â¼%s ÕÙ»½±êÖ¾=%d, DirID1=%d, DirID2=%d",(INT32U)FtInfo.tempname, CallFlag, FtInfo.dirid, DirID);  
+    logSysMsgNoTime("å¬å”¤ç›®å½•%s å¬å”¤æ ‡å¿—=%d, DirID1=%d, DirID2=%d",(INT32U)FtInfo.tempname, CallFlag, FtInfo.dirid, DirID);  
     
     if(CallFlag)
     {
-        pRx++;  //µ÷Õûµ½²éÑ¯ÆğÊ¼Ê±¼äµÄÎ»ÖÃ
+        pRx++;  //è°ƒæ•´åˆ°æŸ¥è¯¢èµ·å§‹æ—¶é—´çš„ä½ç½®
         StartTime.MSecond = MAKEWORD(pRx[0],pRx[1]);
         StartTime.Minute  = (pRx[2] & 0x3f);
         StartTime.Hour    = (pRx[3] & 0x1f);
         StartTime.Day     = (pRx[4] & 0x1f);
         StartTime.Month   = (pRx[5] & 0xf);
         StartTime.Year    = (pRx[6] & 0x7f);
-        pRx += 7;   //µ÷Õûµ½²éÑ¯½áÊøÊ±¼äµÄÎ»ÖÃ
+        pRx += 7;   //è°ƒæ•´åˆ°æŸ¥è¯¢ç»“æŸæ—¶é—´çš„ä½ç½®
         EndTime.MSecond = MAKEWORD(pRx[0],pRx[1]);
         EndTime.Minute  = (pRx[2] & 0x3f);
         EndTime.Hour    = (pRx[3] & 0x1f);
@@ -8223,8 +8223,8 @@ void CSecAppSev::ProcFT_ReadDir(void)
         ConvToAbsTime(&StartTime,&FtInfo.startime, IEC101CLOCKTIME);
         ConvToAbsTime(&EndTime,  &FtInfo.endtime, IEC101CLOCKTIME);
         
-        logSysMsgNoTime("%d %d:%d:%dÄ¿Â¼²éÑ¯¿ªÊ¼",StartTime.Day,StartTime.Hour,StartTime.Minute,StartTime.MSecond/1000);
-        logSysMsgNoTime("%d %d:%d:%dÄ¿Â¼²éÑ¯½áÊø",EndTime.Day,EndTime.Hour,EndTime.Minute,EndTime.MSecond/1000);
+        logSysMsgNoTime("%d %d:%d:%dç›®å½•æŸ¥è¯¢å¼€å§‹",StartTime.Day,StartTime.Hour,StartTime.Minute,StartTime.MSecond/1000);
+        logSysMsgNoTime("%d %d:%d:%dç›®å½•æŸ¥è¯¢ç»“æŸ",EndTime.Day,EndTime.Hour,EndTime.Minute,EndTime.MSecond/1000);
     }
     else
     {
@@ -8236,11 +8236,11 @@ void CSecAppSev::ProcFT_ReadDir(void)
        
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_EncodeFileData()
-º¯Êı¹¦ÄÜ£º  ´«ÊäÒª´«ÊäµÄÎÄ¼şÄÚÈİ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  TRUE ±íÊ¾ÓĞºóĞø£¬ FALSE ÎŞºóĞø
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_EncodeFileData()
+å‡½æ•°åŠŸèƒ½ï¼š  ä¼ è¾“è¦ä¼ è¾“çš„æ–‡ä»¶å†…å®¹
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  TRUE è¡¨ç¤ºæœ‰åç»­ï¼Œ FALSE æ— åç»­
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::ProcFT_EncodeFileData(void)
 {
@@ -8255,34 +8255,34 @@ BOOL CSecAppSev::ProcFT_EncodeFileData(void)
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength;
     
-    TxMsg[FramePos++] = 2;    //¸½¼ÓÊı¾İ°üÀàĞÍ
+    TxMsg[FramePos++] = 2;    //é™„åŠ æ•°æ®åŒ…ç±»å‹
     TxMsg[FramePos++] = FR_RD_FILE_DATA;
     
-    //4×Ö½ÚÎÄ¼ş±êÊ¾ÎÄ¼şID
+    //4å­—èŠ‚æ–‡ä»¶æ ‡ç¤ºæ–‡ä»¶ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HHBYTE(FtInfo.fileid);
     
-    //¸ù¾İFileFlagÎÄ¼ş±êÊ¾£¬²éÕÒ²»Í¬ÎÄ¼ş 
+    //æ ¹æ®FileFlagæ–‡ä»¶æ ‡ç¤ºï¼ŒæŸ¥æ‰¾ä¸åŒæ–‡ä»¶ 
     rc = FT_ReadData(&FtInfo, &TxMsg[FramePos], &len);
             
-    EnCode101DLMsg(FramePos+len, APP_SENDDATA);     //FramePos°üº¬¸½¼ÓÊı¾İ°ü¡¢²Ù×÷±êÊ¶¡¢ÎÄ¼şID 
+    EnCode101DLMsg(FramePos+len, APP_SENDDATA);     //FramePosåŒ…å«é™„åŠ æ•°æ®åŒ…ã€æ“ä½œæ ‡è¯†ã€æ–‡ä»¶ID 
     
     return rc;
 
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_EncodeFileActConf()
-º¯Êı¹¦ÄÜ£º  ¶ÁÎÄ¼ş¼¤»îÈ·ÈÏÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcFT_EncodeFileActConf()
+å‡½æ•°åŠŸèƒ½ï¼š  è¯»æ–‡ä»¶æ¿€æ´»ç¡®è®¤å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_EncodeFileActConf(void)
 {
@@ -8300,23 +8300,23 @@ void CSecAppSev::ProcFT_EncodeFileActConf(void)
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength;
     
-    TxMsg[FramePos++] = 2;    //¸½¼ÓÊı¾İ°üÀàĞÍ
+    TxMsg[FramePos++] = 2;    //é™„åŠ æ•°æ®åŒ…ç±»å‹
     TxMsg[FramePos++] = FR_RD_FILE_ACTCON; 
-    successPos = FramePos;  //¼ÇÂ¼³É¹¦Ê§°ÜÎ»ÖÃ 
+    successPos = FramePos;  //è®°å½•æˆåŠŸå¤±è´¥ä½ç½® 
     FramePos++;
     
-    //ÎÄ¼şÃû
+    //æ–‡ä»¶å
     namelen = FtInfo.namelen;
     TxMsg[FramePos++] = namelen;
     memcpy(&TxMsg[FramePos], FtInfo.tempname, namelen);
     FramePos += namelen;
-    //4×Ö½ÚÎÄ¼ş±êÊ¾ÎÄ¼şID
+    //4å­—èŠ‚æ–‡ä»¶æ ‡ç¤ºæ–‡ä»¶ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
@@ -8324,7 +8324,7 @@ void CSecAppSev::ProcFT_EncodeFileActConf(void)
     
     if(len)
     {
-        TxMsg[successPos] = 0;    //³É¹¦
+        TxMsg[successPos] = 0;    //æˆåŠŸ
         TxMsg[FramePos++] = LLBYTE(len); 
         TxMsg[FramePos++] = LHBYTE(len);
         TxMsg[FramePos++] = HLBYTE(len);
@@ -8345,11 +8345,11 @@ void CSecAppSev::ProcFT_EncodeFileActConf(void)
           
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_ReadFileAct()
-º¯Êı¹¦ÄÜ£º  ¼¤»îÒª¶ÁµÄÎÄ¼ş
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_ReadFileAct()
+å‡½æ•°åŠŸèƒ½ï¼š  æ¿€æ´»è¦è¯»çš„æ–‡ä»¶
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_ReadFileAct(void)
 {
@@ -8361,7 +8361,7 @@ void CSecAppSev::ProcFT_ReadFileAct(void)
         namelen = 39;
     memcpy(FtInfo.tempname, &pRxData[3], namelen);
     
-    //¸ù¾İÎÄ¼şÃû³Æ£¬×éÖ¯ÎÄ¼şµÄ´«Êä
+    //æ ¹æ®æ–‡ä»¶åç§°ï¼Œç»„ç»‡æ–‡ä»¶çš„ä¼ è¾“
     for(i = 0; i < namelen; i++)
     {
         FtInfo.tempname[i] = tolower(FtInfo.tempname[i]);
@@ -8372,11 +8372,11 @@ void CSecAppSev::ProcFT_ReadFileAct(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_EncodeWriteFileActConf()
-º¯Êı¹¦ÄÜ£º  Ğ´ÎÄ¼ş¼¤»îÈ·ÈÏÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_EncodeWriteFileActConf()
+å‡½æ•°åŠŸèƒ½ï¼š  å†™æ–‡ä»¶æ¿€æ´»ç¡®è®¤å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_EncodeWriteFileActConf(void)
 {
@@ -8397,23 +8397,23 @@ void CSecAppSev::ProcFT_EncodeWriteFileActConf(void)
 
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength; 
     
-    TxMsg[FramePos++] = 2;    //¸½¼ÓÊı¾İ°üÀàĞÍ
+    TxMsg[FramePos++] = 2;    //é™„åŠ æ•°æ®åŒ…ç±»å‹
     TxMsg[FramePos++] = FR_WR_FILE_ACTCON;
     TxMsg[FramePos++] = result;
     
-    //ÎÄ¼şÃû
+    //æ–‡ä»¶å
     namelen = FtInfo.namelen;
     TxMsg[FramePos++] = namelen;
     memcpy(&TxMsg[FramePos], FtInfo.name, namelen);
     FramePos += namelen;
     
-    //4×Ö½ÚÎÄ¼ş±êÊ¾ÎÄ¼şID
+    //4å­—èŠ‚æ–‡ä»¶æ ‡ç¤ºæ–‡ä»¶ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
@@ -8430,11 +8430,11 @@ void CSecAppSev::ProcFT_EncodeWriteFileActConf(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_WriteFileAct()
-º¯Êı¹¦ÄÜ£º  Ğ´ÎÄ¼ş¼¤»î¡£¼ÇÂ¼ÎÄ¼şÃû£¬³õÊ¼»¯Ïà¹Ø²ÎÊıµÈ
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_WriteFileAct()
+å‡½æ•°åŠŸèƒ½ï¼š  å†™æ–‡ä»¶æ¿€æ´»ã€‚è®°å½•æ–‡ä»¶åï¼Œåˆå§‹åŒ–ç›¸å…³å‚æ•°ç­‰
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_WriteFileAct(void)
 {
@@ -8455,7 +8455,7 @@ void CSecAppSev::ProcFT_WriteFileAct(void)
     filesize = MAKEDWORD(MAKEWORD(pdata[4],pdata[5]),MAKEWORD(pdata[6],pdata[7]));
     
     
-    //¸ù¾İÎÄ¼şÃû³Æ£¬×éÖ¯ÎÄ¼şµÄ´«Êä
+    //æ ¹æ®æ–‡ä»¶åç§°ï¼Œç»„ç»‡æ–‡ä»¶çš„ä¼ è¾“
     for(i = 0; i < namelen; i++)
     {
         FtInfo.tempname[i] = tolower(FtInfo.tempname[i]);
@@ -8471,34 +8471,34 @@ void CSecAppSev::ProcFT_WriteFileAct(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_EncodeWriteFileDataConf()
-º¯Êı¹¦ÄÜ£º  Ğ´ÎÄ¼ş´«Êä½áÊø£¬»ØÈ·ÈÏÖ¡¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_EncodeWriteFileDataConf()
+å‡½æ•°åŠŸèƒ½ï¼š  å†™æ–‡ä»¶ä¼ è¾“ç»“æŸï¼Œå›ç¡®è®¤å¸§ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_EncodeWriteFileDataConf(void)
 {
     INT8U FramePos;
     INT16U jj;
 
-    //×éÖ¯·µ»ØÊı¾İ
+    //ç»„ç»‡è¿”å›æ•°æ®
     TxMsg[0] = F_FR_NA_N;
     TxMsg[1] = 1;   //VSQ
     TxMsg[CotLocation]=REQ;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength;
     
-    TxMsg[FramePos++] = 2;    //¸½¼ÓÊı¾İ°üÀàĞÍ
+    TxMsg[FramePos++] = 2;    //é™„åŠ æ•°æ®åŒ…ç±»å‹
     TxMsg[FramePos++] = FR_WR_FILE_DATACON;
     
-    //4×Ö½ÚÎÄ¼ş±êÊ¾ÎÄ¼şID
+    //4å­—èŠ‚æ–‡ä»¶æ ‡ç¤ºæ–‡ä»¶ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
@@ -8509,22 +8509,22 @@ void CSecAppSev::ProcFT_EncodeWriteFileDataConf(void)
     TxMsg[FramePos++] = HLBYTE(FtInfo.offset);
     TxMsg[FramePos++] = HHBYTE(FtInfo.offset); 
     
-    TxMsg[FramePos++] = FtInfo.errinfo;  //½á¹ûÃèÊö·û
+    TxMsg[FramePos++] = FtInfo.errinfo;  //ç»“æœæè¿°ç¬¦
     
     EnCode101DLMsg(FramePos, APP_SENDDATA);
         
-    logSysMsgNoTime("Ğ´ÎÄ¼şÈ·ÈÏÖ¡%s, err=%d, offset=%d", (INT32U)FtInfo.name, FtInfo.errinfo, FtInfo.offset,0);
+    logSysMsgNoTime("å†™æ–‡ä»¶ç¡®è®¤å¸§%s, err=%d, offset=%d", (INT32U)FtInfo.name, FtInfo.errinfo, FtInfo.offset,0);
      
-    FT_ParaReset(&FtInfo);  //ÎÄ¼ş´«Êä½áÊø£¬Çå²ÎÊı
+    FT_ParaReset(&FtInfo);  //æ–‡ä»¶ä¼ è¾“ç»“æŸï¼Œæ¸…å‚æ•°
     
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_WriteFileData()
-º¯Êı¹¦ÄÜ£º  ´«ÊäÒªĞ´µÄÎÄ¼şÄÚÈİ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcFT_WriteFileData()
+å‡½æ•°åŠŸèƒ½ï¼š  ä¼ è¾“è¦å†™çš„æ–‡ä»¶å†…å®¹
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_WriteFileData(void)
 {
@@ -8534,17 +8534,17 @@ void CSecAppSev::ProcFT_WriteFileData(void)
     
     fileid = MAKEDWORD(MAKEWORD(pRxData[2],pRxData[3]),MAKEWORD(pRxData[4],pRxData[5]));
     offset = MAKEDWORD(MAKEWORD(pRxData[6],pRxData[7]),MAKEWORD(pRxData[8],pRxData[9]));
-    IsNoFinish = pRxData[10]; //0£ºÎŞºóĞø  1£ºÓĞºóĞø
+    IsNoFinish = pRxData[10]; //0ï¼šæ— åç»­  1ï¼šæœ‰åç»­
 
     FtInfo.errinfo = 0;
     if(fileid != FtInfo.fileid)
     {
-        //ÎÄ¼şID²»Ò»ÖÂ
+        //æ–‡ä»¶IDä¸ä¸€è‡´
         FtInfo.errinfo = 4;  
     }
     if(offset != FtInfo.offset)
     {
-        //ÎÄ¼ş³¤¶ÈÒì³£
+        //æ–‡ä»¶é•¿åº¦å¼‚å¸¸
         FtInfo.errinfo = 3;
     }
     
@@ -8554,11 +8554,11 @@ void CSecAppSev::ProcFT_WriteFileData(void)
         
         if(IsNoFinish == FALSE)
         {
-            //Õı³£Çé¿öÏÂ£¬·¢ÎÄ¼ş½áÊøÁË£¬ÔÚÕâÀï·¢È·ÈÏÖ¡
-            //ÕâÀïºÜ¿ÉÄÜ·¢²»³öÈ¥
-            SetSendData2Flag(DATA2_FT_WTDATAACT);     //ÌáÇ°»ØÈ·ÈÏÖ¡£¬ĞèÒª²âÊÔÖ÷Õ¾ÊÇ·ñÄÜÂíÉÏ½øĞĞÍ¨ĞÅ£¬³ÌĞòÓ¦¸ÃÓĞĞ´flashµÄÊ±¼ä
+            //æ­£å¸¸æƒ…å†µä¸‹ï¼Œå‘æ–‡ä»¶ç»“æŸäº†ï¼Œåœ¨è¿™é‡Œå‘ç¡®è®¤å¸§
+            //è¿™é‡Œå¾ˆå¯èƒ½å‘ä¸å‡ºå»
+            SetSendData2Flag(DATA2_FT_WTDATAACT);     //æå‰å›ç¡®è®¤å¸§ï¼Œéœ€è¦æµ‹è¯•ä¸»ç«™æ˜¯å¦èƒ½é©¬ä¸Šè¿›è¡Œé€šä¿¡ï¼Œç¨‹åºåº”è¯¥æœ‰å†™flashçš„æ—¶é—´
         } 
-        segmentlen = (LengthIn) - AsduHeadLength - 12;   // AsduHeadLength=9  12=³ıÊı¾İ¿éµÄÆäËû×Ö½Ú
+        segmentlen = (LengthIn) - AsduHeadLength - 12;   // AsduHeadLength=9  12=é™¤æ•°æ®å—çš„å…¶ä»–å­—èŠ‚
         //logSysMsgNoTime("offset=%d, segmentlen=%d",offset,segmentlen,0,0);
         
         if(FtInfo.IsWriteProgramFile)
@@ -8569,14 +8569,14 @@ void CSecAppSev::ProcFT_WriteFileData(void)
             }
             else
             {
-                FtInfo.errinfo = 1; //Î´Öª´íÎó
+                FtInfo.errinfo = 1; //æœªçŸ¥é”™è¯¯
                 rc = TRUE;
-                logSysMsgNoTime("Èí¼şÉı¼¶Òì³£(±»³·Ïú)",0,0,0,0);
+                logSysMsgNoTime("è½¯ä»¶å‡çº§å¼‚å¸¸(è¢«æ’¤é”€)",0,0,0,0);
             }
         }
         else
         {
-            //ÏÂÔØ·Ç³ÌĞòÉı¼¶ÎÄ¼ş
+            //ä¸‹è½½éç¨‹åºå‡çº§æ–‡ä»¶
             rc = FT_WriteFileData(&FtInfo, &pRxData[11], segmentlen, pRxData[11+segmentlen], IsNoFinish);
             
         }
@@ -8585,7 +8585,7 @@ void CSecAppSev::ProcFT_WriteFileData(void)
             return;
     }
     
-    //Òì³£ÓĞ´íÎóµÄÇé¿öÏÂ£¬ÔÚÕâÀï·¢È·ÈÏÖ¡
+    //å¼‚å¸¸æœ‰é”™è¯¯çš„æƒ…å†µä¸‹ï¼Œåœ¨è¿™é‡Œå‘ç¡®è®¤å¸§
     if((rc == TRUE) && (IsNoFinish))
         SetSendData2Flag(DATA2_FT_WTDATAACT);
     
@@ -8600,34 +8600,34 @@ void CSecAppSev::ProcFileTran(void)
     /*if(INFOADDR2BYTE)
     {
         pRxData = &RxMsg[InfoAddrLocation+2];
-        //logSysMsgNoTime("ÊÕµ½ÎÄ¼ş´«ÊäÃüÁî%x=%x-%x-%x",pRxData[0],pRxData[1],pRxData[2],pRxData[3]);
+        //logSysMsgNoTime("æ”¶åˆ°æ–‡ä»¶ä¼ è¾“å‘½ä»¤%x=%x-%x-%x",pRxData[0],pRxData[1],pRxData[2],pRxData[3]);
     }*/
     
-    if(pRxData[0] != 2) //¸½¼ÓÊı¾İ°üÀàĞÍ 2=ÎÄ¼ş´«Êä
+    if(pRxData[0] != 2) //é™„åŠ æ•°æ®åŒ…ç±»å‹ 2=æ–‡ä»¶ä¼ è¾“
     {   
         return;   
     }
     
-    switch(pRxData[1])  //ÎÄ¼ş²Ù×÷±êÊ¾
+    switch(pRxData[1])  //æ–‡ä»¶æ“ä½œæ ‡ç¤º
     {
-        case FR_RD_DIR: //¶ÁÄ¿Â¼
+        case FR_RD_DIR: //è¯»ç›®å½•
             ProcFT_ReadDir();
             break;
         
-        case FR_RD_FILE_ACT:    //¶ÁÎÄ¼ş¼¤»î
+        case FR_RD_FILE_ACT:    //è¯»æ–‡ä»¶æ¿€æ´»
             ProcFT_ReadFileAct();
             
             break;
         
-        case FR_RD_FILE_DATACON:   //¶ÁÎÄ¼şÊı¾İÈ·ÈÏ
-            //ÎŞĞèÓ¦ÓÃ²ã»Ø´ğ
+        case FR_RD_FILE_DATACON:   //è¯»æ–‡ä»¶æ•°æ®ç¡®è®¤
+            //æ— éœ€åº”ç”¨å±‚å›ç­”
             break;
         
-        case FR_WR_FILE_ACT:    //Ğ´ÎÄ¼ş¼¤»î
+        case FR_WR_FILE_ACT:    //å†™æ–‡ä»¶æ¿€æ´»
             ProcFT_WriteFileAct();
             break;
         
-        case FR_WR_FILE_DATA:   //Ğ´ÎÄ¼şÊı¾İ
+        case FR_WR_FILE_DATA:   //å†™æ–‡ä»¶æ•°æ®
             ProcFT_WriteFileData();
             break;
     }
@@ -8635,11 +8635,11 @@ void CSecAppSev::ProcFileTran(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcFT_ProgramUpdate()
-º¯Êı¹¦ÄÜ£º  Èí¼şÉı¼¶ÃüÁî´¦Àí¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  
-±¸×¢£º      ÔİÊ±ÕâÑù´¦Àí£¬Ê¹ÓÃ´íÎóµÄ¾µÏñ»Ø´ğ·½Ê½¡£ÒÅÁôÎÊÌâÊÇ»áÓ°Ïì»Ø´ğµÄÓÅÏÈ¼¶£¬Ò»°ãÎÊÌâ²»´ó
+å‡½æ•°åç§°ï¼š  ProcFT_ProgramUpdate()
+å‡½æ•°åŠŸèƒ½ï¼š  è½¯ä»¶å‡çº§å‘½ä»¤å¤„ç†ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      æš‚æ—¶è¿™æ ·å¤„ç†ï¼Œä½¿ç”¨é”™è¯¯çš„é•œåƒå›ç­”æ–¹å¼ã€‚é—ç•™é—®é¢˜æ˜¯ä¼šå½±å“å›ç­”çš„ä¼˜å…ˆçº§ï¼Œä¸€èˆ¬é—®é¢˜ä¸å¤§
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcFT_ProgramUpdate(void)
 {
@@ -8649,14 +8649,14 @@ void CSecAppSev::ProcFT_ProgramUpdate(void)
         
         if(pRxData[0] & 0x80) //CTYPE
         {   
-            //Éı¼¶Æô¶¯   
+            //å‡çº§å¯åŠ¨   
             FtInfo.IsUpdate = TRUE;
             ProgramUpadateCot = ACTCON;
             
         }
         else
         {
-            //Éı¼¶½áÊø
+            //å‡çº§ç»“æŸ
             FT_ParaReset(&FtInfo);
             ProgramUpadateCot = ACTCON; 
             StartProgramUpdate();
@@ -8664,7 +8664,7 @@ void CSecAppSev::ProcFT_ProgramUpdate(void)
     }
     else
     {
-        //Éı¼¶³·Ïú
+        //å‡çº§æ’¤é”€
         FT_ParaReset(&FtInfo);
         ClearProgramUpdate();
         ProgramUpadateCot = DEACTCON;
@@ -8674,11 +8674,11 @@ void CSecAppSev::ProcFT_ProgramUpdate(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  RMTReadAllPara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯¶ÁÈ«²¿²ÎÊı
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  TRUE-ÓĞºóĞø FALSE-ÎŞºóĞø
-            ÔËĞĞ²ÎÊıÊ¹ÓÃÕûÊıÉÏ´«ºÍÉèÖÃ¡£¶¨Öµ²ÎÊıÓÃ¸¡µãÊıÉÏ´«ºÍÉèÖÃ¡£
+å‡½æ•°åç§°ï¼š  RMTReadAllPara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¯»å…¨éƒ¨å‚æ•°
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  TRUE-æœ‰åç»­ FALSE-æ— åç»­
+            è¿è¡Œå‚æ•°ä½¿ç”¨æ•´æ•°ä¸Šä¼ å’Œè®¾ç½®ã€‚å®šå€¼å‚æ•°ç”¨æµ®ç‚¹æ•°ä¸Šä¼ å’Œè®¾ç½®ã€‚
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
 {
@@ -8691,7 +8691,7 @@ BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
     switch(RMTHaveReadParaFlag)
     {
     case 1:
-        //ÉÏ×°¹ÌÓĞ²ÎÊı
+        //ä¸Šè£…å›ºæœ‰å‚æ•°
         for(info=RMTP_ORG_L; info<=RMTP_ORG_H; info++)
         {
             sendnum++;
@@ -8709,7 +8709,7 @@ BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
 
         break;   
     case 2:
-        //ÉÏ×°ÖÕ¶ËÔËĞĞ²ÎÊı
+        //ä¸Šè£…ç»ˆç«¯è¿è¡Œå‚æ•°
         for(info=RMTP_RUN1_L; info<=RMTP_RUN1_H; info++)
         {
             sendnum++;
@@ -8725,7 +8725,7 @@ BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
         RMTHaveReadParaFlag = 3;
         break;
     case 3:
-        //ÉÏ×°ÖÕ¶ËÏßÂ·ÔËĞĞ²ÎÊı
+        //ä¸Šè£…ç»ˆç«¯çº¿è·¯è¿è¡Œå‚æ•°
         fnum = GetFeederNum();
         for(i=0; i<fnum; i++)
         {
@@ -8745,7 +8745,7 @@ BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
         
         break;   
     case 4:
-        //ÉÏ×°ÖÕ¶Ë¶¨Öµ²ÎÊı
+        //ä¸Šè£…ç»ˆç«¯å®šå€¼å‚æ•°
         for(info=RMTP_ACT1_L; info<=RMTP_ACT1_H; info++)
         {
             sendnum++;
@@ -8761,7 +8761,7 @@ BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
         RMTHaveReadParaFlag = 5;
         break;
     case 5:
-        //ÉÏ×°ÖÕ¶ËÏßÂ·¶¨Öµ²ÎÊı
+        //ä¸Šè£…ç»ˆç«¯çº¿è·¯å®šå€¼å‚æ•°
         temp = RMTParaNum*RMTP_ACT_NUM;
         for(info= RMTP_ACT2_L+temp; info<=RMTP_ACT2_H+temp; info++)
         {
@@ -8798,10 +8798,10 @@ BOOL CSecAppSev::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeGXReadPara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯¶Á²ÎÊı
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  rc = TRUE-ÓĞºóĞø FALSE-ÎŞºóĞø
+å‡½æ•°åç§°ï¼š  ProcEncodeGXReadPara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¯»å‚æ•°
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  rc = TRUE-æœ‰åç»­ FALSE-æ— åç»­
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::ProcEncodeGXReadPara(void)
 {
@@ -8814,7 +8814,7 @@ BOOL CSecAppSev::ProcEncodeGXReadPara(void)
     rc2 = TRUE;
     len = 0;    
     TxMsg[0] = P_ME_NA_1_GX;
-    TxMsg[1] = 0;   //VSQ£¬ºóÃæÌî¸öÊı
+    TxMsg[1] = 0;   //VSQï¼Œåé¢å¡«ä¸ªæ•°
     
     TxMsg[CotLocation]=Roi;
     for(jj=0;jj<PubAddrSize;jj++)
@@ -8833,7 +8833,7 @@ BOOL CSecAppSev::ProcEncodeGXReadPara(void)
             if(rc == FALSE) 
             { 
                 rc2 = FALSE;
-                //RMTParaInit();                      ´Ë´¦ÎªºÎÒªµ÷ÓÃ´Ëº¯Êı 20181018£¿
+                //RMTParaInit();                      æ­¤å¤„ä¸ºä½•è¦è°ƒç”¨æ­¤å‡½æ•° 20181018ï¼Ÿ
             }
             TxMsg[FramePos++] = 0x06;
             break;
@@ -8858,7 +8858,7 @@ BOOL CSecAppSev::ProcEncodeGXReadPara(void)
         case INTRO7:
         case INTRO8:
         case INTRO9:
-             rc = GXReadJianGePara(&TxMsg[FramePos], &len, &sendnum, InfoAddrSize,GXParaControl);     //¶Á¼ä¸ô²ÎÊı,Roi-INTRO2Îª¼ä¸ô±àºÅ£¬´Ó0¿ªÊ¼
+             rc = GXReadJianGePara(&TxMsg[FramePos], &len, &sendnum, InfoAddrSize,GXParaControl);     //è¯»é—´éš”å‚æ•°,Roi-INTRO2ä¸ºé—´éš”ç¼–å·ï¼Œä»0å¼€å§‹
              GXParaControl++;
              FramePos += len;
              TxMsg[1] = sendnum | 0x80;
@@ -8879,10 +8879,10 @@ BOOL CSecAppSev::ProcEncodeGXReadPara(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeGXSetPara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯»Ø¸´Ô¤ÖÃ²ÎÊıµÄ±¨ÎÄ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeGXSetPara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡å›å¤é¢„ç½®å‚æ•°çš„æŠ¥æ–‡
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeGXSetPara(void)
 {
@@ -8894,10 +8894,10 @@ void CSecAppSev::ProcEncodeGXSetPara(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeGXActivatePara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯»Ø¸´¼¤»î²ÎÊıµÄ±¨ÎÄ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeGXActivatePara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡å›å¤æ¿€æ´»å‚æ•°çš„æŠ¥æ–‡
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeGXActivatePara(void)
 {
@@ -8909,10 +8909,10 @@ void CSecAppSev::ProcEncodeGXActivatePara(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeGXChangePara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯»Ø¸´¸Ä±ä²ÎÊıµÄ±¨ÎÄ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeGXChangePara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡å›å¤æ”¹å˜å‚æ•°çš„æŠ¥æ–‡
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeGXChangePara(void)
 {
@@ -8951,10 +8951,10 @@ void CSecAppSev::ProcEncodeGXChangePara(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeGXSendPara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯Ö÷¶¯·¢ËÍ²ÎÊıµÄ±¨ÎÄ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeGXSendPara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡ä¸»åŠ¨å‘é€å‚æ•°çš„æŠ¥æ–‡
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::ProcEncodeGXSendPara(void)
 {
@@ -8982,10 +8982,10 @@ BOOL CSecAppSev::ProcEncodeGXSendPara(void)
     return rc;
 }  
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeRMTReadPara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯¶Á²ÎÊı
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  rc2 = TRUE-ÓĞºóĞø FALSE-ÎŞºóĞø
+å‡½æ•°åç§°ï¼š  ProcEncodeRMTReadPara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¯»å‚æ•°
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  rc2 = TRUE-æœ‰åç»­ FALSE-æ— åç»­
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
 {
@@ -8998,7 +8998,7 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
     rc2 = TRUE;
         
     TxMsg[0] = C_RS_NA;
-    TxMsg[1] = 0;   //VSQ£¬ºóÃæÌî¸öÊı
+    TxMsg[1] = 0;   //VSQï¼Œåé¢å¡«ä¸ªæ•°
     
     TxMsg[CotLocation]=ACTCON;
     for(jj=0;jj<PubAddrSize;jj++)
@@ -9008,9 +9008,9 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
     FramePos = PubAddrLocation+PubAddrSize;    
     
     
-    TxMsg[FramePos++] = 1;   //ÇøºÅ
+    TxMsg[FramePos++] = 1;   //åŒºå·
     TxMsg[FramePos++] = 0;
-    piCodePosition = FramePos++;    //piÂëÎ»ÖÃ
+    piCodePosition = FramePos++;    //piç ä½ç½®
  
     if(RMTParaReadAllFlag)
     {
@@ -9019,20 +9019,20 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
         TxMsg[1] = sendnum;
         if(rc == FALSE) 
         {
-            TxMsg[piCodePosition] = 0;     //²ÎÊıÌØÕ÷£¬ÎŞºóĞø 
+            TxMsg[piCodePosition] = 0;     //å‚æ•°ç‰¹å¾ï¼Œæ— åç»­ 
             rc2 = FALSE;
             RMTParaInit();
         }
         else
         {
-            TxMsg[piCodePosition] = RP_PI_CONT;     //²ÎÊıÌØÕ÷£¬ÓĞºóĞø
+            TxMsg[piCodePosition] = RP_PI_CONT;     //å‚æ•°ç‰¹å¾ï¼Œæœ‰åç»­
         }
     }
     else
     {
         sendnum = 0;
         procnum = 0;
-        //²¿·Ö¶Á
+        //éƒ¨åˆ†è¯»
         for(i=RMTHaveReadParaFlag; i<RMTParaNum ; i++)
         {
             procnum++;
@@ -9042,7 +9042,7 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
             if(len != 0)
             {
                 sendnum++;
-                TxMsg[FramePos++] = LOBYTE(RMTParaInfo[i]);  //ĞÅÏ¢ÌåµØÖ·
+                TxMsg[FramePos++] = LOBYTE(RMTParaInfo[i]);  //ä¿¡æ¯ä½“åœ°å€
                 TxMsg[FramePos++] = HIBYTE(RMTParaInfo[i]);
                 
                 FramePos += len;
@@ -9051,20 +9051,20 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
             if(FramePos >= 200)
                 break;
         }
-        logSysMsgNoTime("²ÎÊı¶ÁÈ¡¸öÊı(ÆğÊ¼=%d, ·¢ËÍ=%d, ×Ü=%d)",RMTHaveReadParaFlag,sendnum,RMTParaNum,0);
+        logSysMsgNoTime("å‚æ•°è¯»å–ä¸ªæ•°(èµ·å§‹=%d, å‘é€=%d, æ€»=%d)",RMTHaveReadParaFlag,sendnum,RMTParaNum,0);
 
         TxMsg[1] = sendnum;
         RMTHaveReadParaFlag += procnum;
-        //½áÊø´«ËÍ
+        //ç»“æŸä¼ é€
         if(RMTHaveReadParaFlag >= RMTParaNum) 
         {
             RMTParaInit();
-            TxMsg[piCodePosition] = 0;     //²ÎÊıÌØÕ÷£¬ÎŞºóĞø 
+            TxMsg[piCodePosition] = 0;     //å‚æ•°ç‰¹å¾ï¼Œæ— åç»­ 
             rc2 = FALSE;
         }
         else
         {
-            TxMsg[piCodePosition] = RP_PI_CONT;     //²ÎÊıÌØÕ÷£¬ÓĞºóĞø
+            TxMsg[piCodePosition] = RP_PI_CONT;     //å‚æ•°ç‰¹å¾ï¼Œæœ‰åç»­
         }
         
     }
@@ -9076,11 +9076,11 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcReadParaGX
-º¯Êı¹¦ÄÜ£º  ´¦ÀíÕÙ»½²ÎÊı±¨ÎÄ£¬È¡³öROI£¨²ÎÊıÕÙ»½ÏŞ¶¨´Ê£©¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      ROIÊÇ±íÃ÷Ö÷Õ¾Òª¶ÁÈ¡È«²ÎÊı»¹ÊÇ·Ö×éÕÙ»½²ÎÊı¡£
+å‡½æ•°åç§°ï¼š  ProcReadParaGX
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†å¬å”¤å‚æ•°æŠ¥æ–‡ï¼Œå–å‡ºROIï¼ˆå‚æ•°å¬å”¤é™å®šè¯ï¼‰ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      ROIæ˜¯è¡¨æ˜ä¸»ç«™è¦è¯»å–å…¨å‚æ•°è¿˜æ˜¯åˆ†ç»„å¬å”¤å‚æ•°ã€‚
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcReadParaGX(void)
 {
@@ -9109,11 +9109,11 @@ void CSecAppSev::ProcReadParaGX(void)
     SetSendData2Flag(DATA2_GX_READPARA);
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcSetParaGX
-º¯Êı¹¦ÄÜ£º  ´¦ÀíÔ¤ÖÃ²ÎÊı±¨ÎÄ¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcSetParaGX
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†é¢„ç½®å‚æ•°æŠ¥æ–‡ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcSetParaGX(void)
 {
@@ -9123,7 +9123,7 @@ void CSecAppSev::ProcSetParaGX(void)
     INT32U temp32;
     INT16U infoaddr;
     
-    //°ÑÊı¾İÔİ´æµ½wrongdataÖĞ
+    //æŠŠæ•°æ®æš‚å­˜åˆ°wrongdataä¸­
     WrongDataLength = LengthIn;
     GXvsqflag = 0;
     //memcpy((void*)WrongData,(void*)(&RxMsg[InfoAddrLocation]),LengthIn-PubAddrSize-3);
@@ -9137,17 +9137,17 @@ void CSecAppSev::ProcSetParaGX(void)
            
             pos = 0;
             
-            if(GXParaYZ)   //Ö»½ÓÊÜÒ»Ö¡±¨ÎÄµÄÔ¤ÖÃ£¬Ã»´¦ÀíÍê²»½ÓÊÜÆäËûÔ¤ÖÃ±¨ÎÄ
+            if(GXParaYZ)   //åªæ¥å—ä¸€å¸§æŠ¥æ–‡çš„é¢„ç½®ï¼Œæ²¡å¤„ç†å®Œä¸æ¥å—å…¶ä»–é¢„ç½®æŠ¥æ–‡
             {
-                logSysMsgNoTime("ÉÏÒ»Ö¡Ô¤ÖÃ²ÎÊı»¹Î´¼¤»îÆğĞ§",0,0,0,0);
+                logSysMsgNoTime("ä¸Šä¸€å¸§é¢„ç½®å‚æ•°è¿˜æœªæ¿€æ´»èµ·æ•ˆ",0,0,0,0);
                 return;
             }
-            GXParaNum = RxVsq&VSQ_NUM;    //ÔİÊ±²»¿¼ÂÇ ¹ÌÓĞ²ÎÊıµÄĞ´Èë
+            GXParaNum = RxVsq&VSQ_NUM;    //æš‚æ—¶ä¸è€ƒè™‘ å›ºæœ‰å‚æ•°çš„å†™å…¥
             if((RxVsq & VSQ_SQ) == 0)
             {
                 for(i=0; i<GXParaNum; i++)
                 {
-                    GXParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ĞÅÏ¢ÌåµØÖ·
+                    GXParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ä¿¡æ¯ä½“åœ°å€
                     pos += 2;
                     
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
@@ -9155,7 +9155,7 @@ void CSecAppSev::ProcSetParaGX(void)
                     
                     GXParaValue[i] = tempval;    
                     pos +=4 ; 
-                    ProgLogWrite2("GXÔ¤ÖÃ²ÎÊıinfo=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
+                    ProgLogWrite2("GXé¢„ç½®å‚æ•°info=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
                 } 
                             
                 
@@ -9164,7 +9164,7 @@ void CSecAppSev::ProcSetParaGX(void)
             else
             {
                 GXvsqflag = 1;
-                //GXParaInfo[0] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ĞÅÏ¢ÌåµØÖ·
+                //GXParaInfo[0] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ä¿¡æ¯ä½“åœ°å€
                 infoaddr = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
                 pos += 2;
                 for(i=0; i<GXParaNum; i++)
@@ -9175,28 +9175,28 @@ void CSecAppSev::ProcSetParaGX(void)
                     
                     GXParaValue[i] = tempval;    
                     pos +=4 ; 
-                    ProgLogWrite2("GXÔ¤ÖÃ²ÎÊıinfo=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
+                    ProgLogWrite2("GXé¢„ç½®å‚æ•°info=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
                 }
             } 
             
             if(GXRemoteParaCheck() == 1)
             {
-                //²ÎÊıÒì³£ £¨Ó¦µ÷ÓÃ±äÁ¿Çå0º¯Êı£©
+                //å‚æ•°å¼‚å¸¸ ï¼ˆåº”è°ƒç”¨å˜é‡æ¸…0å‡½æ•°ï¼‰
                 GXParaYZ = FALSE;
                 GXParaInfo[0] = 0;  
                 GXParaNum = 0;              
-                GXReturnCot = ACTCON|0x40;  //·ñ¶¨»Ø´ğ
+                GXReturnCot = ACTCON|0x40;  //å¦å®šå›ç­”
             }
             else
             {
-                //²ÎÊıÕıÈ·
+                //å‚æ•°æ­£ç¡®
                 GXParaYZ = TRUE;
                 GXReturnCot = ACTCON;  
             }         
         }
         else if((RxCot&COT_REASON)==DEACT)
         {
-            //³·Ïú
+            //æ’¤é”€
             //GXParaNum = 0;
             GXParaYZ = FALSE;
             GXParaInfo[0] = 0;        
@@ -9213,12 +9213,12 @@ void CSecAppSev::ProcSetParaGX(void)
     else
     {
         GXReturnCot = ACTCON | 0x40;
-        ProgLogWrite2("GXÔ¤ÖÃ²ÎÊı QPM=%d ´íÎó",RxMsg[LengthIn-1],0,0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+        ProgLogWrite2("GXé¢„ç½®å‚æ•° QPM=%d é”™è¯¯",RxMsg[LengthIn-1],0,0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
         
         /*if((RxCot&COT_REASON)==ACT)
         {
             GXReturnCot = ACTCON | 0x40;
-            GXParaNum = RxVsq&VSQ_NUM;      //ÓĞÓÃÂğ£¿ll
+            GXParaNum = RxVsq&VSQ_NUM;      //æœ‰ç”¨å—ï¼Ÿll
             if((RxVsq & VSQ_SQ) == 0)
             {
                 GXvsqflag = 0;
@@ -9232,11 +9232,11 @@ void CSecAppSev::ProcSetParaGX(void)
     SetSendData2Flag(DATA2_GX_SETPARA);        
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  GXRemoteParaCheck
-º¯Êı¹¦ÄÜ£º  ÖğÒ»¼ì²é²ÎÊıÒì³£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  
-±¸×¢£º      ÓĞÒì³£Í£Ö¹ºóĞø¼ì²é
+å‡½æ•°åç§°ï¼š  GXRemoteParaCheck
+å‡½æ•°åŠŸèƒ½ï¼š  é€ä¸€æ£€æŸ¥å‚æ•°å¼‚å¸¸
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      æœ‰å¼‚å¸¸åœæ­¢åç»­æ£€æŸ¥
 /------------------------------------------------------------------*/
 INT16U CSecAppSev::GXRemoteParaCheck(void)
 {
@@ -9254,18 +9254,18 @@ INT16U CSecAppSev::GXRemoteParaCheck(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcActivateParaGX
-º¯Êı¹¦ÄÜ£º  ´¦Àí¼¤»î²ÎÊı±¨ÎÄ¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcActivateParaGX
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†æ¿€æ´»å‚æ•°æŠ¥æ–‡ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcActivateParaGX(void)
 {
     INT8U i;
     INT16U SetFlag;
     
-    //°ÑÊı¾İÔİ´æµ½wrongdataÖĞ
+    //æŠŠæ•°æ®æš‚å­˜åˆ°wrongdataä¸­
     WrongDataLength = LengthIn;
     memcpy((void*)WrongData,(void*)RxMsg,LengthIn);
     
@@ -9287,7 +9287,7 @@ void CSecAppSev::ProcActivateParaGX(void)
             {
                 
                 DeadValueRealTimeEffect();
-                //logSysMsgNoTime("101¹ãÎ÷Ò£²âËÀÇøÖµÔÚÏßÆğĞ§",0,0,0,0);
+                //logSysMsgNoTime("101å¹¿è¥¿é¥æµ‹æ­»åŒºå€¼åœ¨çº¿èµ·æ•ˆ",0,0,0,0);
             }
             
             
@@ -9302,18 +9302,18 @@ void CSecAppSev::ProcActivateParaGX(void)
     else
     {
         GXReturnCot = ACTCON|0x40;
-        logSysMsgNoTime("GXÔ¶³Ì²ÎÊıÎ´Ô¤ÖÃ¾Í¹Ì»¯101",0,0,0,0);
+        logSysMsgNoTime("GXè¿œç¨‹å‚æ•°æœªé¢„ç½®å°±å›ºåŒ–101",0,0,0,0);
         
     }
     
     SetSendData2Flag(DATA2_GX_ACTIVATEPARA);        
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  GXWatchLPChange
-º¯Êı¹¦ÄÜ£º  ¹ãÎ÷Ô¶³Ì²ÎÊı¡£¼àÊÓ±¾µØ²ÎÊı±ä»¯¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      ROIÊÇ±íÃ÷Ö÷Õ¾Òª¶ÁÈ¡È«²ÎÊı»¹ÊÇ·Ö×éÕÙ»½²ÎÊı¡£
+å‡½æ•°åç§°ï¼š  GXWatchLPChange
+å‡½æ•°åŠŸèƒ½ï¼š  å¹¿è¥¿è¿œç¨‹å‚æ•°ã€‚ç›‘è§†æœ¬åœ°å‚æ•°å˜åŒ–ã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      ROIæ˜¯è¡¨æ˜ä¸»ç«™è¦è¯»å–å…¨å‚æ•°è¿˜æ˜¯åˆ†ç»„å¬å”¤å‚æ•°ã€‚
 /------------------------------------------------------------------*/
 void CSecAppSev::GXWatchLPChange(void)
 {
@@ -9332,10 +9332,10 @@ void CSecAppSev::GXWatchLPChange(void)
     }
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcReadPara()
-º¯Êı¹¦ÄÜ£º  ´¦Àí¶Á²ÎÊı
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcReadPara()
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†è¯»å‚æ•°
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcReadPara(void)
 {
@@ -9343,15 +9343,15 @@ void CSecAppSev::ProcReadPara(void)
     INT16U i, pos;
     INT8U num;
     
-    //Êı¾İ³¤¶È´óÓÚ8£¬±íÊ¾ÊÇ²¿·Ö¶ÁÈ¡£¬·ñÔòÎªÈ«²¿¶ÁÈ¡
-    if(LengthIn > 9) //FrameLen+2ÊÇÈ¥µô¿ØÖÆÓòCµÄ³¤¶È
+    //æ•°æ®é•¿åº¦å¤§äº8ï¼Œè¡¨ç¤ºæ˜¯éƒ¨åˆ†è¯»å–ï¼Œå¦åˆ™ä¸ºå…¨éƒ¨è¯»å–
+    if(LengthIn > 9) //FrameLen+2æ˜¯å»æ‰æ§åˆ¶åŸŸCçš„é•¿åº¦
     {
         RMTSectionNo = MAKEWORD(RxMsg[InfoAddrLocation], RxMsg[InfoAddrLocation+1]);  
         pInfoAddr = &RxMsg[InfoAddrLocation+2];
         pos = 0;
-        num = RxVsq&0x7f;   //¼ÆËã¶ÁÈ¡²ÎÊıµÄ¸öÊı
+        num = RxVsq&0x7f;   //è®¡ç®—è¯»å–å‚æ•°çš„ä¸ªæ•°
         
-        if(RMTParaNum ==0 ) //µÚ1´Î¶Á
+        if(RMTParaNum ==0 ) //ç¬¬1æ¬¡è¯»
         {
             RMTHaveReadParaFlag = 0;
             RMTParaReadAllFlag = 0;
@@ -9366,14 +9366,14 @@ void CSecAppSev::ProcReadPara(void)
             RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
             pos += 2;
         }
-        RMTParaNum += num;  //¼ÇÂ¼ÀÛ¼ÆÏÂ·¢µÄ¶Á²ÎÊı¸öÊı
+        RMTParaNum += num;  //è®°å½•ç´¯è®¡ä¸‹å‘çš„è¯»å‚æ•°ä¸ªæ•°
         
         logSysMsgNoTime("sec=%d, num=%d, max=%d, info2=%x",RMTSectionNo,num,RMTParaNum,RMTParaInfo[RMTParaNum]);
         
     }
     else
     {
-        //È«²¿¶ÁÈ¡   
+        //å…¨éƒ¨è¯»å–   
         RMTParaReadAllFlag = TRUE;
         RMTHaveReadParaFlag = 1;
         RMTParaNum = 0;
@@ -9383,10 +9383,10 @@ void CSecAppSev::ProcReadPara(void)
         
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  RMTParaYzCheck()
-º¯Êı¹¦ÄÜ£º  
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  RMTParaYzCheck()
+å‡½æ•°åŠŸèƒ½ï¼š  
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::RMTParaYzCheck(void)
 {
@@ -9404,10 +9404,10 @@ void CSecAppSev::RMTParaYzCheck(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  GXParaYzCheck()
-º¯Êı¹¦ÄÜ£º  
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  GXParaYzCheck()
+å‡½æ•°åŠŸèƒ½ï¼š  
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::GXParaYzCheck(void)
 {
@@ -9426,10 +9426,10 @@ void CSecAppSev::GXParaYzCheck(void)
     }
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  RMTParaInit()
-º¯Êı¹¦ÄÜ£º  Ô¶³Ì²ÎÊı¶ÁĞ´ÏàÓ¦±êÖ¾³õÊ¼»¯
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  RMTParaInit()
+å‡½æ•°åŠŸèƒ½ï¼š  è¿œç¨‹å‚æ•°è¯»å†™ç›¸åº”æ ‡å¿—åˆå§‹åŒ–
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::RMTParaInit(void)
 {
@@ -9448,10 +9448,10 @@ void CSecAppSev::RMTParaInit(void)
     }
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  SetSendData2Flag()
-º¯Êı¹¦ÄÜ£º  ÉèÖÃĞèÒª´«ËÍµÄ2¼¶Êı¾İ±êÖ¾
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  SetSendData2Flag()
+å‡½æ•°åŠŸèƒ½ï¼š  è®¾ç½®éœ€è¦ä¼ é€çš„2çº§æ•°æ®æ ‡å¿—
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::SetSendData2Flag(INT32U flag)
 {
@@ -9461,10 +9461,10 @@ void CSecAppSev::SetSendData2Flag(INT32U flag)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  DeadValueRealTimeEffect()
-º¯Êı¹¦ÄÜ£º  ÏÂ·¢ËÀÇø²ÎÊıÊµÊ±ÆğĞ§
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  DeadValueRealTimeEffect()
+å‡½æ•°åŠŸèƒ½ï¼š  ä¸‹å‘æ­»åŒºå‚æ•°å®æ—¶èµ·æ•ˆ
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::DeadValueRealTimeEffect(void)
 {
@@ -9475,10 +9475,10 @@ void CSecAppSev::DeadValueRealTimeEffect(void)
     }  
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcWritePara()
-º¯Êı¹¦ÄÜ£º  ´¦ÀíĞ´²ÎÊı
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcWritePara()
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†å†™å‚æ•°
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcWritePara(void)
 {
@@ -9491,46 +9491,46 @@ void CSecAppSev::ProcWritePara(void)
     float tempval;
     INT32U temp32;
     
-    //°ÑÊı¾İÔİ´æµ½wrongdataÖĞ
+    //æŠŠæ•°æ®æš‚å­˜åˆ°wrongdataä¸­
     WrongDataLength = LengthIn;
     memcpy((void*)WrongData,(void*)RxMsg,LengthIn);
     
-    if((RxCot&COT_REASON)==ACT)    //¼¤»î
+    if((RxCot&COT_REASON)==ACT)    //æ¿€æ´»
     {
         RMTSectionNo = MAKEWORD(RxMsg[InfoAddrLocation], RxMsg[InfoAddrLocation+1]);  
         pi  = RxMsg[InfoAddrLocation+2];
         pInfoAddr = &RxMsg[InfoAddrLocation+3];
        
         pos = 0;
-        if(pi & RP_PI_SE)   //Ô¤ÖÃ
+        if(pi & RP_PI_SE)   //é¢„ç½®
         {
-            if(RMTParaYZ)   //Ö»½ÓÊÜÒ»Ö¡±¨ÎÄµÄÔ¤ÖÃ£¬Ã»´¦ÀíÍê²»½ÓÊÜÆäËûÔ¤ÖÃ±¨ÎÄ
+            if(RMTParaYZ)   //åªæ¥å—ä¸€å¸§æŠ¥æ–‡çš„é¢„ç½®ï¼Œæ²¡å¤„ç†å®Œä¸æ¥å—å…¶ä»–é¢„ç½®æŠ¥æ–‡
             {
-                logSysMsgNoTime("ÉÏÒ»Ö¡²ÎÊıÔ¤ÖÃ±¨ÎÄ»¹Î´´¦Àí101",0,0,0,0);
+                logSysMsgNoTime("ä¸Šä¸€å¸§å‚æ•°é¢„ç½®æŠ¥æ–‡è¿˜æœªå¤„ç†101",0,0,0,0);
                 return;
             }
-            RMTParaNum = RxVsq&VSQ_NUM;    //ÔİÊ±²»¿¼ÂÇ ¹ÌÓĞ²ÎÊıµÄĞ´Èë
+            RMTParaNum = RxVsq&VSQ_NUM;    //æš‚æ—¶ä¸è€ƒè™‘ å›ºæœ‰å‚æ•°çš„å†™å…¥
             for(i=0; i<RMTParaNum; i++)
             {
-                RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ĞÅÏ¢ÌåµØÖ·
+                RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ä¿¡æ¯ä½“åœ°å€
                 pos += 2;
                 
-                datatype = pInfoAddr[pos++]; //Êı¾İÀàĞÍ
-                datalen  = pInfoAddr[pos++]; //Êı¾İ³¤¶È
+                datatype = pInfoAddr[pos++]; //æ•°æ®ç±»å‹
+                datalen  = pInfoAddr[pos++]; //æ•°æ®é•¿åº¦
                 
                 if((datatype == PARA_DATA_TYPE_WORD) && (datalen == 2))
                 {            
                     RMTParaValue[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
                     pos +=2 ; 
                     
-                    ProgLogWrite2("Ô¤ÖÃ²ÎÊıinfo=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("é¢„ç½®å‚æ•°info=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else if((datatype == PARA_DATA_TYPE_DWORD) && (datalen == 4))
                 {            
                     RMTParaValue[i] = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
                     pos +=4 ; 
                     
-                    ProgLogWrite2("Ô¤ÖÃ²ÎÊıinfo=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("é¢„ç½®å‚æ•°info=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else if((datatype == PARA_DATA_TYPE_FLOAT) && (datalen == 4))
                 {
@@ -9539,17 +9539,17 @@ void CSecAppSev::ProcWritePara(void)
                     
                     RMTParaValue[i] = tempval;     
                     pos +=4 ; 
-                    ProgLogWrite2("Ô¤ÖÃ²ÎÊıinfo=0x%x, value=%d.%3d",RMTParaInfo[i],(INT16U)RMTParaValue[i],(INT16U)((RMTParaValue[i]-(INT16U)(RMTParaValue[i]))*1000),0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("é¢„ç½®å‚æ•°info=0x%x, value=%d.%3d",RMTParaInfo[i],(INT16U)RMTParaValue[i],(INT16U)((RMTParaValue[i]-(INT16U)(RMTParaValue[i]))*1000),0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else if((datatype == PARA_DATA_TYPE_BOOL) && (datalen == 1))
                 {
                     RMTParaValue[i] = pInfoAddr[pos];
                     pos +=1;
-                    ProgLogWrite2("Ô¤ÖÃ²ÎÊıinfo=0x%x, value=0x%x",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("é¢„ç½®å‚æ•°info=0x%x, value=0x%x",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else
                 {
-                    logSysMsgNoTime("Ô¤ÖÃ²ÎÊı info=0x%x Êı¾İÀàĞÍ´íÎó(%d),Êı¾İ³¤¶È=%d",RMTParaInfo[i], datatype,datalen,0);
+                    logSysMsgNoTime("é¢„ç½®å‚æ•° info=0x%x æ•°æ®ç±»å‹é”™è¯¯(%d),æ•°æ®é•¿åº¦=%d",RMTParaInfo[i], datatype,datalen,0);
                     break;
                 }
                 
@@ -9571,15 +9571,15 @@ void CSecAppSev::ProcWritePara(void)
         }
         else
         {
-            //¹Ì»¯
+            //å›ºåŒ–
             IsSuccess = TRUE;
             if((pi & RP_PI_CR) == 0)
             {
                 if(RMTParaYZ)
                 {
-                    //ÕâÀï²»ĞèÒªĞ¯´ø²ÎÊı
-                    ProgLogWrite2("ÊÕµ½¹Ì»¯²ÎÊıÃüÁî", 0, 0, 0, 0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
-                    //Ô¶³Ì²ÎÊıÉèÖÃ¹Ì»¯¹ı³Ì²»¼ì²éĞ¯´øµÄ²ÎÊı
+                    //è¿™é‡Œä¸éœ€è¦æºå¸¦å‚æ•°
+                    ProgLogWrite2("æ”¶åˆ°å›ºåŒ–å‚æ•°å‘½ä»¤", 0, 0, 0, 0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    //è¿œç¨‹å‚æ•°è®¾ç½®å›ºåŒ–è¿‡ç¨‹ä¸æ£€æŸ¥æºå¸¦çš„å‚æ•°
                     for(i=0; i<RMTParaNum; i++)
                     {
                         ParaFlag = SetTerminalPara(RMTParaValue[i], RMTParaInfo[i]);
@@ -9590,7 +9590,7 @@ void CSecAppSev::ProcWritePara(void)
                 else
                 {
                     IsSuccess = FALSE;
-                    logSysMsgNoTime("Ô¶³Ì²ÎÊıÎ´Ô¤ÖÃ¾Í¹Ì»¯",0,0,0,0);
+                    logSysMsgNoTime("è¿œç¨‹å‚æ•°æœªé¢„ç½®å°±å›ºåŒ–",0,0,0,0);
                 }
                 
                 RMTParaInit();
@@ -9600,15 +9600,15 @@ void CSecAppSev::ProcWritePara(void)
                 
                 if(IsSuccess==FALSE)
                 {
-                	RMTReturnCot |= 0x40; //Ê§°Ü
+                	RMTReturnCot |= 0x40; //å¤±è´¥
                 }
                 else
                 {
-                    if(GetSiQuChangeFlag(ParaFlag))           //¹æÔ¼²ãµÄ²ÎÊıÊµÊ±ÆğĞ§¶¼¿ÉÒÔÍ¬Ñù°´ÕÕËÀÇøÖµµÄÊµÊ±ÆğĞ§µÄ·½Ê½ÊµÏÖ¡£
+                    if(GetSiQuChangeFlag(ParaFlag))           //è§„çº¦å±‚çš„å‚æ•°å®æ—¶èµ·æ•ˆéƒ½å¯ä»¥åŒæ ·æŒ‰ç…§æ­»åŒºå€¼çš„å®æ—¶èµ·æ•ˆçš„æ–¹å¼å®ç°ã€‚
                     {
                         DeadValueRealTimeEffect();
                     }
-                    SaveTerminalPara(); //¹Ì»¯Íê±Ï£¬Ğ´Èëflash
+                    SaveTerminalPara(); //å›ºåŒ–å®Œæ¯•ï¼Œå†™å…¥flash
                     SaveRMTParaToSys();
                 }
                 
@@ -9621,7 +9621,7 @@ void CSecAppSev::ProcWritePara(void)
     }
     else
     {
-        //³·Ïú
+        //æ’¤é”€
         RMTParaNum = 0;
         RMTParaYZ = 0;
         RMTParaInfo[0] = 0;
@@ -9635,11 +9635,11 @@ void CSecAppSev::ProcWritePara(void)
   
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcSetSectionNo()
-º¯Êı¹¦ÄÜ£º  ÇĞ»»¶¨ÖµÇøºÅ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
-±¸×¢£º      ÔİÊ±²»Ö§³Ö¶àÇøºÅ
+å‡½æ•°åç§°ï¼š  ProcSetSectionNo()
+å‡½æ•°åŠŸèƒ½ï¼š  åˆ‡æ¢å®šå€¼åŒºå·
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      æš‚æ—¶ä¸æ”¯æŒå¤šåŒºå·
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcSetSectionNo(void)
 {
@@ -9653,10 +9653,10 @@ void CSecAppSev::ProcSetSectionNo(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeSetSectionNo()
-º¯Êı¹¦ÄÜ£º  ÉèÖÃ¶¨ÖµÇøºÅ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeSetSectionNo()
+å‡½æ•°åŠŸèƒ½ï¼š  è®¾ç½®å®šå€¼åŒºå·
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeSetSectionNo(void)
 {
@@ -9669,13 +9669,13 @@ void CSecAppSev::ProcEncodeSetSectionNo(void)
     TxMsg[CotLocation]=ACTCON;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength;
     
-    TxMsg[FramePos++] = 0;  //µ±Ç°ÇøºÅ
+    TxMsg[FramePos++] = 0;  //å½“å‰åŒºå·
     TxMsg[FramePos++] = 0;
     
     EnCode101DLMsg(FramePos, APP_SENDDATA);
@@ -9683,10 +9683,10 @@ void CSecAppSev::ProcEncodeSetSectionNo(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcReadSectionNo()
-º¯Êı¹¦ÄÜ£º  ¶Á¶¨ÖµÇøºÅ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcReadSectionNo()
+å‡½æ•°åŠŸèƒ½ï¼š  è¯»å®šå€¼åŒºå·
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcReadSectionNo(void)
 {
@@ -9697,10 +9697,10 @@ void CSecAppSev::ProcReadSectionNo(void)
 
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeRMTSetPara()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯¶Á¶¨ÖµÇøºÅÈ·ÈÏÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeRMTSetPara()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¯»å®šå€¼åŒºå·ç¡®è®¤å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeRMTSetPara(void)
 {
@@ -9712,10 +9712,10 @@ void CSecAppSev::ProcEncodeRMTSetPara(void)
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodePUPupdateConf()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯Ó¦´ğÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodePUPupdateConf()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡åº”ç­”å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodePUPupdateConf(void)    
 {   
@@ -9728,7 +9728,7 @@ void CSecAppSev::ProcEncodePUPupdateConf(void)
     TxMsg[CotLocation] = ProgramUpadateCot;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
@@ -9737,20 +9737,20 @@ void CSecAppSev::ProcEncodePUPupdateConf(void)
     TxMsg[FramePos++] = ProgramUpadateSE;
     /*if(FtInfo.IsUpdate)
     {
-        //Æô¶¯
+        //å¯åŠ¨
         TxMsg[FramePos++] = 0x80;   
     }
     else
     {
-        //Éı¼¶½áÊø£¬È¡ÏûÉı¼¶
+        //å‡çº§ç»“æŸï¼Œå–æ¶ˆå‡çº§
         if(ProgramUpadateCot == ACTCON)
         {
-            //Éı¼¶½áÊø
+            //å‡çº§ç»“æŸ
             TxMsg[FramePos++] = 0; 
         }
         else
         {
-            //È¡ÏûÉı¼¶
+            //å–æ¶ˆå‡çº§
             TxMsg[FramePos++] = 0; 
         }
     }*/
@@ -9761,10 +9761,10 @@ void CSecAppSev::ProcEncodePUPupdateConf(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  void ProcEncodeXSFileSynConf(void)
-º¯Êı¹¦ÄÜ£º  ×éÖ¯ÏßËğÎÄ¼şÍ¬²½È·ÈÏÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  void ProcEncodeXSFileSynConf(void)
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡çº¿æŸæ–‡ä»¶åŒæ­¥ç¡®è®¤å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeXSFileSynConf(void)    
 {   
@@ -9776,7 +9776,7 @@ void CSecAppSev::ProcEncodeXSFileSynConf(void)
     TxMsg[CotLocation]=ACTCON;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
      
@@ -9788,10 +9788,10 @@ void CSecAppSev::ProcEncodeXSFileSynConf(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  void ProcEncodeXSFileSynFinish(void)
-º¯Êı¹¦ÄÜ£º  ×éÖ¯ÏßËğÎÄ¼şÍ¬²½¼¤»îÖÕÖ¹Ö¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  void ProcEncodeXSFileSynFinish(void)
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡çº¿æŸæ–‡ä»¶åŒæ­¥æ¿€æ´»ç»ˆæ­¢å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeXSFileSynFinish(void)
 {
@@ -9803,7 +9803,7 @@ void CSecAppSev::ProcEncodeXSFileSynFinish(void)
     TxMsg[CotLocation]=ACTTERM;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
      
@@ -9814,10 +9814,10 @@ void CSecAppSev::ProcEncodeXSFileSynFinish(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEnCodeReadSectionNo()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯¶Á¶¨ÖµÇøºÅÈ·ÈÏÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEnCodeReadSectionNo()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¯»å®šå€¼åŒºå·ç¡®è®¤å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEnCodeReadSectionNo(void)    
 {   
@@ -9829,17 +9829,17 @@ void CSecAppSev::ProcEnCodeReadSectionNo(void)
     TxMsg[CotLocation]=ACTCON;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
-    //ĞÅÏ¢ÌåµØÖ·
+    //ä¿¡æ¯ä½“åœ°å€
     *pTxInfoAddr=0;
     *(pTxInfoAddr+1)=0;
     
     FramePos = AsduHeadLength;    
 
-    TxMsg[FramePos++] = 1;  //µ±Ç°ÇøºÅ
+    TxMsg[FramePos++] = 1;  //å½“å‰åŒºå·
     TxMsg[FramePos++] = 0;
-    TxMsg[FramePos++] = 1;  //×îĞ¡ÇøºÅ
+    TxMsg[FramePos++] = 1;  //æœ€å°åŒºå·
     TxMsg[FramePos++] = 0;
-    TxMsg[FramePos++] = 1;  //×î´óÇøºÅ
+    TxMsg[FramePos++] = 1;  //æœ€å¤§åŒºå·
     TxMsg[FramePos++] = 0;
     
     EnCode101DLMsg(FramePos, APP_SENDDATA);
@@ -9849,10 +9849,10 @@ void CSecAppSev::ProcEnCodeReadSectionNo(void)
 
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EnCode101DLMsg()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯·¢ËÍÊı¾İ³¤¶ÈºÍÃüÁî
-ÊäÈëËµÃ÷£º  len ·¢ËÍÊı¾İ³¤¶È   appcmd ·¢ËÍÊı¾İÃüÁî£¬Èç¹ûÊÇAPP_SENDDATA£¬ÔòÆ½ºâÄ£Ê½ÏÂ×Ô¶¯×ªÎªAPP_SENDCON
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  EnCode101DLMsg()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡å‘é€æ•°æ®é•¿åº¦å’Œå‘½ä»¤
+è¾“å…¥è¯´æ˜ï¼š  len å‘é€æ•°æ®é•¿åº¦   appcmd å‘é€æ•°æ®å‘½ä»¤ï¼Œå¦‚æœæ˜¯APP_SENDDATAï¼Œåˆ™å¹³è¡¡æ¨¡å¼ä¸‹è‡ªåŠ¨è½¬ä¸ºAPP_SENDCON
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::EnCode101DLMsg(INT16U len, INT16U appcmd)
 {
@@ -9865,15 +9865,15 @@ void CSecAppSev::EnCode101DLMsg(INT16U len, INT16U appcmd)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  JudgeSendInitEnd()
-º¯Êı¹¦ÄÜ£º  ÅĞ¶ÏÊÇ·ñ·¢Éú³õÊ¼»¯½áÊø
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
-±¸×¢£º      InitFlag 0xff±íÊ¾Î´·¢ËÍ¹ı¡£ 0±íÊ¾·¢ËÍ¹ı
+å‡½æ•°åç§°ï¼š  JudgeSendInitEnd()
+å‡½æ•°åŠŸèƒ½ï¼š  åˆ¤æ–­æ˜¯å¦å‘ç”Ÿåˆå§‹åŒ–ç»“æŸ
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
+å¤‡æ³¨ï¼š      InitFlag 0xffè¡¨ç¤ºæœªå‘é€è¿‡ã€‚ 0è¡¨ç¤ºå‘é€è¿‡
 /------------------------------------------------------------------*/
 void CSecAppSev::JudgeSendInitEnd(void)
 {
-    if(BalanMode)//Æ½ºâÄ£Ê½
+    if(BalanMode)//å¹³è¡¡æ¨¡å¼
     {
         if(IsAllSendInitEnd || (IsAllSendInitEnd==FALSE && (InitFlag==0xFF)))
         {
@@ -9888,9 +9888,9 @@ void CSecAppSev::JudgeSendInitEnd(void)
             Data1.Flag|=HaveInitEnd;
             *AppCommand|=APP_HAVEDATA1;
         }
-        else//ÖÕ¶ËÎ´¸´Î»
+        else//ç»ˆç«¯æœªå¤ä½
         {
-            if(IsAllSendInitEnd)        //Ìí¼Ó£¬Ã¿´ÎÖØĞÂ½¨Á¢Á´½Ó·¢ËÍ³õÊ¼»¯½áÊøÖ¡µÄÑ¡Ïî¡£ ll
+            if(IsAllSendInitEnd)        //æ·»åŠ ï¼Œæ¯æ¬¡é‡æ–°å»ºç«‹é“¾æ¥å‘é€åˆå§‹åŒ–ç»“æŸå¸§çš„é€‰é¡¹ã€‚ ll
             {
                 Data1.Flag|=HaveInitEnd;
                 *AppCommand|=APP_HAVEDATA1;
@@ -9901,7 +9901,7 @@ void CSecAppSev::JudgeSendInitEnd(void)
         
 }
 
-//×éÖ¯Ò»¸öSPIÖµ£¬ÎªÁË²âÊÔ
+//ç»„ç»‡ä¸€ä¸ªSPIå€¼ï¼Œä¸ºäº†æµ‹è¯•
 INT8U CSecAppSev::EditTestSPI(void)
 {
     (*pTxVSQ) = 1;
@@ -9913,7 +9913,7 @@ INT8U CSecAppSev::EditTestSPI(void)
 }
 
 
-//ÎÄ¼ş´¦Àí
+//æ–‡ä»¶å¤„ç†
 void CSecAppSev::ProcFileCall(void)
 {
     struct AbsTime_t absTime;
@@ -9922,7 +9922,7 @@ void CSecAppSev::ProcFileCall(void)
     CurrentInfoAddr=RxInfoAddr;
     CurrentFileName=RxMsg[AsduHeadLength]+(RxMsg[AsduHeadLength+1]<<8);
 
-    if((RxCot&COT_REASON)==REQ)//ÕÙ»½Ä¿Â¼
+    if((RxCot&COT_REASON)==REQ)//å¬å”¤ç›®å½•
     {
         FileStep=PCallDir;
         if(CurrentInfoAddr&LUBOFLAG)
@@ -9934,21 +9934,21 @@ void CSecAppSev::ProcFileCall(void)
     {
         switch(RxMsg[AsduHeadLength+3]&0x0F)
         {
-            case 0://È±Ê¡
+            case 0://ç¼ºçœ
                 break;
-            case 1://Ñ¡ÔñÎÄ¼ş
+            case 1://é€‰æ‹©æ–‡ä»¶
                 FileStep=PSelectFile;
-                if(CurrentInfoAddr&LUBOFLAG)//¹ÊÕÏÂ¼²¨Êı¾İ
+                if(CurrentInfoAddr&LUBOFLAG)//æ•…éšœå½•æ³¢æ•°æ®
                 {
-                    CurrentFileSize=FILELENGTH;//ÎÄ¼ş³¤¶È
-                    FileReadPtr=0;//ÒÑ¾­·¢ËÍÊı¾İ³¤¶ÈÖ¸Õë
-                    CurrentZBNo=0;//µ±Ç°Òª¶ÁÊı¾İµÄÖÜ²¨ºÅ
-                    FileCheckSum=0;//ÎÄ¼şÊı¾İĞ£ÑéºÍ
+                    CurrentFileSize=FILELENGTH;//æ–‡ä»¶é•¿åº¦
+                    FileReadPtr=0;//å·²ç»å‘é€æ•°æ®é•¿åº¦æŒ‡é’ˆ
+                    CurrentZBNo=0;//å½“å‰è¦è¯»æ•°æ®çš„å‘¨æ³¢å·
+                    FileCheckSum=0;//æ–‡ä»¶æ•°æ®æ ¡éªŒå’Œ
                 }
-                else//ÀúÊ·µç¶ÈÊı¾İ zzw
+                else//å†å²ç”µåº¦æ•°æ® zzw
                 {
                     FileCheckSum=0;
-                    //Ê±¼äµÄ¸ñÊ½ĞèÒªÈ·¶¨
+                    //æ—¶é—´çš„æ ¼å¼éœ€è¦ç¡®å®š
                     HisDDTime.MSecond=0;
                     HisDDTime.Minute=CurrentFileName&0xff;
                     HisDDTime.Hour=(CurrentFileName>>8)&0xff;
@@ -9963,8 +9963,8 @@ void CSecAppSev::ProcFileCall(void)
                         CurrentFileSize=0;
                         break;
                     }
-                    HisDDDevNo=ActDevIndex;//Éè±¸ĞòºÅ
-                    //¶ÁÀúÊ·µç¶È
+                    HisDDDevNo=ActDevIndex;//è®¾å¤‡åºå·
+                    //è¯»å†å²ç”µåº¦
                     if(ReadKWHHistoryData(absTime,(long *)DevList[HisDDDevNo].DevData.HisCounterData,DevList[HisDDDevNo].DevData.CounterNum)==1)
                     {
                         DevList[HisDDDevNo].DevData.HisDDReadPtr=0;
@@ -9976,28 +9976,28 @@ void CSecAppSev::ProcFileCall(void)
                     }
                 }
                 break;
-            case 2://ÇëÇóÎÄ¼ş
+            case 2://è¯·æ±‚æ–‡ä»¶
                 FileStep=PCallFile;
 
                 break;
-            case 3://Í£Ö¹¼¤»îÎÄ¼ş
+            case 3://åœæ­¢æ¿€æ´»æ–‡ä»¶
                 Data2Flag&=(~UpLoadFile);
                 FileStep=PFileOver;
                 CurrentFileSize=0;
                 FileReadPtr=0;
                 CurrentZBNo=0;
                 break;
-            case 4://É¾³ıÎÄ¼ş
+            case 4://åˆ é™¤æ–‡ä»¶
                 Data2Flag&=(~UpLoadFile);
                 FileStep=PFileOver;
                 break;
-            case 5://Ñ¡Ôñ½Ú£¬Êµ¼ÊÍ¨Ñ¶¹ı³ÌÃ»ÓĞÕâÒ»²½¡£
+            case 5://é€‰æ‹©èŠ‚ï¼Œå®é™…é€šè®¯è¿‡ç¨‹æ²¡æœ‰è¿™ä¸€æ­¥ã€‚
                 FileStep=PCallSection;
                 break;
-            case 6://ÇëÇó½Ú
+            case 6://è¯·æ±‚èŠ‚
                 FileStep=PCallSection;
                 break;
-            case 7://Í£Ö¹¼¤»î½Ú
+            case 7://åœæ­¢æ¿€æ´»èŠ‚
                 Data2Flag&=(~UpLoadFile);
                 FileStep=PFileOver;
                 CurrentFileSize=0;
@@ -10020,13 +10020,13 @@ void CSecAppSev::ProcFileCall(void)
         *AppCommand|=APP_HAVEDATA1;
 }
 
-//·¢ËÍÂ¼²¨Êı¾İÄ¿Â¼
+//å‘é€å½•æ³¢æ•°æ®ç›®å½•
 void CSecAppSev::SendDir(void)
 {
     int jj;
     short SendNum,FramePos,j,Length;
 
-    TxMsg[0]=F_DR_NA;//Ä¿Â¼
+    TxMsg[0]=F_DR_NA;//ç›®å½•
     (*pTxVSQ) |= VSQ_SQ;
 
     TxMsg[CotLocation]=REQ;
@@ -10047,12 +10047,12 @@ void CSecAppSev::SendDir(void)
         FramePos=-3;
     if (DirUnit.FileNum>0)
     {
-        Length=ASDULEN-AsduHeadLength-13;//Ó¦ÓÃ²ã·¢ËÍĞÅÏ¢×î´ó³¤¶È
+        Length=ASDULEN-AsduHeadLength-13;//åº”ç”¨å±‚å‘é€ä¿¡æ¯æœ€å¤§é•¿åº¦
         jj=0;
         for(j=DirUnit.ReadPtr;j<DirUnit.FileNum;j++)
         {
             jj++;
-            if(DirUnit.File[j].SendFlag)//ÒÑ¾­·¢ËÍµÄÎÄ¼ş±¾´Î¾Í²»ÔÙ·¢ËÍ
+            if(DirUnit.File[j].SendFlag)//å·²ç»å‘é€çš„æ–‡ä»¶æœ¬æ¬¡å°±ä¸å†å‘é€
                 continue;
             if((FramePos==-2)||(FramePos==-3))
             {
@@ -10062,8 +10062,8 @@ void CSecAppSev::SendDir(void)
             }
             /*else
             {
-                *(pTxData+FramePos)=LOBYTE(DirUnit.File[j].InfoAddr);//ĞÅÏ¢ÌåµØÖ·
-                *(pTxData+FramePos+1)=HIBYTE(DirUnit.File[j].InfoAddr);//ĞÅÏ¢ÌåµØÖ·
+                *(pTxData+FramePos)=LOBYTE(DirUnit.File[j].InfoAddr);//ä¿¡æ¯ä½“åœ°å€
+                *(pTxData+FramePos+1)=HIBYTE(DirUnit.File[j].InfoAddr);//ä¿¡æ¯ä½“åœ°å€
                 FramePos+=InfoAddrSize;
             }*/
 
@@ -10074,7 +10074,7 @@ void CSecAppSev::SendDir(void)
             pTxData[FramePos++]=LOBYTE(HIWORD(DirUnit.File[j].Length));
 
             //pTxData[FramePos++]=HIBYTE(DirUnit.File[j].Status);
-            pTxData[FramePos++]= DirUnit.File[j].Status;                //¸ù¾İcoverity¸ü¸Ä
+            pTxData[FramePos++]= DirUnit.File[j].Status;                //æ ¹æ®coverityæ›´æ”¹
 
             pTxData[FramePos++]=LOBYTE(DirUnit.File[j].Time.MSecond);
             pTxData[FramePos++]=HIBYTE(DirUnit.File[j].Time.MSecond);
@@ -10084,7 +10084,7 @@ void CSecAppSev::SendDir(void)
             pTxData[FramePos++]=DirUnit.File[j].Time.Month;
             pTxData[FramePos++]=DirUnit.File[j].Time.Year;
 
-            SendNum++;//·¢ËÍ¸öÊı
+            SendNum++;//å‘é€ä¸ªæ•°
 
             if(FramePos>=Length)
                 break;
@@ -10096,7 +10096,7 @@ void CSecAppSev::SendDir(void)
         *LengthOut=AsduHeadLength+FramePos;
         if(DirUnit.ReadPtr>=DirUnit.FileNum)
         {
-            pTxData[FramePos-8]|=0x20;//×îºóÒ»¸öÎÄ¼şµÄ×´Ì¬
+            pTxData[FramePos-8]|=0x20;//æœ€åä¸€ä¸ªæ–‡ä»¶çš„çŠ¶æ€
             Data2Flag&=(~UpLoadFile);
             FileStep=PFileOver;
         }
@@ -10120,7 +10120,7 @@ void CSecAppSev::SendDir(void)
 void CSecAppSev::FileReady(void)
 {
     int jj;
-    TxMsg[0]=F_FR_NA;//ÎÄ¼ş×¼±¸¾ÍĞ÷
+    TxMsg[0]=F_FR_NA;//æ–‡ä»¶å‡†å¤‡å°±ç»ª
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=FILE_101;
@@ -10143,11 +10143,11 @@ void CSecAppSev::FileReady(void)
 
     *(pTxData+2)=LOBYTE(LOWORD(CurrentFileSize));
     *(pTxData+3)=HIBYTE(LOWORD(CurrentFileSize));
-    *(pTxData+4)=LOBYTE(HIWORD(CurrentFileSize));//³¤¶ÈµÄ×î¸ß8Î»¡£
+    *(pTxData+4)=LOBYTE(HIWORD(CurrentFileSize));//é•¿åº¦çš„æœ€é«˜8ä½ã€‚
     if(CurrentFileSize)
-        *(pTxData+5)=0;//¿Ï¶¨
+        *(pTxData+5)=0;//è‚¯å®š
     else
-        *(pTxData+5)=0x80;//·ñ¶¨
+        *(pTxData+5)=0x80;//å¦å®š
 
     *LengthOut=AsduHeadLength+6;
     *AppCommand=APP_SENDDATA;
@@ -10161,7 +10161,7 @@ void CSecAppSev::FileReady(void)
 void CSecAppSev::SectionReady(void)
 {
     int jj;
-    TxMsg[0]=F_FR_NA;//½Ú×¼±¸¾ÍĞ÷
+    TxMsg[0]=F_FR_NA;//èŠ‚å‡†å¤‡å°±ç»ª
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=FILE_101;
@@ -10181,14 +10181,14 @@ void CSecAppSev::SectionReady(void)
 
     *(pTxData)=LOBYTE(CurrentFileName);
     *(pTxData+1)=HIBYTE(CurrentFileName);
-    *(pTxData+2)=01;//Ò»¸öÎÄ¼şÈÏÎªÊÇÒ»¸ö½Ú¡£
+    *(pTxData+2)=01;//ä¸€ä¸ªæ–‡ä»¶è®¤ä¸ºæ˜¯ä¸€ä¸ªèŠ‚ã€‚
     *(pTxData+3)=LOBYTE(LOWORD(CurrentFileSize));
     *(pTxData+4)=HIBYTE(LOWORD(CurrentFileSize));
-    *(pTxData+5)=LOBYTE(HIWORD(CurrentFileSize));//³¤¶ÈµÄ×î¸ß8Î»¡£
+    *(pTxData+5)=LOBYTE(HIWORD(CurrentFileSize));//é•¿åº¦çš„æœ€é«˜8ä½ã€‚
     if(CurrentFileSize)
-        *(pTxData+6)=0;//½Ú×¼±¸¾ÍĞ÷
+        *(pTxData+6)=0;//èŠ‚å‡†å¤‡å°±ç»ª
     else
-        *(pTxData+6)=0x80;//½ÚÎ´×¼±¸¾ÍĞ÷
+        *(pTxData+6)=0x80;//èŠ‚æœªå‡†å¤‡å°±ç»ª
 
     *LengthOut=AsduHeadLength+7;
     *AppCommand=APP_SENDDATA;
@@ -10201,19 +10201,19 @@ void CSecAppSev::SectionReady(void)
 
 void CSecAppSev::SendSegment(void)
 {
-    if(CurrentInfoAddr&LUBOFLAG)//¹ÊÕÏÂ¼²¨Êı¾İ
+    if(CurrentInfoAddr&LUBOFLAG)//æ•…éšœå½•æ³¢æ•°æ®
     {
         #ifdef _SAVESAMPDATA_
         SendSegment1();
         #endif
     }
-    else//ÀúÊ·µç¶ÈÊı¾İ
+    else//å†å²ç”µåº¦æ•°æ®
     {
         SendSegment2();
     }
 }
 #ifdef _SAVESAMPDATA_
-//·¢ËÍÂ¼²¨Êı¾İ
+//å‘é€å½•æ³¢æ•°æ®
 void CSecAppSev::SendSegment1(void)
 {
     short Length,i;
@@ -10223,7 +10223,7 @@ void CSecAppSev::SendSegment1(void)
     short value1,value2;
     long  tempvalue;
 
-    TxMsg[0]=F_SG_NA;//¶ÎÊı¾İ
+    TxMsg[0]=F_SG_NA;//æ®µæ•°æ®
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=FILE_101;
@@ -10234,23 +10234,23 @@ void CSecAppSev::SendSegment1(void)
 
     *(pTxData)=LOBYTE(CurrentFileName);
     *(pTxData+1)=HIBYTE(CurrentFileName);
-    *(pTxData+2)=01;//½ÚÃû
+    *(pTxData+2)=01;//èŠ‚å
 
-    //¶ÁÊı¾İ£¬Ã¿´Î¶Á3¸öÖÜ²¨µÄÊı¾İ
+    //è¯»æ•°æ®ï¼Œæ¯æ¬¡è¯»3ä¸ªå‘¨æ³¢çš„æ•°æ®
     //Length=readLBData((INT8U)(CurrentFileName-1),CurrentZBNo,3,(INT8U *)(pTxData+4),192);
     //CurrentZBNo+=3;
 
-    //Ã¿´ÎÈ¡2¸öÖÜ²¨£¬¼ÆËãºó·¢ËÍÇ°1¸öÖÜ²¨
+    //æ¯æ¬¡å–2ä¸ªå‘¨æ³¢ï¼Œè®¡ç®—åå‘é€å‰1ä¸ªå‘¨æ³¢
     Length=readLBData((INT8U)(CurrentFileName-1),CurrentZBNo,2,(INT8U*)Data,300);
     if(Length==0)
     {
-        logSysMsgNoTime("¶ÁÂ¼²¨Êı¾İ´íÎó",0,0,0,0);
+        logSysMsgNoTime("è¯»å½•æ³¢æ•°æ®é”™è¯¯",0,0,0,0);
     }
 
     CurrentZBNo++;
 
     p=(INT8U *)(pTxData+4);
-    //½«Ç°ÖÜ²¨µÄ32µãÀ©Õ¹Îª64µã,128×Ö½Ú¡£Ğ´Èë·¢ËÍ»º³åÇø
+    //å°†å‰å‘¨æ³¢çš„32ç‚¹æ‰©å±•ä¸º64ç‚¹,128å­—èŠ‚ã€‚å†™å…¥å‘é€ç¼“å†²åŒº
     for(i=0;i<32;i++)
     {
         value1=Data[i];
@@ -10266,9 +10266,9 @@ void CSecAppSev::SendSegment1(void)
     }
 
     Length=128;
-    *(pTxData+3)=Length;//¶Î³¤¶È
+    *(pTxData+3)=Length;//æ®µé•¿åº¦
 
-    for(i=0;i<Length;i++)//ÀÛ¼ÓËù·¢ËÍÊı¾İµÄĞ£ÑéºÍ
+    for(i=0;i<Length;i++)//ç´¯åŠ æ‰€å‘é€æ•°æ®çš„æ ¡éªŒå’Œ
         FileCheckSum+=*(pTxData+4+i);
 
     FileReadPtr+=Length;
@@ -10281,7 +10281,7 @@ void CSecAppSev::SendSegment1(void)
         *AppCommand=APP_SENDCON;
 }
 #endif
-//·¢ËÍÀúÊ·µç¶ÈÊı¾İ
+//å‘é€å†å²ç”µåº¦æ•°æ®
 void CSecAppSev::SendSegment2(void)
 {
     short Length,i,FramePos;
@@ -10292,7 +10292,7 @@ void CSecAppSev::SendSegment2(void)
     INT32U *pKWH;
     INT32U KWHValue;
 
-    TxMsg[0]=F_SG_NA;//¶ÎÊı¾İ
+    TxMsg[0]=F_SG_NA;//æ®µæ•°æ®
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=FILE_101;
@@ -10303,14 +10303,14 @@ void CSecAppSev::SendSegment2(void)
 
     *(pTxData)=LOBYTE(CurrentFileName);
     *(pTxData+1)=HIBYTE(CurrentFileName);
-    *(pTxData+2)=01;//½ÚÃû
+    *(pTxData+2)=01;//èŠ‚å
 
     p=(INT8U *)(pTxData+4);
 
-    i=ASDULEN-AsduHeadLength-14-4;//¿ÉÓÃÓÚ·¢ËÍÊı¾İµÄ×î´ó±¨ÎÄ³¤¶È
+    i=ASDULEN-AsduHeadLength-14-4;//å¯ç”¨äºå‘é€æ•°æ®çš„æœ€å¤§æŠ¥æ–‡é•¿åº¦
     SendNum=0;
     FramePos=0;
-    unitlength=2+12;//Ã¿¸öµç¶ÈµÄ³¤¶È£¬ÕâÀïÉè¶¨ĞÅÏ¢ÌåµØÖ·Îª2×Ö½Ú
+    unitlength=2+12;//æ¯ä¸ªç”µåº¦çš„é•¿åº¦ï¼Œè¿™é‡Œè®¾å®šä¿¡æ¯ä½“åœ°å€ä¸º2å­—èŠ‚
     No=DevList[HisDDDevNo].DevData.HisDDReadPtr;
     pKWH=DevList[HisDDDevNo].DevData.HisCounterData;
     BOOL Stop=FALSE;
@@ -10318,16 +10318,16 @@ void CSecAppSev::SendSegment2(void)
     {
         KWHValue=*(pKWH+No);
 
-        //ĞÅÏ¢ÌåµØÖ·
+        //ä¿¡æ¯ä½“åœ°å€
         *(p+unitlength*SendNum+0)=(LBCR+No)&0xff;
         *(p+unitlength*SendNum+1)=((LBCR+No)>>8)&0xff;
-        //µç¶ÈÖµ
+        //ç”µåº¦å€¼
         *(p+unitlength*SendNum+2)=LOBYTE(LOWORD(KWHValue));
         *(p+unitlength*SendNum+3)=HIBYTE(LOWORD(KWHValue));
         *(p+unitlength*SendNum+4)=LOBYTE(HIWORD(KWHValue));
         *(p+unitlength*SendNum+5)=HIBYTE(HIWORD(KWHValue));
         *(p+unitlength*SendNum+6)=(No%32);
-        //Ê±¼ä
+        //æ—¶é—´
         *(p+unitlength*SendNum+7)=0;
         *(p+unitlength*SendNum+8)=0;
         *(p+unitlength*SendNum+9)=HisDDTime.Minute;
@@ -10345,15 +10345,15 @@ void CSecAppSev::SendSegment2(void)
             Stop=TRUE;
         }
 
-        if (SendNum>=10)//Ã¿Ö¡µç¶È²»ÄÜ³¬¹ı10¸ö
+        if (SendNum>=10)//æ¯å¸§ç”µåº¦ä¸èƒ½è¶…è¿‡10ä¸ª
             Stop=TRUE;
     }
     DevList[HisDDDevNo].DevData.HisDDReadPtr=No;
 
     Length=FramePos;
-    *(pTxData+3)=Length;//¶Î³¤¶È
+    *(pTxData+3)=Length;//æ®µé•¿åº¦
 
-    for(jj=0;jj<Length;jj++)//ÀÛ¼ÓËù·¢ËÍÊı¾İµÄĞ£ÑéºÍ
+    for(jj=0;jj<Length;jj++)//ç´¯åŠ æ‰€å‘é€æ•°æ®çš„æ ¡éªŒå’Œ
         FileCheckSum+=*(pTxData+4+jj);
 
     FileReadPtr+=Length;
@@ -10366,12 +10366,12 @@ void CSecAppSev::SendSegment2(void)
         *AppCommand=APP_SENDCON;
 }
 
-//·¢ËÍ×îºó¶Î
+//å‘é€æœ€åæ®µ
 void CSecAppSev::SendLastSegment(void)
 {
 
     int jj;
-    TxMsg[0]=F_LS_NA;//×îºóµÄ¶Î
+    TxMsg[0]=F_LS_NA;//æœ€åçš„æ®µ
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=FILE_101;
@@ -10391,11 +10391,11 @@ void CSecAppSev::SendLastSegment(void)
 
     *(pTxData)=LOBYTE(CurrentFileName);
     *(pTxData+1)=HIBYTE(CurrentFileName);
-    *(pTxData+2)=01;//½ÚÃû
+    *(pTxData+2)=01;//èŠ‚å
 
     *(pTxData+3)=03;//LSQ
 
-    *(pTxData+4)=FileCheckSum;//Ğ£ÑéºÍ
+    *(pTxData+4)=FileCheckSum;//æ ¡éªŒå’Œ
 
     *LengthOut=AsduHeadLength+5;
     *AppCommand=APP_SENDDATA;
@@ -10406,7 +10406,7 @@ void CSecAppSev::SendLastSegment(void)
     FileStep=PFileOver;
 }
 
-//ÎÄ¼ş´«ÊäÈÏ¿É
+//æ–‡ä»¶ä¼ è¾“è®¤å¯
 void CSecAppSev::SConfirm(void)
 {
     INT16U FileName;
@@ -10416,7 +10416,7 @@ void CSecAppSev::SConfirm(void)
 
     switch(RxMsg[AsduHeadLength+3]&0x0F)//AFQ
     {
-        case 1://ÎÄ¼ş´«ÊäµÄ¿Ï¶¨ÈÏ¿É£¬²»ĞèÒª·¢ËÍË¢ĞÂºóµÄÄ¿Â¼2005-5-30 16:15ÁªÏµ»ÆÖ¾ÓÂ
+        case 1://æ–‡ä»¶ä¼ è¾“çš„è‚¯å®šè®¤å¯ï¼Œä¸éœ€è¦å‘é€åˆ·æ–°åçš„ç›®å½•2005-5-30 16:15è”ç³»é»„å¿—å‹‡
             Data2Flag&=(~UpLoadFile);
             FileStep=PFileOver;
             FileReadPtr=0;
@@ -10433,14 +10433,14 @@ void CSecAppSev::SConfirm(void)
                     }
                 }
             }
-            //¸üĞÂÄ¿Â¼ÁĞ±í£¬ÔÙ·¢¸üĞÂºóµÄÄ¿Â¼
+            //æ›´æ–°ç›®å½•åˆ—è¡¨ï¼Œå†å‘æ›´æ–°åçš„ç›®å½•
             Data2Flag|=UpLoadFile;
             FileStep=PCallDir;
             DirUnit.ReadPtr=0;
             */
             break;
-        case 2://ÎÄ¼ş´«ÊäµÄ·ñ¶¨ÈÏ¿É
-            if(CurrentFileName==FileName)//ÖØĞÂ´«Êä£¿
+        case 2://æ–‡ä»¶ä¼ è¾“çš„å¦å®šè®¤å¯
+            if(CurrentFileName==FileName)//é‡æ–°ä¼ è¾“ï¼Ÿ
             {
 
                 Data2Flag&=(~UpLoadFile);
@@ -10448,7 +10448,7 @@ void CSecAppSev::SConfirm(void)
                 FileReadPtr=0;
             }
             break;
-        case 3://½Ú´«ÊäµÄ¿Ï¶¨ÈÏ¿É
+        case 3://èŠ‚ä¼ è¾“çš„è‚¯å®šè®¤å¯
 
             if(CurrentFileName==FileName)
             {
@@ -10457,7 +10457,7 @@ void CSecAppSev::SConfirm(void)
             }
 
             break;
-        case 4://½Ú´«ÊäµÄ·ñ¶¨ÈÏ¿É
+        case 4://èŠ‚ä¼ è¾“çš„å¦å®šè®¤å¯
             if(CurrentFileName==FileName)
             {
 
@@ -10476,13 +10476,13 @@ void CSecAppSev::SConfirm(void)
 }
 
 
-//·¢ËÍ×îºó½Ú
+//å‘é€æœ€åèŠ‚
 void CSecAppSev::SendLastSection(void)
 {
 
     int jj;
 
-    TxMsg[0]=F_LS_NA;//×îºóµÄ¶Î
+    TxMsg[0]=F_LS_NA;//æœ€åçš„æ®µ
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=FILE_101;
@@ -10501,10 +10501,10 @@ void CSecAppSev::SendLastSection(void)
 
     *(pTxData)=LOBYTE(CurrentFileName);
     *(pTxData+1)=HIBYTE(CurrentFileName);
-    *(pTxData+2)=01;//½ÚÃû
+    *(pTxData+2)=01;//èŠ‚å
 
-    *(pTxData+3)=01;//LSQ£¬×îºóµÄ½Ú
-    *(pTxData+4)=FileCheckSum;//Ğ£ÑéºÍ
+    *(pTxData+3)=01;//LSQï¼Œæœ€åçš„èŠ‚
+    *(pTxData+4)=FileCheckSum;//æ ¡éªŒå’Œ
 
     *LengthOut=AsduHeadLength+5;
     *AppCommand=APP_SENDDATA;
@@ -10515,7 +10515,7 @@ void CSecAppSev::SendLastSection(void)
     FileStep=PFileOver;
 }
 
-//¼ì²âÂ¼²¨Êı¾İ
+//æ£€æµ‹å½•æ³¢æ•°æ®
 void CSecAppSev::ReadDirList1(void)
 {
 #ifdef _SAVESAMPDATA_
@@ -10523,7 +10523,7 @@ void CSecAppSev::ReadDirList1(void)
     struct  AbsTime_t ftime_abs;
     struct Iec101ClockTime_t ftime_iec;
 
-    //´ÓÊ±¼äÅĞ¶ÏÊÇ·ñÓĞÂ¼²¨Êı¾İ
+    //ä»æ—¶é—´åˆ¤æ–­æ˜¯å¦æœ‰å½•æ³¢æ•°æ®
 
     readLBTime((void *)&ftime_abs,ABSTIME);
 
@@ -10533,14 +10533,14 @@ void CSecAppSev::ReadDirList1(void)
         DirUnit.FileNum=0;
         DirUnit.WritePtr=0;
         DirUnit.ReadPtr=0;
-        logSysMsgNoTime("ÎŞÂ¼²¨Êı¾İ",0,0,0,0);
+        logSysMsgNoTime("æ— å½•æ³¢æ•°æ®",0,0,0,0);
         return;
     }
 
-    //¶Á¹ÊÕÏÂ¼²¨Êı¾İµÄÊ±¼ä
+    //è¯»æ•…éšœå½•æ³¢æ•°æ®çš„æ—¶é—´
     readLBTime((void *)&ftime_iec,IEC101CLOCKTIME);
 
-    if(CurrentFileName==0)//ÕÙ»½ËùÓĞÎÄ¼ş
+    if(CurrentFileName==0)//å¬å”¤æ‰€æœ‰æ–‡ä»¶
     {
         DirUnit.FileNum=7;
         DirUnit.WritePtr=7;
@@ -10556,7 +10556,7 @@ void CSecAppSev::ReadDirList1(void)
             DirUnit.File[i].Time=ftime_iec;
         }
     }
-    else//Ö»ÕÙ»½Ò»¸öÎÄ¼ş
+    else//åªå¬å”¤ä¸€ä¸ªæ–‡ä»¶
     {
         DirUnit.FileNum=1;
         DirUnit.WritePtr=1;
@@ -10571,7 +10571,7 @@ void CSecAppSev::ReadDirList1(void)
 #endif
 }
 
-//ÀúÊ·µç¶ÈÄ¿Â¼
+//å†å²ç”µåº¦ç›®å½•
 void CSecAppSev::ReadDirList2(void)
 {
     INT32U i,ii,no;
@@ -10589,25 +10589,25 @@ void CSecAppSev::ReadDirList2(void)
         CurrentFileSize=0;
         return;
     }
-    HisDDDevNo=ActDevIndex;//Éè±¸ĞòºÅ
+    HisDDDevNo=ActDevIndex;//è®¾å¤‡åºå·
 
     HisDDTime.MSecond=0;
     HisDDTime.Day=CurrentInfoAddr&0x1f;
     HisDDTime.Month=(CurrentInfoAddr>>5)&0xf;
     HisDDTime.Year=((CurrentInfoAddr>>9)&0x3f);
 
-    if(CurrentFileName!=0)//Ö»´«ËÍÒ»¸öÎÄ¼ş
+    if(CurrentFileName!=0)//åªä¼ é€ä¸€ä¸ªæ–‡ä»¶
     {
         HisDDTime.Minute=CurrentFileName&0xff;
         HisDDTime.Hour=(CurrentFileName>>8)&0xff;
         DirUnit.FileNum=1;
         DirUnit.WritePtr=1;
     }
-    else//·¢ËÍ¸ÃÈÕÆÚËùÓĞÎÄ¼ş
+    else//å‘é€è¯¥æ—¥æœŸæ‰€æœ‰æ–‡ä»¶
     {
         HisDDTime.Minute=0;
         HisDDTime.Hour=0;
-        if(HisDDCycle<=30)//Ğ¡ÓÚ°ëĞ¡Ê±±£´æÒ»´ÎÀúÊ·µç¶È£¬ÏµÍ³ÉèÖÃ×î´óÄ¿Â¼48¸öÎÄ¼ş
+        if(HisDDCycle<=30)//å°äºåŠå°æ—¶ä¿å­˜ä¸€æ¬¡å†å²ç”µåº¦ï¼Œç³»ç»Ÿè®¾ç½®æœ€å¤§ç›®å½•48ä¸ªæ–‡ä»¶
         {
             DirUnit.FileNum=48;
             DirUnit.WritePtr=48;
@@ -10631,11 +10631,11 @@ void CSecAppSev::ReadDirList2(void)
         }
 
         ConvToAbsTime((void*)&HisDDTime,&absTime,IEC101CLOCKTIME);
-        //²éÕÒÊı¾İ
+        //æŸ¥æ‰¾æ•°æ®
 
         ii=(absTime.Minute/HisDDCycle)%SAVENUM;
 
-        if(hisDataPtr->saveData[ii].time.Minute != absTime.Minute)//Ã»ÓĞ¸ÃÊ±¼äµãµÄÊı¾İ
+        if(hisDataPtr->saveData[ii].time.Minute != absTime.Minute)//æ²¡æœ‰è¯¥æ—¶é—´ç‚¹çš„æ•°æ®
             continue;
 
         DirUnit.File[no].SendFlag=0;
@@ -10651,35 +10651,35 @@ void CSecAppSev::ReadDirList2(void)
 }
 
 #ifdef INCLUDE_DA
-//Éè¶¨±£»¤¶¨Öµ
+//è®¾å®šä¿æŠ¤å®šå€¼
 void CSecAppSev::SetProtect(void)
 {
     Data1.Flag|=ProtectCon;
     if((RxCot&COT_REASON)==ACT)
     {
         memcpy((void*)ProtectValue,(void*)(pRxData),32);
-        //±£»¤¶¨ÖµÉè¶¨µ÷ÓÃ
-        if(!setDZ(ProtectValue))//Éè¶¨Ê§°Ü£¬·µ»ØÈ«²¿È¡·´¡£
+        //ä¿æŠ¤å®šå€¼è®¾å®šè°ƒç”¨
+        if(!setDZ(ProtectValue))//è®¾å®šå¤±è´¥ï¼Œè¿”å›å…¨éƒ¨å–åã€‚
         {
             for(int i=0;i<32;i++)
                 ProtectValue[i]=~ProtectValue[i];
-            ProtectValue[32]=0xff;//Ê§°Ü±êÖ¾
+            ProtectValue[32]=0xff;//å¤±è´¥æ ‡å¿—
         }
         else
         {
-            ProtectValue[32]=0;//³É¹¦±êÖ¾
+            ProtectValue[32]=0;//æˆåŠŸæ ‡å¿—
 
-            logSysMsgNoTime("Ö÷Õ¾ÉèÖÃ±£»¤¶¨Öµ1:%2x %2x %2x %2x",ProtectValue[2],
+            logSysMsgNoTime("ä¸»ç«™è®¾ç½®ä¿æŠ¤å®šå€¼1:%2x %2x %2x %2x",ProtectValue[2],
             ProtectValue[3],
             ProtectValue[4],
             ProtectValue[5]);
-            logSysMsgNoTime("Ö÷Õ¾ÉèÖÃ±£»¤¶¨Öµ2:%2x %2x %2x %2x",ProtectValue[6],
+            logSysMsgNoTime("ä¸»ç«™è®¾ç½®ä¿æŠ¤å®šå€¼2:%2x %2x %2x %2x",ProtectValue[6],
             ProtectValue[7],
             ProtectValue[8],
             ProtectValue[9]);
-            logSysMsgNoTime("Ö÷Õ¾ÉèÖÃ±£»¤¶¨Öµ3:%2x %2x %2x %2x",ProtectValue[10],
+            logSysMsgNoTime("ä¸»ç«™è®¾ç½®ä¿æŠ¤å®šå€¼3:%2x %2x %2x %2x",ProtectValue[10],
             ProtectValue[11],0,0);
-            logSysMsgWithTime("Ö÷Õ¾ÉèÖÃ±£»¤¶¨ÖµÊ±¼ä",0,0,0,0);
+            logSysMsgWithTime("ä¸»ç«™è®¾ç½®ä¿æŠ¤å®šå€¼æ—¶é—´",0,0,0,0);
         }
     }
     *LengthOut=0;
@@ -10690,7 +10690,7 @@ void CSecAppSev::SetProtect(void)
 void CSecAppSev::SendProtectCon(void)
 {
     int jj;
-    TxMsg[0]=C_PF_NA;//±£»¤¶¨Öµ¾µÏñÈ·ÈÏ
+    TxMsg[0]=C_PF_NA;//ä¿æŠ¤å®šå€¼é•œåƒç¡®è®¤
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=ACTCON;
@@ -10700,14 +10700,14 @@ void CSecAppSev::SendProtectCon(void)
     *(pTxInfoAddr+1)=0;
 
     memcpy((void*)pTxData,(void*)ProtectValue,32);
-    pTxData[32]=ProtectValue[32];//ÏŞ¶¨´Ê
+    pTxData[32]=ProtectValue[32];//é™å®šè¯
 
     *LengthOut=AsduHeadLength+33;
     *AppCommand=APP_SENDDATA;
     if(BalanMode)
         *AppCommand=APP_SENDCON;
 
-    //±£»¤¶¨ÖµÉè¶¨³É¹¦ºóÒª¸´Î»FTU£¬Ê¹¶¨ÖµÉúĞ§¡£
+    //ä¿æŠ¤å®šå€¼è®¾å®šæˆåŠŸåè¦å¤ä½FTUï¼Œä½¿å®šå€¼ç”Ÿæ•ˆã€‚
     if(ProtectValue[32]==0)
     {
         ResetFlag=0xff;
@@ -10718,21 +10718,21 @@ void CSecAppSev::SendProtectCon(void)
 void CSecAppSev::CallProtect(void)
 {
     INT8U feederno;
-    //±¨ÎÄÖĞÔ­ÏŞ¶¨´ÊµÄÎ»ÖÃ¸ÄÎªÀ¡ÏßºÅ£¬ 2005-3-14 9:39
+    //æŠ¥æ–‡ä¸­åŸé™å®šè¯çš„ä½ç½®æ”¹ä¸ºé¦ˆçº¿å·ï¼Œ 2005-3-14 9:39
     feederno=RxMsg[AsduHeadLength];
 
     Data2Flag|=ProtectData;
 
-    //±£»¤¶¨ÖµÕÙ»½µ÷ÓÃ
-    //·Åµ½ProtectValue[]ÖĞ
+    //ä¿æŠ¤å®šå€¼å¬å”¤è°ƒç”¨
+    //æ”¾åˆ°ProtectValue[]ä¸­
     if(getDZ(feederno,ProtectValue))
     {
-        ProtectValue[32]=0;//³É¹¦±êÖ¾
+        ProtectValue[32]=0;//æˆåŠŸæ ‡å¿—
     }
     else
     {
         memset(ProtectValue,0,32);
-        ProtectValue[32]=0xff;//Ê§°Ü±êÖ¾
+        ProtectValue[32]=0xff;//å¤±è´¥æ ‡å¿—
     }
 
     *LengthOut=0;
@@ -10743,7 +10743,7 @@ void CSecAppSev::CallProtect(void)
 void CSecAppSev::SendProtectData(void)
 {
     int jj;
-    TxMsg[0]=M_PF_NA;//±£»¤¶¨ÖµÊı¾İ
+    TxMsg[0]=M_PF_NA;//ä¿æŠ¤å®šå€¼æ•°æ®
 
     (*pTxVSQ) = 1;
     TxMsg[CotLocation]=REQ;
@@ -10753,7 +10753,7 @@ void CSecAppSev::SendProtectData(void)
     *(pTxInfoAddr+1)=0;
 
     memcpy((void*)pTxData,(void*)ProtectValue,32);
-    pTxData[32]=ProtectValue[32];//ÏŞ¶¨´Ê
+    pTxData[32]=ProtectValue[32];//é™å®šè¯
 
     *LengthOut=AsduHeadLength+33;
     *AppCommand=APP_SENDDATA;
@@ -10762,8 +10762,8 @@ void CSecAppSev::SendProtectData(void)
 }
 #endif
 
-//¶¨Ê± ±£´æÀúÊ·µç¶ÈÊı¾İ
-//ÀúÊ·µç¶È´æ´¢Ö»ÔÊĞíÒ»¸öÉè±¸ÓĞµç¶È¡£
+//å®šæ—¶ ä¿å­˜å†å²ç”µåº¦æ•°æ®
+//å†å²ç”µåº¦å­˜å‚¨åªå…è®¸ä¸€ä¸ªè®¾å¤‡æœ‰ç”µåº¦ã€‚
 
 void CSecAppSev::InitHisDataBuf(void)
 {
@@ -10790,11 +10790,11 @@ void CSecAppSev::InitHisDataBuf(void)
         for(int ii=1;ii<SAVENUM;ii++)
         {
             //hisDataPtr->saveData[ii].Data = hisDataPtr->saveData[ii-1].Data+CountNum*(sizeof(long));
-            hisDataPtr->saveData[ii].Data = hisDataPtr->saveData[ii-1].Data+CountNum;      //¸ù¾İcoverity¸ü¸Ä
+            hisDataPtr->saveData[ii].Data = hisDataPtr->saveData[ii-1].Data+CountNum;      //æ ¹æ®coverityæ›´æ”¹
         }
-        logSysMsgNoTime("ÀúÊ·µç¶È´æ´¢Æô¶¯",0,0,0,0);
+        logSysMsgNoTime("å†å²ç”µåº¦å­˜å‚¨å¯åŠ¨",0,0,0,0);
 
-        break;//±£Ö¤Ö»´¦ÀíÒ»¸öÉè±¸µÄµç¶È
+        break;//ä¿è¯åªå¤„ç†ä¸€ä¸ªè®¾å¤‡çš„ç”µåº¦
     }
 }
 
@@ -10820,7 +10820,7 @@ BOOL CSecAppSev::SaveKWHToBuf(void)
     DATAFORMAT *hourData;
     hourData =&hisDataPtr->saveData[j];
 
-    for (i=0;i<DevCount;i++)//¶àÉè±¸ÓĞµç¶ÈÊ±£¬ÕâÃ´´¦Àí²»ĞĞ¡£Ò»¸öÉè±¸ÓĞµç¶È¿ÉÒÔ¡£
+    for (i=0;i<DevCount;i++)//å¤šè®¾å¤‡æœ‰ç”µåº¦æ—¶ï¼Œè¿™ä¹ˆå¤„ç†ä¸è¡Œã€‚ä¸€ä¸ªè®¾å¤‡æœ‰ç”µåº¦å¯ä»¥ã€‚
     {
         if (DevList[i].DevData.CounterNum<=0)
             continue;
@@ -10834,7 +10834,7 @@ BOOL CSecAppSev::SaveKWHToBuf(void)
             CountNum=CL_ReadCount(DevList[i].DevID,GetBeginNo,GetEndNo,(struct RealCounterNFlag_t *)DBData);
         if(CountNum<=0)
         {
-            logSysMsgNoTime("¶ÁÊı¾İ¿âµç¶ÈÊ§°Ü",0,0,0,0);
+            logSysMsgNoTime("è¯»æ•°æ®åº“ç”µåº¦å¤±è´¥",0,0,0,0);
             return(0);
         }
 
@@ -10846,7 +10846,7 @@ BOOL CSecAppSev::SaveKWHToBuf(void)
 
         memcpy(&hourData->time,&absTime,sizeof(struct AbsTime_t));
 
-        break;//Ö»´¦ÀíÒ»¸öÉè±¸µÄµç¶È
+        break;//åªå¤„ç†ä¸€ä¸ªè®¾å¤‡çš„ç”µåº¦
     }
     return(1);
 }
@@ -10883,39 +10883,39 @@ BOOL CSecAppSev::ReadKWHHistoryData(struct AbsTime_t absTime,long *KWH,INT16U KW
     return(1);
 }
 
-//101ÈÎÎñµÄ¶îÏßËğÄ£¿éÎÄ¼şÍ¬²½´¦Àí
+//101ä»»åŠ¡çš„é¢çº¿æŸæ¨¡å—æ–‡ä»¶åŒæ­¥å¤„ç†
 void CSecAppSev::ProcXSFileSyn()
 {
-    SetSendData2Flag(DATA2_XSFT_SYNACT);  //ÖÃÏàÓ¦µÄ±êÖ¾Î»
-    SetFileSynInfoTaskIDSubstation(MySelf.AppTID);  //×÷ÎªÆô¶¯101Ö÷Õ¾ÈÎÎñ¿ªÊ¼µÄÁ¿
-    if(XSFileSynInfo.TaskIDPri101[0]!=0)//´ú±íµÚÒ»¸öÏßËğÄ£¿éÆğµÄÈÎÎñ
+    SetSendData2Flag(DATA2_XSFT_SYNACT);  //ç½®ç›¸åº”çš„æ ‡å¿—ä½
+    SetFileSynInfoTaskIDSubstation(MySelf.AppTID);  //ä½œä¸ºå¯åŠ¨101ä¸»ç«™ä»»åŠ¡å¼€å§‹çš„é‡
+    if(XSFileSynInfo.TaskIDPri101[0]!=0)//ä»£è¡¨ç¬¬ä¸€ä¸ªçº¿æŸæ¨¡å—èµ·çš„ä»»åŠ¡
    {
-      myEventSend(GetFileSynInfoTaskID101(0),XSFILESYN);//¸ø101Ö÷Õ¾ÈÎÎñ·¢ËÍÏûÏ¢ ÔİÊ±ÏÈ·¢¸øµÚÒ»¸ö101ÈÎÎñ£¬ºóĞøÊÇÍ¨¹ıÎ¬»¤Èí¼şÃæ°å²ÎÊıÈ·ÈÏµÄ¡£
+      myEventSend(GetFileSynInfoTaskID101(0),XSFILESYN);//ç»™101ä¸»ç«™ä»»åŠ¡å‘é€æ¶ˆæ¯ æš‚æ—¶å…ˆå‘ç»™ç¬¬ä¸€ä¸ª101ä»»åŠ¡ï¼Œåç»­æ˜¯é€šè¿‡ç»´æŠ¤è½¯ä»¶é¢æ¿å‚æ•°ç¡®è®¤çš„ã€‚
    }
     else
    {
-      logSysMsgWithTime("ÎŞÖ§³Ö2018±ê×¼µÄÏßËğÄ£¿é£¡",0,0,0,0);
+      logSysMsgWithTime("æ— æ”¯æŒ2018æ ‡å‡†çš„çº¿æŸæ¨¡å—ï¼",0,0,0,0);
    }
-   if(XSFileSynInfo.TaskIDPri101[1]!=0)//´ú±íÓĞµÚ¶ş¸öÏßËğÄ£¿éÆğµÄÈÎÎñ
+   if(XSFileSynInfo.TaskIDPri101[1]!=0)//ä»£è¡¨æœ‰ç¬¬äºŒä¸ªçº¿æŸæ¨¡å—èµ·çš„ä»»åŠ¡
    {
       myEventSend(GetFileSynInfoTaskID101(1),XSFILESYN);
    }   
 }
 
 
-//101ÈÎÎñµÄ¶îÏßËğÄ£¿éÎÄ¼şÍ¬²½´¦Àí
+//101ä»»åŠ¡çš„é¢çº¿æŸæ¨¡å—æ–‡ä»¶åŒæ­¥å¤„ç†
 void CSecAppSev::ProcXSFileSynFinish()
 {
     SetSendData2Flag(DATA2_XSFT_SYNACTFINISH); 
 }
-////ºşÄÏ¹ÊÖ¸ÀÏ¼ÓÃÜ·½°¸
+////æ¹–å—æ•…æŒ‡è€åŠ å¯†æ–¹æ¡ˆ
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProDealF0()
-º¯Êı¹¦ÄÜ£º  ·ÖÎöÊÕµ½µÄÖ÷Õ¾°²È«½»»¥Êı¾İ
-ÊäÈëËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProDealF0()
+å‡½æ•°åŠŸèƒ½ï¼š  åˆ†ææ”¶åˆ°çš„ä¸»ç«™å®‰å…¨äº¤äº’æ•°æ®
+è¾“å…¥è¯´æ˜ï¼š  
 
-Êä³öËµÃ÷£º  0 ³É¹¦ ÆäËû Ê§°Ü -10 ²ÎÊı´íÎó
-±¸×¢£º      
+è¾“å‡ºè¯´æ˜ï¼š  0 æˆåŠŸ å…¶ä»– å¤±è´¥ -10 å‚æ•°é”™è¯¯
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProDealF0()
 {
@@ -10927,7 +10927,7 @@ void CSecAppSev::ProDealF0()
     rc = Sgc1120aGetChipKeyVersion(buf);
 	if(rc == 0)
 	{
-		buf[0] = buf[2];//ÃÜÔ¿°æ±¾ºÅ
+		buf[0] = buf[2];//å¯†é’¥ç‰ˆæœ¬å·
 		Sgc1120aGetChipSerialNumID(serbuf);
 	}
     //*pTxTypeID = E_SGC_F0;
@@ -10969,7 +10969,7 @@ void CSecAppSev::ProDealF0()
         //else
         //{
              //pTxData[0] = 0x00;   
-             //pTxData[1] = 0x01;  	   	//ÆäËû´íÎó
+             //pTxData[1] = 0x01;  	   	//å…¶ä»–é”™è¯¯
         //}
 
 	    *LengthOut=AsduHeadLength + 2;    
@@ -10978,17 +10978,17 @@ void CSecAppSev::ProDealF0()
     *AppCommand=APP_SENDDATA;
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProDealF1()
-º¯Êı¹¦ÄÜ£º  ·ÖÎöÊÕµ½µÄÖ÷Õ¾°²È«½»»¥Êı¾İ
-ÊäÈëËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProDealF1()
+å‡½æ•°åŠŸèƒ½ï¼š  åˆ†ææ”¶åˆ°çš„ä¸»ç«™å®‰å…¨äº¤äº’æ•°æ®
+è¾“å…¥è¯´æ˜ï¼š  
 
-Êä³öËµÃ÷£º  0 ³É¹¦ ÆäËû Ê§°Ü -10 ²ÎÊı´íÎó
-±¸×¢£º      
+è¾“å‡ºè¯´æ˜ï¼š  0 æˆåŠŸ å…¶ä»– å¤±è´¥ -10 å‚æ•°é”™è¯¯
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProDealF1()
 {
     int rc,i;
-    INT8U buf[18];//Ç°Á½¸ö×Ö½ÚÊÇĞÅÏ¢³¤¶È
+    INT8U buf[18];//å‰ä¸¤ä¸ªå­—èŠ‚æ˜¯ä¿¡æ¯é•¿åº¦
     
     AuthEndflag = 0;
 
@@ -11195,11 +11195,11 @@ void CSecAppSev::Sgcwronginf(INT16U enerrno)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcReadParaGD
-º¯Êı¹¦ÄÜ£º  ´¦ÀíÕÙ»½²ÎÊı±¨ÎÄ£¬¡£
-ÊäÈëËµÃ÷£º    
-Êä³öËµÃ÷£º  ÎŞ¡£
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  ProcReadParaGD
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†å¬å”¤å‚æ•°æŠ¥æ–‡ï¼Œã€‚
+è¾“å…¥è¯´æ˜ï¼š    
+è¾“å‡ºè¯´æ˜ï¼š  æ— ã€‚
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcReadParaGD(void)
 {
@@ -11218,8 +11218,8 @@ void CSecAppSev::ProcReadParaGD(void)
     {
         for(i=0; i<RMTParaNum; i++)
         {
-            RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ĞÅÏ¢ÌåµØÖ·
-            pos += 6; //2×Ö½ÚĞÅÏ¢ÌåµØÖ·+4×Ö½ÚÊı¾İ
+            RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ä¿¡æ¯ä½“åœ°å€
+            pos += 6; //2å­—èŠ‚ä¿¡æ¯ä½“åœ°å€+4å­—èŠ‚æ•°æ®
                           
         } 
                     
@@ -11239,10 +11239,10 @@ void CSecAppSev::ProcReadParaGD(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeRMTReadPara_gd()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯Ô¶³Ì²ÎÊı¶ÁÈ¡--¹ã¶«
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  rc = TRUE-ÓĞºóĞø FALSE-ÎŞºóĞø
+å‡½æ•°åç§°ï¼š  ProcEncodeRMTReadPara_gd()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¿œç¨‹å‚æ•°è¯»å–--å¹¿ä¸œ
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  rc = TRUE-æœ‰åç»­ FALSE-æ— åç»­
 /------------------------------------------------------------------*/
 BOOL CSecAppSev::ProcEncodeRMTReadPara_gd(void)
 {
@@ -11252,7 +11252,7 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara_gd(void)
     
             
     TxMsg[0] = GD_MUTIPARA_READ;
-    TxMsg[1] = 0;   //VSQ£¬ºóÃæÌî¸öÊı
+    TxMsg[1] = 0;   //VSQï¼Œåé¢å¡«ä¸ªæ•°
     
     TxMsg[CotLocation]=ACTCON;
     for(jj=0;jj<PubAddrSize;jj++)
@@ -11270,7 +11270,7 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara_gd(void)
             if(len != 0)
             {
                 TxMsg[FramPos++] = LOBYTE(RMTParaInfo[i]);
-                TxMsg[FramPos++] = HIBYTE(RMTParaInfo[i]);  //ĞÅÏ¢ÌåµØÖ·
+                TxMsg[FramPos++] = HIBYTE(RMTParaInfo[i]);  //ä¿¡æ¯ä½“åœ°å€
                             
                 FramPos += len;
             }
@@ -11282,7 +11282,7 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara_gd(void)
     else
     {
         TxMsg[FramPos++] = LOBYTE(RMTParaInfo[0]);
-        TxMsg[FramPos++] = HIBYTE(RMTParaInfo[0]);  //ĞÅÏ¢ÌåµØÖ·
+        TxMsg[FramPos++] = HIBYTE(RMTParaInfo[0]);  //ä¿¡æ¯ä½“åœ°å€
         
         for(i=0; i<RMTParaNum ; i++)
         {
@@ -11310,10 +11310,10 @@ BOOL CSecAppSev::ProcEncodeRMTReadPara_gd(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcWritePara_GD()
-º¯Êı¹¦ÄÜ£º  ´¦ÀíĞ´²ÎÊı
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcWritePara_GD()
+å‡½æ•°åŠŸèƒ½ï¼š  å¤„ç†å†™å‚æ•°
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcWritePara_GD(void)
 {
@@ -11325,21 +11325,21 @@ void CSecAppSev::ProcWritePara_GD(void)
     INT32U temp32;  
     INT16U writeflag;
     
-    //°ÑÊı¾İÔİ´æµ½wrongdataÖĞ
+    //æŠŠæ•°æ®æš‚å­˜åˆ°wrongdataä¸­
     WrongDataLength = LengthIn;
     memcpy((void*)WrongData,(void*)RxMsg,LengthIn);
     
     if(ReadRemoteParaSetEnableState() == FALSE)
     {
-        //·ñ¶¨»Ø´ğ
+        //å¦å®šå›ç­”
         RMTReturnCot = ACTCON|0x40;
         SetSendData2Flag(DATA2_RMT_WRITEPARA_GD);
-        logSysMsgNoTime("Ô¶·½Õû¶¨Í¶ÈëÈíÑ¹°åÎª·Ö£¬½ûÖ¹ĞŞ¸Ä²ÎÊı£¡£¡",0,0,0,0);
+        logSysMsgNoTime("è¿œæ–¹æ•´å®šæŠ•å…¥è½¯å‹æ¿ä¸ºåˆ†ï¼Œç¦æ­¢ä¿®æ”¹å‚æ•°ï¼ï¼",0,0,0,0);
         return;
     }
     
     writeflag = 0;
-    if ((RxCot&COT_REASON)==ACT)    //¼¤»î
+    if ((RxCot&COT_REASON)==ACT)    //æ¿€æ´»
     {
         pInfoAddr = &RxMsg[InfoAddrLocation];
                 
@@ -11350,9 +11350,9 @@ void CSecAppSev::ProcWritePara_GD(void)
             for(i=0; i<RMTParaNum; i++)
             {
                 qos = pInfoAddr[pos+6];
-                if(qos & 0x80)  //Ô¤ÖÃ
+                if(qos & 0x80)  //é¢„ç½®
                 {
-                    RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ĞÅÏ¢ÌåµØÖ·
+                    RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ä¿¡æ¯ä½“åœ°å€
                     pos += 2;
                     
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
@@ -11360,14 +11360,14 @@ void CSecAppSev::ProcWritePara_GD(void)
                     
                     RMTParaValue[i] = tempval;
                     
-                    ProgLogWrite2("Ô¤ÖÃ²ÎÊıinfo=0x%x, value=%d,%d",RMTParaInfo[i],RMTParaValue[i],RMTParaValue[i]*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("é¢„ç½®å‚æ•°info=0x%x, value=%d,%d",RMTParaInfo[i],RMTParaValue[i],RMTParaValue[i]*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                     pos += 5;
                     
                     RMTParaYZ = TRUE;
                 }
                 else
                 {
-                    //Ö´ĞĞ
+                    //æ‰§è¡Œ
                     curparainfo = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
                     pos += 2; 
                     
@@ -11375,16 +11375,16 @@ void CSecAppSev::ProcWritePara_GD(void)
                     tempval =*((float *)(&temp32));
                     pos += 5;
                     
-                    //ÅĞ¶ÏÔ¤ÖÃºÍ¼¤»îÏàÍ¬£¬ÔòÉèÖÃ
+                    //åˆ¤æ–­é¢„ç½®å’Œæ¿€æ´»ç›¸åŒï¼Œåˆ™è®¾ç½®
                     if((curparainfo == RMTParaInfo[i]) && (tempval == RMTParaValue[i]))
                     {
                         SetTerminalPara(RMTParaValue[i], RMTParaInfo[i]); 
-                        //ProgLogWrite2("²ÎÊı¼¤»îinfo=0x%x, val=%d,%d",curparainfo,tempval,tempval*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1); 
+                        //ProgLogWrite2("å‚æ•°æ¿€æ´»info=0x%x, val=%d,%d",curparainfo,tempval,tempval*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1); 
                         writeflag = 1;
                     }
                     else
                     {
-                        ProgLogWrite2("%d²ÎÊı¼¤»îÓëÔ¤ÖÃ²»·û¡£cur=0x%x, old=%x",i,curparainfo,RMTParaInfo[i],0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                        ProgLogWrite2("%då‚æ•°æ¿€æ´»ä¸é¢„ç½®ä¸ç¬¦ã€‚cur=0x%x, old=%x",i,curparainfo,RMTParaInfo[i],0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                     }
                 }
     
@@ -11392,58 +11392,58 @@ void CSecAppSev::ProcWritePara_GD(void)
         }
         else
         {
-            info = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ĞÅÏ¢ÌåµØÖ·
+            info = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //ä¿¡æ¯ä½“åœ°å€
             pos += 2;
             for(i=0; i<RMTParaNum; i++)
             {
                 qos = pInfoAddr[pos+4];
-                if(qos & 0x80)  //Ô¤ÖÃ
+                if(qos & 0x80)  //é¢„ç½®
                 {
-                    RMTParaInfo[i] = info+i;    //ĞÅÏ¢ÌåµØÖ·
+                    RMTParaInfo[i] = info+i;    //ä¿¡æ¯ä½“åœ°å€
                     
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
                     tempval =*((float *)(&temp32));
                     
                     RMTParaValue[i] = tempval;
                     
-                    //ProgLogWrite2("Ô¤ÖÃ²ÎÊıinfo=0x%x, value=%d,%d",RMTParaInfo[i],RMTParaValue[i],RMTParaValue[i]*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    //ProgLogWrite2("é¢„ç½®å‚æ•°info=0x%x, value=%d,%d",RMTParaInfo[i],RMTParaValue[i],RMTParaValue[i]*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                     pos += 5;
                     
                     RMTParaYZ = TRUE;
                 }
                 else
                 {
-                    //Ö´ĞĞ
+                    //æ‰§è¡Œ
                     curparainfo = info+i;
                     
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
                     tempval =*((float *)(&temp32));
                     pos += 5;
                     
-                    //ÅĞ¶ÏÔ¤ÖÃºÍ¼¤»îÏàÍ¬£¬ÔòÉèÖÃ
+                    //åˆ¤æ–­é¢„ç½®å’Œæ¿€æ´»ç›¸åŒï¼Œåˆ™è®¾ç½®
                     if((curparainfo == RMTParaInfo[i]) && (tempval == RMTParaValue[i]))
                     {
                         SetTerminalPara(RMTParaValue[i], RMTParaInfo[i]); 
-                        ProgLogWrite2("²ÎÊı¼¤»îinfo=0x%x, val=%d,%d",curparainfo,tempval,tempval*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1); 
+                        ProgLogWrite2("å‚æ•°æ¿€æ´»info=0x%x, val=%d,%d",curparainfo,tempval,tempval*100,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1); 
                         writeflag = 1;
                     }
                     else
                     {
-                        ProgLogWrite2("%d²ÎÊı¼¤»îÓëÔ¤ÖÃ²»·û¡£cur=0x%x, old=%x",i,curparainfo,RMTParaInfo[i],0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                        ProgLogWrite2("%då‚æ•°æ¿€æ´»ä¸é¢„ç½®ä¸ç¬¦ã€‚cur=0x%x, old=%x",i,curparainfo,RMTParaInfo[i],0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                     }
                 }
     
             }
         }
             
-        //È·ÈÏ»Ø´ğ
+        //ç¡®è®¤å›ç­”
         RMTReturnCot = ACTCON;
         SetSendData2Flag(DATA2_RMT_WRITEPARA_GD);
       
-        if(writeflag)   //¹Ì»¯
+        if(writeflag)   //å›ºåŒ–
         {
-            SaveTerminalPara(); //¹Ì»¯Íê±Ï£¬Ğ´Èëflash
-            SaveRMTParaToSys(); //¼ì²âÊÇ·ñĞèÒª¸üĞÂÏµÍ³²ÎÊıÎÄ¼ş
+            SaveTerminalPara(); //å›ºåŒ–å®Œæ¯•ï¼Œå†™å…¥flash
+            SaveRMTParaToSys(); //æ£€æµ‹æ˜¯å¦éœ€è¦æ›´æ–°ç³»ç»Ÿå‚æ•°æ–‡ä»¶
             
             RMTParaInit();
         }
@@ -11451,7 +11451,7 @@ void CSecAppSev::ProcWritePara_GD(void)
     }
     else
     {
-        //³·Ïú
+        //æ’¤é”€
         RMTParaInit();
         RMTReturnCot = DEACTCON;
         SetSendData2Flag(DATA2_RMT_WRITEPARA_GD);
@@ -11460,10 +11460,10 @@ void CSecAppSev::ProcWritePara_GD(void)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  ProcEncodeRMTSetPara_GD()
-º¯Êı¹¦ÄÜ£º  ×éÖ¯¶Á¶¨ÖµÇøºÅÈ·ÈÏÖ¡
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  
+å‡½æ•°åç§°ï¼š  ProcEncodeRMTSetPara_GD()
+å‡½æ•°åŠŸèƒ½ï¼š  ç»„ç»‡è¯»å®šå€¼åŒºå·ç¡®è®¤å¸§
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  
 /------------------------------------------------------------------*/
 void CSecAppSev::ProcEncodeRMTSetPara_GD(void)
 {

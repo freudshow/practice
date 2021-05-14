@@ -49,7 +49,8 @@ INT8U CheckCerDecryptData(INT8U *pdata,INT16U len);
 INT8U GetEbMsgCheckSum(INT8U *pdata);
 
 void EbEditmsg(INT8U *pdata,INT8U* sdatabuf,INT16U slen, INT16U ebtype,INT8U typeId,INT16U msglen);
-INT8U EbEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo);
+INT8U EbEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo);
+
 
 INT16U EbSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaillen,INT16U len,INT16U wChanNo);
 void EbmsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo);
@@ -101,7 +102,7 @@ INT8U *GetImageInfo(INT32U *plen);
 #if 0
 #endif
 /////////////////////////////////////////////////////////////////////
-//∫˛ƒœ≈©Õ¯º”√‹
+//ÊπñÂçóÂÜúÁΩëÂä†ÂØÜ
 ////////////////////////////////////////////////////////////////////
 INT8U Sgc1120aGetChipSerialNumID(INT8U *rcvbuf);
 INT8U Sgc1120aGetChipKeyVersion(INT8U *rcvbuf);

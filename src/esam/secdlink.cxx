@@ -6,7 +6,7 @@ extern INT32U baudRateTable[];
 extern INT16U fixmlen ;//
 extern INT16U AuthEndflag;
 
-/*���캯������ʼ��*/
+/*构造函数：初始化*/
 CSecDLink::CSecDLink(INT16U appid,CSecAppSev *p)
 {
 	pSecApp=p;
@@ -35,7 +35,7 @@ BOOL CSecDLink::InitSecDLink(void)
         if (TimeOutValue<100)
             TimeOutValue=100;
 
-        DLIdleTime=TimeOutValue/100;//��·���м��ʱ�䲻��С��2��
+        DLIdleTime=TimeOutValue/100;//线路空闲检测时间不能小于2秒
         if((DLIdleTime<2)||(DLIdleTime>=4))
             DLIdleTime=2;
         
@@ -63,9 +63,9 @@ BOOL CSecDLink::InitSecDLink(void)
         if(pSecPad->control & CON_ISNEEDDELAY)
             IsDoubleLinkInit = FALSE;
         else
-            IsDoubleLinkInit = TRUE;    //֧��˫����·ͬ����ʼ��
+            IsDoubleLinkInit = TRUE;    //支持双向链路同步初始化
         
-        //��֧�ֹ�����Լ��չ������£��Զ�ʽ��������·
+        //在支持国网规约扩展的情况下，自动式单向建立链路
         /*if(pSecPad->control & CON_101GYKZ)
         {
            IsDoubleLinkInit = FALSE;   
@@ -74,12 +74,12 @@ BOOL CSecDLink::InitSecDLink(void)
         if(pSecPad->control & CON_NOFCVCTRL)
         {
             NoJudgeFCB = TRUE;
-            logSysMsgNoTime("101��Լ���ж�FCB��ת",0,0,0,0);
+            logSysMsgNoTime("101规约不判断FCB翻转",0,0,0,0);
         }
         else
             NoJudgeFCB = FALSE;
         
-        HeartBeatIdleLimit = 0; //60;   //����������ʱ����
+        HeartBeatIdleLimit = 0; //60;   //心跳功能暂时不加
         HeartBeatIdleTime = 0;
         
         LinkAddrSize=pSecPad->LINKAddrSize;
@@ -100,7 +100,7 @@ BOOL CSecDLink::InitSecDLink(void)
     
     baudrate = baudRateTable[PI->Attri->Baud];
 
-    dwAppTID=TI->Tid;//ϵͳ���������ID��
+    dwAppTID=TI->Tid;//系统分配的任务ID。
 
     DLPriStatus=PRIDISABLE;
     DLSecStatus=SECDISABLE;
@@ -111,21 +111,21 @@ BOOL CSecDLink::InitSecDLink(void)
     fixmlen = 4 + LinkAddrSize;//
     
     i=CheckDevType(PI->DevIDSet[0]);
-    if (i==0)//0����I���߼��豸
+    if (i==0)//0——I类逻辑设备
     {
         struct AppLBConf_t AppLBConf;
         L_ReadBConf(PI->DevIDSet[i],wAppID,(INT8U*)&AppLBConf);
-        SourceNo=AppLBConf.Address;//������ַΪԴվַ
+        SourceNo=AppLBConf.Address;//本机地址为源站址
     }
-    else if (i==2)//2:II���߼��豸
+    else if (i==2)//2:II类逻辑设备
     {
         struct AppSLBConf_t AppSLBConf;
         //SL_ReadBConf(PI->DevIDSet[i],wAppID,(INT8U*)&AppSLBConf);
-        if(!SL_ReadBConf(PI->DevIDSet[i],wAppID,(INT8U*)&AppSLBConf))       //����coverity����
+        if(!SL_ReadBConf(PI->DevIDSet[i],wAppID,(INT8U*)&AppSLBConf))       //根据coverity更改
         {
             return false;
         }
-        SourceNo=AppSLBConf.Address;//������ַΪԴվַ
+        SourceNo=AppSLBConf.Address;//本机地址为源站址
     }
     
     IsEncrypt = 0;
@@ -134,49 +134,49 @@ BOOL CSecDLink::InitSecDLink(void)
     
         if(pSecPad != NULL)
         {
-            //CON_ENCRYPT:CON_1161ENCRPTY = 1:0(�޼���)  0:0(11�氲ȫ����) 0:1(16�氲ȫ��������) 1:1(�Ƿ�)
+            //CON_ENCRYPT:CON_1161ENCRPTY = 1:0(无加密)  0:0(11版安全方案) 0:1(16版安全防护方案) 1:1(非法)
             switch(pSecPad->control & (CON_ENCRYPT|CON_1161ENCRPTY|CON_1120ENCRPTY|CON_OLD1120ENCRPTY))
             {
             case 0:
                 IsEncrypt = 1;
                 myEnctyptInit(SourceNo, pSecPad->EncryptTimeout);
-                logSysMsgNoTime("11�氲ȫ��������(SGC1126)-101",0,0,0,0);
+                logSysMsgNoTime("11版安全防护方案(SGC1126)-101",0,0,0,0);
                 break;
             case CON_ENCRYPT|CON_1161ENCRPTY:
-                //1161����оƬ
+                //1161加密芯片
                 N101Encrptystyle = 2;
-                logSysMsgNoTime("15�氲ȫ������������(SGC1161)-101",0,0,0,0);
+                logSysMsgNoTime("15版安全防护方案启用(SGC1161)-101",0,0,0,0);
                 myTaskDelay(2);    
                 rc = EncrptyChiptest(1);
                 if(rc != 1)
                 {
-                    logSysMsgNoTime("���ܷ�����оƬ���Ͳ�ƥ������оƬ������",0,0,0,0);
+                    logSysMsgNoTime("加密方案和芯片类型不匹配或加密芯片不存在",0,0,0,0);
                 }
                 break;
             case CON_ENCRYPT|CON_1120ENCRPTY:
-                //1120����оƬ����ũ������
+                //1120加密芯片湖南农网加密
                 N101Encrptystyle = 3;
-                logSysMsgNoTime("����ũ����ȫ��������(SGC1120a)-101",0,0,0,0);
+                logSysMsgNoTime("湖南农网安全防护方案(SGC1120a)-101",0,0,0,0);
                 myTaskDelay(2);    
                rc = EncrptyChiptest(1);
                if(rc != 2)
                {
-                   logSysMsgNoTime("���ܷ�����оƬ���Ͳ�ƥ������оƬ������",0,0,0,0);
+                   logSysMsgNoTime("加密方案和芯片类型不匹配或加密芯片不存在",0,0,0,0);
                }
                 break;		
             case CON_ENCRYPT|CON_OLD1120ENCRPTY:
                  N101Encrptystyle = 4;
-                 logSysMsgNoTime("�Ϻ���ũ����ȫ��������(SGC1120a)-101",0,0,0,0);
+                 logSysMsgNoTime("老湖南农网安全防护方案(SGC1120a)-101",0,0,0,0);
                  myTaskDelay(2);    
                 rc = EncrptyChiptest(1);
                 if(rc != 2)
                 {
-                    logSysMsgNoTime("���ܷ�����оƬ���Ͳ�ƥ������оƬ������",0,0,0,0);
+                    logSysMsgNoTime("加密方案和芯片类型不匹配或加密芯片不存在",0,0,0,0);
                 }
                  break;      
             default:
-                //�޼���
-                logSysMsgNoTime("�ް�ȫ��������(͸������)-101",0,0,0,0);
+                //无加密
+                logSysMsgNoTime("无安全防护方案(透明传输)-101",0,0,0,0);
                 break;               
             }
         }
@@ -225,22 +225,22 @@ BOOL CSecDLink::InitSecDLink(void)
         FixFrmLength=5;
     else
         FixFrmLength=6;
-    FirstRecFCB = TRUE;     //wjr  2009.6.3 ��·��λ��ǣ�����ʶ��·��λ���һ���յ��Է��Ĵ�FCBλ�ı��ģ����ԶԷ���FCB��ʼλΪ��ʼ��־
+    FirstRecFCB = TRUE;     //wjr  2009.6.3 链路复位标记，来标识链路复位后第一次收到对方的带FCB位的报文，并以对方的FCB起始位为起始标志
     return	TRUE;
 }
 
-//��MISI����
+//读MISI数据
 void CSecDLink::RecMISIData(void)
 {
 	RecMISIDataDealFun(N101Encrptystyle);
 }
 
 /********************************************************************
-*�������ƣ�RecMISIDataDealFun
-*���ܣ��б�ǰ��Լ���ܷ�ʽ���������Ļ�����������
-*���룺Enflag:�������ͣ�2��ʾ1161�������ܣ�3��ʾ
-*                  1120a����ũ�����ܣ�����Ϊ���Ļ�168���Ĵ���
-*�з��ˣ�����
+*函数名称：RecMISIDataDealFun
+*功能：判别当前规约加密方式，处理密文或者明文数据
+*输入：Enflag:加密类型，2表示1161国网加密，3表示
+*                  1120a湖南农网加密，其他为明文或168号文处理
+*研发人：张良
 *********************************************************************/
 
 void CSecDLink::RecMISIDataDealFun(INT8U Enflag)
@@ -248,13 +248,13 @@ void CSecDLink::RecMISIDataDealFun(INT8U Enflag)
     INT16U RNum,FrameTailFlag;
     INT16U tmpau,ennum;
 	
-    if((Enflag!=2)&&(Enflag!=3))//����ͨѶ��ʽ
+    if((Enflag!=2)&&(Enflag!=3))//明文通讯方式
     {
-        if(RxdHead<RxdTail)    //���ջ�����������δ����������
+        if(RxdHead<RxdTail)    //接收缓冲区中有尚未处理的数据
         {
             if (RxdHead!=0)
             {
-                memcpy(RxdBuf,RxdBuf+RxdHead,RxdTail-RxdHead);//��δ�����������Ƶ�������ͷ
+                memcpy(RxdBuf,RxdBuf+RxdHead,RxdTail-RxdHead);//将未处理的数据移到缓冲区头
                 RxdTail-=RxdHead;
                 RxdHead=0;
             }
@@ -271,11 +271,11 @@ void CSecDLink::RecMISIDataDealFun(INT8U Enflag)
     }
     else
     {
-        if(EbMsgRxdHead<EbMsgRxdTail)    //���ջ�����������δ����������
+        if(EbMsgRxdHead<EbMsgRxdTail)    //接收缓冲区中有尚未处理的数据
         {
             if (EbMsgRxdHead!=0)
             {
-                memcpy(EbMsgRxdBuf,EbMsgRxdBuf+EbMsgRxdHead,EbMsgRxdTail-EbMsgRxdHead);//��δ�����������Ƶ�������ͷ
+                memcpy(EbMsgRxdBuf,EbMsgRxdBuf+EbMsgRxdHead,EbMsgRxdTail-EbMsgRxdHead);//将未处理的数据移到缓冲区头
                 EbMsgRxdTail-=EbMsgRxdHead;
                 EbMsgRxdHead=0;
             }
@@ -288,11 +288,11 @@ void CSecDLink::RecMISIDataDealFun(INT8U Enflag)
         RNum=(INT16U)MisiRead(wChanNo, EbMsgRxdBuf+EbMsgRxdTail, FRAMEBUFSIZE-EbMsgRxdTail, &FrameTailFlag);
         EbMsgRxdTail+=RNum;
 		
-        if(RxdHead<RxdTail)    //���ջ�����������δ����������
+        if(RxdHead<RxdTail)    //接收缓冲区中有尚未处理的数据
         {
             if (RxdHead!=0)
             {
-                memcpy(RxdBuf,RxdBuf+RxdHead,RxdTail-RxdHead);//��δ�����������Ƶ�������ͷ
+                memcpy(RxdBuf,RxdBuf+RxdHead,RxdTail-RxdHead);//将未处理的数据移到缓冲区头
                 RxdTail-=RxdHead;
                 RxdHead=0;
             }
@@ -304,7 +304,7 @@ void CSecDLink::RecMISIDataDealFun(INT8U Enflag)
 
 		tmpau = RxdTail;
 		
-		if(Enflag == 2)//����1161��ȫ����
+		if(Enflag == 2)//国网1161安全加密
 		{
 		    ennum = EbSafetySearchFrame(&EbMsgRxdBuf[0], RxdBuf+RxdTail, &RxdTail, EbMsgRxdTail-EbMsgRxdHead, wChanNo);
 		}
@@ -329,29 +329,29 @@ void CSecDLink::RecMISIDataDealFun(INT8U Enflag)
     }
 }
 
-//���ͻ������е����ݣ�дMISI�ӿ�
+//发送缓冲区中的数据，写MISI接口
 BOOL CSecDLink::SendDataToMISI(void)
 {
     if(BalanMode)
-        myTaskDelay(5);    //ƽ��ģʽ�����ӳ�50ms
+        myTaskDelay(5);    //平衡模式发送延迟50ms
     else
-        myTaskDelay(20);   //��ƽ��ģʽ�����ӳ�200ms
+        myTaskDelay(20);   //非平衡模式发送延迟200ms
         
 	return SendMISIDataDealFun(N101Encrptystyle);
 }
 /********************************************************************
-*�������ƣ� SqrLongFraFunI
-*�������ܣ� �����ṩ��101ԭʼ������Ϣ��������ԭʼ
-*           ���ĵ�ң��/ң��������һ֡�϶̵�101����
-*�������룺
-*           ori:ԭʼ���Ļ�������
-*           Bakbuf��֡���Ļ�����
-*           infodataptr:��ǰ��֡��ң��ң�����ʼ��ַ 
-*           ctoalen:  ������asdu������ַ����   
-*           num: ��Ҫ��֡��ң��/ң�����
-*           infolen:��Ϣ���ַ����
-*           count:֡����
-*�з��ˣ�����
+*函数名称： SqrLongFraFunI
+*函数功能： 根据提供的101原始报文信息，将部分原始
+*           报文的遥信/遥测数据组一帧较短的101报文
+*函数输入：
+*           ori:原始报文缓冲区，
+*           Bakbuf分帧密文缓冲区
+*           infodataptr:当前组帧的遥信遥测的起始地址 
+*           ctoalen:  控制域到asdu公共地址长度   
+*           num: 需要组帧的遥信/遥测个数
+*           infolen:信息体地址长度
+*           count:帧计数
+*研发人：张良
 *********************************************************************/
 void CSecDLink::SqrLongFraFunI(INT8U *ori,INT8U *Bakbuf,INT8U *infodataptr,INT8U ctoalen,INT8U num,INT8U infolen,INT8U count,INT8U Sq) 
 {
@@ -365,7 +365,7 @@ void CSecDLink::SqrLongFraFunI(INT8U *ori,INT8U *Bakbuf,INT8U *infodataptr,INT8U
     }
     else
     {
-        len = ctoalen+((num*infolen) + En_InfoAddrSize); //ֻ��¼��ͷ����Ϣ���ַ
+        len = ctoalen+((num*infolen) + En_InfoAddrSize); //只记录开头的信息体地址
     }
     lenth = len+6;
     ptr = Bakbuf;
@@ -380,7 +380,7 @@ void CSecDLink::SqrLongFraFunI(INT8U *ori,INT8U *Bakbuf,INT8U *infodataptr,INT8U
     {
         ptr[4+(1+En_LinkAddrSize+1)] = (num|0x80);//
     }       
-    memcpy((ptr+4+ctoalen),infodataptr,len-ctoalen);  //ң�ŵ�ַ+ֵ
+    memcpy((ptr+4+ctoalen),infodataptr,len-ctoalen);  //遥信地址+值
     ptr[lenth-1]=0x16;	
 	if((Sq!=0)&&(count!=0))
 	{
@@ -389,7 +389,7 @@ void CSecDLink::SqrLongFraFunI(INT8U *ori,INT8U *Bakbuf,INT8U *infodataptr,INT8U
     	    infonum = paddr[fixmlen+2];
     	    addr = addr+(infonum&0x7F);
            ptr[4+ctoalen+1] = paddr[4+ctoalen+1];
-	    ptr[4+ctoalen] = (INT8U)(addr&0x00FF);//��Ϣ���ַ
+	    ptr[4+ctoalen] = (INT8U)(addr&0x00FF);//信息体地址
            if(addr>0xFF)
            {            
                ptr[4+ctoalen+1]++;                       
@@ -397,7 +397,7 @@ void CSecDLink::SqrLongFraFunI(INT8U *ori,INT8U *Bakbuf,INT8U *infodataptr,INT8U
 	}
     if(count == 1)
     {
-        if((ptr[4]&0x20)==0)//fcb��ת
+        if((ptr[4]&0x20)==0)//fcb翻转
         {
             ptr[4]|=0x20;
         }
@@ -408,13 +408,13 @@ void CSecDLink::SqrLongFraFunI(INT8U *ori,INT8U *Bakbuf,INT8U *infodataptr,INT8U
     }               
 }
 /********************************************************************
-*�������ƣ�SqrLongFraFun
-*�������ܣ��жϵ�ǰ֡�Ƿ���Ҫ�������������ĳ��ȴ���255
-*           �����������ķֳ�3֡����
-*�������룺
-*    ori:ԭʼ���Ļ�������
-*    Bakbuf��֡���Ļ�����
-*�з��ˣ�����
+*函数名称：SqrLongFraFun
+*函数功能：判断当前帧是否需要生成密文且密文长度大于255
+*           并将过长报文分成3帧报文
+*函数输入：
+*    ori:原始报文缓冲区，
+*    Bakbuf分帧报文缓冲区
+*研发人：张良
 *********************************************************************/
 INT8U CSecDLink::SqrLongFraFun(INT8U *ori,INT8U *Bakbuf)
 {
@@ -433,7 +433,7 @@ INT8U CSecDLink::SqrLongFraFun(INT8U *ori,INT8U *Bakbuf)
                 {
                     vsq = (ori[fixmlen+2]&0x7F);
                     sq = (ori[fixmlen+2]&0x80);   
-                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//������asdu������ַ����    9  
+                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//控制域到asdu公共地址长度    9  
                     rc = 1;
                 }
                 else
@@ -469,7 +469,7 @@ INT8U CSecDLink::SqrLongFraFun(INT8U *ori,INT8U *Bakbuf)
                 {
                     vsq = (ori[fixmlen+2]&0x7F);
                     sq = (ori[fixmlen+2]&0x80);   
-                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//������asdu������ַ����    9  
+                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//控制域到asdu公共地址长度    9  
                     rc = 1;
                 }
                 else
@@ -505,7 +505,7 @@ INT8U CSecDLink::SqrLongFraFun(INT8U *ori,INT8U *Bakbuf)
                 {
                     vsq = (ori[fixmlen+2]&0x7F);
                     sq = (ori[fixmlen+2]&0x80);   
-                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//������asdu������ַ����    9  
+                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//控制域到asdu公共地址长度    9  
                     rc = 1;
                 }
                 else
@@ -538,7 +538,7 @@ INT8U CSecDLink::SqrLongFraFun(INT8U *ori,INT8U *Bakbuf)
                 {
                     vsq = (ori[fixmlen+2]&0x7F);
                     sq = (ori[fixmlen+2]&0x80);   
-                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//������asdu������ַ����    9  
+                    len1 = 1+En_LinkAddrSize+1+1+En_CotSize+En_PubAddrSize;//控制域到asdu公共地址长度    9  
                     rc = 1;
                 }
                 else
@@ -573,11 +573,11 @@ INT8U CSecDLink::SqrLongFraFun(INT8U *ori,INT8U *Bakbuf)
     return rc;
  }
 /********************************************************************
-*�������ƣ�RecMISIDataDealFun
-*���ܣ��б�ǰ��Լ���ܷ�ʽ���������Ļ�����������
-*���룺Enflag:�������ͣ�2��ʾ1161�������ܣ�3��ʾ
-*                  1120a����ũ�����ܣ�����Ϊ���Ļ�168���Ĵ���
-*�з��ˣ�����
+*函数名称：RecMISIDataDealFun
+*功能：判别当前规约加密方式，处理密文或者明文数据
+*输入：Enflag:加密类型，2表示1161国网加密，3表示
+*                  1120a湖南农网加密，其他为明文或168号文处理
+*研发人：张良
 *********************************************************************/
 
 BOOL CSecDLink::SendMISIDataDealFun(INT8U Enflag)
@@ -589,28 +589,28 @@ BOOL CSecDLink::SendMISIDataDealFun(INT8U Enflag)
     ////memcpy(TxdBuf,bufttt,255);/////
     ////AuthEndflag = 2;
 
-    if((Enflag!=2)&&(Enflag!=3)&&(Enflag!=4))//����ͨѶ��ʽ
+    if((Enflag!=2)&&(Enflag!=3)&&(Enflag!=4))//明文通讯方式
     {
-        if (TxdStatus==TXDSEND)//�����ݷ���
+        if (TxdStatus==TXDSEND)//新数据发送
         {
             TxdHead=0;
             SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf,TxdTail-TxdHead,3);
-            if (SendLen>0)//�����������ͣ���û�껹δ�жϣ�
+            if (SendLen>0)//数据正常发送（完没完还未判断）
                 TxdStatus=TXDWAIT;
         }
-        else//�ϴ�����δ�����꣬
+        else//上次数据未发送完，
         {
             SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf+TxdHead,TxdTail-TxdHead,1);
         }
     }
-    else if(Enflag == 4)//��ũ������
+    else if(Enflag == 4)//老农网加密
     {
-        if (TxdStatus==TXDSEND)//�����ݷ���
+        if (TxdStatus==TXDSEND)//新数据发送
         {
             TxdHead=0;
-            if((AuthEndflag!=wChanNo)&&(TxdBuf[0]==0x68))//��֤���֮ǰ������ҵ����
+            if((AuthEndflag!=wChanNo)&&(TxdBuf[0]==0x68))//认证完成之前不处理业务报文
             {  
-                switch(TxdBuf[7])//ң�ţ�ң�⣬ң�أ���Ϣ�ϱ���Ҫ����
+                switch(TxdBuf[7])//遥信，遥测，遥控，信息上报都要加密
                 {
                     case 0x01:
                     case 0x03:
@@ -659,10 +659,10 @@ BOOL CSecDLink::SendMISIDataDealFun(INT8U Enflag)
                 }
             }
             SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf,TxdTail-TxdHead,3);
-            if (SendLen>0)//�����������ͣ���û�껹δ�жϣ�
+            if (SendLen>0)//数据正常发送（完没完还未判断）
                 TxdStatus=TXDWAIT;
         }
-        else//�ϴ�����δ�����꣬
+        else//上次数据未发送完，
         {
             SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf+TxdHead,TxdTail-TxdHead,1);
         }
@@ -676,7 +676,7 @@ BOOL CSecDLink::SendMISIDataDealFun(INT8U Enflag)
 			return 0;
 		}
 		
-		if (TxdStatus==TXDSEND)//�����ݷ���
+		if (TxdStatus==TXDSEND)//新数据发送
 		{
 			TxdHead=0;
 			eb101sendlen = 0;
@@ -709,18 +709,18 @@ BOOL CSecDLink::SendMISIDataDealFun(INT8U Enflag)
 			
 	        UpgradeDataVerify(wChanNo);
 	        
-	        if (SendLen>0)//�����������ͣ���û�껹δ�жϣ�
+	        if (SendLen>0)//数据正常发送（完没完还未判断）
 				TxdStatus=TXDWAIT;	
 	    }   
-		else//�ϴ�����δ�����꣬
+		else//上次数据未发送完，
 		{
 			SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf+TxdHead,TxdTail-TxdHead,1);
 		}
     }
     
-    if(SendLen==0xffff)//д���󣬷���-1
+    if(SendLen==0xffff)//写错误，返回-1
     {
-        SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf,0,1);//����֡β
+        SendLen=(INT16U)MisiWrite(wChanNo,TxdBuf,0,1);//发送帧尾
         TxdStatus=TXDSEND;
         if(BalanMode)
         {
@@ -731,7 +731,7 @@ BOOL CSecDLink::SendMISIDataDealFun(INT8U Enflag)
     else
     {
         TxdHead+=SendLen;
-        if(TxdHead>=TxdTail)//�ô����������Ѿ����ꡣ
+        if(TxdHead>=TxdTail)//该次任务数据已经发完。
         {
             TxdStatus=TXDSEND;
             if(BalanMode)
@@ -773,21 +773,21 @@ void CSecDLink::SendSecDataToMISI(void)
     SendDataToMISI();
 }
 /*------------------------------------------------------------------/
-�������ƣ�  SendTestOnTime()
-�������ܣ�  ��ʱ������·��Ĳ���֡��������
-����˵����  
-���˵����  
+函数名称：  SendTestOnTime()
+函数功能：  定时上送链路层的测试帧（心跳）
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void CSecDLink::SendTestOnTime(void)
 {
     if(DLSecStatus==SECDISABLE)
     {
-        //δ�������Ӳ�ִ������ 
+        //未建立连接不执行心跳 
         HeartBeatIdleTime = 0;
         return;
     }
     
-    if(HeartBeatIdleLimit == 0) //HeartBeatIdleLimitΪ0��ʾ����Ҫ��������
+    if(HeartBeatIdleLimit == 0) //HeartBeatIdleLimit为0表示不需要进行心跳
         return;  
     
     HeartBeatIdleTime++;
@@ -807,15 +807,15 @@ void CSecDLink::SendTestOnTime(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  TimeOut()
-�������ܣ�  ��ʱ��������
-����˵����  
-���˵����  ÿ������һ�Σ���Ӧ�ò����
+函数名称：  TimeOut()
+函数功能：  超时处理函数
+输入说明：  
+输出说明：  每秒运行一次，由应用层调用
 /------------------------------------------------------------------*/
 void CSecDLink::TimeOut(void)
 {
     //logSysMsgNoTime("1 PriTime=%d, Sectime=%d,",TimeOutTick_Pri,TimeOutTick_Sec,0,0);//dubug ll
-    if(TimeOutTick_Pri)//��λ����
+    if(TimeOutTick_Pri)//单位是秒
     {
         TimeOutTick_Pri--;
         if(!TimeOutTick_Pri)
@@ -824,39 +824,39 @@ void CSecDLink::TimeOut(void)
         }
     }
 
-    if(BalanMode)//ƽ��ģʽ�£�Ϊ������·�������ڼ�ʱ����Ӧ�ò��һ�����������ڳ����趨�Ŀ���ʱ���ÿ����Ӧ�ò�һ�Ρ�
+    if(BalanMode)//平衡模式下，为了在链路空闲期内及时处理应用层的一级数据任务，在超过设定的空闲时间后每秒检测应用层一次。
     {
         SendTestOnTime();   
         EndlessLoopMonitor();
         IdleTimeCount++;
-        if((IdleTimeCount>=DLIdleTime)&&(DLPriStatus==PRIENABLE))//DLIdleTime��С����С��2
+        if((IdleTimeCount>=DLIdleTime)&&(DLPriStatus==PRIENABLE))//DLIdleTime最小不能小于2
         {
             DLCommand=DL_SCAN1S;
             LengthIn=0;
 
-            //Ӧ�ò����
+            //应用层调用
             pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
                                 TxdBuf+5+LinkAddrSize,&LengthOut,&AppCommand);
             DLSendProc();
-            //logSysMsgNoTime("����ʱ��ɨ��Ӧ�ò�",0,0,0,0);//  debug ll
+            //logSysMsgNoTime("空闲时刻扫描应用层",0,0,0,0);//  debug ll
         }
         
     }
     
-    //�Ӷ�״̬Ϊ��ֹ����·��ʱ��ʼ��������Ҳ��Ϊ�Ӷ�������֪ͨ��·�������Ӷ�״̬
+    //从动状态为禁止，链路延时初始化结束，也认为从动允许，通知链路层允许从动状态
     if(BalanMode &&(DLSecStatus == SECDISABLE))
     {
         if((pSecApp->APP_DLSecStatus == SECDISABLE) && (pSecApp->DLInitFinishFlag == TRUE))
         {
             pSecApp->APP_DLSecStatus = SECENABLE;
             DLSecStatus = SECENABLE;
-            logSysMsgNoTime("�Ӷ�����ʱ��Ϊ����",0,0,0,0);
+            logSysMsgNoTime("从动方向超时判为允许",0,0,0,0);
         }
     }
     
 }
 
-void CSecDLink::TimeOutFun(INT8U FailType,INT8U Prm)//��ʱ����
+void CSecDLink::TimeOutFun(INT8U FailType,INT8U Prm)//超时处理
 {
     if(!RetryCount)
         return;
@@ -864,20 +864,20 @@ void CSecDLink::TimeOutFun(INT8U FailType,INT8U Prm)//��ʱ����
     
     if(RetryCount)
     {
-        if(Prm)//����վ���ĳ�ʱδ�յ�Ӧ��
+        if(Prm)//启动站报文超时未收到应答
         {
-            //logSysMsgNoTime("SEC ��ʱ�ط�,",0,0,0,0);//dubug ll
+            //logSysMsgNoTime("SEC 超时重发,",0,0,0,0);//dubug ll
             SendPriDataToMISI();
             TimeOutTick_Pri=TimeOutTickCopy;
         }
-        else//������ʵ���в���
+        else//这里其实运行不到
         {
             SendSecDataToMISI();
             TimeOutTick_Sec=TimeOutTickCopy;
         }
         return;
     }
-    else//�����ط����������½�����·����֪ͨӦ�ò㡣
+    else//超过重发次数后，重新建立链路，并通知应用层。
     {
         if(BalanMode)
         {
@@ -887,7 +887,7 @@ void CSecDLink::TimeOutFun(INT8U FailType,INT8U Prm)//��ʱ����
              //   CallDLStatus();
             
             //IsSendLinkInitCmd = TRUE;
-            DLSecStatus = SECDISABLE;   //��·��Ӷ��������־λ������������Ϊ�ǳ�ʱ�ط���Ӧ��Ҳ��������̬����������塣
+            DLSecStatus = SECDISABLE;   //链路层从动方向清标志位，主动方向因为是超时重发无应答，也不是允许态，因此无需清。
 
             DLCommand=DL_LINKDISABLE;
             LengthIn=0;
@@ -898,13 +898,13 @@ void CSecDLink::TimeOutFun(INT8U FailType,INT8U Prm)//��ʱ����
 }
 
 
-//������·����
+//启动链路过程
 void CSecDLink::CallDLStatus(void)
 {
-    //if(pSecApp->GYKZ2015Flag)  //����ǹ���Ҫ����չ��Լ����ô������������·��ʼ��
+    //if(pSecApp->GYKZ2015Flag)  //如果是国网要求扩展规约，那么不主动进行链路初始化
     //    return;
         
-    //logSysMsgNoTime("4 CallDLStatus����������·����",0,0,0,0);   //  debug ll
+    //logSysMsgNoTime("4 CallDLStatus发送请求链路命令",0,0,0,0);   //  debug ll
     EditFra10(DLREQSTATUS);
     SendDataToMISI();
 
@@ -952,7 +952,7 @@ void CSecDLink::SearchFrame(void)
                 
             }
             
-            if (RxdHead<RxdTail)//�ҵ������ַ������������뻺�������롣
+            if (RxdHead<RxdTail)//找到启动字符，并将报文与缓冲区对齐。
             {
                 
                 RxdStatus=RXDHEAD;
@@ -967,29 +967,29 @@ void CSecDLink::SearchFrame(void)
         #ifdef INCLUDE_ENCRYPT
             
             RxdLength=RxdTail-RxdHead;
-            if((RxdBuf[RxdHead] == 0x16)&& IsEncrypt )    //���ܱ��Ĵ���&& IsEncrypt
+            if((RxdBuf[RxdHead] == 0x16)&& IsEncrypt )    //加密报文处理&& IsEncrypt
             {
                 
                 rc = CheckEncryptFramHead(&RxdBuf[RxdHead], RxdLength);
                 switch(rc)
                 {
-                case 0: //���ļ����ȷ
-                    RxdHead+=(RxdBuf[RxdHead+1]+6);//ͷָ����Ƶ����ĺ�
+                case 0: //报文检查正确
+                    RxdHead+=(RxdBuf[RxdHead+1]+6);//头指针后移到报文后
                     RxdStatus=RXDSTART;
                     Stop=TRUE;
-                    //logSysMsgWithTime("�յ�ͨѶ���ܱ��Ŀ�ʼ����",0,0,0,0);   //debug
+                    //logSysMsgWithTime("收到通讯加密报文开始处理",0,0,0,0);   //debug
                     ExeDLFunCode16();
-                    //logSysMsgWithTime("���Ĵ�����ϱ���111",0,0,0,0); //debug
+                    //logSysMsgWithTime("报文处理完毕报文111",0,0,0,0); //debug
                     break; 
-                case 1: //֡ͷ����
+                case 1: //帧头不对
                     RxdHead++;
                     RxdStatus=RXDSTART;
                     break;
-                case 2: //δ����ȫ
+                case 2: //未收完全
                     Stop=TRUE;
                     RxdStatus=RXDSTART;
                     break; 
-                case 3: //У��͡���ǩ����
+                case 3: //校验和、解签错误
                     RxdHead+=6;
                     //RxdHead++;
                     RxdStatus=RXDSTART;
@@ -1005,15 +1005,15 @@ void CSecDLink::SearchFrame(void)
         #endif //#ifdef INCLUDE_ENCRYPT    
         }
         RxdLength=RxdTail-RxdHead;
-        if(RxdStatus==RXDHEAD)//���Ĺ�һ֡��
+        if(RxdStatus==RXDHEAD)//报文够一帧则
         {
             switch (RxdBuf[RxdHead])
             {
                 
                 case STARTCODE68:
-                    if (RxdLength>=5+LinkAddrSize)//�����ַ�����·��ַ��6�ֽڡ�
+                    if (RxdLength>=5+LinkAddrSize)//启动字符到链路地址共6字节。
                     {
-                        if (!ExeDLFun68())//�ж��Ƿ���ͷ
+                        if (!ExeDLFun68())//判断是否报文头
                         {
                             RxdHead++;
                             RxdStatus=RXDSTART;
@@ -1081,21 +1081,21 @@ void CSecDLink::SearchFrame(void)
                 
                 case STARTCODE68:
                     length=RxdBuf[RxdHead+1];
-                    if (RxdLength>=length+6)//������ȫ�����д���
+                    if (RxdLength>=length+6)//报文收全，进行处理
                     {
-                        //logSysMsgNoTime("�յ�68����",0,0,0,0);//debug
-                        if ( (RxdBuf[RxdHead+length+4]==CheckSum(RxdBuf+RxdHead))//У����ȷ
-                                &&(RxdBuf[RxdHead+length+4+1]==ENDCODE))//��������ȷ
+                        //logSysMsgNoTime("收到68命令",0,0,0,0);//debug
+                        if ( (RxdBuf[RxdHead+length+4]==CheckSum(RxdBuf+RxdHead))//校验正确
+                                &&(RxdBuf[RxdHead+length+4+1]==ENDCODE))//结束码正确
                         {
                             if (RxdHead>0)
                             {
-                                memcpy(RxdBuf,RxdBuf+RxdHead,RxdTail-RxdHead);//�����뻺��������
+                                memcpy(RxdBuf,RxdBuf+RxdHead,RxdTail-RxdHead);//报文与缓冲区对齐
                                 RxdTail-=RxdHead;
                                 RxdHead=0;
                             }
                             
                         #ifdef INCLUDE_ENCRYPT    
-                            //�Ƿ�֧�ּ��� RxdBuf+5+LinkAddrSize
+                            //是否支持加密 RxdBuf+5+LinkAddrSize
                             if(IsEncrypt && 
                                 ((RxdBuf[5+LinkAddrSize]==C_SC_NA) || (RxdBuf[5+LinkAddrSize]==C_DC_NA))
                               )
@@ -1104,9 +1104,9 @@ void CSecDLink::SearchFrame(void)
                                 {
                                     if((RxdBuf[length+6] != 0x16) || (RxdBuf[length+9] != 0x16))
                                     {
-                                        logSysMsgNoTime("����֤����ͷ����������",0,0,0,0);
+                                        logSysMsgNoTime("无认证报文头，丢弃报文",0,0,0,0);
                                         RxdStatus=RXDSTART;
-                                        //����֤����ͷ����������
+                                        //无认证报文头，丢弃报文
                                         RxdHead+=(RxdBuf[1]+6);
                                         EditSecFra10(DLCON);
                                         SendDataToMISI();
@@ -1115,20 +1115,20 @@ void CSecDLink::SearchFrame(void)
                                         
                                         
                                     }
-                                    else if (RxdLength>=length+6+RxdBuf[length+7]+6)//������ȫ�����д���
+                                    else if (RxdLength>=length+6+RxdBuf[length+7]+6)//报文收全，进行处理
                                     {
                                         RxdStatus=RXDSTART;
                                         
-                                        //logSysMsgWithTime("�յ����Ŀ�ʼ����222",0,0,0,0);   //debug 
+                                        //logSysMsgWithTime("收到报文开始处理222",0,0,0,0);   //debug 
                                         rc = CheckEncryptFrame(&RxdBuf[length+6], RxdBuf, length+6);
                                         if(rc == 0)
                                         {
                                            
-                                            RxdHead+=(length+6+RxdBuf[length+7]+6);//ͷָ����Ƶ����ĺ� 
+                                            RxdHead+=(length+6+RxdBuf[length+7]+6);//头指针后移到报文后 
                                             //RxdStatus=RXDSTART;
-                                            logSysMsgWithTime("�յ�����ң�ر���,��ȫ��֤������ȷ.", 0,0,0,0);
+                                            logSysMsgWithTime("收到加密遥控报文,安全认证报文正确.", 0,0,0,0);
                                             ExeDLFunCode68();
-                                            //logSysMsgWithTime("���Ĵ�������222",0,0,0,0);   //debug
+                                            //logSysMsgWithTime("报文处理结束222",0,0,0,0);   //debug
                                             if (RxdTail>RxdHead)
                                                 myEventSend(myTaskIdSelf(),NEXTFRAME);
                                             
@@ -1136,7 +1136,7 @@ void CSecDLink::SearchFrame(void)
                                         else
                                         {
                                             RxdHead+=(RxdBuf[1]+10);
-                                            logSysMsgNoTime("��ȫ����У��(У���,ǩ��,ʱ���)����ȷ.rc=%d",rc,0,0,0);
+                                            logSysMsgNoTime("安全报文校验(校验和,签名,时间戳)不正确.rc=%d",rc,0,0,0);
                                         }
                                         
                                     }
@@ -1146,11 +1146,11 @@ void CSecDLink::SearchFrame(void)
                                 Stop=TRUE;
                                 
                             }
-                            else    //�������ʱ�Ĵ���
+                            else    //无需加密时的处理
                          #endif
                             {
                                 
-                                RxdHead+=(RxdBuf[1]+6);//ͷָ����Ƶ����ĺ�
+                                RxdHead+=(RxdBuf[1]+6);//头指针后移到报文后
                                 RxdStatus=RXDSTART;
                                 Stop=TRUE;
     
@@ -1162,12 +1162,12 @@ void CSecDLink::SearchFrame(void)
                         }
                         else
                         {
-                            //logSysMsgNoTime("У��Ͳ��ԣ�head=%d,cs=%d, length=%d",RxdHead,RxdBuf[RxdHead+length+4+1],RxdBuf[RxdHead+1],0);//debug
+                            //logSysMsgNoTime("校验和不对，head=%d,cs=%d, length=%d",RxdHead,RxdBuf[RxdHead+length+4+1],RxdBuf[RxdHead+1],0);//debug
                             RxdHead+=6;
                             RxdStatus=RXDSTART;
                         }
                     }
-                    else//����δ��ȫ���������������ȴ����ݡ�
+                    else//报文未收全，不处理，继续等待数据。
                         Stop=TRUE;
                     break;
                 case STARTCODE10:
@@ -1216,7 +1216,7 @@ void CSecDLink::SearchFrame(void)
   	}
 }
 
-//���10֡��ȷ��
+//检测10帧正确性
 BOOL CSecDLink::ExeDLFun10(void)
 {
     INT8U *p;
@@ -1235,7 +1235,7 @@ BOOL CSecDLink::ExeDLFun10(void)
 #ifdef  PRO101_ADDR_STUDY
     struct PortInfo_t *PI;
     
-    if(BalanMode)   //ll ����վַ��ѧϰ
+    if(BalanMode)   //ll 增加站址自学习
     {
         
         if((p[1]&P101_FUNCODE) ==DLREQSTATUS)
@@ -1257,7 +1257,7 @@ BOOL CSecDLink::ExeDLFun10(void)
     return(TRUE);
 }
 
-//�ж�68֡ͷ��
+//判断68帧头。
 BOOL CSecDLink::ExeDLFun68(void)
 {
     INT8U *p;
@@ -1288,20 +1288,20 @@ void CSecDLink::ExeDLFunCode10(void)
     HeartBeatIdleTime = 0;
     
     
-    if(Control&P101_PRM)//��վ��Ϊ�Ӷ�վ������վ������
+    if(Control&P101_PRM)//子站作为从动站接收主站的命令
     {
         
-        //�Ӷ���·ִ�в���
-        if(DLSecStatus==SECDISABLE) //����·״̬δ��Ч����λ��ʱ
+        //从动链路执行部分
+        if(DLSecStatus==SECDISABLE) //当链路状态未有效（复位）时
         {
             if(((Control&P101_FUNCODE)!=DLREQSTATUS) 
-                && ((Control&P101_FUNCODE)!=DLRESETRDL))   //���ش��κη�FC9��FC0�ı���
+                && ((Control&P101_FUNCODE)!=DLRESETRDL))   //不回答任何非FC9和FC0的报文
             {
                 return ;   
             }
         }
         
-        //ƽ��ģʽ�£��յ�FC10��FC11���������
+        //平衡模式下，收到FC10和FC11命令，不处理
         if(BalanMode)   
         {
             if(((Control&P101_FUNCODE)==DLREQDATA1) 
@@ -1310,16 +1310,16 @@ void CSecDLink::ExeDLFunCode10(void)
                 return ;   
             }
         }
-        //��ƽ��ģʽ�£��յ�FC2��������
+        //非平衡模式下，收到FC2，不处理
         if(!BalanMode)
         {
             if((Control&P101_FUNCODE)==DLTESTDL)
                 return;
         }
-        //logSysMsgNoTime("SEC prm=1,�յ�����%d",Control&P101_FUNCODE,0,0,0);   //  debug ll 
+        //logSysMsgNoTime("SEC prm=1,收到报文%d",Control&P101_FUNCODE,0,0,0);   //  debug ll 
         if ((!(Control&P101_FCV)) || ((Control&P101_FCB) !=((RlaConCode) & 0x20)) || (FirstRecFCB==TRUE))
         {
-            if (Control&P101_FCV)//FCV��Ч����¼FCB״̬��
+            if (Control&P101_FCV)//FCV有效，记录FCB状态。
             {
                 RlaConCode=RxdBuf[1];
                 if(NoJudgeFCB == FALSE)
@@ -1331,25 +1331,25 @@ void CSecDLink::ExeDLFunCode10(void)
             }
             switch(Control&P101_FUNCODE)
             {
-                case DLREQSTATUS://FC9 �ٻ���·״̬
+                case DLREQSTATUS://FC9 召唤链路状态
                     RecReqDLStatus();
-                    while((RxdTail-RxdHead>=FixFrmLength)&&(Stop==0))//�յ��ٻ���·״̬����ʱ�����������ͬ���
-                    {//���Ա��������ʵĹ��̣����콨����·��
+                    while((RxdTail-RxdHead>=FixFrmLength)&&(Stop==0))//收到召唤链路状态命令时，清掉后续相同命令。
+                    {//可以避免答非所问的过程，尽快建立链路。
                         if(memcmp(RxdBuf,RxdBuf+RxdHead,FixFrmLength)==0)
                             RxdHead+=FixFrmLength;
                         else
                             Stop=1;
                     }
                     break;
-                case DLRESETRDL://FC0 ��λ��·
+                case DLRESETRDL://FC0 复位链路
                     RecResetDL();
                     break;
-                case DLTESTDL:  //FC2, ��·���ԣ� ll 2010/07/20 for��������
-                    //ƽ��ģʽ���ܵ�������
+                case DLTESTDL:  //FC2, 链路测试， ll 2010/07/20 for广西测试
+                    //平衡模式才能到这里来
                     RecTestDL();
                     break;
                 case DLREQDATA1://FC10
-                    //��ƽ��ģʽ���ܵ�����
+                    //非平衡模式才能到这里
                     DLCommand=DL_CALLDATA1;
                     if((!BalanMode)&&(Control&P101_FCV))
                         DLCommand|=DL_FCBOK;
@@ -1361,7 +1361,7 @@ void CSecDLink::ExeDLFunCode10(void)
                     
                     break;
                 case DLREQDATA2://FC11
-                    //��ƽ��ģʽ���ܵ�����
+                    //非平衡模式才能到这里
                     DLCommand=DL_CALLDATA2;
                     if((!BalanMode)&&(Control&P101_FCV))
                         DLCommand|=DL_FCBOK;
@@ -1371,45 +1371,45 @@ void CSecDLink::ExeDLFunCode10(void)
                     DLSendProc();
                     
                     break;
-                default:    //������FC0,FC2,FC9,FC10,FC11�⣬����FC������
+                default:    //除上述FC0,FC2,FC9,FC10,FC11外，其他FC不理会
                     break;
             }
             return;
         }
-        else //FCBδ��ת
+        else //FCB未翻转
         {
-            //FCBδ��ת����ƽ��ģʽ���յ�FC2�ı��ģ���ʱ��ȡ�ط�����,һ�㷢�Ķ���ȷ�����
-            //FCBδ��ת���ڷ�ƽ��ģʽ���յ�FC10/FC11�ı��ģ���ʱ��ȡ�ط����ԡ�
+            //FCB未翻转，在平衡模式下收到FC2的报文，这时采取重发策略,一般发的都是确认命令。
+            //FCB未翻转，在非平衡模式下收到FC10/FC11的报文，这时采取重发策略。
             SendSecDataToMISI();
-            //logSysMsgNoTime("SEC 10֡δ��ת�ط�",0,0,0,0);   //  debug ll
+            //logSysMsgNoTime("SEC 10帧未翻转重发",0,0,0,0);   //  debug ll
             
         }
     }
-    else//Prm=0 ƽ��ģʽ��վ��Ϊ����վ���յ���վ�����
+    else//Prm=0 平衡模式子站作为启动站接收到主站的命令。
     {
-        //logSysMsgNoTime("SEC prm=0,�յ�����%d",Control&P101_FUNCODE,0,0,0);   //  debug ll
+        //logSysMsgNoTime("SEC prm=0,收到报文%d",Control&P101_FUNCODE,0,0,0);   //  debug ll
         switch(Control&P101_FUNCODE)
         {
-            case DLCON:	//FC0 ȷ��
+            case DLCON:	//FC0 确认
                 RecConf10(Control);
                 break;
-            case DLSTATUSOK://FC11 Ӧ����·
+            case DLSTATUSOK://FC11 应答链路
                 RecDLSta(Control);
                 break;
             case DLNOWORK:  //FC14
             case DLNOFIN:   //FC15
-                //����״̬�£��յ�FC14/FC15ʱ����ԭ״̬����
-                /*if(DLPriStatus==PRISENDCON) //�ڵȴ��Է�ȷ��״̬ʱ���յ�FC14/FC15������·�����״̬
+                //其他状态下，收到FC14/FC15时保持原状态不变
+                /*if(DLPriStatus==PRISENDCON) //在等待对方确认状态时，收到FC14/FC15返回链路层可用状态
                 {
                     DLPriStatus = PRIENABLE;
                     TimeOutTick_Pri = 0;
                 }*/
                 
-                //ָʾӦ�ò㣬��·��δ�����ú�δ��ɡ�(Ӧ�ò���δ�����)
+                //指示应用层，链路层未起作用和未完成。(应用层如何处理？)
                 break;
-            case DLNOCON:   //FC1 ��ȷ��Ӧ��
-                //ֻ����PRIWAITRSCON״̬�£��յ�FC1������ȷ�ģ���ʱ���򲻸ı䵱ǰ״̬
-                //����״̬���յ�FC1�����쳣���, ������Ӧ��    
+            case DLNOCON:   //FC1 否定确认应答
+                //只有在PRIWAITRSCON状态下，收到FC1才是正确的，这时程序不改变当前状态
+                //其他状态下收到FC1属于异常情况, 程序不做应答。    
                 break;    
             default:
                 
@@ -1422,9 +1422,9 @@ void CSecDLink::ExeDLFunCode16(void)
 {
     INT8U len;
     
-    if(DLSecStatus==SECDISABLE) //����·״̬δ��Ч����λ��ʱ, �������κ�68֡��ƽ���ƽ��ģʽͬ������
+    if(DLSecStatus==SECDISABLE) //当链路状态未有效（复位）时, 不接受任何68帧，平衡非平衡模式同样处理
     {
-        logSysMsgNoTime("ͨѶ����-��վδ������·����ִ������",0,0,0,0);
+        logSysMsgNoTime("通讯加密-主站未建立链路，不执行命令",0,0,0,0);
         return ;   
     }
     
@@ -1446,8 +1446,8 @@ void CSecDLink::ExeDLFunCode16(void)
 void CSecDLink::ExeDLFunCode68(void)
 {
     INT8U Control;
-    //logSysMsgNoTime("SEC �յ�68֡���ĴӶ�״̬%d",DLSecStatus,0,0,0);   //  debug ll
-    if(DLSecStatus==SECDISABLE) //����·״̬δ��Ч����λ��ʱ, �������κ�68֡��ƽ���ƽ��ģʽͬ������
+    //logSysMsgNoTime("SEC 收到68帧报文从动状态%d",DLSecStatus,0,0,0);   //  debug ll
+    if(DLSecStatus==SECDISABLE) //当链路状态未有效（复位）时, 不接受任何68帧，平衡非平衡模式同样处理
     {
         return ;   
     }
@@ -1455,23 +1455,23 @@ void CSecDLink::ExeDLFunCode68(void)
     Control=RxdBuf[4];
     IdleTimeCount = 0;
     HeartBeatIdleTime = 0;
-    if(Control&P101_PRM)//��վ��Ϊ�Ӷ�վ������վ��·���ġ�
+    if(Control&P101_PRM)//子站作为从动站接收主站链路报文。
     {
         if ((!(Control&P101_FCV)) || ((Control&P101_FCB) !=((RlaConCode) & 0x20)) || (FirstRecFCB==TRUE))
         {
-            if (Control&P101_FCV)//FCV��Ч����FCB��λ
+            if (Control&P101_FCV)//FCV有效而且FCB变位
             {
-                RlaConCode=RxdBuf[4]; //�������µĹ����룬����ֻ�õ�FCB
+                RlaConCode=RxdBuf[4]; //保存最新的功能码，这里只用到FCB
                 if(NoJudgeFCB == FALSE)
                 {
                     if(FirstRecFCB==TRUE)
-                        FirstRecFCB=FALSE;   //wjr 2009.6.3   �յ�һ��68֡�����ݺ�ͽ��ñ�־���
+                        FirstRecFCB=FALSE;   //wjr 2009.6.3   收到一次68帧的数据后就讲该标志清掉
                 }
             }
             	
             switch(Control&P101_FUNCODE)
             {
-                case DLRESETUSE://1������վ��λ�Ӷ�վ�û�����
+                case DLRESETUSE://1，启动站复位从动站用户过程
                     
                     LengthIn=RxdBuf[1]-1-LinkAddrSize;
                     if((!BalanMode)&&(Control&P101_FCV))
@@ -1483,7 +1483,7 @@ void CSecDLink::ExeDLFunCode68(void)
                     SendDataToMISI();
                     
                     break;
-                case DLTESTDL://2��������·
+                case DLTESTDL://2，测试链路
                                         
                     LengthIn=RxdBuf[1]-1-LinkAddrSize;
                     if((!BalanMode)&&(Control&P101_FCV))
@@ -1495,25 +1495,25 @@ void CSecDLink::ExeDLFunCode68(void)
                     SendDataToMISI();
                     
                     break;
-                case DLSENDCON://3������/ȷ�� ����
+                case DLSENDCON://3，发送/确认 命令
                     DLCommand=DL_SENDCON;//
                     
                     //EditSecFra10(DLCON);
                     //SendDataToMISI();
-                    //logSysMsgNoTime("�յ�68֡, RxdBuf=%x, lenth=%d,pub=%d, cot=%d",RxdBuf[0],RxdBuf[1],pSecApp->PubAddrLocation,pSecApp->CotLocation);   //  debug ll
+                    //logSysMsgNoTime("收到68帧, RxdBuf=%x, lenth=%d,pub=%d, cot=%d",RxdBuf[0],RxdBuf[1],pSecApp->PubAddrLocation,pSecApp->CotLocation);   //  debug ll
                     LengthIn=RxdBuf[1]-1-LinkAddrSize;
                     if((!BalanMode)&&(Control&P101_FCV))
                         DLCommand|=DL_FCBOK;
                     pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
-                                        TxdBuf+5+LinkAddrSize,&LengthOut,&AppCommand);  //����SecAppProc������λ��Ӧ�ı�־�������������ݡ�
-                    //logSysMsgNoTime("�յ�68֡��׼������%d��lenth=%d",AppCommand,LengthOut,0,0);   //  debug ll
-                    DLSendProc();   //����������ȷ��֡
-                    //logSysMsgNoTime("�յ�68֡ ����ȷ��",0,0,0,0);   //  debug ll
-                    EditSecFra10(DLCON);    //����ȷ��֡
+                                        TxdBuf+5+LinkAddrSize,&LengthOut,&AppCommand);  //调用SecAppProc函数置位相应的标志，并不发送数据。
+                    //logSysMsgNoTime("收到68帧，准备发送%d，lenth=%d",AppCommand,LengthOut,0,0);   //  debug ll
+                    DLSendProc();   //基本不发送确认帧
+                    //logSysMsgNoTime("收到68帧 发送确认",0,0,0,0);   //  debug ll
+                    EditSecFra10(DLCON);    //发送确认帧
                     SendDataToMISI();
                     
                     break;
-                case DLSENDNOCON://4������/�޻ش� ����
+                case DLSENDNOCON://4，发送/无回答 命令
                     DLCommand=DL_SENDNOCON;//
                     
                     LengthIn=RxdBuf[1]-1-LinkAddrSize;
@@ -1523,17 +1523,17 @@ void CSecDLink::ExeDLFunCode68(void)
                                         TxdBuf+5+LinkAddrSize,&LengthOut,&AppCommand);
                     DLSendProc();
                     break;
-                default:    //������FC1,FC2,FC3,FC4�⣬����FC������
+                default:    //除上述FC1,FC2,FC3,FC4外，其他FC不理会
                     break;
             }
         }
-        else  //FCB δ��ת  //change by wyj
+        else  //FCB 未翻转  //change by wyj
         {
             SendSecDataToMISI();
           
         }
     }
-    else  //Prm=0����վ��Ϊ����վ������վ��·����
+    else  //Prm=0；子站作为启动站接收主站链路报文
     {
     }
     
@@ -1567,57 +1567,57 @@ INT32U CSecDLink::TimeDelay(INT16U i)
     return(TimeOutTickCopy);
 }
 /*------------------------------------------------------------------/
-�������ƣ�  RecDLSta()
-�������ܣ�  ��Ӧ��ѯ��·
-����˵����  
-���˵����  
+函数名称：  RecDLSta()
+函数功能：  响应查询链路
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void CSecDLink::RecDLSta(INT8U Control)
 {
-    //FC11ֻ����PRIWAITSTATUS���״̬�³��ֲ���Ч�����������쳣���
+    //FC11只有在PRIWAITSTATUS这个状态下出现才有效，其他都属异常情况
     if(DLPriStatus == PRIWAITSTATUS)
     {
-        //if((Control&P101_DFC)==0)   //��PRIWAITSTATUS״̬�£��յ�DFC=1��Ӧ��Ӧ�޷�Ӧ
+        //if((Control&P101_DFC)==0)   //在PRIWAITSTATUS状态下，收到DFC=1的应答，应无反应
         {
             EditFra10(DLRESETRDL);
             SendDataToMISI();
             
             TlaConCode &= 0xDF;  
             DLPriStatus=PRIWAITRSCON;
-            //logSysMsgNoTime("���͸�λ�����",0,0,0,0);   //  debug ll
+            //logSysMsgNoTime("发送复位命令报文",0,0,0,0);   //  debug ll
             TimeOutTick_Pri=TimeDelay(2* FixFrmLength);
             RetryCount=MAXRETRYNUM;
         }
         
     }
-    //����״̬�£��յ�FC11�����������Ĵ���������Ӧ
+    //其他状态下，收到FC11，都丢弃报文处理，不反应
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  RecConf10()
-�������ܣ�  ƽ��ģʽ��վ��Ϊ����վ���յ���վ��ȷ�ϱ���
-����˵����  
-���˵����  
+函数名称：  RecConf10()
+函数功能：  平衡模式子站作为启动站接收到主站的确认报文
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void CSecDLink::RecConf10(INT8U Control)
 {
-    //FC0 ֻ����PRIWAITRSCON��PRISENDCON״̬�³��ֲ�����ȷ�ģ�����Ϊ�쳣���
+    //FC0 只有在PRIWAITRSCON和PRISENDCON状态下出现才是正确的，其他为异常情况
     
     if (DLPriStatus==PRIWAITRSCON)
     {
-        //logSysMsgNoTime("����������·ȷ��",0,0,0,0);    //dubug ll
+        //logSysMsgNoTime("启动方向链路确认",0,0,0,0);    //dubug ll
         DLPriStatus=PRIENABLE;
-        if(IsDoubleLinkInit == FALSE)   //����˫������·�����ôӶ�ҲΪ������Ӧ�ò����·�㣩��
+        if(IsDoubleLinkInit == FALSE)   //不是双向建立链路，就让从动也为允许（应用层和链路层）。
         {
             DLSecStatus=SECENABLE; 
             pSecApp->APP_DLSecStatus = SECENABLE;
             
-            RlaConCode &= 0xDF;     //��FCB  
+            RlaConCode &= 0xDF;     //清FCB  
             FirstRecFCB = TRUE;
         }
-        TimeOutTick_Pri = 0;  //�յ�ȷ�����������λ���ʱʱ��
+        TimeOutTick_Pri = 0;  //收到确认命令，清请求复位命令超时时间
         
-        //֪ͨӦ�ò㣬��ǰ��·״̬����
+        //通知应用层，当前链路状态可用
         DLCommand=DL_LINKENABLE;
         LengthIn=0;
         pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
@@ -1626,14 +1626,14 @@ void CSecDLink::RecConf10(INT8U Control)
         
        
     }
-    else if (DLPriStatus==PRISENDCON)//ƽ��ģʽ
+    else if (DLPriStatus==PRISENDCON)//平衡模式
     {
         //if((Control&P101_DFC)==0)
         {
             DLPriStatus = PRIENABLE;
             //logSysMsgNoTime("RecConf10=%d",DLPriStatus,0,0,0);   //  debug ll
             TimeOutTick_Pri = 0;
-            //Ӧ�ò����
+            //应用层调用
             DLCommand=DL_APPCON;
             LengthIn=0;
             pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
@@ -1642,31 +1642,31 @@ void CSecDLink::RecConf10(INT8U Control)
         }
     }
     
-    //����״̬���յ�FC0�����쳣�������Ӧ��
+    //其他状态下收到FC0，属异常情况，不应答
 }
 
-//�յ���λ��·����
+//收到复位链路命令
 void CSecDLink::RecResetDL(void)
 {
-    //��ֹ������ѭ������ ll 2014-8-11
-    if(ELReplyFlag) //ELReplyFlag ����ʱ����1
+    //防止进入死循环添加 ll 2014-8-11
+    if(ELReplyFlag) //ELReplyFlag 正常时都是1
     {
         ELClearTime = EL_NOREPLY_TIME;
         ELResetNum++;
     }
     
-    DLSecStatus = SECENABLE;//��վ��·����
-    if(IsDoubleLinkInit == FALSE)   //����˫������·���Ӷ�����������������ҲΪ������Ӧ�ò����·�㣩��
+    DLSecStatus = SECENABLE;//从站链路可用
+    if(IsDoubleLinkInit == FALSE)   //不是双向建立链路，从动方向建立，启动方向也为允许（应用层和链路层）。
     {
        DLPriStatus = PRIENABLE; 
        pSecApp->APP_DLPriStatus = PRIENABLE;
     }
     
-    RlaConCode &= 0xDF;     //��FCB  
+    RlaConCode &= 0xDF;     //清FCB  
         
-    FirstRecFCB = TRUE;     //wjr  2009.6.3 ��·��λ��ǣ�����ʶ��·��λ���һ���յ��Է��Ĵ�FCBλ�ı��ģ����ԶԷ���FCB��ʼλΪ��ʼ��־
+    FirstRecFCB = TRUE;     //wjr  2009.6.3 链路复位标记，来标识链路复位后第一次收到对方的带FCB位的报文，并以对方的FCB起始位为起始标志
     
-    //��Ӧ�ò���񣬼���Ƿ��ͳ�ʼ������,���ڷ�ƽ��ģʽ��
+    //调应用层服务，检测是否发送初始化结束,用于非平衡模式下
     if(ELReplyFlag)
     {
         DLCommand=DL_RESETDL;
@@ -1679,12 +1679,12 @@ void CSecDLink::RecResetDL(void)
             FlagData1=FALSE;
     }
 
-    EditSecFra10(DLCON);	//�༭Ӧ��֡��
+    EditSecFra10(DLCON);	//编辑应答帧。
     SendDataToMISI();
 
-    if(BalanMode && ELReplyFlag)   //����Ƿ��ͳ�ʼ������������ƽ��ģʽ��
+    if(BalanMode && ELReplyFlag)   //检查是否发送初始化结束，用于平衡模式下
     {
-        if(IsDoubleLinkInit /*&& (IsSendLinkInitCmd==FALSE)*/) //����Ӷ���·�Ѿ���λ��,˵������վ���س�ʼ������,��Ҫ��λ�Է���·
+        if(IsDoubleLinkInit /*&& (IsSendLinkInitCmd==FALSE)*/) //如果从动链路已经复位过,说明是主站本地初始化过程,需要复位对方链路
         {
             CallDLStatus();
         }
@@ -1695,7 +1695,7 @@ void CSecDLink::RecResetDL(void)
             LengthIn=0;
             pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
                                 TxdBuf+5+LinkAddrSize,&LengthOut,&AppCommand);
-            DLSendProc();           //��������׼���õĳ�ʼ������֡
+            DLSendProc();           //发送上面准备好的初始化结束帧
         }
     }
     
@@ -1703,15 +1703,15 @@ void CSecDLink::RecResetDL(void)
 
 void CSecDLink::RecReqDLStatus(void)
 {
-    //������״̬�£��յ�������·״̬������ı䵱ǰ��·״̬
+    //在任意状态下，收到请求链路状态命令，不改变当前链路状态
     EditSecFra10(DLSTATUSOK);
     SendDataToMISI();
 }
 /*------------------------------------------------------------------------
  Procedure:     RecTestDL
- Purpose:       ��Ӧ��·�����Ӧ������GPRSͨѶģʽ������
+ Purpose:       响应链路层测试应答，用于GPRS通讯模式的心跳
  Input:   
- author��       ll 2010/07/20      
+ author：       ll 2010/07/20      
 ------------------------------------------------------------------------*/
 void CSecDLink::RecTestDL(void)
 {
@@ -1720,7 +1720,7 @@ void CSecDLink::RecTestDL(void)
     SendDataToMISI();
 }
 
-/*�༭10֡��������վ��10֡*/
+/*编辑10帧——启动站的10帧*/
 void CSecDLink::EditFra10(INT8U Function)
 {
     INT8U *p;
@@ -1751,7 +1751,7 @@ void CSecDLink::EditFra10(INT8U Function)
     else
         p[1]|=P101_FCV;*/
 
-    if (p[1]&P101_FCV)//FCV��Ч����תFCB
+    if (p[1]&P101_FCV)//FCV有效，翻转FCB
     {
         if (TlaConCode&0x20)
         {
@@ -1764,26 +1764,26 @@ void CSecDLink::EditFra10(INT8U Function)
             TlaConCode|=0x20;
         }
     }
-    else//FCV��Ч����FCB
+    else//FCV无效，清FCB
         p[1]&=(~P101_FCB);
     p[1]|=P101_PRM;
-    p[1]&=(~P101_DIR);//�巽��λ����ֹ���š�
-    p[1]|=IEC_DIR;//��վ����վ���䣬ƽ��ģʽΪ1����ƽ��ģʽΪ0��
+    p[1]&=(~P101_DIR);//清方向位，防止干扰。
+    p[1]|=IEC_DIR;//子站向主站传输，平衡模式为1，非平衡模式为0。
     for(int i=0;i<LinkAddrSize;i++)
         p[2+i]=((SourceNo>>(8*i))&0xff);
     p[2+LinkAddrSize]=CheckSum(p);
     p[3+LinkAddrSize]=ENDCODE;
-    TxdTail+=FixFrmLength;//�ƶ�����βָ��
+    TxdTail+=FixFrmLength;//移动发送尾指针
 
-    memcpy(TxdBuf_Pri,p,FixFrmLength);//���������ݱ��浽����վ�ط�������
+    memcpy(TxdBuf_Pri,p,FixFrmLength);//将发送数据保存到启动站重发数据区
     FrameHead_Pri=0;
     TxdHead_Pri=0;
     TxdTail_Pri=FixFrmLength;
 }
 
-/*�༭68֡*/
-//Function:��·������
-//FrameLength:Ӧ�ò㱨�ĳ��ȣ������ͱ�ʶ��ʼ������Ӧ�ò���÷��ص�
+/*编辑68帧*/
+//Function:链路功能码
+//FrameLength:应用层报文长度（从类型标识开始），是应用层调用返回的
 void CSecDLink::EditFra68(INT8U Function,INT16U FrameLength)
 {
     INT8U *p;
@@ -1822,8 +1822,8 @@ void CSecDLink::EditFra68(INT8U Function,INT16U FrameLength)
         TlaConCode&=0xEF;
     }
     p[4]|=P101_PRM;
-    p[4]&=(~P101_DIR);//�巽��λ����ֹ���š�
-    p[4]|=IEC_DIR;//��վ����վ���䣬ƽ��ģʽΪ1����ƽ��ģʽΪ0��
+    p[4]&=(~P101_DIR);//清方向位，防止干扰。
+    p[4]|=IEC_DIR;//子站向主站传输，平衡模式为1，非平衡模式为0。
     for(int i=0;i<LinkAddrSize;i++)
         p[5+i]=((SourceNo>>(8*i))&0xff);
 
@@ -1833,7 +1833,7 @@ void CSecDLink::EditFra68(INT8U Function,INT16U FrameLength)
 		FrameLength = p[1]-1-LinkAddrSize;
 		LengthOut = FrameLength;  
 	}
-    length=7+LinkAddrSize+FrameLength;//ȫ�����ĳ���
+    length=7+LinkAddrSize+FrameLength;//全部报文长度
     p[length-2]=CheckSum(p);
     p[length-1]=ENDCODE;
     TxdTail+=length;
@@ -1864,8 +1864,8 @@ void CSecDLink::EditSecFra68(INT8U Function,INT16U FrameLength)
         p[4]&=(~P101_ACD);
     p[4]&=(~P101_DFC);
     p[4]&=(~P101_PRM);
-    p[4]&=(~P101_DIR);//�巽��λ����ֹ���š�
-    p[4]|=IEC_DIR;//��վ����վ���䣬ƽ��ģʽΪ1����ƽ��ģʽΪ0��
+    p[4]&=(~P101_DIR);//清方向位，防止干扰。
+    p[4]|=IEC_DIR;//子站向主站传输，平衡模式为1，非平衡模式为0。
 
     for(int i=0;i<LinkAddrSize;i++)
         p[5+i]=((SourceNo>>(8*i))&0xff);
@@ -1877,7 +1877,7 @@ void CSecDLink::EditSecFra68(INT8U Function,INT16U FrameLength)
 		////LengthOut = FrameLength;  
 	////}
 	
-    length=7+LinkAddrSize+FrameLength;//ȫ�����ĳ���
+    length=7+LinkAddrSize+FrameLength;//全部报文长度
     p[length-2]=CheckSum(p);
     p[length-1]=ENDCODE;
 
@@ -1888,7 +1888,7 @@ void CSecDLink::EditSecFra68(INT8U Function,INT16U FrameLength)
     TxdTail_Sec=length;
 }
 
-void CSecDLink::EditSecFra10(INT8U Function)//�༭�Ӷ�վӦ��10֡
+void CSecDLink::EditSecFra10(INT8U Function)//编辑从动站应答10帧
 {
     INT8U *p;
 
@@ -1901,10 +1901,10 @@ void CSecDLink::EditSecFra10(INT8U Function)//�༭�Ӷ�վӦ��10֡
     LastControl=Function;
     p[1]&=(~P101_DFC);
     p[1]&=(~P101_PRM);
-    p[1]&=(~P101_DIR);//�巽��λ����ֹ���š�
-    p[1]|=IEC_DIR;//��վ����վ���䣬ƽ��ģʽΪ1����ƽ��ģʽΪ0
-    //if(FlagData1&&(!BalanMode)&&(Function!=DLSTATUSOK))//һ������λ
-    if(FlagData1&&(!BalanMode))//һ������λ��Ϊ����Ӧʤ����������·�������ٴ��ٻ���·��Ҫ��
+    p[1]&=(~P101_DIR);//清方向位，防止干扰。
+    p[1]|=IEC_DIR;//子站向主站传输，平衡模式为1，非平衡模式为0
+    //if(FlagData1&&(!BalanMode)&&(Function!=DLSTATUSOK))//一级数据位
+    if(FlagData1&&(!BalanMode))//一级数据位，为了适应胜利油田在链路过程总再次召唤链路的要求
         p[1]|=P101_ACD;
     else
         p[1]&=(~P101_ACD);
@@ -1912,14 +1912,14 @@ void CSecDLink::EditSecFra10(INT8U Function)//�༭�Ӷ�վӦ��10֡
         p[2+i]=((SourceNo>>(8*i))&0xff);
     p[2+LinkAddrSize]=CheckSum(p);
     p[3+LinkAddrSize]=ENDCODE;
-    TxdTail+=FixFrmLength;//�ƶ�����βָ��
+    TxdTail+=FixFrmLength;//移动发送尾指针
 
     memcpy(TxdBuf_Sec,p,FixFrmLength);
     FrameHead_Sec=0;
     TxdHead_Sec=0;
     TxdTail_Sec=FixFrmLength;
 }
-void CSecDLink::EditE5(void)//�༭E5֡
+void CSecDLink::EditE5(void)//编辑E5帧
 {
     if (TxdStatus==TXDSEND)
         TxdTail=0;
@@ -1964,8 +1964,8 @@ BOOL CSecDLink::ExeMaint(void)
         SendDataToMISI();
     }
 
-    //��Լ�л�����
-    enterMaint(wAppID);//wAppID,�Դ������񣬾��Ǵ��ںš�
+    //规约切换调用
+    enterMaint(wAppID);//wAppID,对串口任务，就是串口号。
     return(1);
 }
 
@@ -1994,24 +1994,24 @@ void CSecDLink::EditMaintCon(unsigned int station)
 
 void CSecDLink::DLSendProc(void)
 {
-    if(AppCommand&APP_HAVEDATA1)//����һ������
+    if(AppCommand&APP_HAVEDATA1)//还有一级数据
     {
         FlagData1=TRUE;
         AppCommand&=0x7FFF;
     }
     else
         FlagData1=FALSE;
-    //logSysMsgNoTime("DLSendProc ����%d��״̬=%d",AppCommand,DLPriStatus,0,0);   //  debug ll
+    //logSysMsgNoTime("DLSendProc 命令%d，状态=%d",AppCommand,DLPriStatus,0,0);   //  debug ll
     switch(AppCommand)
     {
-        case APP_APPCON:	//Ӧ�ò���յ���������Ӧ��
+        case APP_APPCON:	//应用层对收到的数据做应答
             //EditSecFra10(DLCON);
             //SendDataToMISI();
             break;
-        case APP_APPDIABALE:	//Ӧ�ò���Ч
+        case APP_APPDIABALE:	//应用层无效
             break;
-        case APP_SENDCON:	//����03����
-            //logSysMsgNoTime("DLSendProc ����03����%d",LengthOut,0,0,0);   //  debug ll
+        case APP_SENDCON:	//发送03命令
+            //logSysMsgNoTime("DLSendProc 发送03命令%d",LengthOut,0,0,0);   //  debug ll
             EditFra68(DLSENDCON,LengthOut);
             SendDataToMISI();
             
@@ -2019,17 +2019,17 @@ void CSecDLink::DLSendProc(void)
             DLPriStatus=PRISENDCON;
             RetryCount=MAXRETRYNUM;
             break;
-        case APP_SENDNOCON:	//����04���� ƽ��ģʽ
+        case APP_SENDNOCON:	//发送04命令 平衡模式
             EditFra68(DLSENDNOCON,LengthOut);
             SendDataToMISI();
-            //logSysMsgNoTime("send04�ı�pritime",0,0,0,0);   //  debug ll
+            //logSysMsgNoTime("send04改变pritime",0,0,0,0);   //  debug ll
             TimeOutTick_Pri=0;
             break;
-        case APP_SENDDATA://����08����
+        case APP_SENDDATA://发送08命令
             EditSecFra68(DLRESDATA,LengthOut);
             SendDataToMISI();
             break;
-        case APP_NODATA://Ӧ�ò�������
+        case APP_NODATA://应用层无数据
             if(!BalanMode)
             {
                 if(!IsSendE5)
@@ -2040,7 +2040,7 @@ void CSecDLink::DLSendProc(void)
                 SendDataToMISI();
             }
             break;
-        case APP_NOJOB://Ӧ�ò�������
+        case APP_NOJOB://应用层无任务
             //logSysMsgNoTime("NOJOB",0,0,0,0);   //  debug ll
             //if(BalanMode&&(DLPriStatus==PRIWAITSTATUS))
             //    CallDLStatus();
@@ -2053,12 +2053,12 @@ void CSecDLink::DLSendProc(void)
         default:
             break;
     }
-    AppCommand = APP_NOJOB; //�������ݷ��������������Ӧ�ò�����Ϊ������
+    AppCommand = APP_NOJOB; //本次数据发送任务结束，清应用层命令为无任务
 }
 
-void CSecDLink::CallUData(void)//ȡ��������
+void CSecDLink::CallUData(void)//取紧急数据
 {
-    ScanFlag=FALSE;//ȡ��Ԥ�Ƶ�Ӧ�ò����
+    ScanFlag=FALSE;//取消预计的应用层调用
     LengthIn=0;
     DLCommand=DL_CALLUDATA;
     pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
@@ -2067,10 +2067,10 @@ void CSecDLink::CallUData(void)//ȡ��������
     DLSendProc();
 }
 
-//ƽ��ģʽ��ң�ع���
-void CSecDLink::CallUMsg(void)//ȡң����Ϣ
+//平衡模式的遥控过程
+void CSecDLink::CallUMsg(void)//取遥控消息
 {
-    ScanFlag=FALSE;//ȡ��Ԥ�Ƶ�Ӧ�ò����
+    ScanFlag=FALSE;//取消预计的应用层调用
     LengthIn=0;
     DLCommand=DL_CALLDBMSG;
     pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
@@ -2080,22 +2080,22 @@ void CSecDLink::CallUMsg(void)//ȡң����Ϣ
     {
         EditFra68(DLSENDCON,LengthOut);
         SendDataToMISI();
-        //logSysMsgNoTime("CallUMsg�ı�pritime",0,0,0,0);   //  debug ll
+        //logSysMsgNoTime("CallUMsg改变pritime",0,0,0,0);   //  debug ll
         TimeOutTick_Pri = TimeDelay(LengthOut+8+5);
         DLPriStatus=PRISENDCON;
         RetryCount=MAXRETRYNUM;
     }
 }
 
-void CSecDLink::SendDataEnd(void)  //���ͽ���,ƽ��ģʽ��
+void CSecDLink::SendDataEnd(void)  //发送结束,平衡模式下
 {
     if(DLPriStatus==PRIENABLE)
     {
-        switch(LastControl)//���һ�η��͵�����
+        switch(LastControl)//最近一次发送的命令
         {
-            case DLSENDNOCON://ƽ��ģʽ������04��������Ӧ�ò����
+            case DLSENDNOCON://平衡模式，发送04命令后调用应用层服务
             case DLCON:
-                //logSysMsgNoTime("SendDataEndɨ��Ӧ�ò�",0,0,0,0);//  debug ll
+                //logSysMsgNoTime("SendDataEnd扫描应用层",0,0,0,0);//  debug ll
                 /*DLCommand=DL_SCAN1S;
                 LengthIn=0;
                 pSecApp->SecAppProc(RxdBuf+5+LinkAddrSize,LengthIn,DLCommand,
@@ -2110,13 +2110,13 @@ void CSecDLink::SendDataEnd(void)  //���ͽ���,ƽ��ģʽ��
     }
 }
 
-//֪ͨӦ�ò�ɨ��
+//通知应用层扫描
 /*------------------------------------------------------------------/
-�������ƣ�  NotifyToAppSchedule()
-�������ܣ�  ����һ��Ӧ�ò�ɨ��
-����˵����    
-���˵����  
-��ע��      
+函数名称：  NotifyToAppSchedule()
+函数功能：  触发一次应用层扫描
+输入说明：    
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void CSecDLink::NotifyToAppSchedule(void)  
 {
@@ -2126,7 +2126,7 @@ void CSecDLink::NotifyToAppSchedule(void)
                         TxdBuf+5+LinkAddrSize,&LengthOut,&AppCommand);
     DLSendProc();
 }
-//��ֹ������·��ѭ����ʼ��
+//防止建立链路死循环初始化
 void CSecDLink::EndlessLoopInit(void)
 {
     ELReplyFlag = TRUE;
@@ -2135,13 +2135,13 @@ void CSecDLink::EndlessLoopInit(void)
     ELResetNum = 0;
     
 }
-//��ֹ������·��ѭ������
-//���һ��ʱ���ڣ�EL_NOREPLY_TIME���յ���λ��·�������ڣ�EL_MAX_RECEIVE_RESETNUM���жϽ�����ѭ�����̣��򲻶Ը�λ��·����˫��λ��·��Ӧ��
-//���ң�EL_NOREPLY_TIME��ʱ����ڲ�����Ӧ��վ��λ��·���
+//防止建立链路死循环监视
+//如果一段时间内（EL_NOREPLY_TIME）收到复位链路次数大于（EL_MAX_RECEIVE_RESETNUM）判断进入死循环过程，则不对复位链路进行双向复位链路响应。
+//并且（EL_NOREPLY_TIME）时间段内不再响应主站复位链路命令。
 void CSecDLink::EndlessLoopMonitor(void)
 {
     
-    if(ELClearTime)     //�յ���·��λ�������ʱ�帴λ����
+    if(ELClearTime)     //收到链路复位命令后，延时清复位次数
     {
         ELClearTime--;
         if(ELClearTime==0)
@@ -2150,7 +2150,7 @@ void CSecDLink::EndlessLoopMonitor(void)
         }   
     }
     
-    if(ELNoReplyTime)   //�жϽ�����ѭ������ʱ����վ��λ���֧��˫������·
+    if(ELNoReplyTime)   //判断进入死循环后，延时对主站复位命令不支持双向建立链路
     {
         ELNoReplyTime--;
         if(ELNoReplyTime==0)
@@ -2163,7 +2163,7 @@ void CSecDLink::EndlessLoopMonitor(void)
     if(ELResetNum >= EL_MAX_RECEIVE_RESETNUM)
     {
                
-        logSysMsgNoTime("���������ѭ����%d�벻֧��˫������·",EL_NOREPLY_TIME,0,0,0);
+        logSysMsgNoTime("程序进入死循环，%d秒不支持双向建立链路",EL_NOREPLY_TIME,0,0,0);
         
         ELResetNum = 0;
         ELReplyFlag = FALSE;

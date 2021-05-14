@@ -1,33 +1,33 @@
 /*********************************************************************************************/
-/*  ���ƣ�                  IEC60870-5-104 ��վ�˳���                                        */
-/*  ��Ȩ��                  ��̨����������Ϣ��ҵ�ɷ����޹�˾                                 */
-/*  ���ߣ�                  ����                                                           */
-/*  �汾��                  v1.0                                                             */
-/*  ���ڣ�                  2005/6/6                                                         */
+/*  名称：                  IEC60870-5-104 从站端程序                                        */
+/*  版权：                  烟台东方电子信息产业股份有限公司                                 */
+/*  作者：                  岳振东                                                           */
+/*  版本：                  v1.0                                                             */
+/*  日期：                  2005/6/6                                                         */
 /*                                                                                           */
 /*                                                                                           */
-/*  ��Ҫ���������ܣ�                                                                         */
-/*                 new104sec(INT16U AppID)                      ������ں���                   */
+/*  主要函数及功能：                                                                         */
+/*                 new104sec(INT16U AppID)                      任务入口函数                   */
 /*                 New104Sec(INT16U AppID,struct PortInfo_t **ppport,                          */
 /*                           struct TaskInfo_t **pptask,BOOL *pInitOK)                       */
-/*                                                            �����ʼ������                 */
-/*                 OnRxData()                                 �������ݴ���                   */
-/*                 OnTimer()                                  ��ʱ������                     */
-/*                 Schedule()                                 ����֡�༭����                 */
-/*                 OnCommState()                              ����ͨ��״̬�仯����           */
-/*                 OnMessage()                                �������ݿⷢ�͵���Ϣ           */
-/*                 SetDevInfo()                               �����豸��Ϣ                   */
-/*                 InitPara()                                 ���������ʼ��                 */
+/*                                                            任务初始化函数                 */
+/*                 OnRxData()                                 接收数据处理                   */
+/*                 OnTimer()                                  定时器函数                     */
+/*                 Schedule()                                 发送帧编辑函数                 */
+/*                 OnCommState()                              接收通信状态变化事项           */
+/*                 OnMessage()                                接收数据库发送的信息           */
+/*                 SetDevInfo()                               设置设备信息                   */
+/*                 InitPara()                                 任务参数初始化                 */
 /*                                                                                           */
-/*  �޸���ʷ��                                                                               */
-/*           1.�޸����ڣ�                                                                    */
-/*           2.�޸��ߣ�                                                                      */
-/*           3.�޸����ݣ�                                                                    */
+/*  修改历史：                                                                               */
+/*           1.修改日期：                                                                    */
+/*           2.修改者：                                                                      */
+/*           3.修改内容：                                                                    */
 /*********************************************************************************************/
 #include "new104sec.h"
-//�����ļ�ͬ��  CL 20180504
+//线损文件同步  CL 20180504
 #include "..\newhis\XSDataProc.h"
-//�����ļ�ͬ��  CL 20180504
+//线损文件同步  CL 20180504
 
 
 
@@ -53,7 +53,7 @@ void new104sec(INT16U AppID)
     {
         ptask->Status=0;
         #ifdef _CHINESE_
-        logSysMsgNoTime("new104sec ���񴴽�ʧ��",0,0,0,0);
+        logSysMsgNoTime("new104sec 任务创建失败",0,0,0,0);
         #else
         logSysMsgNoTime("Init Fail,new104sec Delete",0,0,0,0);
         #endif
@@ -63,7 +63,7 @@ void new104sec(INT16U AppID)
     if(!MisiPortOpen(AppID,RX_AVAIL,TX_AVAIL,EX_STATE))
     {
         #ifdef _CHINESE_
-        logSysMsgNoTime("����򿪴���new104sec ����ɾ��",0,0,0,0);
+        logSysMsgNoTime("网络打开错误，new104sec 任务删除",0,0,0,0);
         #else
         logSysMsgNoTime("Net Open Fail,new104sec Delete",0,0,0,0);
         #endif
@@ -71,17 +71,17 @@ void new104sec(INT16U AppID)
         myTaskSuspendItself();
     }
     
-    /*wjr 2010.5.30  ��ͨѶͨ��֮��6����û�����ݺ�Ͽ��������������֮����Сʱ֮��û�����Ͼ���Ϊ����û�лظ�����������*/
+    /*wjr 2010.5.30  当通讯通上之后6分钟没有数据后断开重启，如果启动之后半个小时之后还没连接上就认为错误没有回复再重新启动*/
     p104Sec->LinkFlag = (INT16U *)nvramMalloc(sizeof(INT16U));
     
     if(((*(p104Sec->LinkFlag)) != 0x5555) && ((*(p104Sec->LinkFlag)) != 0xcccc))
     {
         (*(p104Sec->LinkFlag)) = 0xcccc;    
     }    
-    //logSysMsgWithTime("��־��ַ%d ֵ%d",(INT16U)p104Sec->LinkFlag,*(p104Sec->LinkFlag),0,0);
+    //logSysMsgWithTime("标志地址%d 值%d",(INT16U)p104Sec->LinkFlag,*(p104Sec->LinkFlag),0,0);
     //tm_evafter(SYSCLOCKTICKS * 1800, EV_SYSRET, &Resettimer);
     /*wjr 2010.5.30 */
-    if (!MisiGetLinkStatus(AppID))//�����·�Ƿ���Ч���ȴ����ӽ����ɹ�
+    if (!MisiGetLinkStatus(AppID))//检测链路是否有效，等待连接建立成功
     {
         for(;;)
         {
@@ -92,7 +92,7 @@ void new104sec(INT16U AppID)
                     if (MisiGetLinkStatus(AppID))
                     {    
                         (*(p104Sec->LinkFlag)) = 0xcccc;        /*wjr 2010.5.30 */
-                        logSysMsgWithTime("�˿�%d,104��վTCP���ӽ���,�շ������0",AppID,0,0,0);  // ll
+                        logSysMsgWithTime("端口%d,104从站TCP链接建立,收发序号清0",AppID,0,0,0);  // ll
                         break;
                     }
                 /*if(dwEvent&EV_SYSRET)          wjr 2010.5.30 
@@ -196,7 +196,7 @@ New104Sec::New104Sec(INT16U AppID,struct PortInfo_t **ppport,struct TaskInfo_t *
         else
         {
             #ifdef _CHINESE_
-            logSysMsgNoTime("iec104Sec �޹�Լ��壡������",0,0,0,0);
+            logSysMsgNoTime("iec104Sec 无规约面板！请配置",0,0,0,0);
             #else
             logSysMsgNoTime("iec104Sec No CodePad! Please Check. ",0,0,0,0);
             #endif
@@ -221,44 +221,44 @@ New104Sec::New104Sec(INT16U AppID,struct PortInfo_t **ppport,struct TaskInfo_t *
     pDLink->N104Encrptystyle = 0;
     #ifdef INCLUDE_ENCRYPT    
         
-        //CON_ENCRYPT:CON_1161ENCRPTY = 1:0(�޼���)  0:0(11�氲ȫ����) 1:1(16�氲ȫ��������)  0:1(�Ƿ�)    
+        //CON_ENCRYPT:CON_1161ENCRPTY = 1:0(无加密)  0:0(11版安全方案) 1:1(16版安全防护方案)  0:1(非法)    
         switch(Sec104Pad.control & (CON_ENCRYPT|CON_1161ENCRPTY|CON_1120ENCRPTY))
         {
         case 0:
             pDLink->IsEncrypt = 1;
             myEnctyptInit(DevList[0].Addr, Sec104Pad.EncryptTimeout);
-            logSysMsgNoTime("11�氲ȫ��������(SGC1126)-104",0,0,0,0);
+            logSysMsgNoTime("11版安全防护方案(SGC1126)-104",0,0,0,0);
             break;
         case CON_ENCRYPT|CON_1161ENCRPTY:
-            //1161����оƬ
+            //1161加密芯片
             pDLink->N104Encrptystyle = 2;
-            logSysMsgNoTime("15�氲ȫ��������(SGC1161)-104",0,0,0,0);
+            logSysMsgNoTime("15版安全防护方案(SGC1161)-104",0,0,0,0);
             myTaskDelay(2);    
             rc = EncrptyChiptest(1);
             if(rc != 1)
             {
-                logSysMsgNoTime("���ܷ�����оƬ���Ͳ�ƥ������оƬ������",0,0,0,0);
+                logSysMsgNoTime("加密方案和芯片类型不匹配或加密芯片不存在",0,0,0,0);
             }
             break;
 	 case CON_ENCRYPT|CON_1120ENCRPTY:
-		//1120����оƬ
+		//1120加密芯片
 	     pDLink->N104Encrptystyle = 3;
-           logSysMsgNoTime("����ũ����ȫ��������(SGC1120a)-104",0,0,0,0);
+           logSysMsgNoTime("湖南农网安全防护方案(SGC1120a)-104",0,0,0,0);
             myTaskDelay(2);    
 	     rc = EncrptyChiptest(1);
            if(rc != 2)
            {
-               logSysMsgNoTime("���ܷ�����оƬ���Ͳ�ƥ������оƬ������",0,0,0,0);
+               logSysMsgNoTime("加密方案和芯片类型不匹配或加密芯片不存在",0,0,0,0);
            }
 	     break;
         default:
-            //�޼���
-            logSysMsgNoTime("�ް�ȫ��������(͸������)-104",0,0,0,0);
+            //无加密
+            logSysMsgNoTime("无安全防护方案(透明传输)-104",0,0,0,0);
             break;               
         }
     #endif
     
-    //֧��"������Լ��չ"-2015��
+    //支持"国网规约扩展"-2015版
     GYKZ2015Flag = FALSE;
     SendCOS = 1;
     if((Sec104Pad.control & CON_104GYKZ))
@@ -269,19 +269,19 @@ New104Sec::New104Sec(INT16U AppID,struct PortInfo_t **ppport,struct TaskInfo_t *
         {
             SendCOS = 1;
         }
-        logSysMsgNoTime("104֧��GY2015��չ",0,0,0,0);
+        logSysMsgNoTime("104支持GY2015扩展",0,0,0,0);
     }
     
     if(Sec104Pad.control & CON_NOJUDGERSNO)
     {
         pDLink->NoJudgeFramNo = 1;
-        logSysMsgNoTime("104��Լ����֡���",0,0,0,0);
+        logSysMsgNoTime("104规约不判帧序号",0,0,0,0);
     }
     
     if(Sec104Pad.control & CON_CLEARRSNO)
     {
         pDLink->RsvStartClearRSno = 1;
-        logSysMsgNoTime("104��Լ�յ�����������֡���",0,0,0,0);
+        logSysMsgNoTime("104规约收到启动命令清帧序号",0,0,0,0);
     }
     
     bSendAllDBI = FALSE;
@@ -289,7 +289,7 @@ New104Sec::New104Sec(INT16U AppID,struct PortInfo_t **ppport,struct TaskInfo_t *
         bSendAllDBI = TRUE;
     
     
-    //���ļ����������ʼ��
+    //新文件传输参数初始化
     ProcFileInit();
     RMTSectionNo2 = 1;
     RMTParaInit();
@@ -331,7 +331,7 @@ BOOL New104Sec::SetDevInfo(INT16U DevID)
     if(DevType < 0)
        return FALSE;
     
-    if (DevType == 2)//�����߼��豸
+    if (DevType == 2)//二类逻辑设备
     {
         if(!SL_ReadBConf(DevID, MySelf.AppID, (INT8U *) &AppSLBConf))
             return FALSE;
@@ -351,7 +351,7 @@ BOOL New104Sec::SetDevInfo(INT16U DevID)
         pDev->DevData.BCDNum=0;
         pDev->DevData.NvaNo=0;
 
-        //�������豸��Ŀ
+        //管理的设备数目
         DevCount=AppSLBConf.DevNum;
         if (DevCount<=0)
         {
@@ -364,17 +364,17 @@ BOOL New104Sec::SetDevInfo(INT16U DevID)
             return(FALSE);
         }
 
-        //ȡ�����豸ID
+        //取所有设备ID
         temp = (INT16U *)DBData;
         SL_ReadDevID(DevID, DevCount, temp);
         for(i=0;i<DevCount;i++)
             DevList[i].DevID=temp[i];
 
-        //ȡ�豸��Ϣ
+        //取设备信息
         for(i=0;i<DevCount;i++)
         {
             DevType = CheckDevType(DevList[i].DevID);
-            if(DevType == 1)//ʵ���豸
+            if(DevType == 1)//实际设备
             {
                 R_ReadBConf(DevList[i].DevID, MySelf.AppID,(INT8U *) &AppRBConf,1);
 
@@ -395,7 +395,7 @@ BOOL New104Sec::SetDevInfo(INT16U DevID)
                 DevList[i].DbaseWin=NULL;
 
             }
-            else if(DevType == 0)//I���߼��豸
+            else if(DevType == 0)//I类逻辑设备
             {
                 L_ReadBConf(DevList[i].DevID, MySelf.AppID,(INT8U *) &AppLBConf);
 
@@ -414,10 +414,10 @@ BOOL New104Sec::SetDevInfo(INT16U DevID)
                 DevList[i].DbaseWin=AppLBConf.DbaseWin;
                 DevList[i].RealWin=NULL;
                 
-                DevList[i].DevData.DBINum = 0;      //�°�����˫��ң�Ŵ����������˸��ģ�ʹ��ԭ�в�������ɷ��͵�Ŵ��ҡ� ll 2017-7-19
+                DevList[i].DevData.DBINum = 0;      //新版程序对双点遥信处理策略有了更改，使用原有参数会造成发送点号错乱。 ll 2017-7-19
                 if(AppLBConf.DBINum > 0 )
                 {
-                    logSysMsgNoTime("�°�����˫��ң�Ų�������Ҫ��ͬ���밴��Ҫ���޸�˫��ң����ز���",0,0,0,0);   
+                    logSysMsgNoTime("新版程序对双点遥信参数设置要求不同，请按新要求修改双点遥信相关参数",0,0,0,0);   
                     return FALSE;
                 }
 
@@ -502,8 +502,8 @@ void New104Sec::InitPara(void)
     InitFlag=0xFF;        //wjr
     ActDevIndex=0;
     
-    LinkConnect=FALSE;            /*����ͨ�ϵı�־  wjr  2010.5.21*/
-    LinkBreakCounter = 0;         /*��·ͨ�������û���յ����ݵļ����� wjr  2010.5.21*/
+    LinkConnect=FALSE;            /*网络通上的标志  wjr  2010.5.21*/
+    LinkBreakCounter = 0;         /*网路通的情况下没有收到数据的计数器 wjr  2010.5.21*/
     
     FirstCallAllData = 0;
     WaitCallAllDelay = 5;
@@ -530,10 +530,10 @@ void New104Sec::InitPara(void)
     InfoAddrSize=2;
     #endif
 
-    CotLocation=2;//COT��ASDU�е�λ��
-    PubAddrLocation=CotLocation+CotSize;//PUBADDR��ASDU�е�λ��
-    InfoAddrLocation=PubAddrLocation+PubAddrSize;//INFOADDR��ASDU�е�λ��
-    AsduHeadLength=InfoAddrLocation+InfoAddrSize;//ASDUͷ�ĳ���
+    CotLocation=2;//COT在ASDU中的位置
+    PubAddrLocation=CotLocation+CotSize;//PUBADDR在ASDU中的位置
+    InfoAddrLocation=PubAddrLocation+PubAddrSize;//INFOADDR在ASDU中的位置
+    AsduHeadLength=InfoAddrLocation+InfoAddrSize;//ASDU头的长度
 
     if(PubAddrSize==1)
         BroadCastAddr=0xff;
@@ -577,7 +577,7 @@ void New104Sec::CheckPad(void)
     if ((Sec104Pad.AIType!=M_ME_ND)&&(Sec104Pad.AIType!=M_ME_NA)&&(Sec104Pad.AIType!=M_ME_NB)&& (Sec104Pad.AIType!=M_ME_NC))
         Sec104Pad.AIType=M_ME_NB;
 
-    if((Sec104Pad.LBIinfoaddr<LBI)||(Sec104Pad.LBIinfoaddr>HBI))        //ң����Ϣ���ַ������ 2008.11.5  wjr
+    if((Sec104Pad.LBIinfoaddr<LBI)||(Sec104Pad.LBIinfoaddr>HBI))        //遥信信息体地址可设置 2008.11.5  wjr
         LBIinfoaddr=LBI;
     else
         LBIinfoaddr=Sec104Pad.LBIinfoaddr;
@@ -587,7 +587,7 @@ void New104Sec::CheckPad(void)
     else
         LDBIinfoaddr=Sec104Pad.LDBIinfoaddr;
     
-    //LBIinfoaddr=LBI;    //�°�����˫��ң�Ŵ����������˸��ģ�����ʹ�ù�Լ�������� ll 2017-7-19
+    //LBIinfoaddr=LBI;    //新版程序对双点遥信处理策略有了更改，不再使用规约面板参数。 ll 2017-7-19
     //LDBIinfoaddr=LDBI;
 
     for (i=0;i<4;i++)
@@ -608,7 +608,7 @@ void New104Sec::CheckPad(void)
     {
         pDLink->Tick[1].Value=T1;    //pre 1s
         pDLink->Tick[2].Value=T2;    //pre 1s
-    }*/ //ll 2014-3-14 �� �����ж�Ӱ�����������ʮ�ֲ����㣩��
+    }*/ //ll 2014-3-14 封 这样判断影响参数调整（十分不方便）。
     /*if (pDLink->Tick[3].Value<=pDLink->Tick[1].Value)
     {
         pDLink->Tick[1].Value=T1;    //pre 1s
@@ -620,18 +620,18 @@ void New104Sec::SetDefaultPad(void)
 {
     int i;
 
-    Sec104Pad.ControlPermit = 1;       //ң������ 1-������0-������ ȱʡΪ1
-    Sec104Pad.SetTimePermit = 1;  //�������� 1-������0-������ ȱʡΪ1
+    Sec104Pad.ControlPermit = 1;       //遥控允许 1-允许，0-不允许 缺省为1
+    Sec104Pad.SetTimePermit = 1;  //对钟允许 1-允许，0-不允许 缺省为1
 
-    Sec104Pad.SendCountWithReset = 0;//���͵��ʱ����λ��1-����λ 0-������λ ȱʡΪ0
-    Sec104Pad.UseStandClock = 1;//ʹ�ñ�׼ʱ�Ӹ�ʽ 1-��׼ 0-�Ǳ�׼ ȱʡΪ1
-    Sec104Pad.AllDataInternal = ALLDATATIMER;//��ʱ����ȫ���ݼ�����֣� ȱʡ30
-    Sec104Pad.ScanData2=SCANDATA2TIMER;//��������ɨ����
-    Sec104Pad.CountInternal = COUNTERTIMER;//��ʱ���͵�ȼ�����֣� ȱʡ60
-    Sec104Pad.TickValue[0] = T0;//TickValue[0]����
-    Sec104Pad.TickValue[1] = T1;//TickValue[1]ȷ���޻ش�ʱ�������룩 ȱʡ15
-    Sec104Pad.TickValue[2] = T2;//TickValue[2]����ȷ��֡ʱ�������룩 ȱʡ5
-    Sec104Pad.TickValue[3] = T3;//TickValue[3]���Ͳ���֡ʱ�������룩 ȱʡ30
+    Sec104Pad.SendCountWithReset = 0;//发送电度时带复位，1-带复位 0-不带复位 缺省为0
+    Sec104Pad.UseStandClock = 1;//使用标准时钟格式 1-标准 0-非标准 缺省为1
+    Sec104Pad.AllDataInternal = ALLDATATIMER;//定时发送全数据间隔（分） 缺省30
+    Sec104Pad.ScanData2=SCANDATA2TIMER;//二级数据扫描间隔
+    Sec104Pad.CountInternal = COUNTERTIMER;//定时发送电度间隔（分） 缺省60
+    Sec104Pad.TickValue[0] = T0;//TickValue[0]无用
+    Sec104Pad.TickValue[1] = T1;//TickValue[1]确认无回答时间间隔（秒） 缺省15
+    Sec104Pad.TickValue[2] = T2;//TickValue[2]发送确认帧时间间隔（秒） 缺省5
+    Sec104Pad.TickValue[3] = T3;//TickValue[3]发送测试帧时间间隔（秒） 缺省30
     Sec104Pad.AIDeadValue=3;
     Sec104Pad.SBIType=M_SP_NA;//M_PS_NA;
     Sec104Pad.AIType=M_ME_NB;//M_ME_NA;
@@ -646,11 +646,11 @@ void New104Sec::SetDefaultPad(void)
         pDLink->Tick[i].Value=Sec104Pad.TickValue[i];
     }
     
-    LBIinfoaddr=LBI;                     //ң����Ϣ���ַ������ 2008.11.5  
+    LBIinfoaddr=LBI;                     //遥信信息体地址可设置 2008.11.5  
     LDBIinfoaddr=LDBI;
 }
 
-void New104Sec::ReadAIMaxVal(INT16U DevIndex)  //��ң����ֵ������������ֵ
+void New104Sec::ReadAIMaxVal(INT16U DevIndex)  //读遥测满值——设置死区值
 {
     INT16U i;
     INT16U DevID;
@@ -662,37 +662,37 @@ void New104Sec::ReadAIMaxVal(INT16U DevIndex)  //��ң����ֵ������������ֵ
 
     for (i=0;i<DevList[DevIndex].DevData.AINum;i++)
     {
-        if(DevList[DevIndex].Flag == 1)     //=1ʵ���豸
+        if(DevList[DevIndex].Flag == 1)     //=1实际设备
             val = SRSendMax_ReadAI(DevID,i);
         else
             val = SLMax_ReadAI(DevID,i);
         
-        DevList[DevIndex].DevData.AItype[i] = SL_ReadAI_Type(DevID,i); //��ȡ��ǰ���ݵ����ͣ��з��Ż����޷��ţ�
-        DevList[DevIndex].DevData.AIporperty[i] = SL_ReadAI_Porperty(DevID,i); //��ȡ��ǰ���ݵ�����(��������ѹ�����ʣ�Ƶ��)
+        DevList[DevIndex].DevData.AItype[i] = SL_ReadAI_Type(DevID,i); //读取当前数据的类型（有符号还是无符号）
+        DevList[DevIndex].DevData.AIporperty[i] = SL_ReadAI_Porperty(DevID,i); //读取当前数据的属性(电流，电压，功率，频率)
         DevList[DevIndex].DevData.AIMaxValTrue[i] = val;
                
         
-        //�����������ֵ
+        //逐点设置死区值
         if(DevList[DevIndex].Flag == 1)
             deathval = SRDead_ReadAI(DevID,i);
         else
             deathval = SLDead_ReadAI(DevID,i);
         
-        if(deathval > 1)    //��0����1����Ϊ��Ч
+        if(deathval > 1)    //非0，非1即认为有效
         {
-            DevList[DevIndex].DevData.AIMaxVal[i] = deathval;   //����ǧ�ֱȵ�λ
+            DevList[DevIndex].DevData.AIMaxVal[i] = deathval;   //不是千分比单位
             
         }
         else
         {
             ppty = DevList[DevIndex].DevData.AIporperty[i];
             deathval = GetRmtDeathvalue(ppty);
-            if(deathval > 0)//Զ�̲�������ֵ
+            if(deathval > 0)//远程参数死区值
             {
                 DevList[DevIndex].DevData.AIMaxVal[i] = ((INT32U)val*deathval)/1000;
                 
             }
-            else //��Լ�������ֵ
+            else //规约面板死区值
             {
                  DevList[DevIndex].DevData.AIMaxVal[i] = ((INT32U)val*Sec104Pad.AIDeadValue)/1000;
                  
@@ -710,14 +710,14 @@ void New104Sec::OnRxData(void)
     PDARet DARet;
     BOOL HaveData,Do=TRUE;
     
-    /*Ϊ��������������������   2010.5.21*/
+    /*为北京网络死的问题增加   2010.5.21*/
     if(LinkConnect == FALSE)
     {
         LinkConnect = TRUE;    
     }    
     else
     {
-        LinkBreakCounter = 0;         /*��·ͨ�������û���յ����ݵļ���������   2010.5.21*/	
+        LinkBreakCounter = 0;         /*网路通的情况下没有收到数据的计数器清零   2010.5.21*/	
     }
     
     pDLink->RxData();
@@ -752,7 +752,7 @@ void New104Sec::OnRxData(void)
             }
 
             RxInfoAddr=0;
-            for(i=0;i<2;i++)//InfoAddrSize���Ϊ3��Ҳֻȡǰ2���ֽڡ�
+            for(i=0;i<2;i++)//InfoAddrSize如果为3，也只取前2个字节。
                 RxInfoAddr+=(RxMsg[InfoAddrLocation+i]<<(8*i));
             
             Do=ToProc();
@@ -780,7 +780,7 @@ BOOL New104Sec::ToProc(void)
             return(SecTestDL());
         case C_IC_NA:   //alldata
             EnCodeAllDataConf();
-            if(FirstCallAllData==0xff)  //��һ�����в������ 0xff-�Ѿ����й���0-δ���й�
+            if(FirstCallAllData==0xff)  //第一次总招不被打断 0xff-已经总招过，0-未总招过
                 return(TRUE);
             else
                 return(FALSE);
@@ -804,7 +804,7 @@ BOOL New104Sec::ToProc(void)
             WritePara();*/
         /*    return(TRUE);*/
             //break;
-        //�㶫Զ�̲���
+        //广东远程参数
         case GD_MUTIPARA_READ:
             //if(IsRMTforGuangdong())
             ProcReadParaGD();
@@ -812,48 +812,48 @@ BOOL New104Sec::ToProc(void)
         case GD_MUTIPARA_WRITE:
             ProcWritePara_GD();
             break;
-        //����Զ����ά
-        /*case P_RS_NA_1_GX:              //������վ������
+        //广西远程运维
+        /*case P_RS_NA_1_GX:              //广西主站读参数
             ProcReadParaGX();
             break;
-        case P_ME_NA_1_GX:               //������վԤ�ò���
+        case P_ME_NA_1_GX:               //广西主站预置参数
             ProcSetParaGX();
             break;
-        case P_AC_NA_1_GX:               //������վ�������
+        case P_AC_NA_1_GX:               //广西主站激活参数
             ProcActivateParaGX();
             break;
         */
-        case C_SR_NA:   //�л���ֵ����
+        case C_SR_NA:   //切换定值区号
             ProcSetSectionNo();
             break; 
         case C_RR_NA:
-            ProcReadSectionNo();    //����ֵ����
+            ProcReadSectionNo();    //读定值区号
             break; 
-        case C_RS_NA:       //��������
+        case C_RS_NA:       //读参数区
             ProcReadPara();
             break;  
-        case C_WS_NA:       //д������
+        case C_WS_NA:       //写参数区
             ProcWritePara();
             break;
                
         case F_FR_NA_N:
-            ProcFileTran(); //�ļ�����
+            ProcFileTran(); //文件传输
             break; 
         case F_SR_NA_N:
             ProcFT_ProgramUpdate();
             break;   
         case F_FS_NA_N:
-            ProcFileSyn();//�ļ�ͬ�� CL 20180306
+            ProcFileSyn();//文件同步 CL 20180306
             SetFileSynInfoTaskIDSubstation(MySelf.AppTID);
-            if(XSFileSynInfo.TaskIDPri101[0]!=0)//������һ������ģ���������
+            if(XSFileSynInfo.TaskIDPri101[0]!=0)//代表第一个线损模块起的任务
             {
-                myEventSend(GetFileSynInfoTaskID101(0),XSFILESYN);//��101��վ��������Ϣ ��ʱ�ȷ�����һ��101���񣬺�����ͨ��ά������������ȷ�ϵġ�
+                myEventSend(GetFileSynInfoTaskID101(0),XSFILESYN);//给101主站任务发送消息 暂时先发给第一个101任务，后续是通过维护软件面板参数确认的。
             }
             else
             {
-                logSysMsgWithTime("��֧��2018��׼������ģ�飡",0,0,0,0);
+                logSysMsgWithTime("无支持2018标准的线损模块！",0,0,0,0);
             }
-            if(XSFileSynInfo.TaskIDPri101[1]!=0)//�����еڶ�������ģ���������
+            if(XSFileSynInfo.TaskIDPri101[1]!=0)//代表有第二个线损模块起的任务
             {
                 myEventSend(GetFileSynInfoTaskID101(1),XSFILESYN);
             }
@@ -951,7 +951,7 @@ BOOL New104Sec::WritePara(void)
     TxMsg[0]=RxTypeID;
     TxMsg[1]=RxVsq;
     TxMsg[2]=ACTCON;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
 
     for(int jj=0;jj<PubAddrSize;jj++)
@@ -959,7 +959,7 @@ BOOL New104Sec::WritePara(void)
 
     TxMsg[InfoAddrLocation] = LOBYTE(RxInfoAddr);
     TxMsg[InfoAddrLocation+1] = HIBYTE(RxInfoAddr);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
 	TxMsg[AsduHeadLength]=pRxData[0];
@@ -983,13 +983,13 @@ BOOL New104Sec::SecResetUseP(void)
     TxMsg[0]=C_RP_NA;
     TxMsg[1]=1;
     TxMsg[2]=ACTCON;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     switch(pRxData[0])
@@ -998,7 +998,7 @@ BOOL New104Sec::SecResetUseP(void)
 
             TxMsg[AsduHeadLength] = QRPRESET;
             EnCodeDLMsg(AsduHeadLength+1);
-            //if (RxPubAddr==BroadCastAddr)        2009.4.2 ��������ʱҪ��λ��������ַ�ж�
+            //if (RxPubAddr==BroadCastAddr)        2009.4.2 北京测试时要求复位，不做地址判断
             {
                 myTaskDelay(100);
                 SystemReset(WARMRESET);
@@ -1007,7 +1007,7 @@ BOOL New104Sec::SecResetUseP(void)
         case QRPSOEIND:
             TxMsg[AsduHeadLength] = QRPSOEIND;
             EnCodeDLMsg(AsduHeadLength+1);
-           // if (RxPubAddr==BroadCastAddr)   2009.4.2 ��������ʱҪ��λ��������ַ�ж�
+           // if (RxPubAddr==BroadCastAddr)   2009.4.2 北京测试时要求复位，不做地址判断
             {
                 myTaskDelay(600);
                 SystemReset(COLDRESET);
@@ -1016,7 +1016,7 @@ BOOL New104Sec::SecResetUseP(void)
         case QRPCOLD:
             TxMsg[AsduHeadLength] = QRPCOLD;
             EnCodeDLMsg(AsduHeadLength+1);
-          //  if (RxPubAddr==BroadCastAddr)   2009.4.2 ��������ʱҪ��λ��������ַ�ж�
+          //  if (RxPubAddr==BroadCastAddr)   2009.4.2 北京测试时要求复位，不做地址判断
             {
                 myTaskDelay(600);
                 SystemReset(COLDRESET);
@@ -1049,16 +1049,16 @@ BOOL New104Sec::SecTestDL(void)
     else
         GetSysTime((void *)&time,IEC101EXTCLOCKTIME);
 
-    TxMsg[0]=C_TS_TA;              //2009.3.17�޸ģ�ԭ���ص�����ΪC_RP_NA
+    TxMsg[0]=C_TS_TA;              //2009.3.17修改，原来回的类型为C_RP_NA
     TxMsg[1]=1;
     TxMsg[2]=ACTCON;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
     TxMsg[AsduHeadLength]=0xAA;
 	TxMsg[AsduHeadLength+1]=0x55;
@@ -1076,7 +1076,7 @@ BOOL New104Sec::SecTestDL(void)
     return(TRUE);
 }
 
-void New104Sec::SecCallData2(void)  //�ٻ���������
+void New104Sec::SecCallData2(void)  //召唤二级数据
 {
     int i=Soe;      
     BOOL Stop=FALSE;
@@ -1086,7 +1086,7 @@ void New104Sec::SecCallData2(void)  //�ٻ���������
     {
         switch (Data2Seq)
         {
-            case Soe:   //soeɨ�費��ʹ�ö�ʱɨ��
+            case Soe:   //soe扫描不再使用定时扫描
                 if (EnCodeSOE())        
                     Stop=TRUE;
                 else
@@ -1135,7 +1135,7 @@ BOOL New104Sec::GetActDevIndexByDevID(INT16U DevID)
     return(FALSE);
 }
 
-void New104Sec::ProcControl(void)  //����ң��
+void New104Sec::ProcControl(void)  //处理遥控
 {
     INT8U sco,dco,OnOff;
     INT16U SwitchNo;
@@ -1144,9 +1144,9 @@ void New104Sec::ProcControl(void)  //����ң��
     
     SwitchNo = RxInfoAddr-LBO+1;
     
-    //LogYkInfoRec(DevList[ActDevIndex].DevID, RxTypeID, *pRxData, RxInfoAddr, RxCot);  //��¼��վ���͵�����ң����Ϣ
+    //LogYkInfoRec(DevList[ActDevIndex].DevID, RxTypeID, *pRxData, RxInfoAddr, RxCot);  //记录主站发送的所有遥控信息
     
-    if((RxCot&COT_TEST)==COT_TEST)//�������������λΪ1����ʵ�ʲ���ң�أ�
+    if((RxCot&COT_TEST)==COT_TEST)//正常命令，（测试位为1则不能实际操作遥控）
     {
         if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
             return;
@@ -1164,13 +1164,13 @@ void New104Sec::ProcControl(void)  //����ң��
             EnCodeDLMsg(AsduHeadLength+1);
             return;
         }
-    	if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    	if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
     	for(int jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     	TxMsg[InfoAddrLocation]   = LOBYTE(RxInfoAddr);
     	TxMsg[InfoAddrLocation+1] = HIBYTE(RxInfoAddr);
-    	if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    	if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
             TxMsg[InfoAddrLocation+2]=0;
     	TxMsg[AsduHeadLength] = *pRxData;
     	EnCodeDLMsg(AsduHeadLength+1);
@@ -1179,7 +1179,7 @@ void New104Sec::ProcControl(void)  //����ң��
                         
     if(GetActDevIndexByAddr(RxPubAddr))
     {    
-        if((SwitchNo-1)*2==DevList[ActDevIndex].DevData.BONum)                     //����ά��
+        if((SwitchNo-1)*2==DevList[ActDevIndex].DevData.BONum)                     //蓄电池维护
         {
             pDLink->ConfS();
             if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
@@ -1199,27 +1199,27 @@ void New104Sec::ProcControl(void)  //����ң��
                 EnCodeDLMsg(AsduHeadLength+1);
                 return;
             }
-            if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+            if(CotSize==2)//传送原因为2字节时，高位固定为0。
                 TxMsg[CotLocation+1]=0;
             for(int jj=0;jj<PubAddrSize;jj++)
                 TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
         	TxMsg[InfoAddrLocation]   = LOBYTE(RxInfoAddr);
         	TxMsg[InfoAddrLocation+1] = HIBYTE(RxInfoAddr);
-        	if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+        	if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxMsg[InfoAddrLocation+2]=0;
             TxMsg[AsduHeadLength] = *pRxData;
         	EnCodeDLMsg(AsduHeadLength+1);
-        	if(((*pRxData)&DCO_SE)==0)  //ִ��
+        	if(((*pRxData)&DCO_SE)==0)  //执行
             {
-                if((RxCot&COT_TEST)==0)//�������������λΪ1����ʵ�ʲ���ң�أ�
+                if((RxCot&COT_TEST)==0)//正常命令，（测试位为1则不能实际操作遥控）
                     startCellMaint();
                 TxMsg[2]=ACTTERM;
             	EnCodeDLMsg(AsduHeadLength+1);
             }
             
-            return;                                                     //����ά������
+            return;                                                     //蓄电池维护结束
         }
-        else if((SwitchNo-1)*2==DevList[ActDevIndex].DevData.BONum+2)  //���鼶���豸  
+        else if((SwitchNo-1)*2==DevList[ActDevIndex].DevData.BONum+2)  //复归级联设备  
         {
             pDLink->ConfS();
             if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
@@ -1239,22 +1239,22 @@ void New104Sec::ProcControl(void)  //����ң��
                 EnCodeDLMsg(AsduHeadLength+1);
                 return;
             }
-            if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+            if(CotSize==2)//传送原因为2字节时，高位固定为0。
                 TxMsg[CotLocation+1]=0;
             for(int jj=0;jj<PubAddrSize;jj++)
                 TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
         	TxMsg[InfoAddrLocation]   = LOBYTE(RxInfoAddr);
         	TxMsg[InfoAddrLocation+1] = HIBYTE(RxInfoAddr);
-        	if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+        	if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxMsg[InfoAddrLocation+2]=0;
             TxMsg[AsduHeadLength] = *pRxData;
         	EnCodeDLMsg(AsduHeadLength+1);
-        	if(((*pRxData)&DCO_SE)==0)  //ִ��
+        	if(((*pRxData)&DCO_SE)==0)  //执行
             {
-                if((RxCot&COT_TEST)==0)//�������������λΪ1����ʵ�ʲ���ң�أ�
+                if((RxCot&COT_TEST)==0)//正常命令，（测试位为1则不能实际操作遥控）
                 {
                 	ResetFaultInfoForCall_FaultCheck();
-                	logSysMsgNoTime("���鼶���豸",0,0,0,0);
+                	logSysMsgNoTime("复归级联设备",0,0,0,0);
                 }
                     
                 TxMsg[2]=ACTTERM;
@@ -1277,16 +1277,16 @@ void New104Sec::ProcControl(void)  //����ң��
     switch (RxTypeID)
     {
            
-        case C_SC_NA:    //����ң������
+        case C_SC_NA:    //单点遥控命令
             sco = *pRxData;
             SwitchNo = RxInfoAddr-LBO+1;
-            if ((sco & SCO_SCS) == 0)       //��
+            if ((sco & SCO_SCS) == 0)       //分
                 OnOff = 2;
-            else if ((sco & SCO_SCS) == 1)  //��
+            else if ((sco & SCO_SCS) == 1)  //合
                 OnOff = 1;
-            if(Sec104Pad.ControlPermit == 0)//��������Ϊ������ң��
+            if(Sec104Pad.ControlPermit == 0)//参数设置为不允许遥控
             {
-                EnCodeNACK(UNKNOWNTYPEID); //��ȷ�� 
+                EnCodeNACK(UNKNOWNTYPEID); //否定确认 
                 /*if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
                     return;
                 memcpy(TxMsg,RxMsg,AsduHeadLength+1);
@@ -1301,38 +1301,38 @@ void New104Sec::ProcControl(void)  //����ң��
             
             BODevIndex = ActDevIndex;
             
-            if ((RxCot&COT_REASON)==ACT)//6������
+            if ((RxCot&COT_REASON)==ACT)//6，激活
             {
-                if ((sco & SCO_SE) == SCO_SE)   //1��select
+                if ((sco & SCO_SE) == SCO_SE)   //1，select
                 {
                     
-                    if((RxCot&COT_TEST)==0)//�������������λΪ1����ʵ�ʲ���ң�أ�
+                    if((RxCot&COT_TEST)==0)//正常命令，（测试位为1则不能实际操作遥控）
                         SetYK(MySelf.AppID,DevList[ActDevIndex].DevID,SwitchNo,OnOff);
                     
                 }
-                else//0��ִ��
+                else//0，执行
                 {
                     if(pDLink->YkStatusForTest2 == 0)                    
                     {
-                        EnCodeNACK(ACTCON); //�񶨼���ȷ��                         
-                        return;         //ll Ϊ���ݲ�����ʱ�޸� ִ��֮ǰ����Ԥ�� 2012-3-24
+                        EnCodeNACK(ACTCON); //否定激活确认                         
+                        return;         //ll 为广州测试临时修改 执行之前必须预置 2012-3-24
                     }
                     pDLink->YkStatusForTest2 = 0;
                     
                     if(YKSetAlready == TRUE)
                         YKSetAlready = FALSE;
-                    if((RxCot&COT_TEST)==0)//�������������λΪ1����ʵ�ʲ���ң�أ�
+                    if((RxCot&COT_TEST)==0)//正常命令，（测试位为1则不能实际操作遥控）
                         ExecuteYK(MySelf.AppID,DevList[ActDevIndex].DevID,SwitchNo,OnOff);
                     
                 }
             }
             else//
             {
-                if((RxCot&COT_REASON)==DEACT)       //����
+                if((RxCot&COT_REASON)==DEACT)       //撤消
                     CancelYK(MySelf.AppID,DevList[ActDevIndex].DevID,SwitchNo,OnOff);
                 else
                 {
-                    EnCodeNACK(UNKNOWNCOT); //�񶨼���ȷ��
+                    EnCodeNACK(UNKNOWNCOT); //否定激活确认
                 	/*if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
                         return;
                     memcpy(TxMsg,RxMsg,AsduHeadLength+1);
@@ -1401,9 +1401,9 @@ void New104Sec::ProcControl(void)  //����ң��
             BODevIndex = ActDevIndex;
             dco = *pRxData;
            // SwitchNo = RxInfoAddr-LBO+1;
-            if ((dco&DCO_DCS)==1)        //��
+            if ((dco&DCO_DCS)==1)        //分
                 OnOff = 2;
-            else if ((dco&DCO_DCS)==2)  //��
+            else if ((dco&DCO_DCS)==2)  //合
                 OnOff = 1;
             else
             {
@@ -1417,29 +1417,29 @@ void New104Sec::ProcControl(void)  //����ң��
                 return;
             }
 
-            if ((RxCot&COT_REASON)==ACT)//6������
+            if ((RxCot&COT_REASON)==ACT)//6，激活
             {
-                if ((dco&DCO_SE) == DCO_SE)   //1��select
+                if ((dco&DCO_SE) == DCO_SE)   //1，select
                 {
                     
                     
-                    if((RxCot&COT_TEST)==0)//�������������λΪ1����ʵ�ʲ���ң�أ�
+                    if((RxCot&COT_TEST)==0)//正常命令，（测试位为1则不能实际操作遥控）
                         SetYK(MySelf.AppID,DevList[ActDevIndex].DevID,SwitchNo,OnOff);
-                    if((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2))//�������ϸ��飬���һ��ң�صĺ�
+                    if((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2))//北京故障复归，最后一个遥控的合
                     {
                         YKSetAlready = TRUE;
                     }
                 }
-                else//0��ִ��
+                else//0，执行
                 {
                     if(pDLink->YkStatusForTest2 == 0)
                     {
-                        EnCodeNACK(ACTCON); //�񶨼���ȷ��     
-                        return;   //ll Ϊ���ݲ�����ʱ�޸� 2012-3-24
+                        EnCodeNACK(ACTCON); //否定激活确认     
+                        return;   //ll 为广州测试临时修改 2012-3-24
                     }
                     pDLink->YkStatusForTest2 = 0;
                     
-                    if((YKSetAlready == FALSE)&&((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2)))//�������ϸ��飬���һ��ң�صĺ�
+                    if((YKSetAlready == FALSE)&&((OnOff == 1) && (SwitchNo == DevList[BODevIndex].DevData.BONum/2)))//北京故障复归，最后一个遥控的合
                     {
                         Revert=1;
                         SetYK(MySelf.AppID,DevList[BODevIndex].DevID,SwitchNo,OnOff);
@@ -1448,14 +1448,14 @@ void New104Sec::ProcControl(void)  //����ң��
                     {
                         if(YKSetAlready == TRUE)
                             YKSetAlready = FALSE;
-                        if((RxCot&COT_TEST)==0)//�������������λΪ1����ʵ�ʲ���ң�أ�
+                        if((RxCot&COT_TEST)==0)//正常命令，（测试位为1则不能实际操作遥控）
                             ExecuteYK(MySelf.AppID,DevList[ActDevIndex].DevID,SwitchNo,OnOff);
                     }
                 }
             }
-            else//����
+            else//撤消
             {
-                if(((RxCot&COT_REASON)==DEACT)&&((RxCot&COT_TEST)==0))       //����
+                if(((RxCot&COT_REASON)==DEACT)&&((RxCot&COT_TEST)==0))       //撤消
                     CancelYK(MySelf.AppID,DevList[ActDevIndex].DevID,SwitchNo,OnOff);
                 else
                 {
@@ -1483,20 +1483,20 @@ void New104Sec::ProcReadData(void)
     SendData1(SCHEDULE_DATA1_READDATA);
 }
 
-void New104Sec::ProcClock(void)  //��������
+void New104Sec::ProcClock(void)  //处理对钟
 {
     struct Iec101ClockTime_t Time;
     
-    BOOL flag = FALSE;     //flagΪ1��������ʱ�䣬Ϊ0�����쳣ʱ�䣬���ж����ڼ�
+    BOOL flag = FALSE;     //flag为1代表正常时间，为0代表异常时间，不判断星期几
     
-    if((RxCot == REQ) || ((pRxData[6]+pRxData[5]+pRxData[4])==0))  //�ж�������Ϊ0
+    if((RxCot == REQ) || ((pRxData[6]+pRxData[5]+pRxData[4])==0))  //判断年月日为0
     {
-        //��ʱ��
+        //读时钟
         EnCodeClock(PTL104_CLOCK_READ);
         return;
     }
     
-    //������дʱ��
+    //后面是写时钟
     if (Sec104Pad.SetTimePermit == 1)
     {
         Time.MSecond = MAKEWORD(pRxData[0],pRxData[1]);
@@ -1508,7 +1508,7 @@ void New104Sec::ProcClock(void)  //��������
     
         flag = IEC101TimeIsOK(&Time);
     }
-    //if(flag && Sec104Pad.SetTimePermit)                    //���flagΪ�棬��Sec104Pad.SetTimePermit�϶�Ϊ�棬�����������ĳ�ֻ�ж�flag�Ϳ���
+    //if(flag && Sec104Pad.SetTimePermit)                    //如果flag为真，则Sec104Pad.SetTimePermit肯定为真，所以条件更改成只判断flag就可以
     if(flag)
     {
         
@@ -1518,12 +1518,12 @@ void New104Sec::ProcClock(void)  //��������
         else
             SetSysTime(&Time,IEC101EXTCLOCKTIME);  
         
-        EnCodeClock(PTL104_CLOCK_WRITE);    //�����޸ĺ��ʱ��
+        EnCodeClock(PTL104_CLOCK_WRITE);    //返回修改后的时钟
               
     }
     else
     {
-        EnCodeClock(PTL104_CLOCK_WRITE|PTL104_CLOCK_NACK);                               //�ڴ�վ�������ж��ӻ��߶���ʱ���д���ʱ���ʹ���ԭ��Ϊ0x47,�񶨻ش�
+        EnCodeClock(PTL104_CLOCK_WRITE|PTL104_CLOCK_NACK);                               //在从站不允许有对钟或者对钟时间有错误时发送传送原因为0x47,否定回答
     }    
 }
 
@@ -1537,7 +1537,7 @@ void New104Sec::EnCodeNextFrame(void)
     if ((ScheduleFlag&SCHEDULE_GROUP) && (FirstCallAllData==0))
         ProcGroupTrn();
     
-    if((FirstCallAllData == 0))    //��1�����в��ܱ���ϵĴ���ʱ��
+    if((FirstCallAllData == 0))    //第1次总招不能被打断的处理时。
     {
         return; 
     }
@@ -1613,14 +1613,14 @@ void New104Sec::ProcGroupTrn(void)
 
 void New104Sec::ProcAllData(void)
 {
-    INT16U BeginNo,EndNo,Num,GroupNo = 17;   //����coverity����
+    INT16U BeginNo,EndNo,Num,GroupNo = 17;   //根据coverity更改
 
-    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))  //ң����
+    if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))  //遥信组
     {
         if (CheckAndModifyGroup())
         {
-            //GroupTrn.InfoAddr �Ǵ�LBIinfoaddr��ʼ�ġ�����BeginNo�����Ǵ�0��ʼ�ģ������ٻ����Ǵ�0
-            //EndNo��һ֡���127����BINum�� 0x80��Ŀ���ǿ���128������һ��
+            //GroupTrn.InfoAddr 是从LBIinfoaddr开始的。这样BeginNo总招是从0开始的，分组召唤不是从0
+            //EndNo是一帧最大127个或BINum个 0x80的目的是控制128个数据一组
 
             BeginNo = GroupTrn.InfoAddr-LBIinfoaddr;
             if((DevList[GroupTrn.DevIndex].DevData.DBINum>0)&&(GroupTrn.GroupNo==1))
@@ -1637,7 +1637,7 @@ void New104Sec::ProcAllData(void)
                 BeginNo += Num;
                 GroupTrn.InfoAddr = BeginNo%0x1000 + LBIinfoaddr;
                     
-                if(DevList[GroupTrn.DevIndex].DevData.DBINum>0)     //wjr 2009.8.27    ˫��ң���ڵ�һ��
+                if(DevList[GroupTrn.DevIndex].DevData.DBINum>0)     //wjr 2009.8.27    双点遥信在第一组
                 {
                     if((GroupTrn.GroupNo==1) && (BeginNo>=DevList[GroupTrn.DevIndex].DevData.DBINum))
                     {    
@@ -1664,9 +1664,9 @@ void New104Sec::ProcAllData(void)
                 if ((GroupTrn.GroupNo!=GroupNo) && (BeginNo<DevList[GroupTrn.DevIndex].DevData.BINum))
                 {
                     GroupTrn.GroupNo=GroupNo;
-                    if ((GroupTrn.COT!=INTROGEN)&&(GroupTrn.COT!=BACK))//����Ƿ����ٻ�����˵����վ�ٻ������������Ѿ����ꡣ
+                    if ((GroupTrn.COT!=INTROGEN)&&(GroupTrn.COT!=BACK))//如果是分组召唤，则说明主站召唤的那组数据已经发完。
                     {
-                        GroupTrn.GroupNo=17;    //������֡
+                        GroupTrn.GroupNo=17;    //发结束帧
                     }    
                 }    
                     
@@ -1681,7 +1681,7 @@ void New104Sec::ProcAllData(void)
             }
         }
     }
-    if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=14)) //ң����
+    if ((GroupTrn.GroupNo>=9)&&(GroupTrn.GroupNo<=14)) //遥测组
     {
         if (CheckAndModifyGroup())
         {
@@ -1737,7 +1737,7 @@ void New104Sec::ProcAllData(void)
     }
     if (GroupTrn.GroupNo==16)
     {
-        //���ӹ���Ҫ�����soe
+        //增加广西要求的送soe
         if (CheckAndModifyGroup())
         {
             if(EnCodeAllData(GroupTrn.SoeStartPtr,0,&Num) )
@@ -1832,11 +1832,11 @@ void New104Sec::ProcCounter(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  CheckAndModifyGroup()
-�������ܣ�  ����޸�GroupTrn�ṹ�壬�������й���
-����˵����  
-���˵����  TRUE ��������Ҫ����   FALSE �����ݷ���
-��ע��      
+函数名称：  CheckAndModifyGroup()
+函数功能：  检测修改GroupTrn结构体，控制总招过程
+输入说明：  
+输出说明：  TRUE 有数据需要发送   FALSE 无数据发送
+备注：      
 /------------------------------------------------------------------*/
 BOOL New104Sec::CheckAndModifyGroup(void)
 {
@@ -1845,7 +1845,7 @@ BOOL New104Sec::CheckAndModifyGroup(void)
     
     switch (GroupTrn.TypeID)
     {
-        case C_IC_NA:       //��������
+        case C_IC_NA:       //总招命令
             if ((GroupTrn.GroupNo>=1)&&(GroupTrn.GroupNo<=8))
             {
                 if(DevList[GroupTrn.DevIndex].DevData.DBINum>0)
@@ -1873,7 +1873,7 @@ BOOL New104Sec::CheckAndModifyGroup(void)
                 }
                 else
                 {
-                    if (GroupTrn.InfoAddr < (GroupTrn.GroupNo-1)*0x7f+LBIinfoaddr)  //���ڷ����ٻ������������������
+                    if (GroupTrn.InfoAddr < (GroupTrn.GroupNo-1)*0x7f+LBIinfoaddr)  //用于分组召唤，调整到具体组那里？
                         GroupTrn.InfoAddr = (GroupTrn.GroupNo-1)*0x7f+LBIinfoaddr;
                     else if (GroupTrn.InfoAddr>=GroupTrn.GroupNo*0x7f+LBIinfoaddr)
                     {
@@ -1886,11 +1886,11 @@ BOOL New104Sec::CheckAndModifyGroup(void)
                 Num=GroupTrn.InfoAddr-LBIinfoaddr+1;
                 if (Num>DevList[GroupTrn.DevIndex].DevData.BINum)
                 {
-                    if(GetDBINum()) //����Ƿ�����˫��ң��
+                    if(GetDBINum()) //检测是否配置双点遥信
                     {
                         if((GroupTrn.COT==INTROGEN) && (GroupTrn.HaveSendDBI==FALSE))
                         {
-                            //�����������˫��ң��û�ͣ�����֯˫��ң�š������ٻ�����˫��ң��
+                            //如果是总招且双点遥信没送，则组织双点遥信。分组召唤不送双点遥信
                             GroupTrn.InfoAddr = LBIinfoaddr;
                             GroupTrn.HaveSendDBI = TRUE;
                             
@@ -1979,7 +1979,7 @@ BOOL New104Sec::CheckAndModifyGroup(void)
                         if(wptr > Num)
                         {
                             wptr = wptr%Num;
-                            //���100��
+                            //最近100条
                             if(wptr >100) 
                                 GroupTrn.SoeStartPtr = wptr-100;
                             else
@@ -1994,12 +1994,12 @@ BOOL New104Sec::CheckAndModifyGroup(void)
 
                         }
                         
-                        logSysMsgNoTime("104soe�ٻ����� start=%d, wptr=%d,max=%d",GroupTrn.SoeStartPtr,wptr,Num,0);
+                        logSysMsgNoTime("104soe召唤调试 start=%d, wptr=%d,max=%d",GroupTrn.SoeStartPtr,wptr,Num,0);
                     }
                     else
                     {
-                        //����
-                        logSysMsgNoTime("104soe�ٻ����� wptr=%d,max=%d",wptr,Num,0,0);
+                        //错误
+                        logSysMsgNoTime("104soe召唤错误 wptr=%d,max=%d",wptr,Num,0,0);
                         return FALSE;
                     }
                     
@@ -2030,7 +2030,7 @@ BOOL New104Sec::CheckAndModifyGroup(void)
     return(FALSE);
 }
 
-BOOL New104Sec::GetNextDev(void) //�õ���һ����ѯ���豸
+BOOL New104Sec::GetNextDev(void) //得到下一个轮询的设备
 {
     if (GroupTrn.PubAddr==BroadCastAddr)
     {
@@ -2102,7 +2102,7 @@ void New104Sec::OnCommState(void)
         SetDevUseState(FALSE);
 }
 
-//�����豸ʹ��״̬
+//设置设备使用状态
 void New104Sec::SetDevUseState(BOOL InUse)
 {
     INT32U rc=0;
@@ -2115,24 +2115,24 @@ void New104Sec::SetDevUseState(BOOL InUse)
         pDLink->NS=0;                  
         //InitFlag=0xff;
         FirstCallAllData = 0;
-        ProcFileInit();   //���ļ�����Ĳ���
-        //logSysMsgWithTime("104��վTCP���ӽ���,�շ������0",0,0,0,0);  // ll
-        ProgLogWrite2("�˿�%d,104��վTCP���ӽ��� �շ������0",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 1);
+        ProcFileInit();   //清文件传输的参数
+        //logSysMsgWithTime("104从站TCP链接建立,收发序号清0",0,0,0,0);  // ll
+        ProgLogWrite2("端口%d,104从站TCP链接建立 收发序号清0",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 1);
         
     }
     else
     {
-        //ll ���ͨѶ�жϣ�����ң�ء�Ϊ���ݲ����޸� 2014-3-14
+        //ll 检测通讯中断，撤销遥控。为广州测试修改 2014-3-14
         if(pDLink->YkStatusForTest2)
         {
             pDLink->YkStatusForTest2 = 0;    
             BspYkRelease();
-            logSysMsgNoTime("104ͨѶ�жϳ���ң��",0,0,0,0);
+            logSysMsgNoTime("104通讯中断撤销遥控",0,0,0,0);
         }
         
-        ScheduleFlag = 0;   //�Ͽ����Ӻ������б�־
+        ScheduleFlag = 0;   //断开链接后，清所有标志
         
-        ProgLogWrite2("�˿�%d,104��վTCP�Ͽ�����",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 0);
+        ProgLogWrite2("端口%d,104从站TCP断开链接",MySelf.AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 0);
 
         AllDataEnd=FALSE;
         while(!rc)
@@ -2141,10 +2141,10 @@ void New104Sec::SetDevUseState(BOOL InUse)
             pDLink->StopDT(FALSE);
     }
 }
-//ÿ������һ��
+//每秒运行一次
 void New104Sec::OnTimer(void)
 {
-    /*Ϊ��������������������  wjr 2010.5.21*/
+    /*为北京网络死的问题增加  wjr 2010.5.21*/
     /*if(LinkConnect == TRUE)
     {
         LinkBreakCounter++;
@@ -2152,7 +2152,7 @@ void New104Sec::OnTimer(void)
         {
             (*LinkFlag) = 0x5555;
             logSysMsgWithTime("net104 not rec",0,0,0,0);
-            //logSysMsgWithTime("��־��ַ%d ֵ%d",(INT16U)LinkFlag,*LinkFlag,0,0);
+            //logSysMsgWithTime("标志地址%d 值%d",(INT16U)LinkFlag,*LinkFlag,0,0);
             myTaskDelay(600);
             SystemReset(WARMRESET);    
         }        
@@ -2160,10 +2160,10 @@ void New104Sec::OnTimer(void)
     
 
     //if ((!pDLink->CommConnect)||(!AllDataEnd))
-    //if ((!pDLink->CommConnect)||(!FirstCallAllData))    //��1�����в������ ll 2016-9-16
+    //if ((!pDLink->CommConnect)||(!FirstCallAllData))    //第1次总招不被打断 ll 2016-9-16
     //    return;
         
-    if(WaitCallAllDelay)    //�ȴ����н�����ʱ
+    if(WaitCallAllDelay)    //等待总招结束延时
     {
         WaitCallAllDelay--;
         if(FirstCallAllData)
@@ -2237,8 +2237,8 @@ void New104Sec::OnTimer(void)
     if(NvaCount>NvaInterval)
     {
         NvaCount=0;
-        //if ((ScheduleFlag==FALSE)&&(AllDataEnd==TRUE))    // ǰ���Ѿ��з����ˣ�����Ͳ���Ҫ�ж������� ll 2016-9-16
-        if((ScheduleFlag & 0x0fff) == FALSE)  //�����24λ��ֵ��ɨ��
+        //if ((ScheduleFlag==FALSE)&&(AllDataEnd==TRUE))    // 前面已经有防护了，这里就不需要判断总招了 ll 2016-9-16
+        if((ScheduleFlag & 0x0fff) == FALSE)  //如果低24位有值不扫描
             SecCallData2();
     }
     
@@ -2335,12 +2335,12 @@ void New104Sec::EnCodeData1(void)
     {
         if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
             return;
-        //ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //Ӧ��������������˱�־ wjr 2009.3.31
+        //ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //应答完数据再清除此标志 wjr 2009.3.31
         EnCodeReadData();
     }
 }
 
-void New104Sec::EnCodeAllDataConf(void) //ȫ����ȷ��
+void New104Sec::EnCodeAllDataConf(void) //全数据确认
 {
     INT8U Len;
     
@@ -2361,13 +2361,13 @@ void New104Sec::EnCodeAllDataConf(void) //ȫ����ȷ��
     TxMsg[0]=C_IC_NA;
     TxMsg[1]=1;
     TxMsg[2]=ACTCON;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     TxMsg[AsduHeadLength] = RxMsg[AsduHeadLength];
@@ -2392,9 +2392,9 @@ void New104Sec::EnCodeAllDataConf(void) //ȫ����ȷ��
         if (GetActDevIndexByAddr(GroupTrn.PubAddr))
         {
             EnCodeDLMsg(Len);
-            if(RxMsg[AsduHeadLength] == INTRO16)    //��16 �������� �����޸�
+            if(RxMsg[AsduHeadLength] == INTRO16)    //组16 单独处理 广西修改
             {
-                logSysMsgWithTime("�յ���16����",0,0,0,0);
+                logSysMsgWithTime("收到组16命令",0,0,0,0);
                 ScheduleFlag   |= SCHEDULE_GROUP;
                 GroupTrn.TypeID = C_IC_NA;
                 GroupTrn.COT    =INTRO16;
@@ -2408,7 +2408,7 @@ void New104Sec::EnCodeAllDataConf(void) //ȫ����ȷ��
                 GroupTrn.DevIndex=ActDevIndex;
                 EnCodeNextFrame();
             }
-            else if(RxMsg[AsduHeadLength]>INTROGEN)      //wjr���ӷ����ٻ� 2009.3.31 
+            else if(RxMsg[AsduHeadLength]>INTROGEN)      //wjr增加分组召唤 2009.3.31 
             {
                 GroupTrn.DevIndex=ActDevIndex;
                 GroupTrn.TypeID=C_IC_NA;
@@ -2421,22 +2421,22 @@ void New104Sec::EnCodeAllDataConf(void) //ȫ����ȷ��
                 
                 ProcAllData();
                 
-                //���ٻ� ������֡
+                //组召唤 发结束帧
                 TxMsg[0]=GroupTrn.TypeID;
                 TxMsg[1]=1;
                 TxMsg[2]=ACTTERM;
-                if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+                if(CotSize==2)//传送原因为2字节时，高位固定为0。
                     TxMsg[CotLocation+1]=0;
                 for(int jj=0;jj<PubAddrSize;jj++)
                     TxMsg[PubAddrLocation+jj]=GroupTrn.PubAddr>>(8*jj);
                 TxMsg[InfoAddrLocation] = 0;
                 TxMsg[InfoAddrLocation+1] = 0;
-                if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                     TxMsg[InfoAddrLocation+2]=0;
                 TxMsg[AsduHeadLength] = RxMsg[AsduHeadLength];
                 
                 EnCodeDLMsg(AsduHeadLength+1);
-            }                                                                //���ӽ���2009.3.31
+            }                                                                //增加结束2009.3.31
             else
             {
                 ScheduleFlag|=SCHEDULE_GROUP;
@@ -2454,7 +2454,7 @@ void New104Sec::EnCodeAllDataConf(void) //ȫ����ȷ��
     }
 }
 
-void New104Sec::EnCodeCounterConf(void) //���ȷ��
+void New104Sec::EnCodeCounterConf(void) //电度确认
 {
     INT8U Len;
     INT8U qcc;
@@ -2472,25 +2472,25 @@ void New104Sec::EnCodeCounterConf(void) //���ȷ��
         return;
     }
     
-    //ת����101��վ����˲ʱ����
-    if((pRxData[0]&QCC_FRZ) == FREEZENORESET)  //FRZ=1 ���᲻����λ����
+    //转发给101主站进行瞬时冻结
+    if((pRxData[0]&QCC_FRZ) == FREEZENORESET)  //FRZ=1 冻结不带复位功能
     {
         SendFreezeEvent2Pri101();
     }
-    //ת����101��վ����˲ʱ����
+    //转发给101主站进行瞬时冻结
     
     CallDD=TRUE;
 
     TxMsg[0]=C_CI_NA;
     TxMsg[1]=1;
     TxMsg[2]=ACTCON;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     TxMsg[AsduHeadLength] = pRxData[0];
@@ -2558,13 +2558,13 @@ void New104Sec::EnCodeGroupEnd(void)
     TxMsg[0]=GroupTrn.TypeID;
     TxMsg[1]=1;
     TxMsg[2]=ACTTERM;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=GroupTrn.PubAddr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     if (TxMsg[0]==C_IC_NA) //alldata
@@ -2628,13 +2628,13 @@ void New104Sec::EnCodeClock(INT8U flag)
     }    
     
     
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     TxMsg[AsduHeadLength  ] = LOBYTE(Time.MSecond);
@@ -2649,7 +2649,7 @@ void New104Sec::EnCodeClock(INT8U flag)
     EnCodeDLMsg(Len);
 }
 
-BOOL New104Sec::EnCodeCtrlRet(void)  //ң�ط�У
+BOOL New104Sec::EnCodeCtrlRet(void)  //遥控返校
 {
     INT8U OnOff;
     INT8U dco=0;
@@ -2666,23 +2666,23 @@ BOOL New104Sec::EnCodeCtrlRet(void)  //ң�ط�У
     {
         switch(RetNo)
         {
-            case 1://1-ң��Ԥ�óɹ�
+            case 1://1-遥控预置成功
                 Cmd = SELECT;
-                pDLink->YkStatusForTest2 = 1;   //ll Ϊ���ݲ�����ʱ�޸� 2012-3-24
+                pDLink->YkStatusForTest2 = 1;   //ll 为广州测试临时修改 2012-3-24
                 break;
-            case 2://2-ң��Ԥ��ʧ��
+            case 2://2-遥控预置失败
                 Cmd = SELECT;
                 break;
-            case 3://3-ң��ִ�гɹ�
+            case 3://3-遥控执行成功
                 Cmd = OPERATE;
                 break;
-            case 4://4-ң��ִ��ʧ��
+            case 4://4-遥控执行失败
                 Cmd = OPERATE;
                 break;
-            case 5://5-ң�س����ɹ�
+            case 5://5-遥控撤消成功
                 Cmd = SELECT;
                 break;
-            case 6://6-ң�س���ʧ��
+            case 6://6-遥控撤消失败
                 Cmd = SELECT;
                 break;
             default:
@@ -2708,14 +2708,14 @@ BOOL New104Sec::EnCodeCtrlRet(void)  //ң�ط�У
 
     if (Cmd == SELECT)
     {
-        if((RetNo == 1)&&(Revert==1)&&(OnOff == 1)&&(SwitchNo==DevList[BODevIndex].DevData.BONum/2))//�������ϸ���ִ��
+        if((RetNo == 1)&&(Revert==1)&&(OnOff == 1)&&(SwitchNo==DevList[BODevIndex].DevData.BONum/2))//北京故障复归执行
         {
             Revert=0;
             ExecuteYK(MySelf.AppID,DeviceID,SwitchNo,OnOff);
             return  FALSE;
         }
 
-        if((RetNo == 5)||(RetNo == 6))//����
+        if((RetNo == 5)||(RetNo == 6))//撤消
         {
             TxMsg[2]=DEACTCON;
         }
@@ -2724,11 +2724,11 @@ BOOL New104Sec::EnCodeCtrlRet(void)  //ң�ط�У
             TxMsg[2]=ACTCON;
         }
 
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
 
         if(YKTypeID==C_SC_NA)
-            sco |= SCO_SE;//0x80 Ԥ�ñ�־λ
+            sco |= SCO_SE;//0x80 预置标志位
         else
             dco |= DCO_SE;
     }
@@ -2741,24 +2741,24 @@ BOOL New104Sec::EnCodeCtrlRet(void)  //ң�ط�У
             dco &= ~DCO_SE;
     }
 
-    if ((RetNo & 1) == 0)//2,4,6 ʧ��
+    if ((RetNo & 1) == 0)//2,4,6 失败
     {
         if(GetYKRYBState() == TRUE)
             TxMsg[2]|=0x40;
         else
         {
-            TxMsg[2] = COT_YKRYBERR;    //����ң����ѹ����� ll 
+            TxMsg[2] = COT_YKRYBERR;    //返回遥控软压板错误 ll 
             TxMsg[2] |= COT_PONO;
         }
     }
-    else//1,3,5�ɹ�
+    else//1,3,5成功
         TxMsg[2]&=(~0x40);
 
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
     TxMsg[InfoAddrLocation]   = LOBYTE((SwitchNo%0x80)+LBO-1);
     TxMsg[InfoAddrLocation+1] = HIBYTE((SwitchNo%0x80)+LBO-1);;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     if(YKTypeID==C_SC_NA)
@@ -2798,7 +2798,7 @@ BOOL New104Sec::EnCodeCtrlRet(void)  //ң�ط�У
 
 }
 
-void New104Sec::EnCodeReadData(void) //������
+void New104Sec::EnCodeReadData(void) //读数据
 {
     int No;
     INT16U Num;
@@ -2812,11 +2812,11 @@ void New104Sec::EnCodeReadData(void) //������
     if ((GroupTrn.InfoAddr>=LDBIinfoaddr)&&(GroupTrn.InfoAddr<=HDBI))
     {
         GroupTrn.TypeID=C_IC_NA;
-        if(GroupTrn.InfoAddr>=(LDBIinfoaddr+DevList[GroupTrn.DevIndex].DevData.DBINum/2))   /*��������Ϊ����ң����   wjr2009.8.25*/
+        if(GroupTrn.InfoAddr>=(LDBIinfoaddr+DevList[GroupTrn.DevIndex].DevData.DBINum/2))   /*读的数据为单点遥信则   wjr2009.8.25*/
         {
             if((GroupTrn.InfoAddr<LBIinfoaddr) || (GroupTrn.InfoAddr>=LBIinfoaddr+DevList[GroupTrn.DevIndex].DevData.BINum))
             {
-                ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //Ӧ��������������˱�־ wjr 2009.3.31
+                ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //应答完数据再清除此标志 wjr 2009.3.31
                 if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
                     return;
             
@@ -2838,7 +2838,7 @@ void New104Sec::EnCodeReadData(void) //������
             }
         }    
         else
-        {                                                                                 /*��������Ϊ˫��ң��*/
+        {                                                                                 /*读的数据为双点遥信*/
             No=GroupTrn.InfoAddr-LDBIinfoaddr;
             GroupTrn.GroupNo=1;
         }
@@ -2875,7 +2875,7 @@ void New104Sec::EnCodeReadData(void) //������
     }
     else
     {
-        ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //Ӧ��������������˱�־ wjr 2009.3.31
+        ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //应答完数据再清除此标志 wjr 2009.3.31
         if (!pDLink->GetFreeTxUnit(PRIORITY_1,&TxMsg))
             return;
             
@@ -2892,11 +2892,11 @@ void New104Sec::EnCodeReadData(void) //������
             EnCodeAllData((INT16U)No,(INT16U)No,&Num);
         else
               EnCodeCounter((INT16U)No,(INT16U)No,&Num);                                 
-        ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //Ӧ��������������˱�־ wjr 2009.3.31
+        ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //应答完数据再清除此标志 wjr 2009.3.31
         return;
        
     }
-    ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //Ӧ��������������˱�־ wjr 2009.3.31
+    ScheduleFlag&=(~SCHEDULE_DATA1_READDATA);           //应答完数据再清除此标志 wjr 2009.3.31
     
     pDLink->ConfS();
 }
@@ -2941,19 +2941,19 @@ INT16U New104Sec::EnCodeAllData(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     }
     else if (GroupTrn.GroupNo==16)
     {
-        Len = EnCodeAllLastSoe(BeginNo);  //�ٻ����100��SOE  Len ��ʾ�����Ƿ������ݷ���
+        Len = EnCodeAllLastSoe(BeginNo);  //召唤最近100条SOE  Len 表示本次是否有数据发送
     }
     
     return(Len);
 }
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeLastSoe()
-�������ܣ�  ���������100��SOE������Զ��ά����
-����˵����  BeginNo soe��ʼָ��
+函数名称：  EnCodeLastSoe()
+函数功能：  上送最近的100条SOE（广西远程维护）
+输入说明：  BeginNo soe起始指针
             
-���˵����  FALSE ��ʾû�����ˣ����־�� 
-            TRUE ��ʾ��������Ҫ����
-��ע��      BeginNo ��ʼ��ʱȷ�����ˣ���������BeginNo���͵��������ɣ�ÿ֡���18֡
+输出说明：  FALSE 表示没数据了，清标志， 
+            TRUE 表示还有数据要发送
+备注：      BeginNo 初始化时确定好了，本函数从BeginNo发送到结束即可，每帧最多18帧
 /------------------------------------------------------------------*/
 INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
 {
@@ -2970,10 +2970,10 @@ INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
         if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
             return(TRUE);
 
-        TxMsg[0]=M_SP_TB;   //��ʱ��ĵ�����Ϣ
+        TxMsg[0]=M_SP_TB;   //带时标的单点信息
         TxMsg[1]=0;
-        TxMsg[2]=INTRO16;  //ͨ����16�ٻ��ģ����Դ���ԭ��λ��16
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        TxMsg[2]=INTRO16;  //通过组16召唤的，所以传送原因位组16
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
@@ -2989,19 +2989,19 @@ INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
             SendNum=0;
             FramePos=0-InfoAddrSize;
             p=(struct BIEWithTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-12;//250-9-12=229ΪӦ�ò㷢����Ϣ��󳤶�
+            Length=ASDULEN-AsduHeadLength-12;//250-9-12=229为应用层发送信息最大长度
             
             j=0;
             while(j<Num)
             {
-                /*if(p->Status & BIDBI_STATUSE)    //SOE��״̬λBIDBI_STATUSE��0x10����ʾ��˫��ң��
+                /*if(p->Status & BIDBI_STATUSE)    //SOE的状态位BIDBI_STATUSE（0x10）表示是双点遥信
                 {
                     DBIDBData[DBISOEnum]=(struct BIEWithTimeData_t)(*p);
                     DBISOEnum++;
                 	j++;
                 	p++;
                 }
-                else*/  //��ʱ��֧��˫��ң�ţ����Ҫ֧���ٿ��Ǵ�
+                else*/  //暂时不支持双点遥信，如果要支持再考虑打开
                 {
                     
                     if(p->Status&0x80)
@@ -3013,25 +3013,25 @@ INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
                     {
                         TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LBIinfoaddr));
                         TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LBIinfoaddr));
-                        if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                        if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                             TxMsg[InfoAddrLocation+2]=0;
                     }
                     else
                     {
-                        TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//��Ϣ���ַ
+                        TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//信息体地址
                         TxData[FramePos+1] = HIBYTE((p->No + LBIinfoaddr));
-                        if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                        if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                             TxData[FramePos+2] = 0;
                     }
                     FramePos+=InfoAddrSize;
     
                     if((p->Status&BIACTIVEFLAG)==0)
-                        TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                        TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                     else
-                        TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                        TxData[FramePos]=Status;//设置遥信状态字节
                         
                     if(p->Status&SUBSTITUTEDFLAG)
-                        TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                        TxData[FramePos]|=P101_SB;//设置遥信状态字节
                     FramePos++;
     
                     AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
@@ -3044,7 +3044,7 @@ INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
                     TxData[FramePos++] = time.Month;
                     TxData[FramePos++] = time.Year;
     
-                    SendNum++;//���͸���
+                    SendNum++;//发送个数
                     p++;
                     j++;
                     if(FramePos>=Length)
@@ -3058,9 +3058,9 @@ INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
             
             if(SendNum>0)
             {
-                //�е���ң����Ҫ���ͣ���������������Ƿ��к�������
+                //有单点遥信需要发送，发送完后继续检查是否有后续数据
                 TxMsg[1] = SendNum;
-                Len = FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+                Len = FramePos+AsduHeadLength;//应用层报文总长度
                 
                 GroupTrn.SoeStartPtr +=  SendNum;
                 
@@ -3086,11 +3086,11 @@ INT16U New104Sec::EnCodeAllLastSoe(INT16U BeginNo)
                     myTaskUnlock ();
                     
                     if(DBISOEnum)
-                        return TRUE;    //��ʾ����δ��������
+                        return TRUE;    //表示还有未发送数据
                 }
                 else
                 {
-                	if(j>0) //j���Ѿ��������ĸ���
+                	if(j>0) //j是已经处理过的个数
                     {
                     	myTaskLock ();
                         if (DevList[i].Flag)
@@ -3118,7 +3118,7 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     INT8U Status;
     INT8U *TxData;
     INT16U i,SBINum,devid,Len = 0;
-    short ByteNum,Length,SendNum,FramePos,YxNum;    //SendNum���Ѿ���������ң�Ÿ�����YxNum�Ƿ��͵�ң�Ÿ���
+    short ByteNum,Length,SendNum,FramePos,YxNum;    //SendNum是已经处理过的遥信个数，YxNum是发送的遥信个数
     INT16U yxSendno;
 
     TxMsg[0]=Sec104Pad.SBIType;
@@ -3128,13 +3128,13 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     {
     	TxMsg[0]=M_DP_NA;
     }
-    //�㶫Ҫ���ȫ˫��ң�ŷ��ͣ����⴦��
+    //广东要求的全双点遥信发送，特殊处理
     if(bSendAllDBI)
         TxMsg[0] = M_DP_NA_ALLDBI;
     
-    TxMsg[2]=GroupTrn.COT;  //wjr  2009.8.26 ����ԭ��ֱ�ӵ���������Ĵ���ԭ�� 
+    TxMsg[2]=GroupTrn.COT;  //wjr  2009.8.26 传送原因直接等于组里面的传送原因 
     
-    if(CotSize==2)              //����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)              //传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[GroupTrn.DevIndex].Addr>>(8*jj);
@@ -3155,7 +3155,7 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
             TxMsg[InfoAddrLocation+1]=HIBYTE((GroupTrn.InfoAddr-DevList[GroupTrn.DevIndex].DevData.DBINum));
         }
     }     
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     TxData = TxMsg+AsduHeadLength;
@@ -3166,8 +3166,8 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     SendNum=0;
     YxNum=0;
     Len = 0;
-    Length=ASDULEN-AsduHeadLength-10;//250-7-8-2=233ΪӦ�ò㷢����Ϣ��󳤶�
-    if(TxMsg[0] == M_PS_NA)//20-�����bit
+    Length=ASDULEN-AsduHeadLength-10;//250-7-8-2=233为应用层发送信息最大长度
+    if(TxMsg[0] == M_PS_NA)//20-成组的bit
     {
         if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBIT_ReadSBI(devid,BeginNo,EndNo,DBData, &SBINum);
@@ -3190,23 +3190,23 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
                 break;
         }
     }
-    else if(TxMsg[0]==M_SP_NA)//1-����byte
+    else if(TxMsg[0]==M_SP_NA)//1-单点byte
     {
         if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         else
             ByteNum=CLBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         
-        //����ң�ŷ��Ͳ��ԣ��ڱ����ѯ�У��������˫��ң����ֹͣ���ͣ���ֹͣ���ͱ���������һ������ң��Ҫ����
+        //单点遥信发送策略，在本组查询中，如果遇到双点遥信则停止发送，但停止发送必须至少有一个单点遥信要发送
         for(i=0;i<ByteNum;i++)
         {
             SendNum++;
-            if((DBData[i] & BIDBI_STATUSE) == 0)    //��˫��ң�ţ��򰴵���ң�ŷ���
+            if((DBData[i] & BIDBI_STATUSE) == 0)    //非双点遥信，则按单点遥信发送
             {
                 if((DBData[i]&BIACTIVEFLAG)==0)
-                    TxData[FramePos]=((DBData[i]&0x80)>>7)|P101_IV;   //���ݿ�D7Ϊң��״̬,����Чλ
+                    TxData[FramePos]=((DBData[i]&0x80)>>7)|P101_IV;   //数据库D7为遥信状态,置无效位
                 else
-                    TxData[FramePos]=((DBData[i]&0x80)>>7);           //���ݿ�D7Ϊң��״̬
+                    TxData[FramePos]=((DBData[i]&0x80)>>7);           //数据库D7为遥信状态
                     
                 if(DBData[i]&SUBSTITUTEDFLAG)
                     TxData[FramePos]|=P101_SB;   
@@ -3215,7 +3215,7 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
                 FramePos++;
                 YxNum++;
                 
-                if(YxNum == 1)  //��⵽��1������ң�ţ���������Ϣ���ַ����Ϊ�п��ܵ�1����˫��ң�ţ�
+                if(YxNum == 1)  //检测到第1个单点遥信，则修正信息体地址（因为有可能第1个是双点遥信）
                 {
                     TxMsg[InfoAddrLocation] = LOBYTE(GroupTrn.InfoAddr+i);
                     TxMsg[InfoAddrLocation+1] = HIBYTE(GroupTrn.InfoAddr+i);
@@ -3223,7 +3223,7 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
             }
             else
             {
-                if(YxNum)   //��⵽˫��ң�ź���ֹͣ�������ͣ���Ϊ��������
+                if(YxNum)   //检测到双点遥信后，则停止后续发送（因为不连续）
                     break;
             }
             
@@ -3231,30 +3231,30 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
                 break;
         }
     }
-    else if(TxMsg[0]==M_DP_NA)//3-˫��byte      wjr
+    else if(TxMsg[0]==M_DP_NA)//3-双点byte      wjr
     {
-        //������˫��ң�ţ�����û�䵽���ͱ��������
-        //������˫��ң�ţ�һ֡���Ͳ�������
-        //������˫��ң�ţ������ٻ����
-        //����cos�����
+        //测试有双点遥信，但是没配到发送表的情况。
+        //测试有双点遥信，一帧发送不完的情况
+        //测试有双点遥信，分组召唤情况
+        //测试cos的情况
         
-        TxMsg[1]= 0;    //��˳��Ԫ��
+        TxMsg[1]= 0;    //非顺序元素
 
-    	EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1; //���ң�Ÿ������󣬳���DBData����������ô��Ҫѭ����
+    	EndNo = DevList[GroupTrn.DevIndex].DevData.BINum-1; //如果遥信个数过大，超过DBData缓冲区，那么需要循环读
     	if(DevList[GroupTrn.DevIndex].Flag==1)
             ByteNum=CRSendBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         else
             ByteNum=CLBYTE_ReadSBI(devid,BeginNo,EndNo,DBData);
         
-        FramePos = InfoAddrLocation;       //��������Ϣ���ַλ�� ll 2017-7-19
+        FramePos = InfoAddrLocation;       //调整到信息体地址位置 ll 2017-7-19
         for(i=0; i<(ByteNum); i++)
         {
-            SendNum++;  //�����¼�Ѿ���ȡ����ң�Ÿ���
+            SendNum++;  //这里记录已经读取过的遥信个数
             
             if(DBData[i] & BIDBI_STATUSE)
             {
-                yxSendno = GroupTrn.InfoAddr+i-LBIinfoaddr;   //���㱾�ε�ң�ŷ�����ţ���0��ʼ���㣨GroupTrn.InfoAddrĿǰ�Ǽ�¼�Ĵ�LBIinfoaddr��ʼ����ţ����ڿ��ƴ���ң�ŵĵ�ǰλ�ã� ll 21-03-28
-                TxMsg[FramePos++] = LOBYTE((yxSendno+LDBIinfoaddr));//��Ϣ���ַ
+                yxSendno = GroupTrn.InfoAddr+i-LBIinfoaddr;   //计算本次的遥信发送序号，从0开始计算（GroupTrn.InfoAddr目前是记录的从LBIinfoaddr开始的序号，用于控制传送遥信的当前位置） ll 21-03-28
+                TxMsg[FramePos++] = LOBYTE((yxSendno+LDBIinfoaddr));//信息体地址
                 TxMsg[FramePos++] = HIBYTE((yxSendno+LDBIinfoaddr));
                 TxMsg[FramePos++] = 0;
                 if((DBData[i]&BIACTIVEFLAG)==0)
@@ -3273,9 +3273,9 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
             }
         }
         
-        FramePos -= AsduHeadLength;     //Ϊ���ݵ���ң�ų��򣬵���FramePos�Ĵ�СΪȥ��AsduHeadLength��С  ll 2017-7-19
+        FramePos -= AsduHeadLength;     //为兼容单点遥信程序，调整FramePos的大小为去掉AsduHeadLength大小  ll 2017-7-19
     }
-    else if(TxMsg[0] == M_DP_NA_ALLDBI)//�㶫Ҫ���ȫ˫��ң�ŷ��ͣ����⴦��
+    else if(TxMsg[0] == M_DP_NA_ALLDBI)//广东要求的全双点遥信发送，特殊处理
     {
         TxMsg[0]=M_DP_NA;
         
@@ -3294,9 +3294,9 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
                 Status=(BIDBI_YXF>>5);
             
             if((DBData[i]&BIACTIVEFLAG)==0)
-                TxData[FramePos] = Status|P101_IV;   //���ݿ�D7Ϊң��״̬,����Чλ
+                TxData[FramePos] = Status|P101_IV;   //数据库D7为遥信状态,置无效位
             else
-                TxData[FramePos] = Status;           //���ݿ�D7Ϊң��״̬
+                TxData[FramePos] = Status;           //数据库D7为遥信状态
                 
             if(DBData[i]&SUBSTITUTEDFLAG)
                 TxData[FramePos] |= P101_SB;   
@@ -3321,8 +3321,8 @@ INT16U New104Sec::EnCodeAllYX(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
         }
         else
         {
-            Len = SendNum;    //������ֵ�²���������
-            pDLink->NotifyToAppSchedule();  //����û���κ����ݣ����Ƚ�����һ�η��� ll 2017-7-19
+            Len = SendNum;    //返回真值下步继续处理
+            pDLink->NotifyToAppSchedule();  //由于没发任何数据，调度进行下一次发送 ll 2017-7-19
         }
     }
 
@@ -3345,17 +3345,17 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
 
     TxMsg[0]=Sec104Pad.AIType;
     TxMsg[1]=VSQ_SQ;
-    TxMsg[2]=GroupTrn.COT;           //wjr  2009.8.26 ����ԭ��ֱ�ӵ���������Ĵ���ԭ�� 
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    TxMsg[2]=GroupTrn.COT;           //wjr  2009.8.26 传送原因直接等于组里面的传送原因 
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[GroupTrn.DevIndex].Addr>>(8*jj);
     TxMsg[InfoAddrLocation]   = LOBYTE(GroupTrn.InfoAddr);
     TxMsg[InfoAddrLocation+1] = HIBYTE(GroupTrn.InfoAddr);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
-    //ȡ������
+    //取出数据
     No=BeginNo;
     devid=DevList[GroupTrn.DevIndex].DevID;
     while (No<=EndNo)
@@ -3373,15 +3373,15 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
             Value=pAIValue->Value;
             switch(TxMsg[0])
             {
-                case M_ME_NA:     //9����ֵ����һ��ֵ
+                case M_ME_NA:     //9测量值，规一化值
                 case M_ME_ND:
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Flag=pAIValue->Flag;
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Value=Value;
                     //Value=(long)Value*0x3FFF/(long)DevList[GroupTrn.DevIndex].DevData.AIMaxValTrue[No];
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue=Value;
                     break;
-                case M_ME_NB:     //11����ֵ�����ֵ
-                case M_ME_NC:    //13����ֵ���̸�����
+                case M_ME_NB:     //11测量值，标度值
+                case M_ME_NC:    //13测量值，短浮点数
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Flag=pAIValue->Flag;
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue=Value;
                     DevList[GroupTrn.DevIndex].DevData.AIData[No].Value=Value;
@@ -3392,8 +3392,8 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
         }
     }//end of (while (No<=EndNo))
 
-    //��֡����
-    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234ΪӦ�ò㷢����Ϣ��󳤶�
+    //组帧发送
+    Length=ASDULEN-AsduHeadLength-8-sizeof(INT16U);//250-6-8-2=234为应用层发送信息最大长度
     FramePos=0;
     No=BeginNo;
     *pNum=0;
@@ -3402,8 +3402,8 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     {
         switch(TxMsg[0])
         {
-            case M_ME_NA:     //9����ֵ����һ��ֵ
-            case M_ME_NB:     //11����ֵ�����ֵ
+            case M_ME_NA:     //9测量值，规一化值
+            case M_ME_NB:     //11测量值，标度值
                 Value = (short)SL_ReadAI_S(DevList[GroupTrn.DevIndex].DevID, No, DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue);
                 //Value=DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue;
                 TxData[FramePos++]=LOBYTE(Value);
@@ -3417,7 +3417,7 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
                 FramePos++;
                 
                 break;
-            case M_ME_NC:    //13����ֵ���̸�����
+            case M_ME_NC:    //13测量值，短浮点数
                 temp = SL_ReadAI_S(DevList[GroupTrn.DevIndex].DevID, No, DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue);
                 //temp = (float)DevList[GroupTrn.DevIndex].DevData.AIData[No].TempValue;
                 p = (INT8U*)(&temp);
@@ -3451,7 +3451,7 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
         SendNum++;
         if(No>EndNo)
             Stop=TRUE;
-        if (SendNum>=127)//ÿ֡������127�����ݵ�Ԫ
+        if (SendNum>=127)//每帧不超过127个数据单元
             Stop=TRUE;
     }
 
@@ -3460,7 +3460,7 @@ INT16U New104Sec::EnCodeAllYC(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
         *pNum = SendNum;
         TxMsg[1] |= SendNum;
 
-        Len=FramePos+AsduHeadLength;//Ӧ�ò㱨�ĵ��ܳ���
+        Len=FramePos+AsduHeadLength;//应用层报文的总长度
         EnCodeDLMsg(Len);
     }
     return(Len);
@@ -3484,14 +3484,14 @@ INT16U New104Sec::EnCodeAllSta(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
 
     TxMsg[0]=M_BO_NA;
     TxMsg[1]=1;
-    TxMsg[2]=GroupTrn.COT;                       //����ԭ��ֱ�ӵ���������Ĵ���ԭ�� wjr 2009.8.26
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    TxMsg[2]=GroupTrn.COT;                       //传送原因直接等于组里面的传送原因 wjr 2009.8.26
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[GroupTrn.DevIndex].Addr>>(8*jj);
     TxMsg[InfoAddrLocation] = LOBYTE(RTUSTATUS);
     TxMsg[InfoAddrLocation+1] = HIBYTE(RTUSTATUS);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     TxData[0] = 0;
@@ -3507,7 +3507,7 @@ INT16U New104Sec::EnCodeAllSta(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     return(Len);
 }
 
-BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
+BOOL New104Sec::EnCodeNVA(void)  //编辑变化遥测数据;
 {
     BOOL Stop=FALSE;
     int  FramePos,i,j,jj;
@@ -3534,7 +3534,7 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
         TxMsg[0]=Sec104Pad.AIType;
         TxMsg[1]=0;
         TxMsg[2]=SPONT;
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[NvaActDevNo].Addr>>(8*jj);
@@ -3544,7 +3544,7 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
         
         No=0;
         devid=DevList[NvaActDevNo].DevID;
-        while (No<=(int)(DevList[NvaActDevNo].DevData.AINum-1))//ȡң��ֵ�����÷��ͱ�־
+        while (No<=(int)(DevList[NvaActDevNo].DevData.AINum-1))//取遥测值，设置发送标志
         {
             if(DevList[NvaActDevNo].Flag==1)
                 AINum=CRFSend_ReadAI(devid,No,No+511,(struct RealAI_t *)DBData);
@@ -3567,9 +3567,9 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
                     NvaVal = abs(DevList[NvaActDevNo].DevData.AIData[No].Value-value);
                 }
 
-                if (NvaVal >=DevList[NvaActDevNo].DevData.AIMaxVal[No])//�Ƚϱ仯ֵ������ֵ��С
+                if (NvaVal >=DevList[NvaActDevNo].DevData.AIMaxVal[No])//比较变化值与死区值大小
                 {
-                    DevList[NvaActDevNo].DevData.AIData[No].WillSend=TRUE;//���÷��ͱ�־
+                    DevList[NvaActDevNo].DevData.AIData[No].WillSend=TRUE;//设置发送标志
                 }
                 DevList[NvaActDevNo].DevData.AIData[No].Flag=pAIValue->Flag;
                 DevList[NvaActDevNo].DevData.AIData[No].TempValue=value;
@@ -3579,10 +3579,10 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
         }
         if (AINum<=0)
             return FALSE;
-        No=DevList[NvaActDevNo].DevData.NvaNo; //���ϴη����ң����ſ�ʼ����
+        No=DevList[NvaActDevNo].DevData.NvaNo; //从上次发完的遥测序号开始发送
         k=0;
-        Length=ASDULEN-AsduHeadLength-5-sizeof(INT16U);//���Է������ݵı��ĳ���
-        while ((FramePos<Length)&&(!Stop))//�鷢������֡
+        Length=ASDULEN-AsduHeadLength-5-sizeof(INT16U);//可以发送数据的报文长度
+        while ((FramePos<Length)&&(!Stop))//组发送数据帧
         {
             if (DevList[NvaActDevNo].DevData.AIData[No].WillSend)
             {
@@ -3590,21 +3590,21 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
                 {
                     TxMsg[InfoAddrLocation]   = LOBYTE((No+LAI));
                     TxMsg[InfoAddrLocation+1] = HIBYTE((No+LAI));
-                    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                         TxMsg[InfoAddrLocation+2]=0;
                 }
                 else
                 {
                     pTxData[FramePos]   = LOBYTE((No+LAI));
                     pTxData[FramePos+1] = HIBYTE((No+LAI));
-                    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                         pTxData[FramePos+2] = 0;
                 }
                 FramePos+=InfoAddrSize;
 
                 switch (TxMsg[0])
                 {
-                    case M_ME_NA:     //9����ֵ����һ��ֵ
+                    case M_ME_NA:     //9测量值，规一化值
                         value = (short)SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                         //value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         //value=(long)value*0x3FFF/(long)DevList[NvaActDevNo].DevData.AIMaxValTrue[No];
@@ -3622,7 +3622,7 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
                         DevList[NvaActDevNo].DevData.AIData[No].Value
                                       =DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         break;
-                    case M_ME_NB:     //11����ֵ����Ȼ�
+                    case M_ME_NB:     //11测量值，标度化
                         value = (short)SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                         //value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         pTxData[FramePos++]=LOBYTE(value);
@@ -3638,7 +3638,7 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
 
                         DevList[NvaActDevNo].DevData.AIData[No].Value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         break;
-                    case M_ME_NC:    //13����ֵ���̸�����
+                    case M_ME_NC:    //13测量值，短浮点数
                         temp = SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                         //temp = (float)DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         p = (INT8U*)(&temp);
@@ -3661,7 +3661,7 @@ BOOL New104Sec::EnCodeNVA(void)  //�༭�仯ң������;
                         DevList[NvaActDevNo].DevData.AIData[No].Value
                                        =DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         break;
-                    case M_ME_ND:        //21����Ʒ�������Ĳ���ֵ����һ��
+                    case M_ME_ND:        //21不带品质描述的测量值，归一化
                         value = (short)SL_ReadAI_S(DevList[NvaActDevNo].DevID, No, DevList[NvaActDevNo].DevData.AIData[No].TempValue);
                         //value=DevList[NvaActDevNo].DevData.AIData[No].TempValue;
                         //value=(long)value*0x3FFF/(long)DevList[NvaActDevNo].DevData.AIMaxValTrue[No];
@@ -3706,10 +3706,10 @@ void New104Sec::EnCodeDBISOE(void)
     struct BIEWithTimeData_t *p;
     struct Iec101ClockTime_t time;
 
-    TxMsg[0]=M_DP_TB;   //��ʱ��ĵ�����Ϣ
+    TxMsg[0]=M_DP_TB;   //带时标的单点信息
     TxMsg[1]=0;
     TxMsg[2]=SPONT;  //
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[DBIDevIndex].Addr>>(8*jj);
@@ -3718,7 +3718,7 @@ void New104Sec::EnCodeDBISOE(void)
     Len = 0;
     FramePos=0-InfoAddrSize;
     p=(struct BIEWithTimeData_t *)DBIDBData;
-    Length=ASDULEN-AsduHeadLength-12;//250-9-12=229ΪӦ�ò㷢����Ϣ��󳤶�
+    Length=ASDULEN-AsduHeadLength-12;//250-9-12=229为应用层发送信息最大长度
     
     
     Num=0;    
@@ -3726,7 +3726,7 @@ void New104Sec::EnCodeDBISOE(void)
     
     for(j=0; j<DBISOEnum; j++)
     {
-      //״̬ת�������ݿ��е�ң��D7Ϊ״̬����Լ��D0Ϊ״̬
+      //状态转换：数据库中的遥信D7为状态，规约中D0为状态
         /*if((p->No%2)==0)
         {
             if(p->Status&0x80)
@@ -3756,25 +3756,25 @@ void New104Sec::EnCodeDBISOE(void)
         {
             TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LDBIinfoaddr));
             TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LDBIinfoaddr));
-            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxMsg[InfoAddrLocation+2]=0;
         }
         else
         {
-            TxData[FramePos]   = LOBYTE((p->No + LDBIinfoaddr));//��Ϣ���ַ
+            TxData[FramePos]   = LOBYTE((p->No + LDBIinfoaddr));//信息体地址
             TxData[FramePos+1] = HIBYTE((p->No + LDBIinfoaddr));
-            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxData[FramePos+2] = 0;
         }
         FramePos+=InfoAddrSize;
 
         if((p->Status&BIACTIVEFLAG)==0)
-            TxData[FramePos]=Status1|Status0|P101_IV;//����ң��״̬�ֽ�
+            TxData[FramePos]=Status1|Status0|P101_IV;//设置遥信状态字节
         else
-            TxData[FramePos]=Status1|Status0;//����ң��״̬�ֽ�
+            TxData[FramePos]=Status1|Status0;//设置遥信状态字节
             
         if(p->Status&SUBSTITUTEDFLAG)
-            TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+            TxData[FramePos]|=P101_SB;//设置遥信状态字节
         
         FramePos++;
         AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
@@ -3788,7 +3788,7 @@ void New104Sec::EnCodeDBISOE(void)
         TxData[FramePos++] = time.Year;
 
                 
-        SendNum++;//���͸���
+        SendNum++;//发送个数
         p++;
         if(FramePos>=Length)
             break;
@@ -3797,7 +3797,7 @@ void New104Sec::EnCodeDBISOE(void)
      if(SendNum>0)
      {
          TxMsg[1]=SendNum;
-         Len=FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+         Len=FramePos+AsduHeadLength;//应用层报文总长度
          EnCodeDLMsg(Len);
                 
          
@@ -3824,11 +3824,11 @@ void New104Sec::EnCodeDBISOE(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeSOE()
-�������ܣ�  �༭SOE
-����˵����  
-���˵����  FALSE ��ʾû�����ˣ����־�� TRUE ��ʾ��������Ҫ����
-            SOE���¼�����(OnUData)��ͨ���ñ�־λ����EnCodeSOE
+函数名称：  EnCodeSOE()
+函数功能：  编辑SOE
+输入说明：  
+输出说明：  FALSE 表示没数据了，清标志， TRUE 表示还有数据要发送
+            SOE由事件驱动(OnUData)，通过置标志位调用EnCodeSOE
 /------------------------------------------------------------------*/
 BOOL New104Sec::EnCodeSOE(void) 
 {
@@ -3856,10 +3856,10 @@ BOOL New104Sec::EnCodeSOE(void)
         if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
             return(TRUE);
 
-        TxMsg[0]=M_SP_TB;   //��ʱ��ĵ�����Ϣ
+        TxMsg[0]=M_SP_TB;   //带时标的单点信息
         TxMsg[1]=0;
         TxMsg[2]=SPONT;  //
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
@@ -3875,13 +3875,13 @@ BOOL New104Sec::EnCodeSOE(void)
             SendNum=0;
             FramePos=0-InfoAddrSize;
             p=(struct BIEWithTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-12;//250-9-12=229ΪӦ�ò㷢����Ϣ��󳤶�
+            Length=ASDULEN-AsduHeadLength-12;//250-9-12=229为应用层发送信息最大长度
             
             j=0;
             while(j<Num)
             {
                 
-                if(DevList[i].DevData.DBINum>0)     //����ʹ��DevList[i].DevData.DBINum�ж��Ƿ���˫��ң�ţ���δ��벻��ʹ�� ll 2017-7-19
+                if(DevList[i].DevData.DBINum>0)     //不再使用DevList[i].DevData.DBINum判断是否有双点遥信，这段代码不再使用 ll 2017-7-19
                 {
                     if((p->No)<DevList[i].DevData.DBINum)
                     {
@@ -3903,25 +3903,25 @@ BOOL New104Sec::EnCodeSOE(void)
                         {
                             TxMsg[InfoAddrLocation]   = LOBYTE((p->No - DevList[i].DevData.DBINum + LBIinfoaddr));
                             TxMsg[InfoAddrLocation+1] = HIBYTE((p->No - DevList[i].DevData.DBINum + LBIinfoaddr));
-                            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                 TxMsg[InfoAddrLocation+2]=0;
                         }
                         else
                         {
-                            TxData[FramePos]   = LOBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));//��Ϣ���ַ
+                            TxData[FramePos]   = LOBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));//信息体地址
                             TxData[FramePos+1] = HIBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));
-                            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                 TxData[FramePos+2] = 0;
                         }
                         FramePos+=InfoAddrSize;
         
                         if((p->Status&BIACTIVEFLAG)==0)
-                            TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                            TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                         else
-                            TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                            TxData[FramePos]=Status;//设置遥信状态字节
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                            TxData[FramePos]|=P101_SB;//设置遥信状态字节
                         
                         FramePos++;
                         AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
@@ -3934,7 +3934,7 @@ BOOL New104Sec::EnCodeSOE(void)
                         TxData[FramePos++] = time.Month;
                         TxData[FramePos++] = time.Year;
         
-                        SendNum++;//���͸���
+                        SendNum++;//发送个数
                         p++;
                         j++;
                         if(FramePos>=Length)
@@ -3943,7 +3943,7 @@ BOOL New104Sec::EnCodeSOE(void)
                 }
                 else
                 {
-                    if(p->Status & BIDBI_STATUSE)    //SOE��״̬λBIDBI_STATUSE��0x10����ʾ��˫��ң��
+                    if(p->Status & BIDBI_STATUSE)    //SOE的状态位BIDBI_STATUSE（0x10）表示是双点遥信
                     {
                         DBIDBData[DBISOEnum]=(struct BIEWithTimeData_t)(*p);
                         DBISOEnum++;
@@ -3962,25 +3962,25 @@ BOOL New104Sec::EnCodeSOE(void)
                         {
                             TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LBIinfoaddr));
                             TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LBIinfoaddr));
-                            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                 TxMsg[InfoAddrLocation+2]=0;
                         }
                         else
                         {
-                            TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//��Ϣ���ַ
+                            TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//信息体地址
                             TxData[FramePos+1] = HIBYTE((p->No + LBIinfoaddr));
-                            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                 TxData[FramePos+2] = 0;
                         }
                         FramePos+=InfoAddrSize;
         
                         if((p->Status&BIACTIVEFLAG)==0)
-                            TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                            TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                         else
-                            TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                            TxData[FramePos]=Status;//设置遥信状态字节
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                            TxData[FramePos]|=P101_SB;//设置遥信状态字节
                         
                         FramePos++;        
                         AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
@@ -3993,7 +3993,7 @@ BOOL New104Sec::EnCodeSOE(void)
                         TxData[FramePos++] = time.Month;
                         TxData[FramePos++] = time.Year;
         
-                        SendNum++;//���͸���
+                        SendNum++;//发送个数
                         p++;
                         j++;
                         if(FramePos>=Length)
@@ -4007,9 +4007,9 @@ BOOL New104Sec::EnCodeSOE(void)
             
             if(SendNum>0)
             {
-                //�е���ң����Ҫ���ͣ���������������Ƿ��к�������
+                //有单点遥信需要发送，发送完后继续检查是否有后续数据
                 TxMsg[1] = SendNum;
-                Len = FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+                Len = FramePos+AsduHeadLength;//应用层报文总长度
                 myTaskLock ();
                 if (DevList[i].Flag)
                 {
@@ -4045,11 +4045,11 @@ BOOL New104Sec::EnCodeSOE(void)
                     myTaskUnlock ();
                     
                     if(DBISOEnum)
-                        return TRUE;    //��ʾ����δ��������
+                        return TRUE;    //表示还有未发送数据
                 }
                 else
                 {
-                	if(j>0) //j���Ѿ��������ĸ���
+                	if(j>0) //j是已经处理过的个数
                     {
                     	myTaskLock ();
                         if (DevList[i].Flag)
@@ -4071,11 +4071,11 @@ BOOL New104Sec::EnCodeSOE(void)
     return(FALSE);
 }
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeSOE_ALLDBI()
-�������ܣ�  �༭SOE
-����˵����  
-���˵����  FALSE ��ʾû�����ˣ����־�� TRUE ��ʾ��������Ҫ����
-            SOE���¼�����(OnUData)��ͨ���ñ�־λ����EnCodeSOE
+函数名称：  EnCodeSOE_ALLDBI()
+函数功能：  编辑SOE
+输入说明：  
+输出说明：  FALSE 表示没数据了，清标志， TRUE 表示还有数据要发送
+            SOE由事件驱动(OnUData)，通过置标志位调用EnCodeSOE
 /------------------------------------------------------------------*/
 BOOL New104Sec::EnCodeSOE_ALLDBI(void) 
 {
@@ -4094,10 +4094,10 @@ BOOL New104Sec::EnCodeSOE_ALLDBI(void)
         if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
             return(TRUE);
 
-        TxMsg[0]=M_DP_TB;   //��ʱ��ĵ�����Ϣ
+        TxMsg[0]=M_DP_TB;   //带时标的单点信息
         TxMsg[1]=0;
         TxMsg[2]=SPONT;  //
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
@@ -4114,7 +4114,7 @@ BOOL New104Sec::EnCodeSOE_ALLDBI(void)
             SendNum=0;
             FramePos=0-InfoAddrSize;
             p=(struct BIEWithTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-12;//250-9-12=229ΪӦ�ò㷢����Ϣ��󳤶�
+            Length=ASDULEN-AsduHeadLength-12;//250-9-12=229为应用层发送信息最大长度
             
             j=0;
             while(j<Num)
@@ -4128,25 +4128,25 @@ BOOL New104Sec::EnCodeSOE_ALLDBI(void)
                 {
                     TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LBIinfoaddr));
                     TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LBIinfoaddr));
-                    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                         TxMsg[InfoAddrLocation+2]=0;
                 }
                 else
                 {
-                    TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//��Ϣ���ַ
+                    TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//信息体地址
                     TxData[FramePos+1] = HIBYTE((p->No + LBIinfoaddr));
-                    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                         TxData[FramePos+2] = 0;
                 }
                 FramePos+=InfoAddrSize;
 
                 if((p->Status&BIACTIVEFLAG)==0)
-                    TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                    TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                 else
-                    TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                    TxData[FramePos]=Status;//设置遥信状态字节
                     
                 if(p->Status&SUBSTITUTEDFLAG)
-                    TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                    TxData[FramePos]|=P101_SB;//设置遥信状态字节
                 
                 FramePos++;        
                 AbsTimeConvTo(&p->Time,(void*)&time,IEC101CLOCKTIME);
@@ -4159,7 +4159,7 @@ BOOL New104Sec::EnCodeSOE_ALLDBI(void)
                 TxData[FramePos++] = time.Month;
                 TxData[FramePos++] = time.Year;
 
-                SendNum++;//���͸���
+                SendNum++;//发送个数
                 p++;
                 j++;
                 if(FramePos>=Length)
@@ -4169,9 +4169,9 @@ BOOL New104Sec::EnCodeSOE_ALLDBI(void)
             
             if(SendNum>0)
             {
-                //�е���ң����Ҫ���ͣ���������������Ƿ��к�������
+                //有单点遥信需要发送，发送完后继续检查是否有后续数据
                 TxMsg[1] = SendNum;
-                Len = FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+                Len = FramePos+AsduHeadLength;//应用层报文总长度
                 myTaskLock ();
                 if (DevList[i].Flag)
                 {
@@ -4206,7 +4206,7 @@ void New104Sec::EnCodeDBIENT(void)
     TxMsg[0]=M_DP_NA;
     TxMsg[1]=0;
     TxMsg[2]=SPONT;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=(DevList[DBICOSDevIndex].Addr)>>(8*jj);
@@ -4217,7 +4217,7 @@ void New104Sec::EnCodeDBIENT(void)
     SendNum=0;
     FramePos=0-InfoAddrSize;
     p=(struct BIEWithoutTimeData_t *)DBICOSDBData;
-    Length=ASDULEN-AsduHeadLength-3;//250-9-3=238ΪӦ�ò㷢����Ϣ��󳤶�
+    Length=ASDULEN-AsduHeadLength-3;//250-9-3=238为应用层发送信息最大长度
 
     
     for(j=0; j<DBICOSnum; j++)
@@ -4230,28 +4230,28 @@ void New104Sec::EnCodeDBIENT(void)
         {
             TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LDBIinfoaddr));
             TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LDBIinfoaddr));
-            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxMsg[InfoAddrLocation+2]=0;
         }
         else
         {
-            TxData[FramePos]   = LOBYTE((p->No + LDBIinfoaddr));//��Ϣ���ַ
+            TxData[FramePos]   = LOBYTE((p->No + LDBIinfoaddr));//信息体地址
             TxData[FramePos+1] = HIBYTE((p->No + LDBIinfoaddr));
-            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxData[FramePos+2] = 0;
         }
         
         FramePos+=InfoAddrSize;
         if((p->Status&BIACTIVEFLAG)==0)
-            TxData[FramePos]=Status1|Status0|P101_IV;//����ң��״̬�ֽ�
+            TxData[FramePos]=Status1|Status0|P101_IV;//设置遥信状态字节
         else
-            TxData[FramePos]=Status1|Status0;//����ң��״̬�ֽ�
+            TxData[FramePos]=Status1|Status0;//设置遥信状态字节
             
         if(p->Status&SUBSTITUTEDFLAG)
-            TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+            TxData[FramePos]|=P101_SB;//设置遥信状态字节
         
         FramePos++;
-        SendNum++;//���͸���
+        SendNum++;//发送个数
         p++;
         if(FramePos>=Length)
             break;
@@ -4263,7 +4263,7 @@ void New104Sec::EnCodeDBIENT(void)
     {
         
         TxMsg[1]=SendNum;
-        Len=FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+        Len=FramePos+AsduHeadLength;//应用层报文总长度
         if(EnCodeDLMsg(Len))
         {
             Num=SendNum;
@@ -4289,13 +4289,13 @@ void New104Sec::EnCodeDBIENT(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeBIENT()
-�������ܣ�  ��֯cos����
-����˵����  
-���˵����  TRUE  ����������   FALSE �޺�������
-��ע��      
+函数名称：  EnCodeBIENT()
+函数功能：  组织cos发送
+输入说明：  
+输出说明：  TRUE  后续有数据   FALSE 无后续数据
+备注：      
 /------------------------------------------------------------------*/
-BOOL New104Sec::EnCodeBIENT(void) //�༭COS
+BOOL New104Sec::EnCodeBIENT(void) //编辑COS
 {
     INT8U Len=0,Status;
     short Num,FramePos;
@@ -4318,7 +4318,7 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
         TxMsg[0]=M_SP_NA;
         TxMsg[1]=0;
         TxMsg[2]=SPONT;
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
@@ -4335,7 +4335,7 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
             SendNum=0;
             FramePos=0-InfoAddrSize;
             p=(struct BIEWithoutTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-3;//250-9-3=238ΪӦ�ò㷢����Ϣ��󳤶�
+            Length=ASDULEN-AsduHeadLength-3;//250-9-3=238为应用层发送信息最大长度
             
             j=0;
             while(j<Num)
@@ -4363,27 +4363,27 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
                         {
                             TxMsg[InfoAddrLocation]   = LOBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));
                             TxMsg[InfoAddrLocation+1] = HIBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));
-                            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                 TxMsg[InfoAddrLocation+2]=0;
                         }
                         else
                         {
-                            TxData[FramePos]   = LOBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));//��Ϣ���ַ
+                            TxData[FramePos]   = LOBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));//信息体地址
                             TxData[FramePos+1] = HIBYTE((p->No-DevList[i].DevData.DBINum + LBIinfoaddr));
-                            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                 TxData[FramePos+2] = 0;
                         }
                         FramePos+=InfoAddrSize;
                         if((p->Status&BIACTIVEFLAG)==0)
-                            TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                            TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                         else
-                            TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                            TxData[FramePos]=Status;//设置遥信状态字节
                             
                         if(p->Status&SUBSTITUTEDFLAG)
-                            TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                            TxData[FramePos]|=P101_SB;//设置遥信状态字节
                         
                         FramePos++;
-                        SendNum++;//���͸���
+                        SendNum++;//发送个数
                         p++;
                         j++;
                         if(FramePos>=Length)
@@ -4392,7 +4392,7 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
                 }
                 else
                 {
-                    if(p->Status & BIDBI_STATUSE)   //��⵽��˫��ң�ţ��ŵ���������������
+                    if(p->Status & BIDBI_STATUSE)   //检测到有双点遥信，放到缓冲区单独处理
                     {
                         DBICOSDBData[DBICOSnum] = (struct BIEWithoutTimeData_t)*p;
                         DBICOSnum++;
@@ -4410,28 +4410,28 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
                          {
                              TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LBIinfoaddr));
                              TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LBIinfoaddr));
-                             if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                             if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                  TxMsg[InfoAddrLocation+2]=0;
                          }
                          else
                          {
-                             TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//��Ϣ���ַ
+                             TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//信息体地址
                              TxData[FramePos+1] = HIBYTE((p->No + LBIinfoaddr));
-                             if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                             if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                                  TxData[FramePos+2] = 0;
                          }
                          FramePos+=InfoAddrSize;
                          if((p->Status&BIACTIVEFLAG)==0)
-                             TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                             TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                          else
-                             TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                             TxData[FramePos]=Status;//设置遥信状态字节
                              
                          if(p->Status&SUBSTITUTEDFLAG)
-                             TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                             TxData[FramePos]|=P101_SB;//设置遥信状态字节
                          
                         
                          FramePos++;
-                         SendNum++;//���͸���
+                         SendNum++;//发送个数
                          p++;
                          j++;
                          if(FramePos>=Length)
@@ -4446,7 +4446,7 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
             if(SendNum>0)
             {
                  TxMsg[1]=SendNum;
-                 Len=FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+                 Len=FramePos+AsduHeadLength;//应用层报文总长度
                  if(EnCodeDLMsg(Len))
                  {
                      myTaskLock ();
@@ -4464,7 +4464,7 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
             }
             else
             {
-                //û�е���ң�ţ�����Ƿ���˫��ң�ŷ���
+                //没有单点遥信，检查是否有双点遥信发送
                 if(DBICOSnum>0)
                 {
                     EnCodeDBIENT();
@@ -4514,13 +4514,13 @@ BOOL New104Sec::EnCodeBIENT(void) //�༭COS
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeBIENT_ALLDBI()
-�������ܣ�  ��֯cos���ͣ��㶫��ȫ˫��ң�ţ�
-����˵����  
-���˵����  TRUE  ����������   FALSE �޺�������
-��ע��      
+函数名称：  EnCodeBIENT_ALLDBI()
+函数功能：  组织cos发送（广东用全双点遥信）
+输入说明：  
+输出说明：  TRUE  后续有数据   FALSE 无后续数据
+备注：      
 /------------------------------------------------------------------*/
-BOOL New104Sec::EnCodeBIENT_ALLDBI(void) //�༭COS
+BOOL New104Sec::EnCodeBIENT_ALLDBI(void) //编辑COS
 {
     INT8U Len=0,Status;
     short Num,FramePos;
@@ -4539,7 +4539,7 @@ BOOL New104Sec::EnCodeBIENT_ALLDBI(void) //�༭COS
         TxMsg[0]=M_DP_NA;
         TxMsg[1]=0;
         TxMsg[2]=SPONT;
-        if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+        if(CotSize==2)//传送原因为2字节时，高位固定为0。
             TxMsg[CotLocation+1]=0;
         for(jj=0;jj<PubAddrSize;jj++)
             TxMsg[PubAddrLocation+jj]=DevList[i].Addr>>(8*jj);
@@ -4556,7 +4556,7 @@ BOOL New104Sec::EnCodeBIENT_ALLDBI(void) //�༭COS
             SendNum=0;
             FramePos=0-InfoAddrSize;
             p=(struct BIEWithoutTimeData_t *)DBData;
-            Length=ASDULEN-AsduHeadLength-3;//250-9-3=238ΪӦ�ò㷢����Ϣ��󳤶�
+            Length=ASDULEN-AsduHeadLength-3;//250-9-3=238为应用层发送信息最大长度
             
             j=0;
             while(j<Num)
@@ -4570,28 +4570,28 @@ BOOL New104Sec::EnCodeBIENT_ALLDBI(void) //�༭COS
                 {
                     TxMsg[InfoAddrLocation]   = LOBYTE((p->No + LBIinfoaddr));
                     TxMsg[InfoAddrLocation+1] = HIBYTE((p->No + LBIinfoaddr));
-                    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                         TxMsg[InfoAddrLocation+2]=0;
                 }
                 else
                 {
-                    TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//��Ϣ���ַ
+                    TxData[FramePos]   = LOBYTE((p->No + LBIinfoaddr));//信息体地址
                     TxData[FramePos+1] = HIBYTE((p->No + LBIinfoaddr));
-                    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+                    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                         TxData[FramePos+2] = 0;
                 }
                 FramePos+=InfoAddrSize;
                 if((p->Status&BIACTIVEFLAG)==0)
-                    TxData[FramePos]=Status|P101_IV;//����ң��״̬�ֽ�
+                    TxData[FramePos]=Status|P101_IV;//设置遥信状态字节
                 else
-                    TxData[FramePos]=Status;//����ң��״̬�ֽ�
+                    TxData[FramePos]=Status;//设置遥信状态字节
                      
                 if(p->Status&SUBSTITUTEDFLAG)
-                    TxData[FramePos]|=P101_SB;//����ң��״̬�ֽ�
+                    TxData[FramePos]|=P101_SB;//设置遥信状态字节
                  
                 
                 FramePos++;
-                SendNum++;//���͸���
+                SendNum++;//发送个数
                 p++;
                 j++;
                 if(FramePos>=Length)
@@ -4601,7 +4601,7 @@ BOOL New104Sec::EnCodeBIENT_ALLDBI(void) //�༭COS
             if(SendNum>0)
             {
                  TxMsg[1]=SendNum;
-                 Len=FramePos+AsduHeadLength;//Ӧ�ò㱨���ܳ���
+                 Len=FramePos+AsduHeadLength;//应用层报文总长度
                  if(EnCodeDLMsg(Len))
                  {
                      myTaskLock ();
@@ -4642,17 +4642,17 @@ INT8U New104Sec::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     }
     TxMsg[1]=0;
     if (GroupTrn.COT==REQ)
-        TxMsg[2]=REQCOGCN+GroupTrn.GroupNo;  //�ٻ�һ��
+        TxMsg[2]=REQCOGCN+GroupTrn.GroupNo;  //召唤一组
     else
         TxMsg[2]=GroupTrn.COT;
 
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[GroupTrn.DevIndex].Addr>>(8*jj);
     TxMsg[InfoAddrLocation] = LOBYTE(GroupTrn.InfoAddr);
     TxMsg[InfoAddrLocation+1] = HIBYTE(GroupTrn.InfoAddr);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     if ((GroupTrn.First)&&(GroupTrn.COT!=REQ))
@@ -4673,15 +4673,15 @@ INT8U New104Sec::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
             {
                 value=*p;
                 q=&(DevList[GroupTrn.DevIndex].DevData.CounterData[GetBeginNo+j]);
-                if (GroupTrn.Description&FREEZENORESET)//���᲻��λ
+                if (GroupTrn.Description&FREEZENORESET)//冻结不复位
                 {
-                    q->Value=value;    //������ֵΪ�ۼ�ֵ
+                    q->Value=value;    //被冻结值为累加值
                     q->Flag=0;
                     DevList[GroupTrn.DevIndex].DevData.LastCounterData[GetBeginNo+j]=value;
                 }
                 else if(GroupTrn.Description&FREEZERESET)
                 {
-                    q->Flag=0;        //������ֵΪ����ֵ
+                    q->Flag=0;        //被冻结值为增量值
                     q->Value=value-DevList[GroupTrn.DevIndex].DevData.LastCounterData[GetBeginNo+j];
                     DevList[GroupTrn.DevIndex].DevData.LastCounterData[GetBeginNo+j]=value;
                 }
@@ -4701,7 +4701,7 @@ INT8U New104Sec::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
     Len=0;
     No = BeginNo;
     TxData = TxMsg+AsduHeadLength;
-    Length=ASDULEN-AsduHeadLength-10-sizeof(INT16U);//250-7-10-2=231ΪӦ�ò㷢����Ϣ��󳤶�
+    Length=ASDULEN-AsduHeadLength-10-sizeof(INT16U);//250-7-10-2=231为应用层发送信息最大长度
     for(i=0;i<=EndNo-BeginNo;i++)
     {
         /*if ((Sec104Pad.control & CON_104GYKZ))    // xwm  2017-08-02
@@ -4713,24 +4713,24 @@ INT8U New104Sec::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
             value=DevList[GroupTrn.DevIndex].DevData.CounterData[No].Value;
         }
 
-        //д��Ϣ���ַ
+        //写信息体地址
         if (FramePos < 0)
         {
             TxMsg[InfoAddrLocation]   = LOBYTE((No+LBCR));
             TxMsg[InfoAddrLocation+1] = HIBYTE((No+LBCR));
-            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxMsg[InfoAddrLocation+2]=0;
         }
         else
         {
-            TxData[FramePos]   = LOBYTE(No+LBCR);//��Ϣ���ַ
-            TxData[FramePos+1] = HIBYTE(No+LBCR);//��Ϣ���ַ
-            if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+            TxData[FramePos]   = LOBYTE(No+LBCR);//信息体地址
+            TxData[FramePos+1] = HIBYTE(No+LBCR);//信息体地址
+            if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
                 TxData[FramePos+2] = 0;
         }
         FramePos+=InfoAddrSize;
 
-        //д���ֵ
+        //写电度值
         TxData[FramePos++]=LOBYTE(LOWORD(value));
         TxData[FramePos++]=HIBYTE(LOWORD(value));
         TxData[FramePos++]=LOBYTE(HIWORD(value));
@@ -4742,7 +4742,7 @@ INT8U New104Sec::EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum)
         }
         else
         {
-            TxData[FramePos++] = i;//˳���
+            TxData[FramePos++] = i;//顺序号
         }
 
 
@@ -4774,14 +4774,14 @@ BOOL New104Sec::EnCodeInitEnd(void)
     TxMsg[1] &= ~VSQ_SQ;
 
     TxMsg[CotLocation]=INIT_101;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=DevList[ActDevIndex].Addr>>(8*jj);
 
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     
@@ -4794,11 +4794,11 @@ BOOL New104Sec::EnCodeInitEnd(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_EncodeReadDir()
-�������ܣ�  ��Ŀ¼�Ĵ�����֯����֡
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  ProcFT_EncodeReadDir()
+函数功能：  对目录的传输组织发送帧
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_EncodeReadDir(void)
 {
@@ -4811,11 +4811,11 @@ void New104Sec::ProcFT_EncodeReadDir(void)
     
     len = 0;
     
-    //����Ŀ¼ID��Ŀ¼���ƣ���֯Ŀ¼���ļ��Ĵ���.���ļ�������ʼ��д
+    //根据目录ID或目录名称，组织目录内文件的传输.从文件数量开始填写
     
     rc = FT_ReadDirectory(&FtInfo, &len);
        
-    //len = 0 �ط񶨻ش�rc=true��ʾ���޺���
+    //len = 0 回否定回答，rc=true表示有无后续
     TxMsg[0] = F_FR_NA_N;
     TxMsg[1] = 1;   //VSQ
     TxMsg[2] = REQ; //COT
@@ -4824,18 +4824,18 @@ void New104Sec::ProcFT_EncodeReadDir(void)
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
     FramePos = 6;
-    //��Ϣ���ַ
+    //信息体地址
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
             
-    TxMsg[FramePos++] = 2;    //�������ݰ�����
+    TxMsg[FramePos++] = 2;    //附加数据包类型
     TxMsg[FramePos++] = FR_RD_DIR_CON;
     
     if(len)    
-        TxMsg[FramePos++] = 0;    //��ȡĿ¼�ɹ�
+        TxMsg[FramePos++] = 0;    //读取目录成功
     else
-        TxMsg[FramePos++] = 1;    //��ȡĿ¼ʧ��
+        TxMsg[FramePos++] = 1;    //读取目录失败
         
     TxMsg[FramePos++] = LLBYTE(FtInfo.dirid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.dirid);
@@ -4843,10 +4843,10 @@ void New104Sec::ProcFT_EncodeReadDir(void)
     TxMsg[FramePos++] = HHBYTE(FtInfo.dirid);
     
     if(rc)
-        TxMsg[FramePos++] = 1;    //�к���
+        TxMsg[FramePos++] = 1;    //有后续
     else
     {
-        TxMsg[FramePos++] = 0;    //�޺���
+        TxMsg[FramePos++] = 0;    //无后续
     }
     
     if(len)
@@ -4856,7 +4856,7 @@ void New104Sec::ProcFT_EncodeReadDir(void)
     }
     else
     {
-        TxMsg[FramePos++] = 0;    //�ļ�����=0
+        TxMsg[FramePos++] = 0;    //文件数量=0
     }
     
     
@@ -4867,11 +4867,11 @@ void New104Sec::ProcFT_EncodeReadDir(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_ReadDir()
-�������ܣ�  �����ļ������Ŀ¼���
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  ProcFT_ReadDir()
+函数功能：  处理文件传输读目录命令。
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_ReadDir(void)
 {
@@ -4883,34 +4883,34 @@ void New104Sec::ProcFT_ReadDir(void)
     //DirID = MAKEDWORD(MAKEWORD(pRxData[2],pRxData[3]),MAKEWORD(pRxData[4],pRxData[5]));
     namelen = pRxData[6];
     
-    memset(FtInfo.tempname, 0, 40); //��¼Ŀ¼��
+    memset(FtInfo.tempname, 0, 40); //记录目录名
     if(namelen>=40)
         namelen = 39;
-    memcpy(FtInfo.tempname,&pRxData[7],namelen);    //FtInfo.tempname����ʱ��ţ����ڴ�ӡ��Ϣ
+    memcpy(FtInfo.tempname,&pRxData[7],namelen);    //FtInfo.tempname中临时存放，用于打印信息
     for(i = 0; i < namelen; i++)
     {
         FtInfo.tempname[i] = tolower(FtInfo.tempname[i]);
     }
     
-    FtInfo.dirid = FT_GetDirID(&FtInfo);    //����Ŀ¼������Ŀ¼ID DirID����ʹ�� liuwei20170307
+    FtInfo.dirid = FT_GetDirID(&FtInfo);    //根据目录名返回目录ID DirID不再使用 liuwei20170307
     
-    pRx = &pRxData[7]+namelen;  //���ٻ���־λ�õ�ָ�븳ֵ��pRx    
-    CallFlag = pRx[0];  //�ٻ���־
+    pRx = &pRxData[7]+namelen;  //把召唤标志位置的指针赋值给pRx    
+    CallFlag = pRx[0];  //召唤标志
     
     FtInfo.callflag = CallFlag;  
     
-    logSysMsgNoTime("�ٻ�Ŀ¼%s, namelen=%d �ٻ���־=%d, DirID=%d",(INT32U)FtInfo.tempname, namelen, CallFlag, FtInfo.dirid);
+    logSysMsgNoTime("召唤目录%s, namelen=%d 召唤标志=%d, DirID=%d",(INT32U)FtInfo.tempname, namelen, CallFlag, FtInfo.dirid);
       
     if(CallFlag)
     {
-        pRx++;  //��������ѯ��ʼʱ���λ��
+        pRx++;  //调整到查询起始时间的位置
         StartTime.MSecond = MAKEWORD(pRx[0],pRx[1]);
         StartTime.Minute  = (pRx[2] & 0x3f);
         StartTime.Hour    = (pRx[3] & 0x1f);
         StartTime.Day     = (pRx[4] & 0x1f);
         StartTime.Month   = (pRx[5] & 0xf);
         StartTime.Year    = (pRx[6] & 0x7f);
-        pRx += 7;   //��������ѯ����ʱ���λ��
+        pRx += 7;   //调整到查询结束时间的位置
         EndTime.MSecond = MAKEWORD(pRx[0],pRx[1]);
         EndTime.Minute  = (pRx[2] & 0x3f);
         EndTime.Hour    = (pRx[3] & 0x1f);
@@ -4921,8 +4921,8 @@ void New104Sec::ProcFT_ReadDir(void)
         ConvToAbsTime(&StartTime,&FtInfo.startime, IEC101CLOCKTIME);
         ConvToAbsTime(&EndTime,  &FtInfo.endtime, IEC101CLOCKTIME);
         
-        logSysMsgNoTime("%d %d:%d:%dĿ¼��ѯ��ʼ",StartTime.Day,StartTime.Hour,StartTime.Minute,StartTime.MSecond/1000);
-        logSysMsgNoTime("%d %d:%d:%dĿ¼��ѯ����",EndTime.Day,EndTime.Hour,EndTime.Minute,EndTime.MSecond/1000);
+        logSysMsgNoTime("%d %d:%d:%d目录查询开始",StartTime.Day,StartTime.Hour,StartTime.Minute,StartTime.MSecond/1000);
+        logSysMsgNoTime("%d %d:%d:%d目录查询结束",EndTime.Day,EndTime.Hour,EndTime.Minute,EndTime.MSecond/1000);
     }
     else
     {
@@ -4935,11 +4935,11 @@ void New104Sec::ProcFT_ReadDir(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_ReadFileAct()
-�������ܣ�  ����Ҫ�����ļ�
-����˵����  
-���˵����  
-��ע��      
+函数名称：  ProcFT_ReadFileAct()
+函数功能：  激活要读的文件
+输入说明：  
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_ReadFileAct(void)
 {
@@ -4954,7 +4954,7 @@ void New104Sec::ProcFT_ReadFileAct(void)
         namelen = 39;
     memcpy(FtInfo.tempname, &pRxData[3], namelen);
     
-    //�����ļ����ƣ���֯�ļ��Ĵ���
+    //根据文件名称，组织文件的传输
     for(i = 0; i < namelen; i++)
     {
         FtInfo.tempname[i] = tolower(FtInfo.tempname[i]);
@@ -4963,7 +4963,7 @@ void New104Sec::ProcFT_ReadFileAct(void)
 
     len = FT_ReadFileAct(&FtInfo, FtInfo.tempname);
     
-    //��֯��������
+    //组织返回数据
     if (!pDLink->GetFreeTxUnit(PRIORITY_2, &TxMsg))
         return;   
     
@@ -4975,21 +4975,21 @@ void New104Sec::ProcFT_ReadFileAct(void)
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
     FramePos = 6;
-    //��Ϣ���ַ
+    //信息体地址
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     
-    TxMsg[FramePos++] = 2;    //�������ݰ�����
+    TxMsg[FramePos++] = 2;    //附加数据包类型
     TxMsg[FramePos++] = FR_RD_FILE_ACTCON; 
-    successPos = FramePos;  //��¼�ɹ�ʧ��λ�� 
+    successPos = FramePos;  //记录成功失败位置 
     FramePos++;
     
-    //�ļ���
+    //文件名
     TxMsg[FramePos++] = namelen;
     memcpy(&TxMsg[FramePos], FtInfo.tempname, namelen);
     FramePos += namelen;
-    //4�ֽ��ļ���ʾ�ļ�ID
+    //4字节文件标示文件ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
@@ -4997,7 +4997,7 @@ void New104Sec::ProcFT_ReadFileAct(void)
     
     if(len)
     {
-        TxMsg[successPos] = 0;    //�ɹ�
+        TxMsg[successPos] = 0;    //成功
         TxMsg[FramePos++] = LLBYTE(len); 
         TxMsg[FramePos++] = LHBYTE(len);
         TxMsg[FramePos++] = HLBYTE(len);
@@ -5018,11 +5018,11 @@ void New104Sec::ProcFT_ReadFileAct(void)
    
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_EncodeFileData()
-�������ܣ�  ����Ҫ������ļ�����
-����˵����  
-���˵����  
-��ע��      
+函数名称：  ProcFT_EncodeFileData()
+函数功能：  传输要传输的文件内容
+输入说明：  
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_EncodeFileData(void)
 {
@@ -5041,28 +5041,28 @@ void New104Sec::ProcFT_EncodeFileData(void)
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
     FramePos = 6;
-    //��Ϣ���ַ
+    //信息体地址
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     
-    TxMsg[FramePos++] = 2;    //�������ݰ�����
+    TxMsg[FramePos++] = 2;    //附加数据包类型
     TxMsg[FramePos++] = FR_RD_FILE_DATA;
     
-    //4�ֽ��ļ���ʾ�ļ�ID
+    //4字节文件标示文件ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HHBYTE(FtInfo.fileid);
     
-    //����FileFlag�ļ���ʾ�����Ҳ�ͬ�ļ� 
+    //根据FileFlag文件标示，查找不同文件 
     rc = FT_ReadData(&FtInfo, &TxMsg[FramePos], &len);
             
-    EnCodeDLMsg(FramePos+len);     //6��ʾ�������ݰ���������ʶ���ļ�ID 
+    EnCodeDLMsg(FramePos+len);     //6表示附加数据包、操作标识、文件ID 
     
     if(rc == 0)
     {
-        //û�к���������
+        //没有后续数据了
         ScheduleFlag &= ~SCHEDULE_FT_DATA;
     }
     
@@ -5084,12 +5084,12 @@ void New104Sec::ProcFileInit(void)
     //FtInfo.HisFileTxt = HisFileTxt;
     /*if(Sec104Pad.SoeDirID != 0)
     {
-        FtInfo.SoeDirID = Sec104Pad.SoeDirID;   //SOE  Ŀ¼ID  
-        FtInfo.YkDirID  = Sec104Pad.YkDirID;    //ң��   Ĭ��ֵ 2
-        FtInfo.ExvDirID = Sec104Pad.ExvDirID;   //��ֵ   Ĭ��ֵ 3
-        FtInfo.FixDirID = Sec104Pad.FixDirID;   //����   Ĭ��ֵ 4
-        FtInfo.UlogDirID = Sec104Pad.UlogDirID;  //��־   Ĭ��ֵ 7
-        FtInfo.LbDirID  = Sec104Pad.LbDirID;    //¼��   Ĭ��ֵ 8 
+        FtInfo.SoeDirID = Sec104Pad.SoeDirID;   //SOE  目录ID  
+        FtInfo.YkDirID  = Sec104Pad.YkDirID;    //遥控   默认值 2
+        FtInfo.ExvDirID = Sec104Pad.ExvDirID;   //极值   默认值 3
+        FtInfo.FixDirID = Sec104Pad.FixDirID;   //定点   默认值 4
+        FtInfo.UlogDirID = Sec104Pad.UlogDirID;  //日志   默认值 7
+        FtInfo.LbDirID  = Sec104Pad.LbDirID;    //录波   默认值 8 
     }
     else
     {
@@ -5113,11 +5113,11 @@ void New104Sec::ProcFileInit(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_WriteFileDataConf()
-�������ܣ�  д�ļ������������ȷ��֡��
-����˵����    
-���˵����  
-��ע��      
+函数名称：  ProcFT_WriteFileDataConf()
+函数功能：  写文件传输结束，回确认帧。
+输入说明：    
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_WriteFileDataConf(void)
 {
@@ -5126,7 +5126,7 @@ void New104Sec::ProcFT_WriteFileDataConf(void)
     if (!pDLink->GetFreeTxUnit(PRIORITY_2, &TxMsg))
         return;
     
-    //��֯��������
+    //组织返回数据
     TxMsg[0] = F_FR_NA_N;
     TxMsg[1] = 1;   //VSQ
     TxMsg[2] = REQ;
@@ -5135,15 +5135,15 @@ void New104Sec::ProcFT_WriteFileDataConf(void)
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
     FramePos = 6;
-    //��Ϣ���ַ
+    //信息体地址
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     
-    TxMsg[FramePos++] = 2;    //�������ݰ�����
+    TxMsg[FramePos++] = 2;    //附加数据包类型
     TxMsg[FramePos++] = FR_WR_FILE_DATACON;
     
-    //4�ֽ��ļ���ʾ�ļ�ID
+    //4字节文件标示文件ID
     TxMsg[FramePos++] = LLBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = LHBYTE(FtInfo.fileid);
     TxMsg[FramePos++] = HLBYTE(FtInfo.fileid);
@@ -5154,19 +5154,19 @@ void New104Sec::ProcFT_WriteFileDataConf(void)
     TxMsg[FramePos++] = HLBYTE(FtInfo.offset);
     TxMsg[FramePos++] = HHBYTE(FtInfo.offset); 
     
-    TxMsg[FramePos++] = FtInfo.errinfo;  //���������
+    TxMsg[FramePos++] = FtInfo.errinfo;  //结果描述符
     
     EnCodeDLMsg(FramePos);
         
-    //logSysMsgNoTime("д�ļ�ȷ��֡%s, err=%d, offset=%d", (INT32U)FtInfo.name, FtInfo.errinfo, FtInfo.offset,0);
+    //logSysMsgNoTime("写文件确认帧%s, err=%d, offset=%d", (INT32U)FtInfo.name, FtInfo.errinfo, FtInfo.offset,0);
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_WriteFileData()
-�������ܣ�  ����Ҫд���ļ�����
-����˵����  
-���˵����  
-��ע��      
+函数名称：  ProcFT_WriteFileData()
+函数功能：  传输要写的文件内容
+输入说明：  
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_WriteFileData(void)
 {
@@ -5176,17 +5176,17 @@ void New104Sec::ProcFT_WriteFileData(void)
     
     fileid = MAKEDWORD(MAKEWORD(pRxData[2],pRxData[3]),MAKEWORD(pRxData[4],pRxData[5]));
     offset = MAKEDWORD(MAKEWORD(pRxData[6],pRxData[7]),MAKEWORD(pRxData[8],pRxData[9]));
-    IsNoFinish = pRxData[10]; //0���޺���  1���к���
+    IsNoFinish = pRxData[10]; //0：无后续  1：有后续
 
     FtInfo.errinfo = 0;
     if(fileid != FtInfo.fileid)
     {
-        //�ļ�ID��һ��
+        //文件ID不一致
         FtInfo.errinfo = 4;  
     }
     if(offset != FtInfo.offset)
     {
-        //�ļ������쳣
+        //文件长度异常
         FtInfo.errinfo = 3;
     }
     
@@ -5195,12 +5195,12 @@ void New104Sec::ProcFT_WriteFileData(void)
     {  
         if(IsNoFinish == FALSE)
         {
-            ProcFT_WriteFileDataConf();     //��ǰ��ȷ��֡����Ҫ������վ�Ƿ������Ͻ���ͨ�ţ�����Ӧ����дflash��ʱ��
+            ProcFT_WriteFileDataConf();     //提前回确认帧，需要测试主站是否能马上进行通信，程序应该有写flash的时间
         } 
         //if(INFOADDR2BYTE)
             //segmentlen = (FrameLen+2) - (AsduHeadLength-1) - 12;
         //else
-            segmentlen = (FrameLen+2) - AsduHeadLength - 12;   //ASDUlen= (FrameLen+2) AsduHeadLength=9  12=�����ݿ�������ֽ�
+            segmentlen = (FrameLen+2) - AsduHeadLength - 12;   //ASDUlen= (FrameLen+2) AsduHeadLength=9  12=除数据块的其他字节
         
         if(FtInfo.IsWriteProgramFile)
         {
@@ -5210,14 +5210,14 @@ void New104Sec::ProcFT_WriteFileData(void)
             }
             else
             {
-                FtInfo.errinfo = 1; //δ֪����
+                FtInfo.errinfo = 1; //未知错误
                 rc = TRUE;
-                logSysMsgNoTime("���������쳣(������)",0,0,0,0);
+                logSysMsgNoTime("软件升级异常(被撤销)",0,0,0,0);
             }
         }
         else
         {
-            //���طǳ��������ļ�
+            //下载非程序升级文件
             rc = FT_WriteFileData(&FtInfo, &pRxData[11], segmentlen, pRxData[11+segmentlen], IsNoFinish);
             
         }
@@ -5226,19 +5226,19 @@ void New104Sec::ProcFT_WriteFileData(void)
             return;
     }
 
-    //��û�н������������쳣��ʱ��ҲҪ��ȷ��֡
+    //在没有结束，但是有异常的时候也要回确认帧
     if((rc == TRUE) && (IsNoFinish))
-        ProcFT_WriteFileDataConf(); //�����ļ���ȷ��֡���Ƿ������Ƚϰ�ȫ�������ֳ�����λ����ô��
+        ProcFT_WriteFileDataConf(); //升级文件的确认帧还是放在最后比较安全，否则现场给复位了怎么办
     
-    FT_ParaReset(&FtInfo);  //�ļ���������������
+    FT_ParaReset(&FtInfo);  //文件传输结束，清参数
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_WriteFileAct()
-�������ܣ�  д�ļ������¼�ļ�������ʼ����ز�����
-����˵����    
-���˵����  
-��ע��      
+函数名称：  ProcFT_WriteFileAct()
+函数功能：  写文件激活。记录文件名，初始化相关参数等
+输入说明：    
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_WriteFileAct(void)
 {
@@ -5259,7 +5259,7 @@ void New104Sec::ProcFT_WriteFileAct(void)
     filesize = MAKEDWORD(MAKEWORD(pdata[4],pdata[5]),MAKEWORD(pdata[6],pdata[7]));
     
     
-    //�����ļ����ƣ���֯�ļ��Ĵ���
+    //根据文件名称，组织文件的传输
     for(i = 0; i < namelen; i++)
     {
         FtInfo.tempname[i] = tolower(FtInfo.tempname[i]);
@@ -5272,7 +5272,7 @@ void New104Sec::ProcFT_WriteFileAct(void)
         
     result = FT_WriteFileAct(&FtInfo);
     
-    //��֯��������
+    //组织返回数据
     if (!pDLink->GetFreeTxUnit(PRIORITY_2, &TxMsg))
         return;   
     
@@ -5288,21 +5288,21 @@ void New104Sec::ProcFT_WriteFileAct(void)
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
     FramePos = 6;
-    //��Ϣ���ַ
+    //信息体地址
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 0;
     
-    TxMsg[FramePos++] = 2;     //�������ݰ�����
+    TxMsg[FramePos++] = 2;     //附加数据包类型
     TxMsg[FramePos++] = FR_WR_FILE_ACTCON;
     TxMsg[FramePos++] = result;
     
-    //�ļ���
+    //文件名
     TxMsg[FramePos++] = namelen;
     memcpy(&TxMsg[FramePos], FtInfo.name, namelen);
     FramePos += namelen;
     
-    //4�ֽ��ļ���ʾ�ļ�ID
+    //4字节文件标示文件ID
     TxMsg[FramePos++] = LLBYTE(fileid);
     TxMsg[FramePos++] = LHBYTE(fileid);
     TxMsg[FramePos++] = HLBYTE(fileid);
@@ -5317,11 +5317,11 @@ void New104Sec::ProcFT_WriteFileAct(void)
 
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFT_ProgramUpdate()
-�������ܣ�  ���������������
-����˵����    
-���˵����  
-��ע��      
+函数名称：  ProcFT_ProgramUpdate()
+函数功能：  软件升级命令处理。
+输入说明：    
+输出说明：  
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcFT_ProgramUpdate(void)
 {
@@ -5329,12 +5329,12 @@ void New104Sec::ProcFT_ProgramUpdate(void)
     {
         if(pRxData[0] & 0x80) //CTYPE
         {   
-            //��������   
+            //升级启动   
             FtInfo.IsUpdate = TRUE;
         }
         else
         {
-            //��������
+            //升级结束
             FT_ParaReset(&FtInfo);
             //FtInfo.IsUpdate = FALSE; 
             StartProgramUpdate();
@@ -5343,19 +5343,19 @@ void New104Sec::ProcFT_ProgramUpdate(void)
     }
     else
     {
-        //��������
+        //升级撤销
         FT_ParaReset(&FtInfo);
         ClearProgramUpdate();
     }
     
     
-    //����ȷ��֡
+    //返回确认帧
     if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
     {
         return ;
     }
     
-    if((RxCot&COT_REASON) == DEACT) //ȡ������
+    if((RxCot&COT_REASON) == DEACT) //取消升级
     {
         RxMsg[CotLocation] = DEACTCON;  
     }
@@ -5373,31 +5373,31 @@ void New104Sec::ProcFT_ProgramUpdate(void)
 void New104Sec::ProcFileTran(void)
 {
     
-    if(pRxData[0] != 2) //�������ݰ����� 2=�ļ�����
+    if(pRxData[0] != 2) //附加数据包类型 2=文件传输
     {   
         return;   
     }
     
-    switch(pRxData[1])  //�ļ�������ʾ
+    switch(pRxData[1])  //文件操作标示
     {
-        case FR_RD_DIR: //��Ŀ¼
+        case FR_RD_DIR: //读目录
             ProcFT_ReadDir();
             break;
         
-        case FR_RD_FILE_ACT:    //���ļ�����
+        case FR_RD_FILE_ACT:    //读文件激活
             ProcFT_ReadFileAct();
             
             break;
         
-        case FR_RD_FILE_DATACON:   //���ļ�����ȷ��
+        case FR_RD_FILE_DATACON:   //读文件数据确认
             
             break;
         
-        case FR_WR_FILE_ACT:    //д�ļ�����
+        case FR_WR_FILE_ACT:    //写文件激活
             ProcFT_WriteFileAct();
             break;
         
-        case FR_WR_FILE_DATA:   //д�ļ�����
+        case FR_WR_FILE_DATA:   //写文件数据
             ProcFT_WriteFileData();
             break;
     }
@@ -5406,11 +5406,11 @@ void New104Sec::ProcFileTran(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcFileSyn()
-�������ܣ�  �����ļ�ͬ������
-����˵����  
-���˵���� 
-��ע������ģ��2018��׼���ļ�ͬ����cl 20180314     
+函数名称：  ProcFileSyn()
+函数功能：  处理文件同步命令
+输入说明：  
+输出说明： 
+备注：线损模块2018标准，文件同步；cl 20180314     
 /------------------------------------------------------------------*/
 void New104Sec::ProcFileSyn(void)
 {
@@ -5422,21 +5422,21 @@ void New104Sec::ProcFileSyn(void)
     TxMsg[0]=F_FS_NA_N;              
     TxMsg[1]=1;
     TxMsg[2]=ACTCON;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
     TxMsg[AsduHeadLength]=0;
 
     Len=AsduHeadLength+1;
     EnCodeDLMsg(Len);
-    //��101��վ��������Ϣ����101���ļ��ٻ�
+    //给101主站任务发送消息启动101的文件召唤
     
-    //��101��վ��������Ϣ����101���ļ��ٻ�
+    //给101主站任务发送消息启动101的文件召唤
 }
 
 void New104Sec::ProcXsFileSynFinish(void)
@@ -5445,19 +5445,19 @@ void New104Sec::ProcXsFileSynFinish(void)
     TxMsg[0]=F_FS_NA_N;              
     TxMsg[1]=1;
     TxMsg[2]=ACTTERM;
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
     TxMsg[AsduHeadLength]=0;
 
     Len=AsduHeadLength+1;
     EnCodeDLMsg(Len); 
-    logSysMsgWithTime("�ļ�ͬ����ֹ",0,0,0,0); //debugʹ��CL 20180528    
+    logSysMsgWithTime("文件同步终止",0,0,0,0); //debug使用CL 20180528    
 }
 
 
@@ -5467,28 +5467,28 @@ void New104Sec::ProcXsFileSynFinish(void)
 
  #ifdef STANDARDFILETRANS104
 /*------------------------------------------------------------------/
-�������ƣ�  StdProcFT_ReadDir()
-�������ܣ�  �����ļ������Ŀ¼���
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  StdProcFT_ReadDir()
+函数功能：  处理文件传输读目录命令。
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_ReadDir(void)
 {
-    //������Ϣ���ַ����һ���ٻ�¼���ļ��������ļ���¼���ļ�����Ϣ���ַ��0x680A
+    //根据信息体地址区分一下召唤录波文件或其他文件，录波文件的信息体地址是0x680A
     
     StdFtInfo.dirid    = RxInfoAddr;
     /*if(StdFtInfo.dirid == FT_DIRID_LB)
     {
-        StdFileInfo.SectionNum = 2;          //����¼���Ĺ涨��¼���ļ���Ϊ2�ڣ�.cfg�ļ�����Ϊ��һ�ڣ�.dat�ļ�����Ϊ�ڶ��ڡ�
+        StdFileInfo.SectionNum = 2;          //根据录波的规定，录波文件分为2节，.cfg文件定义为第一节，.dat文件定义为第二节。
     }*/
     ScheduleFlag |= SCHEDULE_FT_DIR_STD;   
 }
 /*------------------------------------------------------------------/
-�������ƣ�StdGetFileInfo()
-�������ܣ��ļ������������F_SC_NA��
-����˵����pData:Ӧ�ò�������
-���˵����          
+函数名称：StdGetFileInfo()
+函数功能：文件命令处理函数（F_SC_NA）
+输入说明：pData:应用层请求报文
+输出说明：          
 /------------------------------------------------------------------*/
 void New104Sec::StdGetFileInfo(INT8U* pData)
 {
@@ -5528,46 +5528,46 @@ void New104Sec::StdGetFileInfo(INT8U* pData)
         /*vsq*/
         
         /*cot*/
-        if (StdFileInfo.RxCot == SFREQ)   /*�ٻ�Ŀ¼*/
+        if (StdFileInfo.RxCot == SFREQ)   /*召唤目录*/
         {
     
             
         }
-        else if (StdFileInfo.RxCot == SFILE)     /*����*/
+        else if (StdFileInfo.RxCot == SFILE)     /*其他*/
         {
             switch (scq)
             {
                 
                     
-                case 1:     /*ѡ���ļ�*/
+                case 1:     /*选择文件*/
                     StdFileInfo.FileStep = SelectFile;
                     StdFileInfo.SectionName = 0;
                     break;
                     
-                case 2:     /*�����ļ�*/
+                case 2:     /*请求文件*/
                     StdFileInfo.FileStep = CallFile;
                     break;
                     
-                case 3:     /*ֹͣ�����ļ�*/
+                case 3:     /*停止激活文件*/
                     StdFileInfo.FileStep = FileOver;
                     break;
                     
                     
-                case 4:     /*ɾ���ļ�*/
+                case 4:     /*删除文件*/
                     StdFileInfo.FileStep = FileOver;
                     break;
                     
-                case 5:     /*ѡ���*/
+                case 5:     /*选择节*/
                     StdFileInfo.FileStep = CallSection;
                     StdFileInfo.SectionName = sname;
                     break;
                     
-                case 6:     /*�����*/
+                case 6:     /*请求节*/
                     StdFileInfo.FileStep = CallSection;
                     StdFileInfo.SectionName = sname;
                     break;
                     
-                case 7:     /*ֹͣ�����*/
+                case 7:     /*停止激活节*/
                     StdFileInfo.FileStep = FileOver;
                     break;
                     
@@ -5579,7 +5579,7 @@ void New104Sec::StdGetFileInfo(INT8U* pData)
             
             
         }
-        else    /*��Ч*/
+        else    /*无效*/
         {
             
         }
@@ -5610,10 +5610,10 @@ void New104Sec::StdGetFileInfo(INT8U* pData)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�StdProcFT_ReadFile()
-�������ܣ���÷�����Ϣ�������չ�Լ��Ӧ�ò�涨�����ͱ�ʶ��֡
-����˵������
-���˵����pData����֡�����ݣ�Flag��TRUE���к���֡��������֡�����ݳ���
+函数名称：StdProcFT_ReadFile()
+函数功能：获得返回信息，将按照规约的应用层规定从类型标识组帧
+输入说明：无
+输出说明：pData：组帧的数据；Flag：TRUE，有后续帧；返回组帧的数据长度
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_ReadFile()
 {
@@ -5622,7 +5622,7 @@ void New104Sec::StdProcFT_ReadFile()
     switch(StdFileInfo.FileStep)
     {
         case SelectFile:
-            //rc = SFileReady();        //�ڴ�Ҫȥ�����ļ���
+            //rc = SFileReady();        //在此要去生成文件，
             ScheduleFlag |= SCHEDULE_FT_FILE_READY_STD;
             break;
         
@@ -5654,7 +5654,7 @@ void New104Sec::StdProcFileTran(void)
 {
     switch(StdFileInfo.RxCot)
     {
-        case REQ:                         //��Ŀ¼
+        case REQ:                         //读目录
             StdProcFT_ReadDir();
             break;
         case FILE_101:
@@ -5692,11 +5692,11 @@ void New104Sec::StdProcFileAck(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  StdProcFT_EncodeReadDir()
-�������ܣ�  ��Ŀ¼�Ĵ�����֯����֡
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  StdProcFT_EncodeReadDir()
+函数功能：  对目录的传输组织发送帧
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_EncodeReadDir(void)
 {
@@ -5710,17 +5710,17 @@ void New104Sec::StdProcFT_EncodeReadDir(void)
     
     len = 0;
     rc = StdFT_ReadDirectory(&StdFtInfo, &len, logicDevId);
-    filenum = len / 13;    //13��TYPE IDENT 126 ��ÿһ�ļ���ص���Ϣ��
+    filenum = len / 13;    //13是TYPE IDENT 126 中每一文件相关的信息。
     TxMsg[0] = F_DR_NA;
     TxMsg[1] = 0x80 | filenum;   //VSQ
     TxMsg[2] = REQ; //COT
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
-    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //�˴��п��������⣬�ؼ�����ô�����Լ���Ȱ��ո���ʾ�����ı�д��2016��12��30��
+    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //此处有可能有问题，关键看怎么理解规约，先按照给的示例报文编写，2016年12月30日
     TxMsg[InfoAddrLocation+1] = HIBYTE(FT_DIRID_LB_STD);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     FramePos = AsduHeadLength;
@@ -5731,7 +5731,7 @@ void New104Sec::StdProcFT_EncodeReadDir(void)
     }
     else
     {
-        memset(&TxMsg[FramePos],0,5);//TxMsg[FramePos++] = 0;    //�ļ�����=0
+        memset(&TxMsg[FramePos],0,5);//TxMsg[FramePos++] = 0;    //文件数量=0
         FramePos+=5;
         TxMsg[FramePos++] = 0x20;
         memset(&TxMsg[FramePos],0,7);
@@ -5747,11 +5747,11 @@ void New104Sec::StdProcFT_EncodeReadDir(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  StdProcFT_EncodeFileReady()
-�������ܣ�  �ļ�׼������
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  StdProcFT_EncodeFileReady()
+函数功能：  文件准备就绪
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_EncodeFileReady(void)
 {
@@ -5763,19 +5763,19 @@ void New104Sec::StdProcFT_EncodeFileReady(void)
         return;
     
     
-    rc = StdFT_GetFileReady(&StdFtInfo,StdFileInfo.FileName,&StdFileInfo.SectionNum,&StdFileInfo.FileLen);     //����¼���ļ��������ڴ˺��������ɱ�Ҫ���ļ�����.cfg��.dat�ļ�
-    //filenum = len / 13;    //13��TYPE IDENT 126 ��ÿһ�ļ���ص���Ϣ��
+    rc = StdFT_GetFileReady(&StdFtInfo,StdFileInfo.FileName,&StdFileInfo.SectionNum,&StdFileInfo.FileLen);     //对于录波文件来讲，在此函数中生成必要的文件，即.cfg和.dat文件
+    //filenum = len / 13;    //13是TYPE IDENT 126 中每一文件相关的信息。
     StdFileInfo.FileChs = 0;
     TxMsg[0] = F_FR_NA;
     TxMsg[1] = 0x01;   //VSQ
     TxMsg[2] = FILE_101; //COT
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
-    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //�˴��п��������⣬�ؼ�����ô�����Լ���Ȱ��ո���ʾ�����ı�д��2016��12��30��
+    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //此处有可能有问题，关键看怎么理解规约，先按照给的示例报文编写，2016年12月30日
     TxMsg[InfoAddrLocation+1] = HIBYTE(FT_DIRID_LB_STD);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     FramePos = AsduHeadLength;
@@ -5806,11 +5806,11 @@ void New104Sec::StdProcFT_EncodeFileReady(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  StdProcFT_EncodeSectionReady()
-�������ܣ�  ��׼������
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  StdProcFT_EncodeSectionReady()
+函数功能：  节准备就绪
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_EncodeSectionReady(void)
 {
@@ -5824,17 +5824,17 @@ void New104Sec::StdProcFT_EncodeSectionReady(void)
     StdFileInfo.SectChs = 0;
     //len = 0;
     rc = StdFT_GetSectionReady(&StdFtInfo,&StdFileInfo.SectionName,&StdFileInfo.SectLen);     //
-    //filenum = len / 13;    //13��TYPE IDENT 126 ��ÿһ�ļ���ص���Ϣ��
+    //filenum = len / 13;    //13是TYPE IDENT 126 中每一文件相关的信息。
     TxMsg[0] = F_FR_NA;
     TxMsg[1] = 0x01;   //VSQ
     TxMsg[2] = FILE_101; //COT
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
-    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //�˴��п��������⣬�ؼ�����ô�����Լ���Ȱ��ո���ʾ�����ı�д��2016��12��30��
+    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //此处有可能有问题，关键看怎么理解规约，先按照给的示例报文编写，2016年12月30日
     TxMsg[InfoAddrLocation+1] = HIBYTE(FT_DIRID_LB_STD);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     FramePos = AsduHeadLength;
@@ -5842,7 +5842,7 @@ void New104Sec::StdProcFT_EncodeSectionReady(void)
     TxMsg[FramePos++] = HIBYTE(StdFileInfo.FileName);
     TxMsg[FramePos++] = StdFileInfo.SectionName;
     
-    //SectionLength = GetSectionLength();              //����д������¼���ļ���������1�ĳ�����.cfg�ļ��ĳ��ȣ���2�ĳ�����.dat�ļ��ĳ��ȡ�
+    //SectionLength = GetSectionLength();              //待编写，对于录波文件来讲，节1的长度是.cfg文件的长度；节2的长度是.dat文件的长度。
     
     TxMsg[FramePos++] = LLBYTE(StdFileInfo.SectLen);
     TxMsg[FramePos++] = LHBYTE(StdFileInfo.SectLen);
@@ -5869,11 +5869,11 @@ void New104Sec::StdProcFT_EncodeSectionReady(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  StdProcFT_EncodeSegment()
-�������ܣ�  ��׼������
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  StdProcFT_EncodeSegment()
+函数功能：  节准备就绪
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_EncodeSegment(void)
 {
@@ -5888,19 +5888,19 @@ void New104Sec::StdProcFT_EncodeSegment(void)
     len = 0;
     if(StdFtInfo.SectionReadyFlag)
     {
-        StdFT_GetSegment(&StdFtInfo, &len, &flag,StdFileInfo.SectionName,&StdFileInfo.SectChs);     //���ļ��ĶΣ���ȡ�����ݱ�����StdFtInfo.DataBuf��,flag���ص��Ǳ����ǲ�������
+        StdFT_GetSegment(&StdFtInfo, &len, &flag,StdFileInfo.SectionName,&StdFileInfo.SectChs);     //读文件的段，读取的内容保存在StdFtInfo.DataBuf里,flag返回的是表征是不是最后段
     }
-    //filenum = len / 13;    //13��TYPE IDENT 126 ��ÿһ�ļ���ص���Ϣ��
+    //filenum = len / 13;    //13是TYPE IDENT 126 中每一文件相关的信息。
     TxMsg[0] = F_SG_NA;
     TxMsg[1] = 0x01;   //VSQ
     TxMsg[2] = FILE_101; //COT
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
-    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //�˴��п��������⣬�ؼ�����ô�����Լ���Ȱ��ո���ʾ�����ı�д��2016��12��30��
+    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //此处有可能有问题，关键看怎么理解规约，先按照给的示例报文编写，2016年12月30日
     TxMsg[InfoAddrLocation+1] = HIBYTE(FT_DIRID_LB_STD);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     FramePos = AsduHeadLength;
@@ -5917,7 +5917,7 @@ void New104Sec::StdProcFT_EncodeSegment(void)
     }
     else
     {
-        ScheduleFlag &= ~SCHEDULE_FT_DATA_STD;//TxMsg[FramePos++] = 0;    //�ļ�����=0
+        ScheduleFlag &= ~SCHEDULE_FT_DATA_STD;//TxMsg[FramePos++] = 0;    //文件数量=0
         return;
     }
     
@@ -5928,17 +5928,17 @@ void New104Sec::StdProcFT_EncodeSegment(void)
     {
         ScheduleFlag &= ~SCHEDULE_FT_DATA_STD;
         StdFileInfo.SectionNum--;
-        ScheduleFlag |= SCHEDULE_FT_LAST_SECTION_FILE_STD;       //�����α�ʶ
+        ScheduleFlag |= SCHEDULE_FT_LAST_SECTION_FILE_STD;       //置最后段标识
     }
     
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  StdProcFT_EncodeSegment()
-�������ܣ�  ��׼������
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  StdProcFT_EncodeSegment()
+函数功能：  节准备就绪
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::StdProcFT_EncodeLastSegSect(void)
 {
@@ -5951,18 +5951,18 @@ void New104Sec::StdProcFT_EncodeLastSegSect(void)
         return;
     
     //len = 0;
-    //rc = StdFT_GetSection(&StdFtInfo, &len, &flag);     //���ļ��ĶΣ���ȡ�����ݱ�����StdFtInfo.DataBuf��,flag���ص��Ǳ����ǲ�������
-    //filenum = len / 13;    //13��TYPE IDENT 126 ��ÿһ�ļ���ص���Ϣ��
+    //rc = StdFT_GetSection(&StdFtInfo, &len, &flag);     //读文件的段，读取的内容保存在StdFtInfo.DataBuf里,flag返回的是表征是不是最后段
+    //filenum = len / 13;    //13是TYPE IDENT 126 中每一文件相关的信息。
     TxMsg[0] = F_LS_NA;
     TxMsg[1] = 0x01;   //VSQ
     TxMsg[2] = FILE_101; //COT
-    if(CotSize==2)//����ԭ��Ϊ2�ֽ�ʱ����λ�̶�Ϊ0��
+    if(CotSize==2)//传送原因为2字节时，高位固定为0。
         TxMsg[CotLocation+1]=0;
     for(int jj=0;jj<PubAddrSize;jj++)
         TxMsg[PubAddrLocation+jj]=RxPubAddr>>(8*jj);
-    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //�˴��п��������⣬�ؼ�����ô�����Լ���Ȱ��ո���ʾ�����ı�д��2016��12��30��
+    TxMsg[InfoAddrLocation] = LOBYTE(FT_DIRID_LB_STD);      //此处有可能有问题，关键看怎么理解规约，先按照给的示例报文编写，2016年12月30日
     TxMsg[InfoAddrLocation+1] = HIBYTE(FT_DIRID_LB_STD);
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
 
     FramePos = AsduHeadLength;
@@ -5998,10 +5998,10 @@ void New104Sec::StdProcFT_EncodeLastSegSect(void)
 }
 #endif
 /*------------------------------------------------------------------/
-�������ƣ�  RMTReadAllPara()
-�������ܣ�  ��֯��ȫ������
-����˵����  
-���˵����  
+函数名称：  RMTReadAllPara()
+函数功能：  组织读全部参数
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
 {
@@ -6014,7 +6014,7 @@ BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
     switch(RMTHaveReadParaFlag)
     {
     case 1:
-        //��װ���в���
+        //上装固有参数
         for(info=RMTP_ORG_L; info<=RMTP_ORG_H; info++)
         {
             sendnum++;
@@ -6033,7 +6033,7 @@ BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
 
         break;   
     case 2:
-        //��װ�ն����в���
+        //上装终端运行参数
         for(info=RMTP_RUN1_L; info<=RMTP_RUN1_H; info++)
         {
             sendnum++;
@@ -6050,7 +6050,7 @@ BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
         RMTHaveReadParaFlag = 3;
         break;
     case 3:
-        //��װ�ն����в���
+        //上装终端运行参数
         fnum = GetFeederNum();
         for(i=0; i<fnum; i++)
         {
@@ -6071,7 +6071,7 @@ BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
         
         break;   
     case 4:
-        //��װ�ն˶�ֵ����
+        //上装终端定值参数
         for(info=RMTP_ACT1_L; info<=RMTP_ACT1_H; info++)
         {
             sendnum++;
@@ -6088,7 +6088,7 @@ BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
         RMTHaveReadParaFlag = 5;
         break;
     case 5:
-        //��װ�ն���·��ֵ����
+        //上装终端线路定值参数
         temp = RMTParaNum*RMTP_ACT_NUM; 
         for(info= RMTP_ACT2_L+temp; info<=RMTP_ACT2_H+temp; info++)
         {
@@ -6126,10 +6126,10 @@ BOOL New104Sec::RMTReadAllPara(INT8U *pbuf, INT8U *plen, INT8U *psendnum)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  EncodeRMTReadPara()
-�������ܣ�  ��֯������
-����˵����  
-���˵����  
+函数名称：  EncodeRMTReadPara()
+函数功能：  组织读参数
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::EncodeRMTReadPara(void)
 {
@@ -6154,9 +6154,9 @@ void New104Sec::EncodeRMTReadPara(void)
     TxMsg[4] = LOBYTE(DevList[ActDevIndex].Addr);
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
-    TxMsg[6] = 1;   //����
+    TxMsg[6] = 1;   //区号
     TxMsg[7] = 0;
-    //TxMsg[8]  pi��
+    //TxMsg[8]  pi码
     
     FramPos = 9;
     if(RMTParaReadAllFlag)
@@ -6166,20 +6166,20 @@ void New104Sec::EncodeRMTReadPara(void)
         TxMsg[1] = sendnum;
         if(rc == FALSE) 
         {
-            TxMsg[8] = 0;     //�����������޺��� 
+            TxMsg[8] = 0;     //参数特征，无后续 
             RMTParaInit();
             ScheduleFlag &= ~SCHEDULE_RMTPARA;
         }
         else
         {
-            TxMsg[8] = RP_PI_CONT;     //�����������к���
+            TxMsg[8] = RP_PI_CONT;     //参数特征，有后续
         }
     }
     else
     {
         sendnum = 0;
         procnum = 0;
-        //���ֶ�
+        //部分读
         for(i=RMTHaveReadParaFlag; i<RMTParaNum ; i++)
         {
             procnum++;
@@ -6190,14 +6190,14 @@ void New104Sec::EncodeRMTReadPara(void)
             {
                 sendnum++;
                 TxMsg[FramPos++] = LOBYTE(RMTParaInfo[i]);
-                TxMsg[FramPos++] = HIBYTE(RMTParaInfo[i]);  //��Ϣ���ַ
+                TxMsg[FramPos++] = HIBYTE(RMTParaInfo[i]);  //信息体地址
                 TxMsg[FramPos++] = 0;
                 
                 FramPos += len;
             }
             else
             {
-                //�ش���Ϣ���ַ���󣬲���������������
+                //回答信息体地址错误，并结束读参数操作
                 infoerr = TRUE;
                 break; 
             }
@@ -6211,25 +6211,25 @@ void New104Sec::EncodeRMTReadPara(void)
         {
             TxMsg[1] = sendnum;
             RMTHaveReadParaFlag += procnum;
-            //��������
+            //结束传送
             if(RMTHaveReadParaFlag >= RMTParaNum) 
             {
                 RMTParaInit();
-                TxMsg[8] = 0;     //�����������޺��� 
+                TxMsg[8] = 0;     //参数特征，无后续 
                 ScheduleFlag &= ~SCHEDULE_RMTPARA;
             }
             else
             {
-                TxMsg[8] = RP_PI_CONT;     //�����������к���
+                TxMsg[8] = RP_PI_CONT;     //参数特征，有后续
             }
         }
         else
         {
-            //��Ϣ���ַ������֯�񶨻ش�
+            //信息体地址错误，组织否定回答
             RMTParaInit();
             TxMsg[1] = 0;       //VSQ=0 
-            TxMsg[2] = COT_PONO|UNKNOWNTINFOADDR;  //����ԭ��
-            TxMsg[8] = 0;     //�����������޺��� 
+            TxMsg[2] = COT_PONO|UNKNOWNTINFOADDR;  //传送原因
+            TxMsg[8] = 0;     //参数特征，无后续 
             FramPos  = 9; 
             ScheduleFlag &= ~SCHEDULE_RMTPARA;
         }
@@ -6242,11 +6242,11 @@ void New104Sec::EncodeRMTReadPara(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcReadParaGX
-�������ܣ�  �����ٻ��������ģ�ȡ��ROI�������ٻ��޶��ʣ���
-����˵����    
-���˵����  �ޡ�
-��ע��      ROI�Ǳ�����վҪ��ȡȫ�������Ƿ����ٻ�������
+函数名称：  ProcReadParaGX
+函数功能：  处理召唤参数报文，取出ROI（参数召唤限定词）。
+输入说明：    
+输出说明：  无。
+备注：      ROI是表明主站要读取全参数还是分组召唤参数。
 /------------------------------------------------------------------*/
 void New104Sec::ProcReadParaGX(void)
 {
@@ -6291,7 +6291,7 @@ void New104Sec::ProcReadParaGX(void)
 
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
     TxMsg[CotLocation]=ACTCON;
     
@@ -6311,10 +6311,10 @@ void New104Sec::ProcReadParaGX(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcEncodeGXReadPara()
-�������ܣ�  ��֯������
-����˵����  
-���˵����  rc = TRUE-�к��� FALSE-�޺���
+函数名称：  ProcEncodeGXReadPara()
+函数功能：  组织读参数
+输入说明：  
+输出说明：  rc = TRUE-有后续 FALSE-无后续
 /------------------------------------------------------------------*/
 void New104Sec::ProcEncodeGXReadPara(void)
 {
@@ -6331,7 +6331,7 @@ void New104Sec::ProcEncodeGXReadPara(void)
     rc2 = TRUE;
     len = 0;    
     TxMsg[0] = P_ME_NA_1_GX;
-    TxMsg[1] = 0;   //VSQ�����������
+    TxMsg[1] = 0;   //VSQ，后面填个数
     
     TxMsg[CotLocation]=Roi;
     for(jj=0;jj<PubAddrSize;jj++)
@@ -6350,9 +6350,9 @@ void New104Sec::ProcEncodeGXReadPara(void)
             if(rc == FALSE) 
             { 
                 rc2 = FALSE;
-                //RMTParaInit();                      �˴�Ϊ��Ҫ���ô˺��� 20181018��
+                //RMTParaInit();                      此处为何要调用此函数 20181018？
             }
-            TxMsg[FramePos++] = 0x06;   //QPM ������������ֵ���ͣ�������Ͷ�ˡ��Ҳ������޸�
+            TxMsg[FramePos++] = 0x06;   //QPM 测量量参数定值上送，参数已投运、且参数可修改
             break;
             
         case INTRO1:
@@ -6375,7 +6375,7 @@ void New104Sec::ProcEncodeGXReadPara(void)
         case INTRO7:
         case INTRO8:
         case INTRO9:
-             rc = GXReadJianGePara(&TxMsg[FramePos], &len, &sendnum, InfoAddrSize,GXParaControl);     //���������,Roi-INTRO2Ϊ�����ţ���0��ʼ
+             rc = GXReadJianGePara(&TxMsg[FramePos], &len, &sendnum, InfoAddrSize,GXParaControl);     //读间隔参数,Roi-INTRO2为间隔编号，从0开始
              GXParaControl++;
              FramePos += len;
              TxMsg[1] = sendnum | 0x80; //VSQ SQ=1
@@ -6401,11 +6401,11 @@ void New104Sec::ProcEncodeGXReadPara(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeGXReadParaEnd
-�������ܣ�  ������������
-����˵����    
-���˵����  �ޡ�
-��ע��      ������������Ϻ��Դ�֡���Ľ�����
+函数名称：  EnCodeGXReadParaEnd
+函数功能：  读参数结束。
+输入说明：    
+输出说明：  无。
+备注：      将参数发送完毕后，以此帧报文结束。
 /------------------------------------------------------------------*/
 void New104Sec::EnCodeGXReadParaEnd(void)
 {
@@ -6421,7 +6421,7 @@ void New104Sec::EnCodeGXReadParaEnd(void)
 
     TxMsg[InfoAddrLocation] = 0;
     TxMsg[InfoAddrLocation+1] = 0;
-    if(InfoAddrSize==3)//��Ϣ���ַΪ3���ֽ�ʱ������ֽ�Ϊ0
+    if(InfoAddrSize==3)//信息体地址为3个字节时，最高字节为0
         TxMsg[InfoAddrLocation+2]=0;
     TxMsg[CotLocation]=ACTTERM;
 
@@ -6440,7 +6440,7 @@ void New104Sec::ProcSetParaGX(void)
     INT32U temp32;
     INT16U infoaddr;
     
-    //�������ݴ浽wrongdata��
+    //把数据暂存到wrongdata中
     //WrongDataLength = LengthIn;
     //GXvsqflag = 0;
     
@@ -6453,23 +6453,23 @@ void New104Sec::ProcSetParaGX(void)
    
     if(RxMsg[FrameLen+1] == 9)  //QPM
     {
-        if((RxCot&COT_REASON)==ACT)    //����
+        if((RxCot&COT_REASON)==ACT)    //激活
         {
             pInfoAddr = &RxMsg[InfoAddrLocation];
            
             pos = 0;
             
-            if(GXParaYZ)   //ֻ����һ֡���ĵ�Ԥ�ã�û�����겻��������Ԥ�ñ���
+            if(GXParaYZ)   //只接受一帧报文的预置，没处理完不接受其他预置报文
             {
-                logSysMsgNoTime("��һ֡Ԥ�ò�����δ������Ч",0,0,0,0);
+                logSysMsgNoTime("上一帧预置参数还未激活起效",0,0,0,0);
                 return;
             }
-            GXParaNum = RxVsq&VSQ_NUM;    //��ʱ������ ���в�����д��
+            GXParaNum = RxVsq&VSQ_NUM;    //暂时不考虑 固有参数的写入
             if((RxVsq & VSQ_SQ) == 0)
             {
                 for(i=0; i<GXParaNum; i++)
                 {
-                    GXParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //��Ϣ���ַ
+                    GXParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //信息体地址
                     pos += 3;
                     
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
@@ -6477,14 +6477,14 @@ void New104Sec::ProcSetParaGX(void)
                     
                     GXParaValue[i] = tempval;    
                     pos +=4 ; 
-                    ProgLogWrite2("gxԤ�ò���info=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
+                    ProgLogWrite2("gx预置参数info=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
                 } 
                             
             }
             else
             {
                 //GXvsqflag = 1;
-                //GXParaInfo[0] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //��Ϣ���ַ
+                //GXParaInfo[0] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //信息体地址
                 infoaddr = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
                 pos += 3;
                 for(i=0; i<GXParaNum; i++)
@@ -6495,15 +6495,15 @@ void New104Sec::ProcSetParaGX(void)
                     
                     GXParaValue[i] = tempval;    
                     pos +=4 ; 
-                    ProgLogWrite2("gxԤ�ò���info=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
+                    ProgLogWrite2("gx预置参数info=0x%x, value=0x%x",GXParaInfo[i],GXParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);                
                 }
             }
             
             if(GXRemoteParaCheck() == 1)
             {
-                //�����쳣 ��Ӧ���ñ�����0������
+                //参数异常 （应调用变量清0函数）
                 GXParaInit();             
-                GXReturnCot = ACTCON|0x40;  //�񶨻ش�
+                GXReturnCot = ACTCON|0x40;  //否定回答
             }
             else
             {
@@ -6511,7 +6511,7 @@ void New104Sec::ProcSetParaGX(void)
                 GXReturnCot = ACTCON; 
             }          
         }
-        else if((RxCot&COT_REASON)==DEACT)  //����
+        else if((RxCot&COT_REASON)==DEACT)  //撤销
         {
             
             GXParaInit();        
@@ -6527,7 +6527,7 @@ void New104Sec::ProcSetParaGX(void)
     else
     {
         GXReturnCot = ACTCON | 0x40;
-        ProgLogWrite2("gxԤ�ò��� QPM=%d ����",RxMsg[FrameLen+1],0,0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+        ProgLogWrite2("gx预置参数 QPM=%d 错误",RxMsg[FrameLen+1],0,0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
         
     }
     
@@ -6536,11 +6536,11 @@ void New104Sec::ProcSetParaGX(void)
     EnCodeDLMsg(FrameLen+2);    
 }
 /*------------------------------------------------------------------/
-�������ƣ�  GXRemoteParaCheck
-�������ܣ�  ��һ�������쳣
-����˵����    
-���˵����  
-��ע��      ���쳣ֹͣ�������
+函数名称：  GXRemoteParaCheck
+函数功能：  逐一检查参数异常
+输入说明：    
+输出说明：  
+备注：      有异常停止后续检查
 /------------------------------------------------------------------*/
 INT16U New104Sec::GXRemoteParaCheck(void)
 {
@@ -6558,10 +6558,10 @@ INT16U New104Sec::GXRemoteParaCheck(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcEncodeGXSendPara()
-�������ܣ�  ��֯�������Ͳ����ı���
-����˵����  
-���˵����  
+函数名称：  ProcEncodeGXSendPara()
+函数功能：  组织主动发送参数的报文
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcEncodeGXSendPara(void)
 {
@@ -6589,9 +6589,9 @@ void New104Sec::ProcEncodeGXSendPara(void)
     FramePos += len;
     TxMsg[1] = sendnum | 0x80;  //VSQ SQ=1
     
-    TxMsg[FramePos++] = 0x06;   //QPM ������������ֵ���ͣ�������Ͷ�ˡ��Ҳ������޸� 
+    TxMsg[FramePos++] = 0x06;   //QPM 测量量参数定值上送，参数已投运、且参数可修改 
     
-    //rc = GXReadJianGePara(&TxMsg[FramePos], &len, &sendnum, InfoAddrSize,GXParaControl);     //���������,Roi-INTRO2Ϊ�����ţ���0��ʼ
+    //rc = GXReadJianGePara(&TxMsg[FramePos], &len, &sendnum, InfoAddrSize,GXParaControl);     //读间隔参数,Roi-INTRO2为间隔编号，从0开始
     //GXParaControl++;
     //FramePos += len;
     //TxMsg[1] = sendnum | 0x80;
@@ -6605,10 +6605,10 @@ void New104Sec::ProcEncodeGXSendPara(void)
     }
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcEncodeGXChangePara()
-�������ܣ�  ��֯�ظ��ı�����ı���
-����˵����  
-���˵����  
+函数名称：  ProcEncodeGXChangePara()
+函数功能：  组织回复改变参数的报文
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcEncodeGXChangePara(void)
 {
@@ -6676,7 +6676,7 @@ void New104Sec::ProcActivateParaGX(void)
             {
                 
                 DeadValueRealTimeEffect();
-                //logSysMsgNoTime("104����ң������ֵ������Ч",0,0,0,0);
+                //logSysMsgNoTime("104广西遥测死区值在线起效",0,0,0,0);
             }
             
             
@@ -6691,8 +6691,8 @@ void New104Sec::ProcActivateParaGX(void)
     else
     {
         GXReturnCot = ACTCON|0x40;
-        Qpa = 0xff;     //��ʱ�����ط񶨻ش�
-        logSysMsgNoTime("GXԶ�̲���δԤ�þ͹̻�104",0,0,0,0);
+        Qpa = 0xff;     //暂时这样回否定回答
+        logSysMsgNoTime("GX远程参数未预置就固化104",0,0,0,0);
     } 
     
     if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
@@ -6702,7 +6702,7 @@ void New104Sec::ProcActivateParaGX(void)
         return;
     }
     
-    //��ȷ��֡
+    //回确认帧
     RxMsg[CotLocation] = GXReturnCot;
     memcpy((void*)TxMsg,(void*)RxMsg,FrameLen+2);
     EnCodeDLMsg(FrameLen+2);
@@ -6712,11 +6712,11 @@ void New104Sec::ProcActivateParaGX(void)
     GXParaInit();
 }
 /*------------------------------------------------------------------/
-�������ƣ�  GXWatchLPChange
-�������ܣ�  ����Զ�̲��������ӱ��ز����仯��
-����˵����    
-���˵����  �ޡ�
-��ע��      ROI�Ǳ�����վҪ��ȡȫ�������Ƿ����ٻ�������
+函数名称：  GXWatchLPChange
+函数功能：  广西远程参数。监视本地参数变化。
+输入说明：    
+输出说明：  无。
+备注：      ROI是表明主站要读取全参数还是分组召唤参数。
 /------------------------------------------------------------------*/
 void New104Sec::GXWatchLPChange(void)
 {
@@ -6735,10 +6735,10 @@ void New104Sec::GXWatchLPChange(void)
 }
  
 /*------------------------------------------------------------------/
-�������ƣ�  ProcReadPara()
-�������ܣ�  ����������
-����˵����  
-���˵����  
+函数名称：  ProcReadPara()
+函数功能：  处理读参数
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcReadPara(void)
 {
@@ -6746,15 +6746,15 @@ void New104Sec::ProcReadPara(void)
     INT16U i, pos;
     INT16U num;
     
-    //���ݳ��ȴ���8����ʾ�ǲ��ֶ�ȡ������Ϊȫ����ȡ
-    if(FrameLen+2 > 9) //FrameLen+2��ȥ��������C�ĳ���
+    //数据长度大于8，表示是部分读取，否则为全部读取
+    if(FrameLen+2 > 9) //FrameLen+2是去掉控制域C的长度
     {
         RMTSectionNo = MAKEWORD(RxMsg[InfoAddrLocation], RxMsg[InfoAddrLocation+1]);  
         pInfoAddr = &RxMsg[InfoAddrLocation+2];
         pos = 0;
-        num = ((FrameLen+2)-8)/3;   //�����ȡ�����ĸ���
+        num = ((FrameLen+2)-8)/3;   //计算读取参数的个数
         
-        if(RMTParaNum ==0 ) //��1�ζ�
+        if(RMTParaNum ==0 ) //第1次读
         {
             RMTHaveReadParaFlag = 0;
             RMTParaReadAllFlag = 0;
@@ -6772,11 +6772,11 @@ void New104Sec::ProcReadPara(void)
         
         logSysMsgNoTime("sec=%d, num=%d, max=%d, info2=%x",RMTSectionNo,num,RMTParaNum,RMTParaInfo[RMTParaNum]);
 
-        RMTParaNum += num;  //��¼�ۼ��·��Ķ���������
+        RMTParaNum += num;  //记录累计下发的读参数个数
     }
     else
     {
-        //ȫ����ȡ   
+        //全部读取   
         RMTParaReadAllFlag = TRUE;
         RMTHaveReadParaFlag = 1;
         RMTParaNum = 0;
@@ -6786,10 +6786,10 @@ void New104Sec::ProcReadPara(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  RMTParaYzCheck()
-�������ܣ�  
-����˵����  
-���˵����  
+函数名称：  RMTParaYzCheck()
+函数功能：  
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::RMTParaYzCheck(void)
 {
@@ -6807,10 +6807,10 @@ void New104Sec::RMTParaYzCheck(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  GXParaYzCheck()
-�������ܣ�  
-����˵����  
-���˵����  
+函数名称：  GXParaYzCheck()
+函数功能：  
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::GXParaYzCheck(void)
 {
@@ -6827,10 +6827,10 @@ void New104Sec::GXParaYzCheck(void)
     }
 }
 /*------------------------------------------------------------------/
-�������ƣ�  RMTParaInit()
-�������ܣ�  Զ�̲�����д��Ӧ��־��ʼ��
-����˵����  
-���˵����  
+函数名称：  RMTParaInit()
+函数功能：  远程参数读写相应标志初始化
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::RMTParaInit(void)
 {
@@ -6857,10 +6857,10 @@ void New104Sec::GXParaInit(void)
     GXParaNum = 0; 
 }
 /*------------------------------------------------------------------/
-�������ƣ�  DeadValueRealTimeEffect()
-�������ܣ�  �·���������ʵʱ��Ч
-����˵����  
-���˵����  
+函数名称：  DeadValueRealTimeEffect()
+函数功能：  下发死区参数实时起效
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::DeadValueRealTimeEffect(void)
 {
@@ -6871,10 +6871,10 @@ void New104Sec::DeadValueRealTimeEffect(void)
     }  
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcWritePara()
-�������ܣ�  ����д����
-����˵����  
-���˵����  
+函数名称：  ProcWritePara()
+函数功能：  处理写参数
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcWritePara(void)
 {
@@ -6894,42 +6894,42 @@ void New104Sec::ProcWritePara(void)
         return;
     }        
 
-    if ((RxCot&COT_REASON)==ACT)    //����
+    if ((RxCot&COT_REASON)==ACT)    //激活
     {
         RMTSectionNo = MAKEWORD(RxMsg[InfoAddrLocation], RxMsg[InfoAddrLocation+1]);  
         pi  = RxMsg[InfoAddrLocation+2];
         pInfoAddr = &RxMsg[InfoAddrLocation+3];
                 
         pos = 0;
-        if(pi & RP_PI_SE)   //Ԥ�ã�����ѡ��
+        if(pi & RP_PI_SE)   //预置（参数选择）
         {
-            if(RMTParaYZ)   //ֻ����һ֡���ĵ�Ԥ�ã�û�����겻��������Ԥ�ñ���
+            if(RMTParaYZ)   //只接受一帧报文的预置，没处理完不接受其他预置报文
             {
-                logSysMsgNoTime("��һ֡����Ԥ�ñ��Ļ�δ����",0,0,0,0);
+                logSysMsgNoTime("上一帧参数预置报文还未处理",0,0,0,0);
                 return;
             }   
-            RMTParaNum = RxVsq&VSQ_NUM;    //��ʱ������ ���в�����д��
+            RMTParaNum = RxVsq&VSQ_NUM;    //暂时不考虑 固有参数的写入
             for(i=0; i<RMTParaNum; i++)
             {
-                RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //��Ϣ���ַ
+                RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //信息体地址
                 pos += 3;
                 
-                datatype = pInfoAddr[pos++]; //��������
-                datalen  = pInfoAddr[pos++]; //���ݳ���
+                datatype = pInfoAddr[pos++]; //数据类型
+                datalen  = pInfoAddr[pos++]; //数据长度
                 
                 if((datatype == PARA_DATA_TYPE_WORD) && (datalen == 2))
                 {            
                     RMTParaValue[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
                     pos +=2 ; 
                     
-                    ProgLogWrite2("Ԥ�ò���info=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("预置参数info=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else if((datatype == PARA_DATA_TYPE_DWORD) && (datalen == 4))
                 {            
                     RMTParaValue[i] = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
                     pos +=4 ; 
                     
-                    ProgLogWrite2("Ԥ�ò���info=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("预置参数info=0x%x, value=%d",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else if((datatype == PARA_DATA_TYPE_FLOAT) && (datalen == 4))
                 {
@@ -6938,17 +6938,17 @@ void New104Sec::ProcWritePara(void)
                     
                     RMTParaValue[i] = tempval;     
                     pos +=4 ; 
-                    ProgLogWrite2("Ԥ�ò���info=0x%x, value=%d.%3d",RMTParaInfo[i],(INT16U)RMTParaValue[i],(INT16U)((RMTParaValue[i]-(INT16U)(RMTParaValue[i]))*1000),0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("预置参数info=0x%x, value=%d.%3d",RMTParaInfo[i],(INT16U)RMTParaValue[i],(INT16U)((RMTParaValue[i]-(INT16U)(RMTParaValue[i]))*1000),0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else if((datatype == PARA_DATA_TYPE_BOOL) && (datalen == 1))
                 {
                     RMTParaValue[i] = pInfoAddr[pos];
                     pos +=1;
-                    ProgLogWrite2("Ԥ�ò���info=0x%x, value=0x%x",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("预置参数info=0x%x, value=0x%x",RMTParaInfo[i],RMTParaValue[i],0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                 }
                 else
                 {
-                    logSysMsgNoTime("Ԥ�ò��� info=0x%x �������ʹ���(%d),���ݳ���=%d",RMTParaInfo[i], datatype,datalen,0);
+                    logSysMsgNoTime("预置参数 info=0x%x 数据类型错误(%d),数据长度=%d",RMTParaInfo[i], datatype,datalen,0);
                     break;
                 }
             } 
@@ -6969,16 +6969,16 @@ void New104Sec::ProcWritePara(void)
         }
         else
         {
-            //�̻�������ִ�У�
+            //固化（参数执行）
             IsSuccess = TRUE;
             if((pi & RP_PI_CR) == 0)
             {
                 if(RMTParaYZ)
                 {
                     
-                    //���ﲻ��ҪЯ������
-                    ProgLogWrite2("�յ��̻���������", 0, 0, 0, 0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
-                    //Զ�̲������ù̻����̲����Я���Ĳ���
+                    //这里不需要携带参数
+                    ProgLogWrite2("收到固化参数命令", 0, 0, 0, 0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    //远程参数设置固化过程不检查携带的参数
                     for(i=0; i<RMTParaNum; i++)
                     {
                         ParaFlag = SetTerminalPara(RMTParaValue[i], RMTParaInfo[i]);
@@ -6989,7 +6989,7 @@ void New104Sec::ProcWritePara(void)
                 else
                 {
                     IsSuccess = FALSE;
-                    logSysMsgNoTime("Զ�̲���δԤ�þ͹̻�",0,0,0,0);
+                    logSysMsgNoTime("远程参数未预置就固化",0,0,0,0);
                 }
                 
                 RMTParaInit();
@@ -6998,17 +6998,17 @@ void New104Sec::ProcWritePara(void)
                 
                 if(IsSuccess==FALSE)
                 {
-                	RxMsg[CotLocation] |= 0x40; //ʧ��
+                	RxMsg[CotLocation] |= 0x40; //失败
                 }
                 else
                 {
                     
-                    if(GetSiQuChangeFlag(ParaFlag))           //��Լ��Ĳ���ʵʱ��Ч������ͬ����������ֵ��ʵʱ��Ч�ķ�ʽʵ�֡�
+                    if(GetSiQuChangeFlag(ParaFlag))           //规约层的参数实时起效都可以同样按照死区值的实时起效的方式实现。
                     {
                         DeadValueRealTimeEffect();
                     }
-                    SaveTerminalPara(); //�̻���ϣ�д��flash
-                    SaveRMTParaToSys(); //����Ƿ���Ҫ����ϵͳ�����ļ�
+                    SaveTerminalPara(); //固化完毕，写入flash
+                    SaveRMTParaToSys(); //检测是否需要更新系统参数文件
                 }
                 
                 
@@ -7021,7 +7021,7 @@ void New104Sec::ProcWritePara(void)
     }
     else
     {
-        //����
+        //撤销
         RMTParaInit();
         
         RxMsg[CotLocation] = DEACTCON;
@@ -7033,10 +7033,10 @@ void New104Sec::ProcWritePara(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcSetSectionNo()
-�������ܣ�  �л���ֵ����
-����˵����  
-���˵����  
+函数名称：  ProcSetSectionNo()
+函数功能：  切换定值区号
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcSetSectionNo(void)
 {
@@ -7050,7 +7050,7 @@ void New104Sec::ProcSetSectionNo(void)
     RMTSectionNo2 = MAKEWORD(pRxData[0],pRxData[1]);
     if(RMTSectionNo < 5)
     {
-        logSysMsgNoTime("���õ�ǰ����=%d",RMTSectionNo,0,0,0);
+        logSysMsgNoTime("设置当前区号=%d",RMTSectionNo,0,0,0);
     }
     else
         RMTSectionNo = 0;
@@ -7063,10 +7063,10 @@ void New104Sec::ProcSetSectionNo(void)
 
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcReadSectionNo()
-�������ܣ�  �л���ֵ����
-����˵����  
-���˵����  
+函数名称：  ProcReadSectionNo()
+函数功能：  切换定值区号
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcReadSectionNo(void)
 {
@@ -7074,7 +7074,7 @@ void New104Sec::ProcReadSectionNo(void)
     
     if (!pDLink->GetFreeTxUnit(PRIORITY_2,&TxMsg))
     {
-        return ;    //���������һȡ�������������в�Ӧ��ķ��ա� ll
+        return ;    //这里存在万一取不到空闲区域，有不应答的风险。 ll
     }
     
     //SectionNo = pRxData[0];
@@ -7093,7 +7093,7 @@ void New104Sec::ProcReadSectionNo(void)
     TxMsg[8] = 0;
  
     FramePos = 9;
-    TxMsg[FramePos++] = RMTSectionNo2;  //��ǰ����
+    TxMsg[FramePos++] = RMTSectionNo2;  //当前区号
     TxMsg[FramePos++] = 0;
     TxMsg[FramePos++] = 1;
     TxMsg[FramePos++] = 0;
@@ -7106,10 +7106,10 @@ void New104Sec::ProcReadSectionNo(void)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  CheckFREOnTime()
-�������ܣ�  ��ʱɨ������¼�����.ֻ����չ��Լ����Ҫ
-����˵����  
-���˵����  
+函数名称：  CheckFREOnTime()
+函数功能：  定时扫描故障事件上送.只有扩展规约才需要
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::CheckFREOnTime(void)
 {
@@ -7127,10 +7127,10 @@ void New104Sec::CheckFREOnTime(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeFREvent()
-�������ܣ�  �����¼��ϴ�
-����˵����  
-���˵����  
+函数名称：  EnCodeFREvent()
+函数功能：  故障事件上传
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::EnCodeFREvent(void)
 {
@@ -7144,11 +7144,11 @@ void New104Sec::EnCodeFREvent(void)
     
     
     if (!pDLink->GetFreeTxUnit(PRIORITY_2, &TxMsg))
-        return ;   //û�з��Ϳռ��򱣳ֱ�־λ
+        return ;   //没有发送空间则保持标志位
         
     ScheduleFlag&=(~SCHEDULE_FT_FREVENT);
     
-    if(GWFREventRead(&frevent, DevList[NvaActDevNo].DevID) == FALSE)    //��ʱ����͸���rpָ��
+    if(GWFREventRead(&frevent, DevList[NvaActDevNo].DevID) == FALSE)    //暂时读完就更新rp指针
         return ;
     
     TxMsg[0] = M_FT_NA;
@@ -7158,9 +7158,9 @@ void New104Sec::EnCodeFREvent(void)
     TxMsg[4] = LOBYTE(DevList[ActDevIndex].Addr);
     TxMsg[5] = HIBYTE(DevList[ActDevIndex].Addr);
     
-    //����û����Ϣ���ַ
+    //这里没有信息体地址
     sendpos = 6;
-    TxMsg[7] = M_SP_TB;             //ң������ ���� 
+    TxMsg[7] = M_SP_TB;             //遥信类型 单点 
     
     FramePos = 8;
     AbsTimeConvTo(&frevent.ActTime, (void*)&time, IEC101CLOCKTIME);
@@ -7176,7 +7176,7 @@ void New104Sec::EnCodeFREvent(void)
             no += LBI;
             TxMsg[FramePos++] = LOBYTE(no);
             TxMsg[FramePos++] = HIBYTE(no);
-            TxMsg[FramePos++] = 0;      //��Ϊ��׼��д����2��������Ժ�ע��
+            TxMsg[FramePos++] = 0;      //因为标准上写的是2，封掉，以后注意
         
             TxMsg[FramePos++] = 0x01;
             
@@ -7191,7 +7191,7 @@ void New104Sec::EnCodeFREvent(void)
         }
         
     }
-    TxMsg[sendpos] = sendnum;       //ң�Ÿ���
+    TxMsg[sendpos] = sendnum;       //遥信个数
     
     sendpos = FramePos++;
     TxMsg[FramePos++] = Sec104Pad.AIType; 
@@ -7211,7 +7211,7 @@ void New104Sec::EnCodeFREvent(void)
             switch(Sec104Pad.AIType)
             {
              
-             case M_ME_NC: //�̸�����
+             case M_ME_NC: //短浮点数
                 temp = SL_ReadAI_S(DevList[NvaActDevNo].DevID, no-LAI, frevent.actvalue[i]);
                 //temp = (float)frevent.actvalue[i];
                 p = (INT8U*)(&temp);
@@ -7227,14 +7227,14 @@ void New104Sec::EnCodeFREvent(void)
                 break;
              case M_ME_NA:   
              case M_ME_NB:  
-             default:   //M_ME_NA ��һ��ֵ
+             default:   //M_ME_NA 归一化值
                 TxMsg[FramePos++]=LOBYTE(frevent.actvalue[i]);
                 TxMsg[FramePos++]=HIBYTE(frevent.actvalue[i]);
                 break; 
             } 
         }
     }
-    TxMsg[sendpos] = sendnum;       //ң�����
+    TxMsg[sendpos] = sendnum;       //遥测个数
     
     EnCodeDLMsg(FramePos);
         
@@ -7244,11 +7244,11 @@ void New104Sec::EnCodeFREvent(void)
 
 
 /*------------------------------------------------------------------/
-�������ƣ�  GetWhLogicDevID()
-�������ܣ�  �õ�104 �е��豸ID
-����˵����  
-���˵���� 
-��ע��      
+函数名称：  GetWhLogicDevID()
+函数功能：  得到104 中的设备ID
+输入说明：  
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 INT16U GetWhLogicDevID(void)
 {
@@ -7269,27 +7269,27 @@ void New104Sec::ProcXSFileSynFinish(void)
 
 void New104Sec::SendFreezeEvent2Pri101(void)
 {
-    SetFileSynInfoTaskIDSubstation(MySelf.AppTID);  //��Ϊ����101��վ����ʼ����
-    if(XSFileSynInfo.TaskIDPri101[0]!=0)//������һ������ģ���������
+    SetFileSynInfoTaskIDSubstation(MySelf.AppTID);  //作为启动101主站任务开始的量
+    if(XSFileSynInfo.TaskIDPri101[0]!=0)//代表第一个线损模块起的任务
     {
-        myEventSend(GetFileSynInfoTaskID101(0),XSFREEZE);//��101��վ��������Ϣ ��ʱ�ȷ�����һ��101���񣬺�����ͨ��ά������������ȷ�ϵġ�
+        myEventSend(GetFileSynInfoTaskID101(0),XSFREEZE);//给101主站任务发送消息 暂时先发给第一个101任务，后续是通过维护软件面板参数确认的。
     }
     else
     {
-        logSysMsgWithTime("��֧��2018��׼������ģ��,��֧��˲ʱ���ᣡ",0,0,0,0);  
+        logSysMsgWithTime("无支持2018标准的线损模块,不支持瞬时冻结！",0,0,0,0);  
     }
-    if(XSFileSynInfo.TaskIDPri101[1]!=0)//�����еڶ�������ģ���������
+    if(XSFileSynInfo.TaskIDPri101[1]!=0)//代表有第二个线损模块起的任务
     {
         myEventSend(GetFileSynInfoTaskID101(1),XSFREEZE);
     }     
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  EnCodeNACK()
-�������ܣ�  ��ȷ��
-����˵����  ��ԭ��    
-���˵���� 
-��ע��      
+函数名称：  EnCodeNACK()
+函数功能：  否定确认
+输入说明：  否定原因    
+输出说明： 
+备注：      
 /------------------------------------------------------------------*/
 
 void New104Sec::EnCodeNACK(INT16U Cot)
@@ -7306,12 +7306,12 @@ void New104Sec::EnCodeNACK(INT16U Cot)
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcInitEnd()
-�������ܣ�  ��ʼ��������������
-����˵����  
-���˵���� 
-��ע������ѡ����λʱ����ʼ������֡�������ҽ�����λ����վ����start�ն˻ظ�ȷ�Ϻ󣬲ŷ��ͳ�ʼ������֡��
-����ѡ��һ���յ�Start�ظ�ȷ�Ϻ�ͷ��ͳ�ʼ������֡��Ĭ��Ϊ����ѡ��      
+函数名称：  ProcInitEnd()
+函数功能：  初始化结束处理函数
+输入说明：  
+输出说明： 
+备注：当勾选“复位时发初始化结束帧”：当且仅当复位后主站发送start终端回复确认后，才发送初始化结束帧。
+不勾选：一旦收到Start回复确认后就发送初始化结束帧。默认为不勾选。      
 /------------------------------------------------------------------*/
 
 void New104Sec::ProcInitEnd()
@@ -7325,7 +7325,7 @@ void New104Sec::ProcInitEnd()
     }
     else 
     {
-        if(InitFlag == 0xff)        //wjr  ��ʼ������
+        if(InitFlag == 0xff)        //wjr  初始化结束
         {
             if(EnCodeInitEnd())
             {
@@ -7341,11 +7341,11 @@ void New104Sec::ProcInitEnd()
 }
 
 /*------------------------------------------------------------------/
-�������ƣ�  ProcReadParaGD
-�������ܣ�  �����ٻ��������ġ�
-����˵����    
-���˵����  �ޡ�
-��ע��      
+函数名称：  ProcReadParaGD
+函数功能：  处理召唤参数报文。
+输入说明：    
+输出说明：  无。
+备注：      
 /------------------------------------------------------------------*/
 void New104Sec::ProcReadParaGD(void)
 {
@@ -7358,14 +7358,14 @@ void New104Sec::ProcReadParaGD(void)
     pInfoAddr = &RxMsg[InfoAddrLocation];
     RMTParaNum = RxVsq&VSQ_NUM; 
     //if(RMTParaNum > 33)
-    //    RMTParaNum = 33;   //һ֡��ഫ33����һ��ֻ��30��
+    //    RMTParaNum = 33;   //一帧最多传33个，一般只传30个
     pos = 0; 
     if((RxVsq & VSQ_SQ) == 0)
     {
         for(i=0; i<RMTParaNum; i++)
         {
-            RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //��Ϣ���ַ
-            pos += 7; //3�ֽ���Ϣ���ַ+4�ֽ�����
+            RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //信息体地址
+            pos += 7; //3字节信息体地址+4字节数据
                           
         } 
                     
@@ -7384,10 +7384,10 @@ void New104Sec::ProcReadParaGD(void)
     
 }
 /*------------------------------------------------------------------/
-�������ƣ�  EncodeRMTReadPara_GD()
-�������ܣ�  ��֯���㶫Զ�̲���
-����˵����  
-���˵����  
+函数名称：  EncodeRMTReadPara_GD()
+函数功能：  组织读广东远程参数
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::EncodeRMTReadPara_GD(void)
 {
@@ -7425,14 +7425,14 @@ void New104Sec::EncodeRMTReadPara_GD(void)
             if(len != 0)
             {
                 TxMsg[FramPos++] = LOBYTE(RMTParaInfo[i]);
-                TxMsg[FramPos++] = HIBYTE(RMTParaInfo[i]);  //��Ϣ���ַ
+                TxMsg[FramPos++] = HIBYTE(RMTParaInfo[i]);  //信息体地址
                 TxMsg[FramPos++] = 0;
                 
                 FramPos += len;
             }
             else
             {
-                //�ش���Ϣ���ַ���󣬲���������������
+                //回答信息体地址错误，并结束读参数操作
                 infoerr = TRUE;
                 break; 
             }
@@ -7444,7 +7444,7 @@ void New104Sec::EncodeRMTReadPara_GD(void)
     else
     {
         TxMsg[FramPos++] = LOBYTE(RMTParaInfo[0]);
-        TxMsg[FramPos++] = HIBYTE(RMTParaInfo[0]);  //��Ϣ���ַ
+        TxMsg[FramPos++] = HIBYTE(RMTParaInfo[0]);  //信息体地址
         TxMsg[FramPos++] = 0;
         for(i=0; i<RMTParaNum ; i++)
         {
@@ -7457,7 +7457,7 @@ void New104Sec::EncodeRMTReadPara_GD(void)
             }
             else
             {
-                //�ش���Ϣ���ַ���󣬲���������������
+                //回答信息体地址错误，并结束读参数操作
                 infoerr = TRUE;
                 break; 
             }
@@ -7475,20 +7475,20 @@ void New104Sec::EncodeRMTReadPara_GD(void)
     }
     else
     {
-        //��Ϣ���ַ������֯�񶨻ش�
+        //信息体地址错误，组织否定回答
         RMTParaInit();
         TxMsg[1] = 0;       //VSQ=0 
-        TxMsg[2] = COT_PONO|UNKNOWNTINFOADDR;  //����ԭ��
+        TxMsg[2] = COT_PONO|UNKNOWNTINFOADDR;  //传送原因
         
     }
 
     EnCodeDLMsg(FramPos);
 }
 /*------------------------------------------------------------------/
-�������ƣ�  ProcWritePara_GD()
-�������ܣ�  ����д����
-����˵����  
-���˵����  
+函数名称：  ProcWritePara_GD()
+函数功能：  处理写参数
+输入说明：  
+输出说明：  
 /------------------------------------------------------------------*/
 void New104Sec::ProcWritePara_GD(void)
 {
@@ -7509,30 +7509,30 @@ void New104Sec::ProcWritePara_GD(void)
     
     if(ReadRemoteParaSetEnableState() == FALSE)
     {
-        //�񶨻ش�
+        //否定回答
         RxMsg[CotLocation] = ACTCON|0x40;
         memcpy((void*)TxMsg,(void*)RxMsg,FrameLen+2);
         EnCodeDLMsg(FrameLen+2);
         
-        logSysMsgNoTime("Զ������Ͷ����ѹ��Ϊ�֣���ֹ�޸Ĳ�������",0,0,0,0);
+        logSysMsgNoTime("远方整定投入软压板为分，禁止修改参数！！",0,0,0,0);
         return;
     }    
     
     writeflag = 0;
-    if ((RxCot&COT_REASON)==ACT)    //����
+    if ((RxCot&COT_REASON)==ACT)    //激活
     {
         pInfoAddr = &RxMsg[InfoAddrLocation];
                 
         pos = 0;    
-        RMTParaNum = RxVsq&VSQ_NUM;    //��ʱ������ ���в�����д��
+        RMTParaNum = RxVsq&VSQ_NUM;    //暂时不考虑 固有参数的写入
         if((RxVsq & VSQ_SQ) == 0)
         {
             for(i=0; i<RMTParaNum; i++)
             {
                 qos = pInfoAddr[pos+7];
-                if(qos & 0x80)  //Ԥ��
+                if(qos & 0x80)  //预置
                 {
-                    RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //��Ϣ���ַ
+                    RMTParaInfo[i] = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //信息体地址
                     pos += 3;
                     
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
@@ -7540,14 +7540,14 @@ void New104Sec::ProcWritePara_GD(void)
                     
                     RMTParaValue[i] = tempval;
                     
-                    ProgLogWrite2("Ԥ�ò���info=0x%x, value=%d,num=%d",RMTParaInfo[i],RMTParaValue[i],RMTParaNum,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("预置参数info=0x%x, value=%d,num=%d",RMTParaInfo[i],RMTParaValue[i],RMTParaNum,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                     pos += 5;
                     
                     RMTParaYZ = TRUE;
                 }
                 else
                 {
-                    //ִ��
+                    //执行
                     curparainfo = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);
                     pos += 3; 
                     
@@ -7555,7 +7555,7 @@ void New104Sec::ProcWritePara_GD(void)
                     tempval =*((float *)(&temp32));
                     pos += 5;
                     
-                    //�ж�Ԥ�úͼ�����ͬ��������
+                    //判断预置和激活相同，则设置
                     if((curparainfo == RMTParaInfo[i]) && (tempval == RMTParaValue[i]))
                     {
                         SetTerminalPara(RMTParaValue[i], RMTParaInfo[i]);  
@@ -7569,13 +7569,13 @@ void New104Sec::ProcWritePara_GD(void)
         }
         else
         {
-            //ProgLogWrite2("104�ݲ�֧��vsq=1�����",0,0,0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
-            info = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //��Ϣ���ַ
+            //ProgLogWrite2("104暂不支持vsq=1的情况",0,0,0,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+            info = MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]);    //信息体地址
             pos += 3;
             for(i=0; i<RMTParaNum; i++)
             {
                 qos = pInfoAddr[pos+4];
-                if(qos & 0x80)  //Ԥ��
+                if(qos & 0x80)  //预置
                 {
                     RMTParaInfo[i] = info+i;
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
@@ -7583,7 +7583,7 @@ void New104Sec::ProcWritePara_GD(void)
                     
                     RMTParaValue[i] = tempval;
                     
-                    ProgLogWrite2("Ԥ�ò���info=0x%x, value=%d,num=%d",RMTParaInfo[i],RMTParaValue[i],RMTParaNum,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
+                    ProgLogWrite2("预置参数info=0x%x, value=%d,num=%d",RMTParaInfo[i],RMTParaValue[i],RMTParaNum,0,SYSINFO_WITHTIME, ULOG_TYPE_PARAERR, 1);
                     pos += 5;
                     
                     RMTParaYZ = TRUE;
@@ -7591,12 +7591,12 @@ void New104Sec::ProcWritePara_GD(void)
                 else
                 {
                     curparainfo = info+i;
-                    //ִ��
+                    //执行
                     temp32 = MAKEDWORD(MAKEWORD(pInfoAddr[pos], pInfoAddr[pos+1]), MAKEWORD(pInfoAddr[pos+2],pInfoAddr[pos+3]));
                     tempval =*((float *)(&temp32));
                     pos += 5;
                     
-                    //�ж�Ԥ�úͼ�����ͬ��������
+                    //判断预置和激活相同，则设置
                     if((curparainfo == RMTParaInfo[i]) && (tempval == RMTParaValue[i]))
                     {
                         SetTerminalPara(RMTParaValue[i], RMTParaInfo[i]);  
@@ -7606,15 +7606,15 @@ void New104Sec::ProcWritePara_GD(void)
     
             }
         }   
-        //ȷ�ϻش�
+        //确认回答
         RxMsg[CotLocation] = ACTCON;
         memcpy((void*)TxMsg,(void*)RxMsg,FrameLen+2);
         EnCodeDLMsg(FrameLen+2);
         
-        if(writeflag)   //�̻�
+        if(writeflag)   //固化
         {
-            SaveTerminalPara(); //�̻���ϣ�д��flash
-            SaveRMTParaToSys(); //����Ƿ���Ҫ����ϵͳ�����ļ�
+            SaveTerminalPara(); //固化完毕，写入flash
+            SaveRMTParaToSys(); //检测是否需要更新系统参数文件
             
             RMTParaInit();
         }
@@ -7622,7 +7622,7 @@ void New104Sec::ProcWritePara_GD(void)
     }
     else
     {
-        //����
+        //撤销
         RMTParaInit();
         
         RxMsg[CotLocation] = DEACTCON;

@@ -84,14 +84,14 @@ public:
     BOOL CommConnect;
     struct PTick Tick[4];
     
-    INT16U YkStatusForTest2;    //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24
+    INT16U YkStatusForTest2;    //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24
     
-    INT16U NoJudgeFramNo;       //1-²»ÅĞÖ¡ĞòºÅ 
-    INT16U RsvStartClearRSno;   //ÊÕµ½startÖ¡ÊÕ·¢ĞòºÅÇå0
+    INT16U NoJudgeFramNo;       //1-ä¸åˆ¤å¸§åºå· 
+    INT16U RsvStartClearRSno;   //æ”¶åˆ°startå¸§æ”¶å‘åºå·æ¸…0
     
     
-    //Í¨Ñ¶¼ÓÃÜÏà¹Ø
-    BOOL  IsEncrypt;                    //ÊÇ·ñÖ§³Ö¼ÓÃÜ ll
+    //é€šè®¯åŠ å¯†ç›¸å…³
+    BOOL  IsEncrypt;                    //æ˜¯å¦æ”¯æŒåŠ å¯† ll
 	INT8U N104Encrptystyle;
 	INT8U EncryptBuf[255];
     void ExeDLFunCode16(void);    

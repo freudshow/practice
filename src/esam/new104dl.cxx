@@ -12,7 +12,7 @@ New104DataLink::New104DataLink(struct PMySelf *pmyself,INT32U *pscheduleflag,BOO
     TxBuf=new INT8U[MAXRXLEN+(K+1)*APDULEN];
 
     EBRxBuf=new INT8U[K*APDULEN];
-	EBTxBuf = new INT8U[APDULEN+100];//ÃÜÎÄ·¢ËÍ»º³åÇø³õÊ¼»¯
+	EBTxBuf = new INT8U[APDULEN+100];//å¯†æ–‡å‘é€ç¼“å†²åŒºåˆå§‹åŒ–
 
     if (!(RxBuf&&TxBuf&&EBRxBuf&&EBTxBuf))
         *IsOK=FALSE;
@@ -76,7 +76,7 @@ void New104DataLink::CloseTCP(void)
     MisiDisconnect(pMySelf->AppID);
 }
 
-void New104DataLink::BeginDT(void)  //¿ªÊ¼Êı¾İ´«Êä
+void New104DataLink::BeginDT(void)  //å¼€å§‹æ•°æ®ä¼ è¾“
 {
     INT8U TypeID;
     if (RxHead>=RxTail)
@@ -86,7 +86,7 @@ void New104DataLink::BeginDT(void)  //¿ªÊ¼Êı¾İ´«Êä
     CommConnect=TRUE;
     CurTxUnit=-1;                   
     
-    YkStatusForTest2 = 0;   //ll Îª¹ãÖİ²âÊÔÁÙÊ±ĞŞ¸Ä 2012-3-24
+    YkStatusForTest2 = 0;   //ll ä¸ºå¹¿å·æµ‹è¯•ä¸´æ—¶ä¿®æ”¹ 2012-3-24
    
     if(RsvStartClearRSno == 1)
     {
@@ -99,7 +99,7 @@ void New104DataLink::BeginDT(void)  //¿ªÊ¼Êı¾İ´«Êä
         for (int i=0;i<K+2;i++)
             TxBufUnit[i].State=NoUse;
         
-        ProgLogWrite2("¶Ë¿Ú%d,ÊÕµ½Æô¶¯Ö¡ÊÕ·¢ĞòºÅÇå0",pMySelf->AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 1);
+        ProgLogWrite2("ç«¯å£%d,æ”¶åˆ°å¯åŠ¨å¸§æ”¶å‘åºå·æ¸…0",pMySelf->AppID,0,0,0, SYSINFO_WITHTIME, ULOG_TYPE_COMSTATE, 1);
     }
     for (int i=0;i<K+2;i++)
     {
@@ -120,7 +120,7 @@ void New104DataLink::BeginDT(void)  //¿ªÊ¼Êı¾İ´«Êä
     BeginTick(3);
 }
 
-void New104DataLink::StopDT(BOOL closetcp)  //Í£Ö¹Êı¾İ´«Êä
+void New104DataLink::StopDT(BOOL closetcp)  //åœæ­¢æ•°æ®ä¼ è¾“
 {
     StopTick(1);
     StopTick(2);
@@ -137,18 +137,18 @@ void New104DataLink::RxData(void)
     RxDataEnDealFun(N104Encrptystyle);   
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºRxDataEnDealFun
-*¹¦ÄÜ£ºÅĞ±ğµ±Ç°¹æÔ¼¼ÓÃÜ·½Ê½£¬´¦ÀíÃÜÎÄ»òÕßÃ÷ÎÄÊı¾İ
-*ÊäÈë£ºEnflag:¼ÓÃÜÀàĞÍ£¬2±íÊ¾1161¹úÍø¼ÓÃÜ£¬3±íÊ¾
-*                  1120aºşÄÏÅ©Íø¼ÓÃÜ£¬ÆäËûÎªÃ÷ÎÄ»ò168ºÅÎÄ´¦Àí
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šRxDataEnDealFun
+*åŠŸèƒ½ï¼šåˆ¤åˆ«å½“å‰è§„çº¦åŠ å¯†æ–¹å¼ï¼Œå¤„ç†å¯†æ–‡æˆ–è€…æ˜æ–‡æ•°æ®
+*è¾“å…¥ï¼šEnflag:åŠ å¯†ç±»å‹ï¼Œ2è¡¨ç¤º1161å›½ç½‘åŠ å¯†ï¼Œ3è¡¨ç¤º
+*                  1120aæ¹–å—å†œç½‘åŠ å¯†ï¼Œå…¶ä»–ä¸ºæ˜æ–‡æˆ–168å·æ–‡å¤„ç†
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void New104DataLink::RxDataEnDealFun(INT8U Enflag)
 {
     INT16U RNum,TailFlag;
     INT16U tmpau = 0;
     INT16U Ennum = 0;
-    if((Enflag!=2)&&(Enflag!=3))//Ã÷ÎÄÍ¨Ñ¶·½Ê½
+    if((Enflag!=2)&&(Enflag!=3))//æ˜æ–‡é€šè®¯æ–¹å¼
     {
         if(RxHead<RxTail)
         {
@@ -247,7 +247,7 @@ void New104DataLink::ExeDLFunCode16(void)
     ProcEncryptFrame(&RxBuf[RxHead],EncryptBuf, &len);
     
     if(len)
-        MisiWrite(pMySelf->PortID,(INT8U*)EncryptBuf, len,3);//Ö¡Ê×Ö¡Î²
+        MisiWrite(pMySelf->PortID,(INT8U*)EncryptBuf, len,3);//å¸§é¦–å¸§å°¾
    
 }
 #endif
@@ -282,32 +282,32 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
     #ifdef INCLUDE_ENCRYPT
         
         RxLen=RxTail-RxHead;
-        if((RxBuf[RxHead] == 0x16)&& IsEncrypt )    //¼ÓÃÜ±¨ÎÄ´¦Àí&& IsEncrypt
+        if((RxBuf[RxHead] == 0x16)&& IsEncrypt )    //åŠ å¯†æŠ¥æ–‡å¤„ç†&& IsEncrypt
         { 
             BeginTick(3);  
-            //logSysMsgWithTime("ÊÕµ½±¨ÎÄ¿ªÊ¼´¦Àí111",0,0,0,0);   //debug
+            //logSysMsgWithTime("æ”¶åˆ°æŠ¥æ–‡å¼€å§‹å¤„ç†111",0,0,0,0);   //debug
             rc = CheckEncryptFramHead(&RxBuf[RxHead], RxLen);
             switch(rc)
             {
-            case 0: //±¨ÎÄ¼ì²éÕıÈ·
-                //logSysMsgWithTime("±¨ÎÄ´¦Àí¿ªÊ¼222",0,0,0,0);
+            case 0: //æŠ¥æ–‡æ£€æŸ¥æ­£ç¡®
+                //logSysMsgWithTime("æŠ¥æ–‡å¤„ç†å¼€å§‹222",0,0,0,0);
                 ExeDLFunCode16();
-                //logSysMsgWithTime("±¨ÎÄ´¦ÀíÍê±Ï±¨ÎÄ222",0,0,0,0); //debug
-                RxHead+=(RxBuf[RxHead+1]+6);//Í·Ö¸ÕëºóÒÆµ½±¨ÎÄºó
+                //logSysMsgWithTime("æŠ¥æ–‡å¤„ç†å®Œæ¯•æŠ¥æ–‡222",0,0,0,0); //debug
+                RxHead+=(RxBuf[RxHead+1]+6);//å¤´æŒ‡é’ˆåç§»åˆ°æŠ¥æ–‡å
                 RxState=Start;
                 
                 break; 
-            case 1: //Ö¡Í·²»¶Ô
+            case 1: //å¸§å¤´ä¸å¯¹
                 RxHead++;
                 RxState=Start;
-                //logSysMsgWithTime("Ö¡Í·²»¶Ô",0,0,0,0); //debug
+                //logSysMsgWithTime("å¸§å¤´ä¸å¯¹",0,0,0,0); //debug
                 break;
-            case 2: //Î´ÊÕÍêÈ«
+            case 2: //æœªæ”¶å®Œå…¨
                 RxState=Start;
                 DARet=DA_NODATA;
-                //logSysMsgWithTime("Î´ÊÕÍê",0,0,0,0); //debug
+                //logSysMsgWithTime("æœªæ”¶å®Œ",0,0,0,0); //debug
                 break; 
-            case 3: //Ğ£ÑéºÍ¡¢½âÇ©´íÎó
+            case 3: //æ ¡éªŒå’Œã€è§£ç­¾é”™è¯¯
                 RxHead+=6;
                 RxState=Start;
                 break;
@@ -337,7 +337,7 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
             
             if (apci.NS&0x01)
             {
-                if(apci.Length == 4)    //ll ÅĞÏÂUºÍSÖ¡µÄÊı¾İ³¤¶È 
+                if(apci.Length == 4)    //ll åˆ¤ä¸‹Uå’ŒSå¸§çš„æ•°æ®é•¿åº¦ 
                 {    
                     StopTick(1);   //figure 12
                     BeginTick(3);  //figure 13
@@ -361,7 +361,7 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
                 else
                 {
                 
-                    //UºÍSÖ¡³¤¶È²»¶Ô£¬¶ªÆú
+                    //Uå’ŒSå¸§é•¿åº¦ä¸å¯¹ï¼Œä¸¢å¼ƒ
                     RxHead++;
                     RxState=Start;   
                 }
@@ -370,10 +370,10 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
             {
                 if(apci.NR&0x01)
                 {
-                    //IÖ¡µÄÊÕĞòºÅÒì³£   //ll 2012-9-5 ½â¾öÊÕµ½ÎŞÓÃ¼ÓÃÜ±¨ÎÄÊ±¼ìÖ¡µÄÎÊÌâ
+                    //Iå¸§çš„æ”¶åºå·å¼‚å¸¸   //ll 2012-9-5 è§£å†³æ”¶åˆ°æ— ç”¨åŠ å¯†æŠ¥æ–‡æ—¶æ£€å¸§çš„é—®é¢˜
                     RxHead++;
                     RxState=Start;
-                    //logSysMsgNoTime("IÖ¡ÊÕĞòºÅ´íÎó",0,0,0,0);
+                    //logSysMsgNoTime("Iå¸§æ”¶åºå·é”™è¯¯",0,0,0,0);
                 }
                 else
                 {
@@ -403,10 +403,10 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
             
             if(NoJudgeFramNo == 0)
             {
-                //ÅĞÖ¡ĞòºÅ
+                //åˆ¤å¸§åºå·
                 if ((apci.NS)!= ((NR<<1) & 0xfffe))
                 {
-                    logSysMsgNoTime("ÊÕµ½IÖ¡µÄ·¢ËÍĞòºÅ´íÎó£¬·¢ËÍĞòºÅ=%d,ÆÚ´ıĞòºÅ=%d",apci.NS>>1,NR,0,0); // ll
+                    logSysMsgNoTime("æ”¶åˆ°Iå¸§çš„å‘é€åºå·é”™è¯¯ï¼Œå‘é€åºå·=%d,æœŸå¾…åºå·=%d",apci.NS>>1,NR,0,0); // ll
                     StopDT(TRUE);
                     *HaveData=FALSE;
                     return(DA_NULL);
@@ -414,18 +414,18 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
             }
             else
             {
-                //²»ÅĞÖ¡ĞòºÅ
+                //ä¸åˆ¤å¸§åºå·
                 if ((apci.NS)!= ((NR<<1) & 0xfffe))
                 {
                     NR = apci.NS>>1;
-                    logSysMsgNoTime("µ÷ÕûIÖ¡µÄ½ÓÊÕĞòºÅ£¬Ö÷Õ¾·¢ËÍĞòºÅ=%d,½ÓÊÕĞòºÅ=%d",apci.NS>>1,NR,0,0); // ll
+                    logSysMsgNoTime("è°ƒæ•´Iå¸§çš„æ¥æ”¶åºå·ï¼Œä¸»ç«™å‘é€åºå·=%d,æ¥æ”¶åºå·=%d",apci.NS>>1,NR,0,0); // ll
                     
                 }
                 
             }
             
         #ifdef INCLUDE_ENCRYPT    
-            //ÊÇ·ñÖ§³Ö¼ÓÃÜ 
+            //æ˜¯å¦æ”¯æŒåŠ å¯† 
             if(IsEncrypt && 
                 ((pAPCI[APCILEN]==C_SC_NA) || (pAPCI[APCILEN]==C_DC_NA))
               )
@@ -434,9 +434,9 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
                 {
                     if((pAPCI[apci.Length+2] != 0x16) || (pAPCI[apci.Length+5] != 0x16))
                     {
-                        logSysMsgNoTime("104 ÎŞÈÏÖ¤±¨ÎÄÍ·£¬¶ªÆú±¨ÎÄ",0,0,0,0);
+                        logSysMsgNoTime("104 æ— è®¤è¯æŠ¥æ–‡å¤´ï¼Œä¸¢å¼ƒæŠ¥æ–‡",0,0,0,0);
                         RxState=Start;
-                        //ÎŞÈÏÖ¤±¨ÎÄÍ·£¬¶ªÆú±¨ÎÄ
+                        //æ— è®¤è¯æŠ¥æ–‡å¤´ï¼Œä¸¢å¼ƒæŠ¥æ–‡
                         RxHead += (apci.Length+2);
                         if (CommConnect)
                         {
@@ -444,13 +444,13 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
                             BeginTick(2);  //figure 10
                             BeginTick(3);  //figure 13
                             NR++;
-                            RxFrmNum++;    //Ó¦ÓÃ²ãÖĞ¶ÔÎŞIÓ¦´ğµÄÊı¾İÒªÅĞRxFrmNum¾ö¶¨ÊÇ·ñÓ¦´ğS
+                            RxFrmNum++;    //åº”ç”¨å±‚ä¸­å¯¹æ— Iåº”ç­”çš„æ•°æ®è¦åˆ¤RxFrmNumå†³å®šæ˜¯å¦åº”ç­”S
                             DARet=DA_NODATA;
                         }
                         
                         
                     }
-                    else if (RxLen>=apci.Length+2+pAPCI[apci.Length+3]+6)//±¨ÎÄÊÕÈ«£¬½øĞĞ´¦Àí
+                    else if (RxLen>=apci.Length+2+pAPCI[apci.Length+3]+6)//æŠ¥æ–‡æ”¶å…¨ï¼Œè¿›è¡Œå¤„ç†
                     {
                         RxState=Start;
                         
@@ -460,16 +460,16 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
                             BeginTick(2);  //figure 10
                             BeginTick(3);  //figure 13
                             NR++;
-                            RxFrmNum++;    //Ó¦ÓÃ²ãÖĞ¶ÔÎŞIÓ¦´ğµÄÊı¾İÒªÅĞRxFrmNum¾ö¶¨ÊÇ·ñÓ¦´ğS
+                            RxFrmNum++;    //åº”ç”¨å±‚ä¸­å¯¹æ— Iåº”ç­”çš„æ•°æ®è¦åˆ¤RxFrmNumå†³å®šæ˜¯å¦åº”ç­”S
                         }
-                        //logSysMsgWithTime("ÊÕµ½±¨ÎÄ¿ªÊ¼´¦Àí222",0,0,0,0);   //debug 
+                        //logSysMsgWithTime("æ”¶åˆ°æŠ¥æ–‡å¼€å§‹å¤„ç†222",0,0,0,0);   //debug 
                         rc = CheckEncryptFrame(&pAPCI[apci.Length+2], pAPCI, apci.Length+2);
                         if(rc == 0)
                         {
                            
-                            RxHead+=(apci.Length+2+pAPCI[apci.Length+3]+6);//Í·Ö¸ÕëºóÒÆµ½±¨ÎÄºó 
+                            RxHead+=(apci.Length+2+pAPCI[apci.Length+3]+6);//å¤´æŒ‡é’ˆåç§»åˆ°æŠ¥æ–‡å 
                             
-                            logSysMsgWithTime("104 ÊÕµ½Ö÷Õ¾¼ÓÃÜÒ£¿Ø±¨ÎÄ£¬ÑéÇ©ÕıÈ·.", 0,0,0,0);
+                            logSysMsgWithTime("104 æ”¶åˆ°ä¸»ç«™åŠ å¯†é¥æ§æŠ¥æ–‡ï¼ŒéªŒç­¾æ­£ç¡®.", 0,0,0,0);
                             
                             if (CommConnect)
                             {
@@ -480,7 +480,7 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
                         else
                         {
                             RxHead+=(apci.Length+6);
-                            logSysMsgNoTime("°²È«±¨ÎÄĞ£Ñé(Ğ£ÑéºÍ,Ç©Ãû,Ê±¼ä´Á)²»ÕıÈ·.rc=%d",rc,0,0,0);
+                            logSysMsgNoTime("å®‰å…¨æŠ¥æ–‡æ ¡éªŒ(æ ¡éªŒå’Œ,ç­¾å,æ—¶é—´æˆ³)ä¸æ­£ç¡®.rc=%d",rc,0,0,0);
                             if (CommConnect)
                             {
                                 DARet=DA_NODATA;
@@ -507,7 +507,7 @@ PDARet New104DataLink::SearchFrm(BOOL *HaveData)
                     BeginTick(2);  //figure 10
                     BeginTick(3);  //figure 13
                     NR++;
-                    RxFrmNum++;    //Ó¦ÓÃ²ãÖĞ¶ÔÎŞIÓ¦´ğµÄÊı¾İÒªÅĞRxFrmNum¾ö¶¨ÊÇ·ñÓ¦´ğS
+                    RxFrmNum++;    //åº”ç”¨å±‚ä¸­å¯¹æ— Iåº”ç­”çš„æ•°æ®è¦åˆ¤RxFrmNumå†³å®šæ˜¯å¦åº”ç­”S
                     DARet=DA_SUCCESS;
                 }
                 RxHead+=(apci.Length+2);
@@ -559,7 +559,7 @@ INT8U *New104DataLink::GetASDU(INT8U *FrameLen)
     return(pAPCI+APCILEN);
 }
 
-void New104DataLink::ProcUFrame(void)  //´¦ÀíUÖ¡
+void New104DataLink::ProcUFrame(void)  //å¤„ç†Uå¸§
 {
    
     switch (LOBYTE(apci.NS))
@@ -567,7 +567,7 @@ void New104DataLink::ProcUFrame(void)  //´¦ÀíUÖ¡
         case U_STARTDTACT:
             BeginDT();
             SendCtrlFrame(U_STARTDTCON);
-            (*pScheduleFlag)|=SCHEDULE_INITOK;      //wjr³õÊ¼»¯½áÊø
+            (*pScheduleFlag)|=SCHEDULE_INITOK;      //wjråˆå§‹åŒ–ç»“æŸ
             NotifyToAppSchedule();
             break;
         case U_STARTDTCON:
@@ -588,7 +588,7 @@ void New104DataLink::ProcUFrame(void)  //´¦ÀíUÖ¡
             if (PeerNoAckNum>=K)
             {
                 //SendCtrlFrame(U_STOPDTACT);
-                logSysMsgNoTime("³¬¹ı%dÖ¡±¨ÎÄÎ´±»È·ÈÏ,¶Ï¿ªTCP",PeerNoAckNum,0,0,0); // ll
+                logSysMsgNoTime("è¶…è¿‡%då¸§æŠ¥æ–‡æœªè¢«ç¡®è®¤,æ–­å¼€TCP",PeerNoAckNum,0,0,0); // ll
                 StopDT(TRUE);
             }
             else
@@ -600,7 +600,7 @@ void New104DataLink::ProcUFrame(void)  //´¦ÀíUÖ¡
     }
 }
 
-BOOL New104DataLink::ProcPeerNoAckNum(INT16U PeerNR)  //´¦Àí¶Ô·½È·ÈÏÖ¡
+BOOL New104DataLink::ProcPeerNoAckNum(INT16U PeerNR)  //å¤„ç†å¯¹æ–¹ç¡®è®¤å¸§
 {
     INT16U TempPeerNoAckNum,i,j;
     struct PAPCI APCI;
@@ -613,15 +613,15 @@ BOOL New104DataLink::ProcPeerNoAckNum(INT16U PeerNR)  //´¦Àí¶Ô·½È·ÈÏÖ¡
     
     if(NoJudgeFramNo == 0)
     {  
-        //ÅĞÖ¡ĞòºÅ£¬Ô­³ÌĞòÕı³£´¦Àí 
-        if (TempPeerNoAckNum>PeerNoAckNum)  //TempPeerNoAckNum »¹Î´È·ÈÏµÄÖ¡ ll remark
+        //åˆ¤å¸§åºå·ï¼ŒåŸç¨‹åºæ­£å¸¸å¤„ç† 
+        if (TempPeerNoAckNum>PeerNoAckNum)  //TempPeerNoAckNum è¿˜æœªç¡®è®¤çš„å¸§ ll remark
         {
-            logSysMsgNoTime("±¾»ú·¢ËÍĞòºÅ=%d,¶Ô·½È·ÈÏĞòºÅ=%d,Î´È·ÈÏÖ¡Êı=%d",NS,PeerNR,PeerNoAckNum,0); // ll
+            logSysMsgNoTime("æœ¬æœºå‘é€åºå·=%d,å¯¹æ–¹ç¡®è®¤åºå·=%d,æœªç¡®è®¤å¸§æ•°=%d",NS,PeerNR,PeerNoAckNum,0); // ll
             return(FALSE);
         }
         
-        //ÊÍ·Å»º³åÇøÖĞÒÑ¾­È·ÈÏµÄÖ¡ ll remark
-        for(i=0;i<PeerNoAckNum-TempPeerNoAckNum;i++)    //PeerNoAckNum-TempPeerNoAckNumÒÑ¾­È·ÈÏÖ¡µÄ¸öÊı ll remark
+        //é‡Šæ”¾ç¼“å†²åŒºä¸­å·²ç»ç¡®è®¤çš„å¸§ ll remark
+        for(i=0;i<PeerNoAckNum-TempPeerNoAckNum;i++)    //PeerNoAckNum-TempPeerNoAckNumå·²ç»ç¡®è®¤å¸§çš„ä¸ªæ•° ll remark
         {
             if (PeerNR==0)
                 PeerNR=32767;
@@ -638,7 +638,7 @@ BOOL New104DataLink::ProcPeerNoAckNum(INT16U PeerNR)  //´¦Àí¶Ô·½È·ÈÏÖ¡
     }
     else
     {
-        //²»ÅĞ¶ÏÖ¡ĞòºÅ£¬ÎŞĞè¶Ô·½È·ÈÏ£¬°ÑËùÓĞ´ıÈ·ÈÏµÄÊÍ·Å 
+        //ä¸åˆ¤æ–­å¸§åºå·ï¼Œæ— éœ€å¯¹æ–¹ç¡®è®¤ï¼ŒæŠŠæ‰€æœ‰å¾…ç¡®è®¤çš„é‡Šæ”¾ 
         for (i=0; i<K+2;i++)
         {
             if (TxBufUnit[i].State==WaitAck)
@@ -671,7 +671,7 @@ void New104DataLink::StopTick(INT8U i)
     Tick[i].IsUse=FALSE;
 }
 
-void New104DataLink::SendCtrlFrame(INT16U FrameType)    //¸ù¾İcoverity¸ü¸Ä
+void New104DataLink::SendCtrlFrame(INT16U FrameType)    //æ ¹æ®coverityæ›´æ”¹
 {
     TxBufUnit[0].State=WaitSend;
     INT8U *TxMsg = TxBufUnit[0].BufStart;
@@ -694,7 +694,7 @@ void New104DataLink::ReferToMisi(void)
         FindTxUnitToSend();
 }
 
-void New104DataLink::FindTxUnitToSend(void) //²éÕÒ·¢ËÍµ¥Ôª·¢ËÍ
+void New104DataLink::FindTxUnitToSend(void) //æŸ¥æ‰¾å‘é€å•å…ƒå‘é€
 {
     int i;
     struct PAPCI TxMsg;
@@ -736,7 +736,7 @@ void New104DataLink::FindTxUnitToSend(void) //²éÕÒ·¢ËÍµ¥Ôª·¢ËÍ
                 NS++;
                 NS=NS&0x7FFF;
                 PeerNoAckNum++;
-                BeginTick(1);   // Ôö¼ÓÕı³£Ö¡µÄ·¢ËÍÎŞÈ·ÈÏ¼ÆÊ±  ll 2014-3-14 ÓÃÓÚ¿ìËÙ¼ì²âÍ¨Ñ¶ÖĞ¶Ï
+                BeginTick(1);   // å¢åŠ æ­£å¸¸å¸§çš„å‘é€æ— ç¡®è®¤è®¡æ—¶  ll 2014-3-14 ç”¨äºå¿«é€Ÿæ£€æµ‹é€šè®¯ä¸­æ–­
                 StopTick(2);
                 BeginTick(3);
             }
@@ -759,22 +759,22 @@ void New104DataLink::SendToTeam(void)
     SendToTeamEnDealFun(N104Encrptystyle);    
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºRecMISIDataDealFun
-*¹¦ÄÜ£ºÅĞ±ğµ±Ç°¹æÔ¼¼ÓÃÜ·½Ê½£¬´¦ÀíÃÜÎÄ»òÕßÃ÷ÎÄÊı¾İ
-*ÊäÈë£ºEnflag:¼ÓÃÜÀàĞÍ£¬2±íÊ¾1161¹úÍø¼ÓÃÜ£¬3±íÊ¾
-*                  1120aºşÄÏÅ©Íø¼ÓÃÜ£¬ÆäËûÎªÃ÷ÎÄ»ò168ºÅÎÄ´¦Àí
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šRecMISIDataDealFun
+*åŠŸèƒ½ï¼šåˆ¤åˆ«å½“å‰è§„çº¦åŠ å¯†æ–¹å¼ï¼Œå¤„ç†å¯†æ–‡æˆ–è€…æ˜æ–‡æ•°æ®
+*è¾“å…¥ï¼šEnflag:åŠ å¯†ç±»å‹ï¼Œ2è¡¨ç¤º1161å›½ç½‘åŠ å¯†ï¼Œ3è¡¨ç¤º
+*                  1120aæ¹–å—å†œç½‘åŠ å¯†ï¼Œå…¶ä»–ä¸ºæ˜æ–‡æˆ–168å·æ–‡å¤„ç†
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void New104DataLink::SendToTeamEnDealFun(INT8U Enflag)
 {
     INT16U i,rc,ebsendlen;
     INT8U *Packstar;
     
-    if((Enflag!=2)&&(Enflag!=3))//Ã÷ÎÄÍ¨Ñ¶·½Ê½
+    if((Enflag!=2)&&(Enflag!=3))//æ˜æ–‡é€šè®¯æ–¹å¼
     {
         if (TxState==Send)
         {
-            i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(TxStart+TxHead),(INT16U)(TxTail-TxHead),3);//Ö¡Ê×Ö¡Î²
+            i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(TxStart+TxHead),(INT16U)(TxTail-TxHead),3);//å¸§é¦–å¸§å°¾
             if (i)
             {
                 TxState=Wait;
@@ -782,7 +782,7 @@ void New104DataLink::SendToTeamEnDealFun(INT8U Enflag)
         }
         else
         {
-            i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(TxStart+TxHead),(INT16U)(TxTail-TxHead),1);//ÓĞÖ¡Î²£¬ÎŞÖ¡Ê×
+            i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(TxStart+TxHead),(INT16U)(TxTail-TxHead),1);//æœ‰å¸§å°¾ï¼Œæ— å¸§é¦–
         }
         
         myTaskDelay(10);
@@ -796,7 +796,7 @@ void New104DataLink::SendToTeamEnDealFun(INT8U Enflag)
     else
     {
 		ebsendlen = 0;
-        if(AuthEndflag != pMySelf->PortID)//&&TxStart[0] != 0xEB)//Ö÷Õ¾ÈÏÖ¤Íê³ÉÖ®Ç°²»·¢ËÍ¹æÔ¼Êı¾İ£¬·ñÔò»áµ¼ÖÂÖØĞÂÈÏÖ¤
+        if(AuthEndflag != pMySelf->PortID)//&&TxStart[0] != 0xEB)//ä¸»ç«™è®¤è¯å®Œæˆä¹‹å‰ä¸å‘é€è§„çº¦æ•°æ®ï¼Œå¦åˆ™ä¼šå¯¼è‡´é‡æ–°è®¤è¯
         {
             memset(TxStart+TxHead,0,TxTail-TxHead);
             TxHead = TxTail = 0;
@@ -825,7 +825,7 @@ void New104DataLink::SendToTeamEnDealFun(INT8U Enflag)
                 return ;
 			}
 			
-            i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(EBTxBuf),(INT16U)(rc),3);//Ö¡Ê×Ö¡Î²
+            i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(EBTxBuf),(INT16U)(rc),3);//å¸§é¦–å¸§å°¾
             if (i)
             {
                 TxState=Wait;
@@ -835,7 +835,7 @@ void New104DataLink::SendToTeamEnDealFun(INT8U Enflag)
 		}
 		else
 		{
-		    i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(TxStart+TxHead),(INT16U)(TxTail-TxHead),1);//ÓĞÖ¡Î²£¬ÎŞÖ¡Ê×
+		    i=(INT16U)MisiWrite(pMySelf->PortID,(INT8U*)(TxStart+TxHead),(INT16U)(TxTail-TxHead),1);//æœ‰å¸§å°¾ï¼Œæ— å¸§é¦–
 		}
 		
         UpgradeDataVerify(pMySelf->PortID);
@@ -865,7 +865,7 @@ void New104DataLink::TimeOut(void)
         if (Tick[1].Count==0)
         {
             StopTick(1);
-            logSysMsgWithTime("·¢ËÍÖ¡³¬¹ıT1Ê±¼äÎ´µÃµ½È·ÈÏ,¶Ï¿ªTCP",0,0,0,0);  // ll
+            logSysMsgWithTime("å‘é€å¸§è¶…è¿‡T1æ—¶é—´æœªå¾—åˆ°ç¡®è®¤,æ–­å¼€TCP",0,0,0,0);  // ll
             StopDT(TRUE);
         }
     }
@@ -892,7 +892,7 @@ void New104DataLink::TimeOut(void)
     }
 }
 
-BOOL New104DataLink::GetFreeTxUnit(INT8U Priority,INT8U **pTxMsg)  //µÃµ½¿ÕÏĞ·¢ËÍµ¥Ôª
+BOOL New104DataLink::GetFreeTxUnit(INT8U Priority,INT8U **pTxMsg)  //å¾—åˆ°ç©ºé—²å‘é€å•å…ƒ
 {
     INT16U i,j=0;
     if (!CommConnect)
@@ -933,7 +933,7 @@ void New104DataLink::NotifyToAppSchedule(void)
         myEventSend(pMySelf->AppTID,SCHEDULEFLAG);
 }
 
-//·¢ËÍÈ·ÈÏÖ¡
+//å‘é€ç¡®è®¤å¸§
 void New104DataLink::ConfS(void)
 {
     if (RxFrmNum>=W)

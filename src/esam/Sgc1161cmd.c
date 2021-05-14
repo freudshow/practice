@@ -13,31 +13,31 @@
 #define SGCRANDOMLEN   8
 #define SGCSYMMETRYKEYID   0x01
 
-#define EBKEYIDLEN   1      //ÃÜÔ¿Ë÷Òı×Ö½ÚÊı
+#define EBKEYIDLEN   1      //å¯†é’¥ç´¢å¼•å­—èŠ‚æ•°
 #define EBHEADLEN   4
-#define EBAUDATASTARTSITE   9   //ÈÏÖ¤¹ı³Ì±¨ÎÄÊı¾İÆğÊ¼Î»ÖÃ
+#define EBAUDATASTARTSITE   9   //è®¤è¯è¿‡ç¨‹æŠ¥æ–‡æ•°æ®èµ·å§‹ä½ç½®
 
 extern  SEM_ID  sem_qspiid;
 
 extern INT8U *pHeSendBuf1,*pHeSendBuf2;
 extern INT8U *ParaTempBuf;
-extern struct encrypt_st  encrypt_data;//ÓÃÓÚÅĞ¶ÏÊ±¼ä´Á³¬Ê±
+extern struct encrypt_st  encrypt_data;//ç”¨äºåˆ¤æ–­æ—¶é—´æˆ³è¶…æ—¶
 
 
-INT8U SgcSelfRandbuf[8];//Ğ¾Æ¬×ÔÉú³ÉËæ»úÊı´æ·Å
-INT8U SgcCerToolIDbuf[8];//Ö¤Êé¹ÜÀí¹¤¾ßID´æ·Å
-INT8U SgcGetWayRandbuf[8];//Íø¹ØÏÂ·¢Ëæ»úÊı
-INT8U SgcMasterRandbuf[16];//Ö÷Õ¾ÈÏÖ¤Ê±ÏÂ·¢Ëæ»úÊı R1+R1°´Î»È¡·´
-INT8U SgcRdDatatoYWbuf[16];//Ö¤Êé¹ÜÀí¹¤¾ßÈÏÖ¤Ëæ»úÊıR+RÈ¡·´
+INT8U SgcSelfRandbuf[8];//èŠ¯ç‰‡è‡ªç”Ÿæˆéšæœºæ•°å­˜æ”¾
+INT8U SgcCerToolIDbuf[8];//è¯ä¹¦ç®¡ç†å·¥å…·IDå­˜æ”¾
+INT8U SgcGetWayRandbuf[8];//ç½‘å…³ä¸‹å‘éšæœºæ•°
+INT8U SgcMasterRandbuf[16];//ä¸»ç«™è®¤è¯æ—¶ä¸‹å‘éšæœºæ•° R1+R1æŒ‰ä½å–å
+INT8U SgcRdDatatoYWbuf[16];//è¯ä¹¦ç®¡ç†å·¥å…·è®¤è¯éšæœºæ•°R+Rå–å
 
-INT8U UpLoadtime[6];//Éı¼¶ÑéÖ¤Ê±¼ä
-INT8U UpLoadRdata[8];//Éı¼¶ÑéÖ¤Ëæ»úÊı    
-INT8U UpLoadSdata[64];//Éı¼¶ÑéÖ¤Ç©Ãû
+INT8U UpLoadtime[6];//å‡çº§éªŒè¯æ—¶é—´
+INT8U UpLoadRdata[8];//å‡çº§éªŒè¯éšæœºæ•°    
+INT8U UpLoadSdata[64];//å‡çº§éªŒè¯ç­¾å
 INT8U UpLoadKeyId;
 INT8U UoLoadMD5[16];
 
-INT8U SGCConsultrandom[8];//ÃÜÔ¿Ğ­ÉÌËæ»úÊı
-//INT8U SGCSymrandom[8];//¸üĞÂ¶Ô³ÆÃÜÔ¿Ëæ»úÊı
+INT8U SGCConsultrandom[8];//å¯†é’¥åå•†éšæœºæ•°
+//INT8U SGCSymrandom[8];//æ›´æ–°å¯¹ç§°å¯†é’¥éšæœºæ•°
 ////INT8U g_EnDone = 0;
 
 INT8U rmparaflag = 0;
@@ -48,7 +48,7 @@ INT8U Upendflag = 0;
 
 INT8U Sendnum = 0;
 INT16U Sendlen = 0;
-INT8U SendCount = 0;//ÒÑ·¢ËÍÁË¶àÉÙÖ¡
+INT8U SendCount = 0;//å·²å‘é€äº†å¤šå°‘å¸§
 
 
 INT16U LenFromEbMsg = 0;
@@ -62,10 +62,10 @@ INT16U YWCerlen = 0;
 struct Sgc1120aFlag_t HnnwInf;
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetChipSerialNumID
-*¹¦ÄÜ£º»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅ
-*ÊäÈë£ºrcvbuf:Êı¾İ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetChipSerialNumID
+*åŠŸèƒ½ï¼šè·å–èŠ¯ç‰‡åºåˆ—å·
+*è¾“å…¥ï¼šrcvbuf:æ•°æ®å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161GetChipSerialNumID(INT8U *rcvbuf)
 {
@@ -92,11 +92,11 @@ INT8U Sgc1161GetChipSerialNumID(INT8U *rcvbuf)
     semGive(sem_qspiid);
     if(rc == 0)
     {
-        //logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è·å–èŠ¯ç‰‡åºåˆ—å·æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-       // logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅÊ§°Ü.rc=%d",rc,0,0,0);
+       // logSysMsgNoTime("è·å–èŠ¯ç‰‡åºåˆ—å·å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -105,10 +105,10 @@ INT8U Sgc1161GetChipSerialNumID(INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161GetOriCerlen
-*¹¦ÄÜ£º»ñÈ¡³õÊ¼Ö¤Êé³¤¶È
-*ÊäÈë£ºrcvbuf:Êı¾İ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161GetOriCerlen
+*åŠŸèƒ½ï¼šè·å–åˆå§‹è¯ä¹¦é•¿åº¦
+*è¾“å…¥ï¼šrcvbuf:æ•°æ®å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161GetOriCerlen(INT8U *rcvbuf)
 {
@@ -138,11 +138,11 @@ INT8U Sgc1161GetOriCerlen(INT8U *rcvbuf)
         
     if(rc == 0)
     {
-        //logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è·å–èŠ¯ç‰‡åºåˆ—å·æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("»ñÈ¡³õÊ¼Ö¤Êé³¤¶ÈÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è·å–åˆå§‹è¯ä¹¦é•¿åº¦å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -151,10 +151,10 @@ INT8U Sgc1161GetOriCerlen(INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161GetOriCerData
-*¹¦ÄÜ£º»ñÈ¡³õÊ¼Ö¤Êé
-*ÊäÈë£ºrcvbuf:Êı¾İ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161GetOriCerData
+*åŠŸèƒ½ï¼šè·å–åˆå§‹è¯ä¹¦
+*è¾“å…¥ï¼šrcvbuf:æ•°æ®å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161GetOriCerData(INT8U *rcvbuf,INT16U lenth)
 {
@@ -228,11 +228,11 @@ INT8U Sgc1161GetOriCerData(INT8U *rcvbuf,INT16U lenth)
     
     if(rc == 0)
     {
-        //logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è·å–èŠ¯ç‰‡åºåˆ—å·æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("»ñÈ¡³õÊ¼Ö¤ÊéÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è·å–åˆå§‹è¯ä¹¦å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -241,10 +241,10 @@ INT8U Sgc1161GetOriCerData(INT8U *rcvbuf,INT16U lenth)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetChipKeyVersion
-*¹¦ÄÜ£º»ñÈ¡Ğ¾Æ¬ÃÜÔ¿°æ±¾ºÅ
-*ÊäÈë£ºpdataÊı¾İ½ÓÊÕ»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetChipKeyVersion
+*åŠŸèƒ½ï¼šè·å–èŠ¯ç‰‡å¯†é’¥ç‰ˆæœ¬å·
+*è¾“å…¥ï¼špdataæ•°æ®æ¥æ”¶ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161GetChipKeyVersion(INT8U *pdata,INT8U *rcvbuf)
 {
@@ -272,11 +272,11 @@ INT8U Sgc1161GetChipKeyVersion(INT8U *pdata,INT8U *rcvbuf)
     
     if(rc == 0)
     {
-        //logSysMsgNoTime("»ñÈ¡ÃÜÔ¿°æ±¾ºÅÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è·å–å¯†é’¥ç‰ˆæœ¬å·æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        //logSysMsgNoTime("»ñÈ¡ÃÜÔ¿°æ±¾ºÅÊ§°Ü.rc=%d",rc,0,0,0);
+        //logSysMsgNoTime("è·å–å¯†é’¥ç‰ˆæœ¬å·å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -285,10 +285,10 @@ INT8U Sgc1161GetChipKeyVersion(INT8U *pdata,INT8U *rcvbuf)
     
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcVerify1161MasterSignData
-*¹¦ÄÜ£ºÑéÖ¤Ö÷Õ¾Ç©Ãû
-*ÊäÈë£ºpdataÇ©ÃûÊı¾İ,KeyId£ºÇ©ÃûÃÜÔ¿Ë÷Òı
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcVerify1161MasterSignData
+*åŠŸèƒ½ï¼šéªŒè¯ä¸»ç«™ç­¾å
+*è¾“å…¥ï¼špdataç­¾åæ•°æ®,KeyIdï¼šç­¾åå¯†é’¥ç´¢å¼•
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161VerifyMasterSignData(INT8U KeyId,INT8U* pdata)
 {
@@ -317,11 +317,11 @@ INT8U Sgc1161VerifyMasterSignData(INT8U KeyId,INT8U* pdata)
     
     if(rc == 0)
     {
-        //logSysMsgNoTime("ÑéÖ¤Ö÷Õ¾Ç©ÃûÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("éªŒè¯ä¸»ç«™ç­¾åæ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÑéÖ¤Ö÷Õ¾Ç©Ãû´íÎó¡£rc=%d",rc,0,0,0);
+        logSysMsgNoTime("éªŒè¯ä¸»ç«™ç­¾åé”™è¯¯ã€‚rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -329,10 +329,10 @@ INT8U Sgc1161VerifyMasterSignData(INT8U KeyId,INT8U* pdata)
     return rc;         
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGet1161RanSignData
-*¹¦ÄÜ£º¶ÔËæ»úÊıÉú³ÉÇ©Ãû
-*ÊäÈë£ºpdata:Ö÷Õ¾Ëæ»úÊı
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGet1161RanSignData
+*åŠŸèƒ½ï¼šå¯¹éšæœºæ•°ç”Ÿæˆç­¾å
+*è¾“å…¥ï¼špdata:ä¸»ç«™éšæœºæ•°
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161GetRanSignData(INT8U* pdata,INT8U *rcvbuf)
 {
@@ -404,11 +404,11 @@ INT8U Sgc1161GetRanSignData(INT8U* pdata,INT8U *rcvbuf)
     if(rc == 0)
     {
         //memcpy(SgcSelfRandbuf, pdata+2, SGCRANDOMLEN);    
-        //logSysMsgNoTime("Ëæ»úÊıÇ©ÃûÉú³ÉÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("éšæœºæ•°ç­¾åç”Ÿæˆæ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("Ëæ»úÊıÇ©ÃûÉú³ÉÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("éšæœºæ•°ç­¾åç”Ÿæˆå¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -416,10 +416,10 @@ INT8U Sgc1161GetRanSignData(INT8U* pdata,INT8U *rcvbuf)
     return rc;          
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161EncryptData
-*¹¦ÄÜ£ºÊı¾İ¼ÓÃÜ
-*ÊäÈë£ºpdata:´ı¼ÓÃÜÊı¾İ,lenth£º¼ÓÃÜÊı¾İ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161EncryptData
+*åŠŸèƒ½ï¼šæ•°æ®åŠ å¯†
+*è¾“å…¥ï¼špdata:å¾…åŠ å¯†æ•°æ®,lenthï¼šåŠ å¯†æ•°æ®é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161EncryptData(INT8U *pdata,INT16U lenth)
 {
@@ -441,7 +441,7 @@ INT8U Sgc1161EncryptData(INT8U *pdata,INT16U lenth)
     
     semTake(sem_qspiid, WAIT_FOREVER);
     myTaskDelay(1); 
-    // //²âÊÔÏÖÏóÀ´¿´£¬Èç¹û²»¼ÓÕâ¸öÑÓÊ±£¬ÓĞ¿ÉÄÜ»á±»Â¼²¥Ğ´flashÓ°Ïì¼ÓÃÜÖ¸ÁîµÄ·¢ËÍ   
+    // //æµ‹è¯•ç°è±¡æ¥çœ‹ï¼Œå¦‚æœä¸åŠ è¿™ä¸ªå»¶æ—¶ï¼Œæœ‰å¯èƒ½ä¼šè¢«å½•æ’­å†™flashå½±å“åŠ å¯†æŒ‡ä»¤çš„å‘é€   
     HESendCmd(&hecmd, pHeSendBuf2, lenth+16);  //      
     
      myTaskDelay(3);    
@@ -461,7 +461,7 @@ INT8U Sgc1161EncryptData(INT8U *pdata,INT16U lenth)
         semGive(sem_qspiid);
         for(i = 0;i < 3;i++)
         {
-            if(rc == 77)//´«Êä´íÎó£¬Ö§³ÖÖØ·¢Èı´Î
+            if(rc == 77)//ä¼ è¾“é”™è¯¯ï¼Œæ”¯æŒé‡å‘ä¸‰æ¬¡
             {
             
                 myTaskDelay(2);    
@@ -490,11 +490,11 @@ INT8U Sgc1161EncryptData(INT8U *pdata,INT16U lenth)
     
     if(rc == 0)
     {
-        //logSysMsgNoTime("Êı¾İ¼ÓÃÜÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("æ•°æ®åŠ å¯†æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("Êı¾İ¼ÓÃÜÊ§°Ü!!!.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("æ•°æ®åŠ å¯†å¤±è´¥!!!.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -504,10 +504,10 @@ INT8U Sgc1161EncryptData(INT8U *pdata,INT16U lenth)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161DecryptData
-*¹¦ÄÜ£ºÊı¾İ½âÃÜ
-*ÊäÈë£ºpdata:´ı½âÃÜÊı¾İ,lenth£º½âÃÜÊı¾İ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161DecryptData
+*åŠŸèƒ½ï¼šæ•°æ®è§£å¯†
+*è¾“å…¥ï¼špdata:å¾…è§£å¯†æ•°æ®,lenthï¼šè§£å¯†æ•°æ®é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161DecryptData(INT8U *pdata,INT16U lenth,INT8U *dndata)
 {
@@ -584,7 +584,7 @@ INT8U Sgc1161DecryptData(INT8U *pdata,INT16U lenth,INT8U *dndata)
         }
 
         j++;
-        //logSysMsgNoTime("Êı¾İ½âÃÜÊ§°Ü.rc=%d",rc,0,0,0);
+        //logSysMsgNoTime("æ•°æ®è§£å¯†å¤±è´¥.rc=%d",rc,0,0,0);
         if(j > 3)
         {
             break;
@@ -595,11 +595,11 @@ INT8U Sgc1161DecryptData(INT8U *pdata,INT16U lenth,INT8U *dndata)
     
     if(rc == 0)
     {
-        //logSysMsgNoTime("Êı¾İ½âÃÜÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("æ•°æ®è§£å¯†æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("Êı¾İ½âÃÜÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("æ•°æ®è§£å¯†å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
    // semGive(sem_qspiid);
@@ -610,10 +610,10 @@ INT8U Sgc1161DecryptData(INT8U *pdata,INT16U lenth,INT8U *dndata)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161VerifySigndata
-*¹¦ÄÜ£ºÑéÖ¤Ç©Ãû
-*ÊäÈë£ºpdataÇ©ÃûÊı¾İ+Ç©Ãû,KeyId£ºÇ©ÃûÃÜÔ¿Ë÷Òı
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161VerifySigndata
+*åŠŸèƒ½ï¼šéªŒè¯ç­¾å
+*è¾“å…¥ï¼špdataç­¾åæ•°æ®+ç­¾å,KeyIdï¼šç­¾åå¯†é’¥ç´¢å¼•
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U Sgc1161VerifySigndata(INT8U *pdata,INT16U lenth,INT8U KeyId)
@@ -641,11 +641,11 @@ INT8U Sgc1161VerifySigndata(INT8U *pdata,INT16U lenth,INT8U KeyId)
     semGive(sem_qspiid);
     if(rc == 0)
     {
-        //logSysMsgNoTime("ÑéÖ¤Ç©ÃûÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("éªŒè¯ç­¾åæ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÑéÖ¤Ç©ÃûÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("éªŒè¯ç­¾åå¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -653,10 +653,10 @@ INT8U Sgc1161VerifySigndata(INT8U *pdata,INT16U lenth,INT8U KeyId)
     return rc;       
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161ObtainRandata
-*¹¦ÄÜ£º»ñÈ¡Ëæ»úÊı
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161ObtainRandata
+*åŠŸèƒ½ï¼šè·å–éšæœºæ•°
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U Sgc1161ObtainRandata(void)
@@ -696,7 +696,7 @@ INT8U Sgc1161ObtainRandata(void)
         semGive(sem_qspiid);
         for(i = 0;i < 3;i++)
         {
-            if(rc == 77)//´«Êä´íÎó£¬Ö§³ÖÖØ·¢Èı´Î
+            if(rc == 77)//ä¼ è¾“é”™è¯¯ï¼Œæ”¯æŒé‡å‘ä¸‰æ¬¡
             {
                 
                 myTaskDelay(2);    
@@ -714,7 +714,7 @@ INT8U Sgc1161ObtainRandata(void)
         }
         
         j++;
-        //logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬Ëæ»úÊıÊ§°Ü!1",0,0,0,0);
+        //logSysMsgNoTime("è·å–èŠ¯ç‰‡éšæœºæ•°å¤±è´¥!1",0,0,0,0);
         if(j > 3)
         {
             break;
@@ -727,11 +727,11 @@ INT8U Sgc1161ObtainRandata(void)
     if(rc == 0)
     {
         memcpy(SgcSelfRandbuf,buf+2,8);
-        //logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬Ëæ»úÊıÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è·å–èŠ¯ç‰‡éšæœºæ•°æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("»ñÈ¡Ğ¾Æ¬Ëæ»úÊıÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è·å–èŠ¯ç‰‡éšæœºæ•°å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -739,10 +739,10 @@ INT8U Sgc1161ObtainRandata(void)
     return rc;     
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161LoadSymmetryKey
-*¹¦ÄÜ£ºĞ´Èë¶Ô³ÆÃÜÔ¿
-*ÊäÈë£ºpdata¶Ô³ÆÃÜÔ¿+Ç©Ãû,KeyId£ºÇ©ÃûÃÜÔ¿Ë÷Òı
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161LoadSymmetryKey
+*åŠŸèƒ½ï¼šå†™å…¥å¯¹ç§°å¯†é’¥
+*è¾“å…¥ï¼špdataå¯¹ç§°å¯†é’¥+ç­¾å,KeyIdï¼šç­¾åå¯†é’¥ç´¢å¼•
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161LoadSymmetryKey(INT8U* pdata,INT16U lenth,INT8U KeyId)
 {
@@ -757,11 +757,11 @@ INT8U Sgc1161LoadSymmetryKey(INT8U* pdata,INT16U lenth,INT8U KeyId)
     hecmd.ins  = 0x1C;
     if(keyver > 0)
     {
-        hecmd.p1   = 0x00;//¸üĞÂÃÜÔ¿
+        hecmd.p1   = 0x00;//æ›´æ–°å¯†é’¥
     }
     else
     {
-        hecmd.p1   = 0x01;//»Ö¸´ÃÜÔ¿
+        hecmd.p1   = 0x01;//æ¢å¤å¯†é’¥
     }
     
     hecmd.p2   = KeyId;
@@ -780,11 +780,11 @@ INT8U Sgc1161LoadSymmetryKey(INT8U* pdata,INT16U lenth,INT8U KeyId)
     semGive(sem_qspiid);
     if(rc == 0)
     {
-        //logSysMsgNoTime("¶Ô³ÆÃÜÔ¿Ğ´ÈëÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("å¯¹ç§°å¯†é’¥å†™å…¥æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("¶Ô³ÆÃÜÔ¿Ğ´ÈëÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("å¯¹ç§°å¯†é’¥å†™å…¥å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -794,10 +794,10 @@ INT8U Sgc1161LoadSymmetryKey(INT8U* pdata,INT16U lenth,INT8U KeyId)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161DeCerdata
-*¹¦ÄÜ£º½âÎöÖ¤Êé
-*ÊäÈë£ºpdata£ºÖ¤Êé,KeyId£º¶Ô³ÆÃÜÔ¿±êÊ¶
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161DeCerdata
+*åŠŸèƒ½ï¼šè§£æè¯ä¹¦
+*è¾“å…¥ï¼špdataï¼šè¯ä¹¦,KeyIdï¼šå¯¹ç§°å¯†é’¥æ ‡è¯†
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161DeCerdata(INT8U* pdata,INT16U lenth,INT8U KeyId)
 {
@@ -825,11 +825,11 @@ INT8U Sgc1161DeCerdata(INT8U* pdata,INT16U lenth,INT8U KeyId)
     semGive(sem_qspiid);
     if(rc == 0)
     {
-        //logSysMsgNoTime("Ö¤Êé½âÃÜÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è¯ä¹¦è§£å¯†æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("Ö¤Êé½âÃÜÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è¯ä¹¦è§£å¯†å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -838,10 +838,10 @@ INT8U Sgc1161DeCerdata(INT8U* pdata,INT16U lenth,INT8U KeyId)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161DeCerdata
-*¹¦ÄÜ£º¸üĞÂÖ÷Õ¾£¬Íø¹Ø£¬ÖÕ¶ËÖ¤Êé
-*ÊäÈë£ºpdata£ºÖ¤Êé,CerId:Ö¤ÊéID
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161DeCerdata
+*åŠŸèƒ½ï¼šæ›´æ–°ä¸»ç«™ï¼Œç½‘å…³ï¼Œç»ˆç«¯è¯ä¹¦
+*è¾“å…¥ï¼špdataï¼šè¯ä¹¦,CerId:è¯ä¹¦ID
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161LoadCerdata(INT8U* pdata,INT16U lenth,INT8U CerId)
 {
@@ -869,11 +869,11 @@ INT8U Sgc1161LoadCerdata(INT8U* pdata,INT16U lenth,INT8U CerId)
     semGive(sem_qspiid);
     if(rc == 0)
     {
-       // logSysMsgNoTime("Ö¤ÊéĞ´ÈëÕıÈ·:",0,0,0,0);
+       // logSysMsgNoTime("è¯ä¹¦å†™å…¥æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("Ö¤ÊéĞ´ÈëÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è¯ä¹¦å†™å…¥å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -882,10 +882,10 @@ INT8U Sgc1161LoadCerdata(INT8U* pdata,INT16U lenth,INT8U CerId)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161LoadTemSelfCerdata
-*¹¦ÄÜ£º¸üĞÂÖÕ¶ËÖ¤Êé
-*ÊäÈë£ºpdata£ºÖ¤Êé,
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161LoadTemSelfCerdata
+*åŠŸèƒ½ï¼šæ›´æ–°ç»ˆç«¯è¯ä¹¦
+*è¾“å…¥ï¼špdataï¼šè¯ä¹¦,
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161LoadTemSelfCerdata(INT8U* pdata,INT16U lenth )
 {
@@ -913,11 +913,11 @@ INT8U Sgc1161LoadTemSelfCerdata(INT8U* pdata,INT16U lenth )
     semGive(sem_qspiid);
     if(rc == 0)
     {
-       // logSysMsgNoTime("ÖÕ¶ËÖ¤ÊéĞ´ÈëÕıÈ·:",0,0,0,0);
+       // logSysMsgNoTime("ç»ˆç«¯è¯ä¹¦å†™å…¥æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÖÕ¶ËÖ¤ÊéĞ´ÈëÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("ç»ˆç«¯è¯ä¹¦å†™å…¥å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -926,10 +926,10 @@ INT8U Sgc1161LoadTemSelfCerdata(INT8U* pdata,INT16U lenth )
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161CheckoutCer
-*¹¦ÄÜ£ºµ¼³öÖÕ¶ËĞ¾Æ¬Ö¤Êé
-*ÊäÈë£ºpdata£ºÖ¤Êéµ¼³ö»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161CheckoutCer
+*åŠŸèƒ½ï¼šå¯¼å‡ºç»ˆç«¯èŠ¯ç‰‡è¯ä¹¦
+*è¾“å…¥ï¼špdataï¼šè¯ä¹¦å¯¼å‡ºç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161CheckoutCer(INT8U *pdata)
 {
@@ -968,7 +968,7 @@ INT8U Sgc1161CheckoutCer(INT8U *pdata)
         semGive(sem_qspiid);
         for(i = 0;i < 3;i++)
         {
-            if(rc == 77)//´«Êä´íÎó£¬Ö§³ÖÖØ·¢Èı´Î
+            if(rc == 77)//ä¼ è¾“é”™è¯¯ï¼Œæ”¯æŒé‡å‘ä¸‰æ¬¡
             {
                 myTaskDelay(2);    
                 semTake(sem_qspiid, WAIT_FOREVER);  
@@ -996,11 +996,11 @@ INT8U Sgc1161CheckoutCer(INT8U *pdata)
         
     if(rc == 0)
     {
-       // logSysMsgNoTime("ÖÕ¶ËÖ¤ÊéĞ´µ¼³öÕıÈ·:",0,0,0,0);
+       // logSysMsgNoTime("ç»ˆç«¯è¯ä¹¦å†™å¯¼å‡ºæ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        //logSysMsgNoTime("ÖÕ¶ËÖ¤Êéµ¼³öÊ§°Ü.rc=%d",rc,0,0,0);
+        //logSysMsgNoTime("ç»ˆç«¯è¯ä¹¦å¯¼å‡ºå¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1009,10 +1009,10 @@ INT8U Sgc1161CheckoutCer(INT8U *pdata)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161CheckoutPKey
-*¹¦ÄÜ£ºµ¼³öÖÕ¶ËĞ¾Æ¬¹«Ô¿
-*ÊäÈë£ºpdata¹«Ô¿µ¼³ö»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161CheckoutPKey
+*åŠŸèƒ½ï¼šå¯¼å‡ºç»ˆç«¯èŠ¯ç‰‡å…¬é’¥
+*è¾“å…¥ï¼špdataå…¬é’¥å¯¼å‡ºç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161CheckoutPKey(INT8U *pdata)
 {
@@ -1051,7 +1051,7 @@ INT8U Sgc1161CheckoutPKey(INT8U *pdata)
         semGive(sem_qspiid);
         for(i = 0;i < 3;i++)
         {
-            if(rc == 77)//´«Êä´íÎó£¬Ö§³ÖÖØ·¢Èı´Î
+            if(rc == 77)//ä¼ è¾“é”™è¯¯ï¼Œæ”¯æŒé‡å‘ä¸‰æ¬¡
             {
                 myTaskDelay(2);    
                 semTake(sem_qspiid, WAIT_FOREVER);
@@ -1078,11 +1078,11 @@ INT8U Sgc1161CheckoutPKey(INT8U *pdata)
 
     if(rc == 0)
     {
-       // logSysMsgNoTime("ÖÕ¶ËÖ¤ÊéĞ´µ¼³öÕıÈ·:",0,0,0,0);
+       // logSysMsgNoTime("ç»ˆç«¯è¯ä¹¦å†™å¯¼å‡ºæ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("µ¼³öÖÕ¶ËĞ¾Æ¬¹«Ô¿Ê§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("å¯¼å‡ºç»ˆç«¯èŠ¯ç‰‡å…¬é’¥å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1091,10 +1091,10 @@ INT8U Sgc1161CheckoutPKey(INT8U *pdata)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161VerifyMaintDevCer
-*¹¦ÄÜ£ºÑéÖ¤ÔËÎ¬ÖÕ¶ËÖ¤Êé
-*ÊäÈë£ºpdata£ºÖ¤Êé,
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161VerifyMaintDevCer
+*åŠŸèƒ½ï¼šéªŒè¯è¿ç»´ç»ˆç«¯è¯ä¹¦
+*è¾“å…¥ï¼špdataï¼šè¯ä¹¦,
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161VerifyMaintDevCer(INT8U* pdata,INT16U lenth )
 {
@@ -1122,11 +1122,11 @@ INT8U Sgc1161VerifyMaintDevCer(INT8U* pdata,INT16U lenth )
     semGive(sem_qspiid);
     if(rc == 0)
     {
-       // logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤ÊéÕıÈ·:",0,0,0,0);
+       // logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤Êé´íÎó.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦é”™è¯¯.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1135,10 +1135,10 @@ INT8U Sgc1161VerifyMaintDevCer(INT8U* pdata,INT16U lenth )
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161VerifyMaintDevSigndata
-*¹¦ÄÜ£ºÑéÖ¤ÔËÎ¬ÖÕ¶ËÇ©Ãû
-*ÊäÈë£ºpdata£ºÇ©Ãû
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161VerifyMaintDevSigndata
+*åŠŸèƒ½ï¼šéªŒè¯è¿ç»´ç»ˆç«¯ç­¾å
+*è¾“å…¥ï¼špdataï¼šç­¾å
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161VerifyMaintDevSigndata(INT8U* pdata,INT16U lenth )
 {
@@ -1166,11 +1166,11 @@ INT8U Sgc1161VerifyMaintDevSigndata(INT8U* pdata,INT16U lenth )
     semGive(sem_qspiid);
     if(rc == 0)
     {
-        //logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤ÊéÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤Êé´íÎó.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦é”™è¯¯.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1179,10 +1179,10 @@ INT8U Sgc1161VerifyMaintDevSigndata(INT8U* pdata,INT16U lenth )
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161VfyYWCer
-*¹¦ÄÜ£ºÑéÖ¤Ö¤Êé¹ÜÀí¹¤¾ßÖ¤ÊéÓĞĞ§ĞÔ
-*ÊäÈë£ºpdata£ºÇ©Ãû
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161VfyYWCer
+*åŠŸèƒ½ï¼šéªŒè¯è¯ä¹¦ç®¡ç†å·¥å…·è¯ä¹¦æœ‰æ•ˆæ€§
+*è¾“å…¥ï¼špdataï¼šç­¾å
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161VfyYWCer(INT8U* pdata,INT16U lenth )
 {
@@ -1230,11 +1230,11 @@ INT8U Sgc1161VfyYWCer(INT8U* pdata,INT16U lenth )
     
     if(rc == 0)
     {
-        //logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤ÊéÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÑéÖ¤Ö¤Êé¹ÜÀí¹¤¾ßÖ¤ÊéÓĞĞ§ĞÔ´íÎó.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("éªŒè¯è¯ä¹¦ç®¡ç†å·¥å…·è¯ä¹¦æœ‰æ•ˆæ€§é”™è¯¯.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1244,10 +1244,10 @@ INT8U Sgc1161VfyYWCer(INT8U* pdata,INT16U lenth )
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161EncryptPbKey
-*¹¦ÄÜ£º¹«Ô¿¼ÓÃÜ(¶ÔÖ¤Êé¹ÜÀí¹¤¾ß´«ÊäÃÜÎÄ)
-*ÊäÈë£ºpdata:Ö¤Êé¹ÜÀí¹¤¾ßID£¬R1Ëæ»úÊı£¬³õÊ¼ÏòÁ¿,lenth£º¼ÓÃÜÊı¾İ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161EncryptPbKey
+*åŠŸèƒ½ï¼šå…¬é’¥åŠ å¯†(å¯¹è¯ä¹¦ç®¡ç†å·¥å…·ä¼ è¾“å¯†æ–‡)
+*è¾“å…¥ï¼špdata:è¯ä¹¦ç®¡ç†å·¥å…·IDï¼ŒR1éšæœºæ•°ï¼Œåˆå§‹å‘é‡,lenthï¼šåŠ å¯†æ•°æ®é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161EncryptPbKey(INT8U *pdata,INT16U lenth)
 {
@@ -1260,7 +1260,7 @@ INT8U Sgc1161EncryptPbKey(INT8U *pdata,INT16U lenth)
     hecmd.ins  = 0x26;
     hecmd.p1   = 0x62;
     hecmd.p2   = 0x02;    
-    hecmd.len1 = HIBYTE(lenth+32);//ID + R1+IVData(R1+R1È¡·´)
+    hecmd.len1 = HIBYTE(lenth+32);//ID + R1+IVData(R1+R1å–å)
     hecmd.len2 = LOBYTE(lenth+32);     
         
     memcpy(&pHeSendBuf2[0], SgcCerToolIDbuf, 8); 
@@ -1296,11 +1296,11 @@ INT8U Sgc1161EncryptPbKey(INT8U *pdata,INT16U lenth)
         
     if(rc == 0)
     {
-        //logSysMsgNoTime("Êı¾İ¼ÓÃÜÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("æ•°æ®åŠ å¯†æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("¹«Ô¿¼ÓÃÜÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("å…¬é’¥åŠ å¯†å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1310,10 +1310,10 @@ INT8U Sgc1161EncryptPbKey(INT8U *pdata,INT16U lenth)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161DecryptYWFileData
-*¹¦ÄÜ£º½âÃÜÖ¤Êé¹ÜÀí¹¤¾ßÖ¤ÊéÇëÇóÊı¾İ
-*ÊäÈë£ºpdata:lenth£º½âÃÜÊı¾İ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161DecryptYWFileData
+*åŠŸèƒ½ï¼šè§£å¯†è¯ä¹¦ç®¡ç†å·¥å…·è¯ä¹¦è¯·æ±‚æ•°æ®
+*è¾“å…¥ï¼špdata:lenthï¼šè§£å¯†æ•°æ®é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161DecryptYWFileData(INT8U *pdata,INT16U lenth,INT8U *dndata)
 {
@@ -1327,7 +1327,7 @@ INT8U Sgc1161DecryptYWFileData(INT8U *pdata,INT16U lenth,INT8U *dndata)
     hecmd.ins  = 0x2C;
     hecmd.p1   = 0x62;
     hecmd.p2   = 0x02;
-    hecmd.len1 = HIBYTE(lenth+32);//ID + R1+IVData(R1+R1È¡·´)
+    hecmd.len1 = HIBYTE(lenth+32);//ID + R1+IVData(R1+R1å–å)
     hecmd.len2 = LOBYTE(lenth+32 );     
     
     memcpy(&pHeSendBuf2[0], SgcCerToolIDbuf, 8); 
@@ -1383,11 +1383,11 @@ INT8U Sgc1161DecryptYWFileData(INT8U *pdata,INT16U lenth,INT8U *dndata)
         
     if(rc == 0)
     {
-        //logSysMsgNoTime("Êı¾İ½âÃÜÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("æ•°æ®è§£å¯†æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("½âÃÜÖ¤Êé¹ÜÀí¹¤¾ßÖ¤ÊéÇëÇóÊı¾İÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è§£å¯†è¯ä¹¦ç®¡ç†å·¥å…·è¯ä¹¦è¯·æ±‚æ•°æ®å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
    // semGive(sem_qspiid);
@@ -1395,10 +1395,10 @@ INT8U Sgc1161DecryptYWFileData(INT8U *pdata,INT16U lenth,INT8U *dndata)
     return rc;        
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161SignYWData
-*¹¦ÄÜ£º¶ÔÖ¤Êé¹ÜÀí¹¤¾ßÊı¾İÇ©Ãû
-*ÊäÈë£ºpdata£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161SignYWData
+*åŠŸèƒ½ï¼šå¯¹è¯ä¹¦ç®¡ç†å·¥å…·æ•°æ®ç­¾å
+*è¾“å…¥ï¼špdataï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161SignYWData(INT8U* pdata,INT16U lenth )
 {
@@ -1461,11 +1461,11 @@ INT8U Sgc1161SignYWData(INT8U* pdata,INT16U lenth )
     
     if(rc == 0)
     {
-       // logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤ÊéÕıÈ·:",0,0,0,0);
+       // logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("ÔËÎ¬ÖÕ¶ËÖ¤Êé´íÎó.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("è¿ç»´ç»ˆç«¯è¯ä¹¦é”™è¯¯.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1474,10 +1474,10 @@ INT8U Sgc1161SignYWData(INT8U* pdata,INT16U lenth )
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1161RecoveryKeydata
-*¹¦ÄÜ£ºÖ¤Êé¹ÜÀí¹¤¾ß»Ö¸´ÃÜÔ¿
-*ÊäÈë£ºpdata  
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1161RecoveryKeydata
+*åŠŸèƒ½ï¼šè¯ä¹¦ç®¡ç†å·¥å…·æ¢å¤å¯†é’¥
+*è¾“å…¥ï¼špdata  
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1161RecoveryKeydata(INT8U* pdata,INT16U lenth)
 {
@@ -1490,7 +1490,7 @@ INT8U Sgc1161RecoveryKeydata(INT8U* pdata,INT16U lenth)
     
     hecmd.cla  = 0x80;
     hecmd.ins  = 0x1C;
-    hecmd.p1   = 0x02;//»Ö¸´ÃÜÔ¿
+    hecmd.p1   = 0x02;//æ¢å¤å¯†é’¥
     hecmd.p2   = 0x00;
     
     hecmd.len1 = HIBYTE(lenth);
@@ -1508,11 +1508,11 @@ INT8U Sgc1161RecoveryKeydata(INT8U* pdata,INT16U lenth)
     semGive(sem_qspiid);
     if(rc == 0)
     {
-        //logSysMsgNoTime("¶Ô³ÆÃÜÔ¿Ğ´ÈëÕıÈ·:",0,0,0,0);
+        //logSysMsgNoTime("å¯¹ç§°å¯†é’¥å†™å…¥æ­£ç¡®:",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("¶Ô³ÆÃÜÔ¿Ğ´ÈëÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("å¯¹ç§°å¯†é’¥å†™å…¥å¤±è´¥.rc=%d",rc,0,0,0);
     }
     
     //semGive(sem_qspiid);
@@ -1522,10 +1522,10 @@ INT8U Sgc1161RecoveryKeydata(INT8U* pdata,INT16U lenth)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºGetEbMegCheckSum
-*¹¦ÄÜ£º¼ÆËãÀÛ¼ÓºÍ
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šGetEbMegCheckSum
+*åŠŸèƒ½ï¼šè®¡ç®—ç´¯åŠ å’Œ
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U GetEbMsgCheckSum(INT8U *pdata)
 {
@@ -1543,10 +1543,10 @@ INT8U GetEbMsgCheckSum(INT8U *pdata)
     return sum;    
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºCheckIllfgalType
-*¹¦ÄÜ£º´¦ÀíÖ÷Õ¾ÏÂ·¢µÄ±¨ÎÄÓ¦ÓÃÀàĞÍÊÇ·ñºÏ·¨
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬type:Ó¦ÓÃÀàĞÍ£¬wChanNo:¹æÔ¼¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šCheckIllfgalType
+*åŠŸèƒ½ï¼šå¤„ç†ä¸»ç«™ä¸‹å‘çš„æŠ¥æ–‡åº”ç”¨ç±»å‹æ˜¯å¦åˆæ³•
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œtype:åº”ç”¨ç±»å‹ï¼ŒwChanNo:è§„çº¦ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
@@ -1558,11 +1558,11 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     
     int rc = 1;
     
-    if(wChanNo < 6)//101±¨ÎÄ
+    if(wChanNo < 6)//101æŠ¥æ–‡
     {
     	
         /*
-    	if(fixmlen == 6)//È·¶¨µØÖ·ÓòÊÇÒ»¸ö×Ö½Ú»¹ÊÇÁ½¸ö×Ö½Ú
+    	if(fixmlen == 6)//ç¡®å®šåœ°å€åŸŸæ˜¯ä¸€ä¸ªå­—èŠ‚è¿˜æ˜¯ä¸¤ä¸ªå­—èŠ‚
 	    {
 	        DncryptTi = ptada[7];
 	        DncryptCot = ptada[9]&0x3F;
@@ -1583,14 +1583,14 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
            
            }
     }
-    else if(wChanNo > 40)//104±¨ÎÄ
+    else if(wChanNo > 40)//104æŠ¥æ–‡
     {
            DncryptTi = ptada[6];
 	    DncryptCot = ptada[8]&0x3F;
 	    if(DncryptTi == 203)
 	    {
 	        DncryptPI = ptada[14];
-//ĞŞ¸Ä²ÎÊıµÄÌØÕ÷±êÊ¶±ÈÒ£¿ØºÍÈí¼şÉı¼¶ÍùÇ°Ò»¸ö×Ö½Ú£¨ÒòÎª¶¨ÖµÇøºÅÖ»ÓĞÁ½¸ö×Ö½Ú£©
+//ä¿®æ”¹å‚æ•°çš„ç‰¹å¾æ ‡è¯†æ¯”é¥æ§å’Œè½¯ä»¶å‡çº§å¾€å‰ä¸€ä¸ªå­—èŠ‚ï¼ˆå› ä¸ºå®šå€¼åŒºå·åªæœ‰ä¸¤ä¸ªå­—èŠ‚ï¼‰
 	    }
 	    else
 	    {
@@ -1605,15 +1605,15 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     switch(DncryptTi)
     {
     	case 45:
-    	case 46://Ò£¿ØTI
-    	    if(((DncryptPI&0x80) != 0)||(DncryptCot == 8))//Ò£¿ØÑ¡Ôñ/³·Ïú
+    	case 46://é¥æ§TI
+    	    if(((DncryptPI&0x80) != 0)||(DncryptCot == 8))//é¥æ§é€‰æ‹©/æ’¤é”€
     	    {
     	    	if(type != 0x05)
     	    	{
     	    	    rc = -1;
     	        }
     	    }
-    	    else//Ò£¿ØÖ´ĞĞ
+    	    else//é¥æ§æ‰§è¡Œ
     	    {
     	    	if(type != 0x07)
     	    	{
@@ -1621,7 +1621,7 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	        }    	    	
     	    }
     	    break;
-    	case 200://ÇĞ»»¶¨ÖµÇøTI
+    	case 200://åˆ‡æ¢å®šå€¼åŒºTI
     	
     	    if(DncryptCot == 6)
     	    {
@@ -1632,7 +1632,7 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	    }
            break;
            
-    	case 210://Ğ´ÎÄ¼ş¼¤»î
+    	case 210://å†™æ–‡ä»¶æ¿€æ´»
 
     	    if((DncryptCot == 6)&&(Filetype == 0x07))//
     	    {
@@ -1644,7 +1644,7 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	
     	    break;    	
     	case 203:    	    
-    	    if((DncryptPI&0x80) != 0)//²ÎÊıÔ¤ÖÃ(ÖÕÖ¹µÄ»°ÊÇ0x40)
+    	    if((DncryptPI&0x80) != 0)//å‚æ•°é¢„ç½®(ç»ˆæ­¢çš„è¯æ˜¯0x40)
     	    {
   	    	if(type != 0x01)
     	    	{
@@ -1652,7 +1652,7 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	       }
               rmparaflag = 1;
     	    }
-    	    else if((DncryptCot == 0x06)&&((DncryptPI&0x40) == 0))//²ÎÊı¹Ì»¯
+    	    else if((DncryptCot == 0x06)&&((DncryptPI&0x40) == 0))//å‚æ•°å›ºåŒ–
     	    {
   	    	if(type != 0x03)
     	    	{
@@ -1662,11 +1662,11 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	    }
            else if((DncryptPI&0x40) != 0)
            {
-               if((rmparaflag == 1)&&(type != 0x01))//²ÎÊıÔ¤ÖÃÈ¡Ïû
+               if((rmparaflag == 1)&&(type != 0x01))//å‚æ•°é¢„ç½®å–æ¶ˆ
                {
                    rc = -1;
                }
-               else if((rmparaflag == 2)&&(type != 0x03))//²ÎÊı¹Ì»¯È¡Ïû
+               else if((rmparaflag == 2)&&(type != 0x03))//å‚æ•°å›ºåŒ–å–æ¶ˆ
                {
                    rc = -1;
                }
@@ -1675,8 +1675,8 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	    break;
         /*    	
         case 210:
-    	    if(DncryptCot == 6)//Ğ´ÎÄ¼ş¼¤»îÖ»ĞèÒªÅĞ¶Ïcot¼´¿É£¨Ö»ÓĞĞ´ÎÄ¼ş¼¤»îÊÇ6
-£¬¼¤»îÈ·ÈÏ7£¬Êı¾İ´«Êä5£©
+    	    if(DncryptCot == 6)//å†™æ–‡ä»¶æ¿€æ´»åªéœ€è¦åˆ¤æ–­cotå³å¯ï¼ˆåªæœ‰å†™æ–‡ä»¶æ¿€æ´»æ˜¯6
+ï¼Œæ¿€æ´»ç¡®è®¤7ï¼Œæ•°æ®ä¼ è¾“5ï¼‰
     	    {
   	    	    if(type != 0x01)
     	    	{
@@ -1687,14 +1687,14 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
         break;
         */
         case 211:
-    	    if(((DncryptPI&0x80) != 0)&&(DncryptCot == 6))//Éı¼¶Æô¶¯
+    	    if(((DncryptPI&0x80) != 0)&&(DncryptCot == 6))//å‡çº§å¯åŠ¨
     	    {
     	    	if(type != 0x01)
     	    	{
     	    	    rc = -1;
     	        }
     	    }
-    	    //else//Éı¼¶Ö´ĞĞ
+    	    //else//å‡çº§æ‰§è¡Œ
     	    //{
     	    	//if(type != 0x03)
     	    	//{
@@ -1710,10 +1710,10 @@ int CheckIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbEncpytDataAnaly
-*¹¦ÄÜ£º´¦ÀíÖ÷Õ¾ÏÂ·¢µÄÃÜÎÄÊı¾İ£¬½âÃÜ²¢·ÖÎö
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbEncpytDataAnaly
+*åŠŸèƒ½ï¼šå¤„ç†ä¸»ç«™ä¸‹å‘çš„å¯†æ–‡æ•°æ®ï¼Œè§£å¯†å¹¶åˆ†æ
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EbEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo)
@@ -1724,60 +1724,60 @@ INT8U EbEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo)
     //int typid = 0;
     int rc;
     
-    bwlen = Sgc1161DecryptData(pdata,lenth,sgcbuf);//½âÃÜ»ñµÃÃ÷ÎÄÊı¾İ
+    bwlen = Sgc1161DecryptData(pdata,lenth,sgcbuf);//è§£å¯†è·å¾—æ˜æ–‡æ•°æ®
     /*
     if(bwlen != 0)
     {
         myTaskDelay(10);   
         
-        bwlen = Sgc1161DecryptData(pdata,lenth,sgcbuf);//½âÃÜÊ§°ÜÖØĞÂ½âÃÜ
+        bwlen = Sgc1161DecryptData(pdata,lenth,sgcbuf);//è§£å¯†å¤±è´¥é‡æ–°è§£å¯†
 
         if(bwlen != 0)
         {
             myTaskDelay(10);   
             
-            bwlen = Sgc1161DecryptData(pdata,lenth,sgcbuf);//½âÃÜÊ§°ÜÖØĞÂ½âÃÜ
+            bwlen = Sgc1161DecryptData(pdata,lenth,sgcbuf);//è§£å¯†å¤±è´¥é‡æ–°è§£å¯†
         }
         
         if(bwlen != 0)
         {
-            EbErrCodeSend(0x9103,0x1f,wChanNo);//½âÃÜÊ§°Ü
+            EbErrCodeSend(0x9103,0x1f,wChanNo);//è§£å¯†å¤±è´¥
         }
     }
     */
     if(bwlen != 0)
     {
-        EbErrCodeSend(0x9103,0x1f,wChanNo);//½âÃÜÊ§°Ü
+        EbErrCodeSend(0x9103,0x1f,wChanNo);//è§£å¯†å¤±è´¥
     }
-    //p = sgcbuf + 4;//sgcbufÖĞÇ°Á½¸ö×Ö½ÚÊÇ°²È«Ğ¾Æ¬·µ»ØµÄÊı¾İ³¤¶È£¬µÚÈıµÚËÄ¸ö×Ö½ÚÊÇÖ÷Õ¾×éÖ¡Ê±Ìí¼ÓµÄ³¤¶È?
+    //p = sgcbuf + 4;//sgcbufä¸­å‰ä¸¤ä¸ªå­—èŠ‚æ˜¯å®‰å…¨èŠ¯ç‰‡è¿”å›çš„æ•°æ®é•¿åº¦ï¼Œç¬¬ä¸‰ç¬¬å››ä¸ªå­—èŠ‚æ˜¯ä¸»ç«™ç»„å¸§æ—¶æ·»åŠ çš„é•¿åº¦?
 
     p = sgcbuf + 2;
 
-    ddatalen = sgcbuf[1]+(sgcbuf[0]<<8);//Ã÷ÎÄ±¨ÎÄ³¤¶È
+    ddatalen = sgcbuf[1]+(sgcbuf[0]<<8);//æ˜æ–‡æŠ¥æ–‡é•¿åº¦
     saveRecord(sgcbuf,ddatalen+2,RXSAVEMODE,0);
     
     rc = CheckIllfgalType(p+2,p[0],wChanNo);
     
     if(rc  < 0)
     {
-        EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
+        EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
         bwlen = 0;
-        logSysMsgNoTime("ÒµÎñÀàĞÍ´íÎó",0,0,0,0);
+        logSysMsgNoTime("ä¸šåŠ¡ç±»å‹é”™è¯¯",0,0,0,0);
         return bwlen;
     }
 
 
-    switch(p[0])//ÅĞ¶ÏÒµÎñÓ¦ÓÃÀàĞÍ£¬Ä¿Ç°Ö»ÓÃµ½ÁË00 01 02 03 05 07
+    switch(p[0])//åˆ¤æ–­ä¸šåŠ¡åº”ç”¨ç±»å‹ï¼Œç›®å‰åªç”¨åˆ°äº†00 01 02 03 05 07
     {
 	    case 0x00:
-			bwlen = p[1];//101±¨ÎÄ³¤¶È
+			bwlen = p[1];//101æŠ¥æ–‡é•¿åº¦
 			memcpy(dedata,p+2,bwlen);
 			break;
 	    case 0x01:
 			bwlen = EbMsgWithSData(p,dedata,ddatalen,wChanNo);
 			break;
-	    case 0x02://ÖÕ¶Ë¶ÔÖ÷Õ¾µÄÈ·ÈÏ±¨ÎÄ£¬Ö÷Õ¾²»»áÏÂ·¢02
-                    EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
+	    case 0x02://ç»ˆç«¯å¯¹ä¸»ç«™çš„ç¡®è®¤æŠ¥æ–‡ï¼Œä¸»ç«™ä¸ä¼šä¸‹å‘02
+                    EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
                     bwlen = 0;
 			break;
            case 0x03:
@@ -1793,7 +1793,7 @@ INT8U EbEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo)
                     bwlen = EbMsgUpLoadData(p,dedata,ddatalen,wChanNo);
                 break;
            default:            
-                    EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
+                    EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
                     bwlen = 0;
 			break;
     }
@@ -1801,10 +1801,10 @@ INT8U EbEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo)
 	
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgWithAllData
-*¹¦ÄÜ£º´¦Àí´øÊ±¼äËæ»úÊıÒÔ¼°Ç©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgWithAllData
+*åŠŸèƒ½ï¼šå¤„ç†å¸¦æ—¶é—´éšæœºæ•°ä»¥åŠç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EbMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
@@ -1819,28 +1819,28 @@ INT8U EbMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
     
 	seek = 2;
 	KeyId = pdata[len - 1];
-	tmplen = pdata[1];//101±¨ÎÄ³¤¶È
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//À©Õ¹Êı¾İÇø³¤¶È
+	tmplen = pdata[1];//101æŠ¥æ–‡é•¿åº¦
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//æ‰©å±•æ•°æ®åŒºé•¿åº¦
 
 	memcpy(verbuf,pdata+seek,tmplen);
 	seek += tmplen;
 	seek += 2;
 	memcpy(timebuf,pdata+seek,6);
-	memcpy(verbuf+tmplen,pdata+seek,extlen-1);//À©Õ¹ÇøÊı¾İÆ´½ÓÖÁ101±¨ÎÄºó£¬¼ÆËãÇ©ÃûÓÃ
+	memcpy(verbuf+tmplen,pdata+seek,extlen-1);//æ‰©å±•åŒºæ•°æ®æ‹¼æ¥è‡³101æŠ¥æ–‡åï¼Œè®¡ç®—ç­¾åç”¨
 	seek += 6;
 	memcpy(randombuf,pdata+seek,8);
     
        if(CheckTimeAging(timebuf) != 0)
        {
            EbErrCodeSend(0x9105,0x1f,wChanNo);//
-           logSysMsgNoTime("07Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+           logSysMsgNoTime("07æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
            return 0;
        }
     
        if(memcmp(randombuf,SgcSelfRandbuf,8) != 0)
        {
            EbErrCodeSend(0x9104,0x1f,wChanNo);//
-           logSysMsgNoTime("07Ëæ»ú³öĞ£Ñé´íÎó:",0,0,0,0);         
+           logSysMsgNoTime("07éšæœºå‡ºæ ¡éªŒé”™è¯¯:",0,0,0,0);         
            return 0;
        }
         
@@ -1856,7 +1856,7 @@ INT8U EbMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 	else
 	{
            EbErrCodeSend(0x9102,0x1f,wChanNo);//
-           logSysMsgNoTime("07Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+           logSysMsgNoTime("07æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 	
@@ -1864,10 +1864,10 @@ INT8U EbMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgUpLoadData
-*¹¦ÄÜ£º´¦Àí´øÊ±¼äËæ»úÊıÒÔ¼°Ç©ÃûµÄÉı¼¶°üÑéÖ¤±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgUpLoadData
+*åŠŸèƒ½ï¼šå¤„ç†å¸¦æ—¶é—´éšæœºæ•°ä»¥åŠç­¾åçš„å‡çº§åŒ…éªŒè¯æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U EbMsgUpLoadData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 {
@@ -1894,14 +1894,14 @@ INT8U EbMsgUpLoadData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
        if(CheckTimeAging(UpLoadtime) != 0)
        {
            EbErrCodeSend(0x9105,0x1f,wChanNo);//
-           logSysMsgNoTime("08Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+           logSysMsgNoTime("08æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
            return 0;
        }
     
        if(memcmp(UpLoadRdata,SgcSelfRandbuf,8) != 0)
        {
            EbErrCodeSend(0x9104,0x1f,wChanNo);//
-           logSysMsgNoTime("08Ëæ»ú³öĞ£Ñé´íÎó´íÎó:",0,0,0,0);         
+           logSysMsgNoTime("08éšæœºå‡ºæ ¡éªŒé”™è¯¯é”™è¯¯:",0,0,0,0);         
            return 0;
        }
     
@@ -1917,18 +1917,18 @@ INT8U EbMsgUpLoadData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 	else
 	{
            EbErrCodeSend(0x9102,0x1f,wChanNo);//
-           logSysMsgNoTime("07Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+           logSysMsgNoTime("07æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 */	
-	return 0;//´ı¶¨ 
+	return 0;//å¾…å®š 
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSGCVerifyUpLoadData
-*¹¦ÄÜ£ºÑéÖ¤Éı¼¶°üÑéÖ¤Êı¾İ
-*ÊäÈë£ºpdata£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSGCVerifyUpLoadData
+*åŠŸèƒ½ï¼šéªŒè¯å‡çº§åŒ…éªŒè¯æ•°æ®
+*è¾“å…¥ï¼špdataï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SGCVerifyUpLoadData(INT16U wChanNo)
@@ -1941,7 +1941,7 @@ INT8U SGCVerifyUpLoadData(INT16U wChanNo)
     {
         ClearProgramUpdate();
         EbErrCodeSend(0x9105,0x1f,wChanNo);//
-        logSysMsgNoTime("08Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+        logSysMsgNoTime("08æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
         return 0;
     }
     
@@ -1949,7 +1949,7 @@ INT8U SGCVerifyUpLoadData(INT16U wChanNo)
     {
         ClearProgramUpdate();
         EbErrCodeSend(0x9104,0x1f,wChanNo);//
-        logSysMsgNoTime("08Ëæ»ú³öĞ£Ñé´íÎó:",0,0,0,0);         
+        logSysMsgNoTime("08éšæœºå‡ºæ ¡éªŒé”™è¯¯:",0,0,0,0);         
         return 0;
     }
     
@@ -1962,7 +1962,7 @@ INT8U SGCVerifyUpLoadData(INT16U wChanNo)
     
     if(rc == 0)
     {
-       // EbErrCodeSend(0x9000,0x1f,wChanNo);//³É¹¦²»·µ»Ø´¦Àí½á¹û
+       // EbErrCodeSend(0x9000,0x1f,wChanNo);//æˆåŠŸä¸è¿”å›å¤„ç†ç»“æœ
         StartProgramUpdate();
         return 0;
     }
@@ -1970,17 +1970,17 @@ INT8U SGCVerifyUpLoadData(INT16U wChanNo)
     {
         ClearProgramUpdate();
         EbErrCodeSend(0x9102,0x1f,wChanNo);//
-        logSysMsgNoTime("08Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+        logSysMsgNoTime("08æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	 return 0;
     }
     
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSGCVerifyMD5UpLoadData
-*¹¦ÄÜ£º»ñÈ¡MD5Öµ²¢Ğ£ÑéÊ±¼äÇ©ÃûËæ»úÊı
-*ÊäÈë£ºpdata£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSGCVerifyMD5UpLoadData
+*åŠŸèƒ½ï¼šè·å–MD5å€¼å¹¶æ ¡éªŒæ—¶é—´ç­¾åéšæœºæ•°
+*è¾“å…¥ï¼špdataï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U UpgradeDataVerify(INT16U wChanNo)
 {
@@ -2007,10 +2007,10 @@ INT8U UpgradeDataVerify(INT16U wChanNo)
 	return 1;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgWithRandSData
-*¹¦ÄÜ£º´¦Àí´øËæ»úÊıÒÔ¼°Ç©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgWithRandSData
+*åŠŸèƒ½ï¼šå¤„ç†å¸¦éšæœºæ•°ä»¥åŠç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
@@ -2019,7 +2019,7 @@ INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
     INT8U rc;
     INT16U tmplen;
 	
-	tmplen = pdata[1];//101±¨ÎÄ³¤¶È	
+	tmplen = pdata[1];//101æŠ¥æ–‡é•¿åº¦	
 	rc = VerifyMsgWithExt(pdata,len);
 */
     INT8U KeyId,rc,seek;
@@ -2029,8 +2029,8 @@ INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 
 	seek = 2;
 	KeyId = pdata[len - 1];
-	tmplen = pdata[1];//ÓĞĞ§Êı¾İ³¤¶È
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//À©Õ¹Êı¾İÇø³¤¶È
+	tmplen = pdata[1];//æœ‰æ•ˆæ•°æ®é•¿åº¦
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//æ‰©å±•æ•°æ®åŒºé•¿åº¦
 
 	memcpy(verbuf,pdata+seek,tmplen);
 	seek += tmplen;
@@ -2040,7 +2040,7 @@ INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
        if(memcmp(randbuf,SgcSelfRandbuf,8) != 0)
        {
            EbErrCodeSend(0x9104,0x1f,wChanNo);//
-           //logSysMsgNoTime("03Ëæ»ú³öĞ£Ñé´íÎó:",0,0,0,0);
+           //logSysMsgNoTime("03éšæœºå‡ºæ ¡éªŒé”™è¯¯:",0,0,0,0);
           // logSysMsgNoTime("Rand,%x,%x,%x,%x",randbuf[0],randbuf[1],randbuf[2],randbuf[3]); 
            //logSysMsgNoTime("Rand,%x,%x,%x,%x",randbuf[4],randbuf[5],randbuf[6],randbuf[7]); 
            //logSysMsgNoTime("Rand,%x,%x,%x,%x",SgcSelfRandbuf[0],SgcSelfRandbuf[1],SgcSelfRandbuf[2],SgcSelfRandbuf[3]); 
@@ -2050,7 +2050,7 @@ INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
        }
 
     
-	memcpy(verbuf+tmplen,pdata+seek,extlen-1);//À©Õ¹ÇøÊı¾İÆ´½ÓÖÁ101±¨ÎÄºó£¬¼ÆËãÇ©ÃûÓÃ
+	memcpy(verbuf+tmplen,pdata+seek,extlen-1);//æ‰©å±•åŒºæ•°æ®æ‹¼æ¥è‡³101æŠ¥æ–‡åï¼Œè®¡ç®—ç­¾åç”¨
   
 	
 	rc = Sgc1161VerifySigndata(verbuf,tmplen + extlen - 1,KeyId);
@@ -2063,7 +2063,7 @@ INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 	{
 	    
            EbErrCodeSend(0x9102,0x1f,wChanNo);//
-           logSysMsgNoTime("03Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+           logSysMsgNoTime("03æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 	
@@ -2071,10 +2071,10 @@ INT8U EbMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºCheckTimeAging
-*¹¦ÄÜ£º¼ì²éÊ±¼ä´ÁµÄÊ±Ğ§ĞÔ
-*ÊäÈë£ºpdata£ºÊ±¼ä´ÁÊı¾İ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šCheckTimeAging
+*åŠŸèƒ½ï¼šæ£€æŸ¥æ—¶é—´æˆ³çš„æ—¶æ•ˆæ€§
+*è¾“å…¥ï¼špdataï¼šæ—¶é—´æˆ³æ•°æ®
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 int CheckTimeAging(INT8U *pdta)
 {
@@ -2115,7 +2115,7 @@ int CheckTimeAging(INT8U *pdta)
             delay = delay - mtime;
         }
         
-        if(delay > 60)  //Ä¿Ç°µç¿ÆÔº¹æ¶¨ÊÇÒ»·ÖÖÓ£¬ËùÒÔĞ´ËÀÔÚ³ÌĞòÀï
+        if(delay > 60)  //ç›®å‰ç”µç§‘é™¢è§„å®šæ˜¯ä¸€åˆ†é’Ÿï¼Œæ‰€ä»¥å†™æ­»åœ¨ç¨‹åºé‡Œ
         {
             
             logSysMsgNoTime("t err,%x,%x,%x,%x",pdta[0],pdta[1],pdta[2],pdta[3]); 
@@ -2131,10 +2131,10 @@ int CheckTimeAging(INT8U *pdta)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgWithTandSData
-*¹¦ÄÜ£º´¦Àí´øÊ±¼äÒÔ¼°Ç©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgWithTandSData
+*åŠŸèƒ½ï¼šå¤„ç†å¸¦æ—¶é—´ä»¥åŠç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EbMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
@@ -2143,7 +2143,7 @@ INT8U EbMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
     INT8U rc;
     INT16U tmplen;
 	
-	tmplen = pdata[1];//101±¨ÎÄ³¤¶È	
+	tmplen = pdata[1];//101æŠ¥æ–‡é•¿åº¦	
 	rc = VerifyMsgWithExt(pdata,len);
 */
     INT8U KeyId,rc,seek;
@@ -2154,20 +2154,20 @@ INT8U EbMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 
 	seek = 2;
 	KeyId = pdata[len - 1];
-	tmplen = pdata[1];//ÓĞĞ§Êı¾İ³¤¶È
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//À©Õ¹Êı¾İÇø³¤¶È
+	tmplen = pdata[1];//æœ‰æ•ˆæ•°æ®é•¿åº¦
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//æ‰©å±•æ•°æ®åŒºé•¿åº¦
 
 	memcpy(verbuf,pdata+seek,tmplen);
 	seek += tmplen;
 	seek += 2;
 	memcpy(timebuf,pdata+seek,6);
-	memcpy(verbuf+tmplen,pdata+seek,extlen-1);//À©Õ¹ÇøÊı¾İÆ´½ÓÖÁ101±¨ÎÄºó£¬¼ÆËãÇ©ÃûÓÃ
+	memcpy(verbuf+tmplen,pdata+seek,extlen-1);//æ‰©å±•åŒºæ•°æ®æ‹¼æ¥è‡³101æŠ¥æ–‡åï¼Œè®¡ç®—ç­¾åç”¨
 
 
      if(CheckTimeAging(timebuf) != 0)
      {
          EbErrCodeSend(0x9105,0x1f,wChanNo);//
-         logSysMsgNoTime("05Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+         logSysMsgNoTime("05æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
          return 0;
      }
 	
@@ -2181,7 +2181,7 @@ INT8U EbMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 	{
 	    
            EbErrCodeSend(0x9102,0x1f,wChanNo);//
-           logSysMsgNoTime("05Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+           logSysMsgNoTime("05æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 	
@@ -2189,10 +2189,10 @@ INT8U EbMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 }
 #if 0
 /********************************************************************
-*º¯ÊıÃû³Æ£ºVerifyMsgWithExt
-*¹¦ÄÜ£ºÑéÖ¤´øÀ©Õ¹ÇøÊı¾İ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šVerifyMsgWithExt
+*åŠŸèƒ½ï¼šéªŒè¯å¸¦æ‰©å±•åŒºæ•°æ®æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U VerifyMsgWithExt(INT8U *pdata,INT16U len )
@@ -2203,8 +2203,8 @@ INT8U VerifyMsgWithExt(INT8U *pdata,INT16U len )
 
 	seek = 2;
 	KeyId = pdata[len - 1];
-	tmplen = pdata[1];//101±¨ÎÄ³¤¶È	
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//À©Õ¹Êı¾İÇø³¤¶È
+	tmplen = pdata[1];//101æŠ¥æ–‡é•¿åº¦	
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);//æ‰©å±•æ•°æ®åŒºé•¿åº¦
 	
 	memcpy(verbuf,pdata+seek,tmplen);
 	seek += tmplen;
@@ -2217,10 +2217,10 @@ INT8U VerifyMsgWithExt(INT8U *pdata,INT16U len )
 }
 #endif
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgWithSData
-*¹¦ÄÜ£º´¦ÀíÖ»´øÇ©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgWithSData
+*åŠŸèƒ½ï¼šå¤„ç†åªå¸¦ç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EbMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
@@ -2231,7 +2231,7 @@ INT8U EbMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 
 	seek = 2;
 	KeyId = pdata[len - 1];
-	tmplen = pdata[1];//101/104±¨ÎÄ³¤¶È
+	tmplen = pdata[1];//101/104æŠ¥æ–‡é•¿åº¦
 	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8);
 	
 	memcpy(verbuf,pdata+seek,tmplen);
@@ -2248,7 +2248,7 @@ INT8U EbMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 	else
 	{
            EbErrCodeSend(0x9102,0x1f,wChanNo);//
-           logSysMsgNoTime("01Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+           logSysMsgNoTime("01æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
            return 0;
 	}
 	return tmplen;
@@ -2258,11 +2258,11 @@ INT8U EbMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U len,INT16U wChanNo)
 //EbSafetySearchFrame(EbMsgRxdBuf,RxdBuf+RxdTail,&RxdTail,RxdTail - TxdHead,wChanNo);
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbSafetySearchFrame
-*¹¦ÄÜ£º½âÎöÊÕµ½µÄEB±¨ÎÄ£¬²¢½«±¨ÎÄ×ª»¯Îª101/104Ö¡
-*ÊäÈë£ºoribuf£ºEB±¨ÎÄ»º³åÇø,validbuf:101/104±¨ÎÄ´æ·Å»º³åÇø£¬
-*validtaillen:RxdTail£¬len£º½ÓÊÕµ½µÄEB»º³åÇø³¤¶È,wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbSafetySearchFrame
+*åŠŸèƒ½ï¼šè§£ææ”¶åˆ°çš„EBæŠ¥æ–‡ï¼Œå¹¶å°†æŠ¥æ–‡è½¬åŒ–ä¸º101/104å¸§
+*è¾“å…¥ï¼šoribufï¼šEBæŠ¥æ–‡ç¼“å†²åŒº,validbuf:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºï¼Œ
+*validtaillen:RxdTailï¼Œlenï¼šæ¥æ”¶åˆ°çš„EBç¼“å†²åŒºé•¿åº¦,wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U EbSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaillen,INT16U len,INT16U wChanNo)
@@ -2298,7 +2298,7 @@ INT16U EbSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaillen,INT
 
             checklen = oribuf[i+2]+(oribuf[i+1]<<8);
 
-            if(checklen > (512 -6))//Èç¹ûchecklen>256»á³öÏÖ i ²»ÔÙÖ´ĞĞ++
+            if(checklen > (512 -6))//å¦‚æœchecklen>256ä¼šå‡ºç° i ä¸å†æ‰§è¡Œ++
             {
                 i++;
             }
@@ -2335,10 +2335,10 @@ INT16U EbSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaillen,INT
     return i;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºCheckEbMegSty
-*¹¦ÄÜ£º¼ìÑéÊÇ·ñEB±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šCheckEbMegSty
+*åŠŸèƒ½ï¼šæ£€éªŒæ˜¯å¦EBæŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 BOOL CheckEbMsgSty(INT8U *pdata)
 {
@@ -2371,10 +2371,10 @@ BOOL CheckEbMsgSty(INT8U *pdata)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbmegAnalysis
-*¹¦ÄÜ£º½âÎöEb¸ñÊ½±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬rxbuff:101/104±¨ÎÄ´æ·Å»º³åÇø£¬wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbmegAnalysis
+*åŠŸèƒ½ï¼šè§£æEbæ ¼å¼æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œrxbuff:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºï¼ŒwChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void EbmsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 {
@@ -2382,18 +2382,18 @@ void EbmsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 
     switch(pdata[5] & 0xF0)
     {
-        case 0x80://¸ôÀëÍø¹Ø
+        case 0x80://éš”ç¦»ç½‘å…³
             EnMsgByGetwayHandle(pdata,rxbuff,wChanNo);           
             break;
-        case 0x40://ÔËÎ¬ÖÕ¶Ë
+        case 0x40://è¿ç»´ç»ˆç«¯
             EnMsgByYWTool(pdata,rxbuff,wChanNo); 
             break;
             
-        case 0x00://Ö÷Õ¾
+        case 0x00://ä¸»ç«™
             LenFromEbMsg = EnMsgBymasterHandle(pdata,rxbuff,wChanNo);
             break;        
              
-        case 0x0C://±¸ÓÃ
+        case 0x0C://å¤‡ç”¨
             break;        
         default:
             EbErrCodeSend(0x9110,0x1f,wChanNo);
@@ -2403,10 +2403,10 @@ void EbmsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbmegAnalysis
-*¹¦ÄÜ£º½âÎöEb¸ñÊ½±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬rxbuff:101/104±¨ÎÄ´æ·Å»º³åÇø£¬wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbmegAnalysis
+*åŠŸèƒ½ï¼šè§£æEbæ ¼å¼æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œrxbuff:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºï¼ŒwChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void EbErrCodeSend(INT16U SW,INT8U TypeId,INT16U wChanNo)
 {
@@ -2423,10 +2423,10 @@ void EbErrCodeSend(INT16U SW,INT8U TypeId,INT16U wChanNo)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEnMsgByGetwayHandle
-*¹¦ÄÜ£º´¦ÀíÍø¹ØÏÂ·¢µÄÊı¾İ
-*ÊäÈë£ºpdata£ºEB±¨ÎÄ»º³åÇø£¬rxbuff:101/104±¨ÎÄ´æ·Å»º³åÇøwChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEnMsgByGetwayHandle
+*åŠŸèƒ½ï¼šå¤„ç†ç½‘å…³ä¸‹å‘çš„æ•°æ®
+*è¾“å…¥ï¼špdataï¼šEBæŠ¥æ–‡ç¼“å†²åŒºï¼Œrxbuff:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºwChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EnMsgByGetwayHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
@@ -2434,12 +2434,12 @@ INT8U EnMsgByGetwayHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
     INT16U wEblenth;
 	INT8U bwlen = 0;
 	
-    wEblenth = pdata[2]+(pdata[1]<<8);//±¨ÎÄ³¤¶È(±¨ÎÄÍ·ÖÁĞ£ÑéÂë)
+    wEblenth = pdata[2]+(pdata[1]<<8);//æŠ¥æ–‡é•¿åº¦(æŠ¥æ–‡å¤´è‡³æ ¡éªŒç )
 
 	switch(pdata[6])
 	{
-	    case 0x20://Íø¹ØÈÏÖ¤ÇëÇó±¨ÎÄ
-	            AuthEndflag = 0;//Á´½Ó¶Ï¿ªºóÖØĞÂÈÏÖ¤Ê±ĞèÒªÏÈ½«ÈÏÖ¤±êÖ¾Î»Çå0
+	    case 0x20://ç½‘å…³è®¤è¯è¯·æ±‚æŠ¥æ–‡
+	            AuthEndflag = 0;//é“¾æ¥æ–­å¼€åé‡æ–°è®¤è¯æ—¶éœ€è¦å…ˆå°†è®¤è¯æ ‡å¿—ä½æ¸…0
 	            SgcGetwayauthenStepI(pdata+6,wEblenth,wChanNo);
                    myTaskDelay(10);
 	            break;
@@ -2455,10 +2455,10 @@ INT8U EnMsgByGetwayHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetwayauthenStepI
-*¹¦ÄÜ£ºÍø¹ØÓëÖÕ¶ËÉí·İÈÏÖ¤µÚÒ»²½
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetwayauthenStepI
+*åŠŸèƒ½ï¼šç½‘å…³ä¸ç»ˆç«¯èº«ä»½è®¤è¯ç¬¬ä¸€æ­¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcGetwayauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -2467,7 +2467,7 @@ INT8U SgcGetwayauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U signbuf[100];
     INT8U replybuf[120];
     
-    //datalen = pdata[2]+(pdata[1]<<8);//Ó¦ÓÃÊı¾İ³¤¶È
+    //datalen = pdata[2]+(pdata[1]<<8);//åº”ç”¨æ•°æ®é•¿åº¦
     datalen = (INT16U)pdata[1];
 	datalen = (datalen<<8)+(INT16U)pdata[2];
 		
@@ -2478,10 +2478,10 @@ INT8U SgcGetwayauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     Sgc1161GetRanSignData(SgcMasterRandbuf,signbuf);
 
     sdatalen = signbuf[1]+(signbuf[0]<<8) + EBKEYIDLEN;
-    wholelen = sdatalen + 5;//EB±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//EBæŠ¥æ–‡å¤´ä¸­é•¿åº¦
     
     memcpy(signbuf,signbuf + 2,sdatalen);
-    signbuf[sdatalen-1] = 0x01;//½áÎ²Ìí¼ÓÃÜÔ¿Ë÷Òı
+    signbuf[sdatalen-1] = 0x01;//ç»“å°¾æ·»åŠ å¯†é’¥ç´¢å¼•
     
     EbEditmsg(replybuf,signbuf,wholelen, 0X0080,0x21,sdatalen);
 	
@@ -2495,10 +2495,10 @@ INT8U SgcGetwayauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     return 0;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetwayauthenStepI
-*¹¦ÄÜ£ºÍø¹ØÓëÖÕ¶ËÉí·İÈÏÖ¤µÚ2²½
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetwayauthenStepI
+*åŠŸèƒ½ï¼šç½‘å…³ä¸ç»ˆç«¯èº«ä»½è®¤è¯ç¬¬2æ­¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcGetwayauthenStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -2511,7 +2511,7 @@ INT8U SgcGetwayauthenStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
     //msglen = pdata[2]+(pdata[1]<<8);
     //Keyno = pdata[msglen + EBHEADLEN - 1];
     
-    //logSysMsgNoTime("ÑéÖ¤Ö÷Õ¾Ç©Ãû¡£",0,0,0,0);
+    //logSysMsgNoTime("éªŒè¯ä¸»ç«™ç­¾åã€‚",0,0,0,0);
     rc = Sgc1161VerifyMasterSignData( 0x05, (pdata + 3));
     if(rc == 0)
     {    
@@ -2535,10 +2535,10 @@ INT8U SgcGetwayauthenStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
     return 0;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEnMsgBymasterHandle
-*¹¦ÄÜ£º´¦ÀíÖ÷Õ¾ÏÂ·¢µÄÊı¾İ
-*ÊäÈë£ºpdata£º±¨ÎÄ,rxbuff:101/104±¨ÎÄ´æ·Å»º³åÇø£¬wChanNo£º¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEnMsgBymasterHandle
+*åŠŸèƒ½ï¼šå¤„ç†ä¸»ç«™ä¸‹å‘çš„æ•°æ®
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,rxbuff:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºï¼ŒwChanNoï¼šç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
@@ -2547,10 +2547,10 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
     INT16U wEblenth;
     INT8U bwlen = 0;
 	
-    wEblenth = pdata[2]+(pdata[1]<<8);//±¨ÎÄ³¤¶È(±¨ÎÄÍ·ÖÁĞ£ÑéÂë)
-    //SKeyId = pdata[EBHEADLEN + 1]&0x07;//¶Ô³ÆÃÜÔ¿±êÊ¶
+    wEblenth = pdata[2]+(pdata[1]<<8);//æŠ¥æ–‡é•¿åº¦(æŠ¥æ–‡å¤´è‡³æ ¡éªŒç )
+    //SKeyId = pdata[EBHEADLEN + 1]&0x07;//å¯¹ç§°å¯†é’¥æ ‡è¯†
     
-    if(pdata[EBHEADLEN + 1]&0x08)//ÊÇ·ñ¼ÓÃÜ
+    if(pdata[EBHEADLEN + 1]&0x08)//æ˜¯å¦åŠ å¯†
     {
         Encrptyflag = TRUE;
     }
@@ -2569,9 +2569,9 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
             bwlen = 0;
         }
         
-        bwlen = EbEncpytDataAnaly(pdata + 6, wEblenth - 2,rxbuff,wChanNo);//½âÃÜ»ñµÃÃ÷ÎÄÊı¾İ
+        bwlen = EbEncpytDataAnaly(pdata + 6, wEblenth - 2,rxbuff,wChanNo);//è§£å¯†è·å¾—æ˜æ–‡æ•°æ®
     
-            //if(bwlen == 0)//Ó¦ÓÃÀàĞÍ²»Ã÷
+            //if(bwlen == 0)//åº”ç”¨ç±»å‹ä¸æ˜
             //{
                // EbErrCodeSend(0x9101,0x1f,wChanNo);//
            // }
@@ -2592,7 +2592,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 	    }
 	    switch(pdata[6])
 	    {
-	        case 0x50://Ö÷Õ¾ÈÏÖ¤ÇëÇó±¨ÎÄ
+	        case 0x50://ä¸»ç«™è®¤è¯è¯·æ±‚æŠ¥æ–‡
                    AuthEndflag = 0;
 	            SgcMasterauthenStepI(pdata,wEblenth,wChanNo);
                    myTaskDelay(2);
@@ -2606,7 +2606,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                     myTaskDelay(2);
                     AuthEndflag = wChanNo;
                     /*
-                    if(wChanNo < 6)//101¶Ë¿Ú
+                    if(wChanNo < 6)//101ç«¯å£
                     {
                          AuthEndflag = 1;
                     }
@@ -2617,11 +2617,11 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                     */
 	            break;
 
-               case 0x60://Ö÷Õ¾Ô¶³ÌÃÜÔ¿¹ÜÀí
+               case 0x60://ä¸»ç«™è¿œç¨‹å¯†é’¥ç®¡ç†
                    
                    if(AuthEndflag == 0)
                    {
-                       logSysMsgNoTime("Ô½È¨¸üĞÂÃÜÔ¿1",0,0,0,0);
+                       logSysMsgNoTime("è¶Šæƒæ›´æ–°å¯†é’¥1",0,0,0,0);
                        EbErrCodeSend(0x9091,0x61,wChanNo);
                        return 0;
                    }
@@ -2633,7 +2633,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                 
                    if(AuthEndflag == 0)
                    {
-                       logSysMsgNoTime("Ô½È¨¸üĞÂÃÜÔ¿2",0,0,0,0);
+                       logSysMsgNoTime("è¶Šæƒæ›´æ–°å¯†é’¥2",0,0,0,0);
                        EbErrCodeSend(0x9091,0x63,wChanNo);
                        return 0;
                    }
@@ -2641,11 +2641,11 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    myTaskDelay(3);
                    break;
 
-               case 0x64://Ö÷Õ¾Ô¶³ÌÃÜÔ¿»Ö¸´
+               case 0x64://ä¸»ç«™è¿œç¨‹å¯†é’¥æ¢å¤
                
                    if(AuthEndflag == 0)
                    {
-                       logSysMsgNoTime("Ô½È¨»Ö¸´ÃÜÔ¿",0,0,0,0);
+                       logSysMsgNoTime("è¶Šæƒæ¢å¤å¯†é’¥",0,0,0,0);
                        EbErrCodeSend(0x9092,0x65,wChanNo);
                        return 0;
                    }
@@ -2654,11 +2654,11 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    myTaskDelay(3);
                    break;
 
-               case 0x70://Ö÷Õ¾Ô¶³ÌÖ¤Êé¹ÜÀí
+               case 0x70://ä¸»ç«™è¿œç¨‹è¯ä¹¦ç®¡ç†
                
                    if(AuthEndflag == 0)
                    {
-                       logSysMsgNoTime("Ô½È¨ÏÂ·¢Ö¤Êé1",0,0,0,0);
+                       logSysMsgNoTime("è¶Šæƒä¸‹å‘è¯ä¹¦1",0,0,0,0);
                        EbErrCodeSend(0x9097,0x71,wChanNo);
                        return 0;
                    }
@@ -2669,7 +2669,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                case 0x72:
                    if(AuthEndflag == 0)
                    {
-                       logSysMsgNoTime("Ô½È¨ÏÂ·¢Ö¤Êé2",0,0,0,0);
+                       logSysMsgNoTime("è¶Šæƒä¸‹å‘è¯ä¹¦2",0,0,0,0);
                        EbErrCodeSend(0x9097,0x73,wChanNo);
                        return 0;
                    }
@@ -2677,10 +2677,10 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    myTaskDelay(2);
                    break;
                    
-              case 0x74: //Ö÷Õ¾ÌáÈ¡ÖÕ¶ËÖ¤Êé         
+              case 0x74: //ä¸»ç«™æå–ç»ˆç«¯è¯ä¹¦         
                   if(AuthEndflag == 0)
                   {
-                      logSysMsgNoTime("Ô½È¨ÌáÈ¡Ö¤Êé",0,0,0,0);
+                      logSysMsgNoTime("è¶Šæƒæå–è¯ä¹¦",0,0,0,0);
                       EbErrCodeSend(0x9095,0x75,wChanNo);
                       return 0;
                   }
@@ -2693,7 +2693,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    myTaskDelay(1);
                    break;
                /*    
-               case 0x05://Èí¼şÉı¼¶°üÒÔÃ÷ÎÄ+Ê±¼ä+Ç©ÃûµÄĞÎÊ½ÏÂ·¢
+               case 0x05://è½¯ä»¶å‡çº§åŒ…ä»¥æ˜æ–‡+æ—¶é—´+ç­¾åçš„å½¢å¼ä¸‹å‘
                    
                    bwlen = EbMsgWithTandSData(pdata+6,rxbuff,wEblenth,wChanNo);
                    break;  
@@ -2706,9 +2706,9 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    //}
                    
 	            bwlen = pdata[7];
-                   if(wChanNo < 6)//101¶Ë¿Ú
+                   if(wChanNo < 6)//101ç«¯å£
                    {
-                       if(bwlen > fixmlen)//·Ç¶¨³¤Ö¡Ê¹ÓÃÁËÃ÷ÎÄ
+                       if(bwlen > fixmlen)//éå®šé•¿å¸§ä½¿ç”¨äº†æ˜æ–‡
                        {
                            EbErrCodeSend(0x9106,0x1f,wChanNo);
                            return 0;
@@ -2716,7 +2716,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    }
                    else if(wChanNo > 40)
                    {
-                       if(bwlen > 6)//·Ç¶¨³¤Ö¡Ê¹ÓÃÁËÃ÷ÎÄ
+                       if(bwlen > 6)//éå®šé•¿å¸§ä½¿ç”¨äº†æ˜æ–‡
                        {
                            EbErrCodeSend(0x9106,0x1f,wChanNo);
                            return 0;
@@ -2729,9 +2729,9 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 	        default:
              
 	            bwlen = pdata[7];
-                   if(wChanNo < 6)//101¶Ë¿Ú
+                   if(wChanNo < 6)//101ç«¯å£
                    {
-                       if(bwlen > fixmlen)//·Ç¶¨³¤Ö¡Ê¹ÓÃÁËÃ÷ÎÄ
+                       if(bwlen > fixmlen)//éå®šé•¿å¸§ä½¿ç”¨äº†æ˜æ–‡
                        {
                            EbErrCodeSend(0x9106,0x1f,wChanNo);
                            return 0;
@@ -2739,7 +2739,7 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                    }
                    else if(wChanNo > 40)
                    {
-                       if(bwlen > 6)//·Ç¶¨³¤Ö¡Ê¹ÓÃÁËÃ÷ÎÄ
+                       if(bwlen > 6)//éå®šé•¿å¸§ä½¿ç”¨äº†æ˜æ–‡
                        {
                            EbErrCodeSend(0x9106,0x1f,wChanNo);
                            return 0;
@@ -2752,10 +2752,10 @@ INT8U EnMsgBymasterHandle(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 	return bwlen;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcMasterauthenStepI
-*¹¦ÄÜ£ºÖ÷Õ¾ÓëÖÕ¶ËÉí·İÈÏÖ¤µÚÒ»²½
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcMasterauthenStepI
+*åŠŸèƒ½ï¼šä¸»ç«™ä¸ç»ˆç«¯èº«ä»½è®¤è¯ç¬¬ä¸€æ­¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcMasterauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -2765,7 +2765,7 @@ INT8U SgcMasterauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U replybuf[120];
     INT8U i ;
         
-    datalen = pdata[8]+(pdata[7]<<8);//Ó¦ÓÃÊı¾İ³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8);//åº”ç”¨æ•°æ®é•¿åº¦
     
     memset(signbuf,0,100);
     memset(replybuf,0,120);
@@ -2774,7 +2774,7 @@ INT8U SgcMasterauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     //Sgc1161GetChipSerialNumID(signbuf);
     for(i = 0;i < SGCRANDOMLEN;i++)
     {
-        SgcMasterRandbuf[8 + i] = ~SgcMasterRandbuf[i];//¶ÔÖ÷Õ¾R1°´Î»È¡·´
+        SgcMasterRandbuf[8 + i] = ~SgcMasterRandbuf[i];//å¯¹ä¸»ç«™R1æŒ‰ä½å–å
     }
     //logSysMsgNoTime("Rand:%x,%x,%x,%x",SgcMasterRandbuf[0],SgcMasterRandbuf[1],SgcMasterRandbuf[2],SgcMasterRandbuf[3]);
     //logSysMsgNoTime("Rand:%x,%x,%x,%x",SgcMasterRandbuf[4],SgcMasterRandbuf[5],SgcMasterRandbuf[6],SgcMasterRandbuf[7]);
@@ -2783,10 +2783,10 @@ INT8U SgcMasterauthenStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     Sgc1161GetRanSignData(pdata + EBAUDATASTARTSITE,signbuf);
 
     sdatalen = signbuf[1]+(signbuf[0]<<8) + EBKEYIDLEN;
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
     
     memcpy(signbuf,signbuf + 2,sdatalen);
-    signbuf[sdatalen-1] = 0x01;//½áÎ²Ìí¼ÓÃÜÔ¿Ë÷Òı
+    signbuf[sdatalen-1] = 0x01;//ç»“å°¾æ·»åŠ å¯†é’¥ç´¢å¼•
     
     EbEditmsg(replybuf,signbuf,wholelen, 0,0x51,sdatalen);
 	
@@ -2812,7 +2812,7 @@ INT8U SgcMasterauthenStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
     
     msglen = pdata[2]+(pdata[1]<<8);
     Keyno = pdata[msglen + EBHEADLEN - 1];
-    //logSysMsgNoTime("ÑéÖ¤Ö÷Õ¾Ç©Ãû¡£Keyno=%d",Keyno,0,0,0);
+    //logSysMsgNoTime("éªŒè¯ä¸»ç«™ç­¾åã€‚Keyno=%d",Keyno,0,0,0);
     rc = Sgc1161VerifyMasterSignData( Keyno, (pdata + EBAUDATASTARTSITE));
     if(rc == 0)
     {    
@@ -2838,10 +2838,10 @@ INT8U SgcMasterauthenStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcMasterauthenStepIII
-*¹¦ÄÜ£º»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅ
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcMasterauthenStepIII
+*åŠŸèƒ½ï¼šè·å–èŠ¯ç‰‡åºåˆ—å·
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcMasterauthenStepIII(INT8U TypeID,INT16U wChanNo)
@@ -2853,7 +2853,7 @@ INT8U SgcMasterauthenStepIII(INT8U TypeID,INT16U wChanNo)
     Sgc1161GetChipSerialNumID(rbuf);
 
     sdatalen = rbuf[1]+(rbuf[0]<<8);
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
 	
     memcpy(rbuf,rbuf + 2,sdatalen);
     if(TypeID == 0x55)
@@ -2877,10 +2877,10 @@ INT8U SgcMasterauthenStepIII(INT8U TypeID,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcKeymanageStepI
-*¹¦ÄÜ£ºÖ÷Õ¾ÓëÖÕ¶ËÃÜÔ¿¸üĞÂµÚÒ»²½,»ñÈ¡Ğ¾Æ¬ÃÜÔ¿°æ±¾ºÅ+Ëæ»úÊı
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcKeymanageStepI
+*åŠŸèƒ½ï¼šä¸»ç«™ä¸ç»ˆç«¯å¯†é’¥æ›´æ–°ç¬¬ä¸€æ­¥,è·å–èŠ¯ç‰‡å¯†é’¥ç‰ˆæœ¬å·+éšæœºæ•°
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcKeymanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -2911,8 +2911,8 @@ INT8U SgcKeymanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     memset(infobuf,0,9);
     memset(replybuf,0,25);
     
-    infobuf[0] = KeyVersion;//ÃÜÔ¿°æ±¾ºÅ
-    memcpy(infobuf+1,SgcSelfRandbuf,8); //ÖÕ¶ËËæ»úÊı   
+    infobuf[0] = KeyVersion;//å¯†é’¥ç‰ˆæœ¬å·
+    memcpy(infobuf+1,SgcSelfRandbuf,8); //ç»ˆç«¯éšæœºæ•°   
 
     EbEditmsg(replybuf,infobuf,9 + 5, 0,0x61,9);
 	
@@ -2922,10 +2922,10 @@ INT8U SgcKeymanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcKeymanageStepII
-*¹¦ÄÜ£ºÖ÷Õ¾ÓëÖÕ¶ËÃÜÔ¿¸üĞÂ/»Ö¸´µÚ¶ş²½,Ö´ĞĞÃÜÔ¿¸üĞÂ/»Ö¸´
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcKeymanageStepII
+*åŠŸèƒ½ï¼šä¸»ç«™ä¸ç»ˆç«¯å¯†é’¥æ›´æ–°/æ¢å¤ç¬¬äºŒæ­¥,æ‰§è¡Œå¯†é’¥æ›´æ–°/æ¢å¤
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcKeymanageStepII(INT8U *pdata,INT16U len,INT16U wChanNo,INT8U typeid)
@@ -2953,7 +2953,7 @@ INT8U SgcKeymanageStepII(INT8U *pdata,INT16U len,INT16U wChanNo,INT8U typeid)
         {
             infobuf[1] = 0x92;   
         }
-        logSysMsgNoTime("ÃÜÔ¿¸üĞÂÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("å¯†é’¥æ›´æ–°å¤±è´¥.rc=%d",rc,0,0,0);
 	 
     }
     
@@ -2965,10 +2965,10 @@ INT8U SgcKeymanageStepII(INT8U *pdata,INT16U len,INT16U wChanNo,INT8U typeid)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcCAmanageStepI
-*¹¦ÄÜ£ºÖ¤Êé¹ÜÀíµÚÒ»²½
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcCAmanageStepI
+*åŠŸèƒ½ï¼šè¯ä¹¦ç®¡ç†ç¬¬ä¸€æ­¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -2983,7 +2983,7 @@ INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U timebuf[6];
 
     //CAVersion = pdata[EBAUDATASTARTSITE];
-    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAÃÜÎÄÊı¾İ°ü³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAå¯†æ–‡æ•°æ®åŒ…é•¿åº¦
     signbuf = ParaTempBuf + 2048;
     memset(signbuf,0,1024);
 	
@@ -3004,14 +3004,14 @@ INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
         return 0;
     }
     
-    if(CAnum != pdata[EBAUDATASTARTSITE + 1])//»¹Î´½ÓÊÕÍê±Ï
+    if(CAnum != pdata[EBAUDATASTARTSITE + 1])//è¿˜æœªæ¥æ”¶å®Œæ¯•
     {
         return 0;
     }
     
     saveRecord(ParaTempBuf,enCAlen,RXSAVEMODE,0);
     
-    rc = Sgc1161DecryptData(ParaTempBuf,enCAlen,signbuf);//½âÃÜ»ñµÃÃ÷ÎÄÊı¾İ
+    rc = Sgc1161DecryptData(ParaTempBuf,enCAlen,signbuf);//è§£å¯†è·å¾—æ˜æ–‡æ•°æ®
     
     if(rc != 0)
     {
@@ -3020,22 +3020,22 @@ INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
         EbEditmsg(replybuf,signbuf,7, 0,0x71,2);
         SendAuthDataToMISI(replybuf,7 + 6,wChanNo)	;
 
-        logSysMsgNoTime("Ö¤Êé½âÃÜÊ§°Ü",0,0,0,0);
+        logSysMsgNoTime("è¯ä¹¦è§£å¯†å¤±è´¥",0,0,0,0);
         enCAlen = 0;
         CAnum = 0;
         return 0;
     }
     
-    sdatalen = signbuf[1]+(signbuf[0]<<8);//Ã÷ÎÄ±¨ÎÄ³¤¶È
+    sdatalen = signbuf[1]+(signbuf[0]<<8);//æ˜æ–‡æŠ¥æ–‡é•¿åº¦
   
-    p = signbuf + 2;//sgcbufÖĞÇ°Á½¸ö×Ö½ÚÊÇ°²È«Ğ¾Æ¬·µ»ØµÄÊı¾İ³¤¶È
+    p = signbuf + 2;//sgcbufä¸­å‰ä¸¤ä¸ªå­—èŠ‚æ˜¯å®‰å…¨èŠ¯ç‰‡è¿”å›çš„æ•°æ®é•¿åº¦
     saveRecord(signbuf,sdatalen+2,RXSAVEMODE,0);
     
     enCAlen = 0;
     CAnum = 0;
     
     CArID = p[0];
-    CAlen = sdatalen -1 -6 - 65;//ÃÜÔ¿±êÊ¶£¬Ê±¼äĞÅÏ¢£¬Ç©Ãû½á¹û+Ç©ÃûÃÜÔ¿±êÊ¶
+    CAlen = sdatalen -1 -6 - 65;//å¯†é’¥æ ‡è¯†ï¼Œæ—¶é—´ä¿¡æ¯ï¼Œç­¾åç»“æœ+ç­¾åå¯†é’¥æ ‡è¯†
     KeyID = p[sdatalen - 1];
     
 
@@ -3048,7 +3048,7 @@ INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
         EbEditmsg(replybuf,signbuf,7, 0,0x71,2);
         SendAuthDataToMISI(replybuf,7 + 6,wChanNo)	;
 
-        //logSysMsgNoTime("70Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+        //logSysMsgNoTime("70æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
         return 0;
     }
     
@@ -3064,7 +3064,7 @@ INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
         signbuf[1] = 0x97;//
         EbEditmsg(replybuf,signbuf,7, 0,0x71,2);
         SendAuthDataToMISI(replybuf,7 + 6,wChanNo)	; 
-        logSysMsgNoTime("ÑéÖ¤Ö÷Õ¾ÏÂ·¢Ö¤ÊéÇ©ÃûÊ§°Ü",0,0,0,0);
+        logSysMsgNoTime("éªŒè¯ä¸»ç«™ä¸‹å‘è¯ä¹¦ç­¾åå¤±è´¥",0,0,0,0);
         return 0;   
     }
     
@@ -3087,10 +3087,10 @@ INT8U SgcCAmanageStepI(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºCheckCerDecryptData
-*¹¦ÄÜ£ºÖ¤ÊéÃÜÎÄ½âÃÜ±¨ÎÄ¼ì²é
-*ÊäÈë£ºpdata£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šCheckCerDecryptData
+*åŠŸèƒ½ï¼šè¯ä¹¦å¯†æ–‡è§£å¯†æŠ¥æ–‡æ£€æŸ¥
+*è¾“å…¥ï¼špdataï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U CheckCerDecryptData(INT8U *pdata,INT16U len)
 {
@@ -3121,7 +3121,7 @@ INT8U SgcCAmanageStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
     
 
     //CAVersion = pdata[EBAUDATASTARTSITE];
-    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAÊı¾İ°ü·Ö°ü³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAæ•°æ®åŒ…åˆ†åŒ…é•¿åº¦
     
     if(pdata[EBAUDATASTARTSITE + 2] == (CAnum + 1))
     {
@@ -3139,7 +3139,7 @@ INT8U SgcCAmanageStepII(INT8U *pdata,INT16U len,INT16U wChanNo)
         CAnum = 0;
         return 0;
     }
-    if(CAnum != pdata[EBAUDATASTARTSITE + 1])//»¹Î´½ÓÊÕÍê±Ï
+    if(CAnum != pdata[EBAUDATASTARTSITE + 1])//è¿˜æœªæ¥æ”¶å®Œæ¯•
     {
         return 0;
     }
@@ -3193,23 +3193,23 @@ INT8U SgcCAmanageStepIII(INT8U *pdata,INT16U len,INT16U wChanNo)
         msgnum = (CAlen/200) + 1;
     }
     
-    CAbuf[0] = 0x06;//ÖÕ¶ËÖ¤Êé±êÊ¶(Óëµç¿ÆÔº¹µÍ¨µÃÖª±êÊ¶¹Ì¶¨Îª1)
-    CAbuf[1] = msgnum;//Ö¤Êé±¨ÎÄ×ÜÖ¡Êı
+    CAbuf[0] = 0x06;//ç»ˆç«¯è¯ä¹¦æ ‡è¯†(ä¸ç”µç§‘é™¢æ²Ÿé€šå¾—çŸ¥æ ‡è¯†å›ºå®šä¸º1)
+    CAbuf[1] = msgnum;//è¯ä¹¦æŠ¥æ–‡æ€»å¸§æ•°
     
     for(i = 1;i <= msgnum; i++)
     {
     
-        CAbuf[2] = i;//µ±Ç°Ö¡ĞòºÅ
+        CAbuf[2] = i;//å½“å‰å¸§åºå·
         
         if(i < msgnum)
         {
-            memcpy(CAbuf+3,ParaTempBuf+2+((i - 1) * 200),200);//Ã¿Ö¡´«Êä200×Ö½ÚcaÊı¾İ
+            memcpy(CAbuf+3,ParaTempBuf+2+((i - 1) * 200),200);//æ¯å¸§ä¼ è¾“200å­—èŠ‚caæ•°æ®
             EbEditmsg(sendbuf,CAbuf, 208,0,0x75,203);
             SendAuthDataToMISI(sendbuf,208+ 6,wChanNo); 
         }
         else
         {
-            memcpy(CAbuf+3,ParaTempBuf+2+((i - 1) * 200),(CAlen%200));//×îºóÒ»Ö¡ca±¨ÎÄ
+            memcpy(CAbuf+3,ParaTempBuf+2+((i - 1) * 200),(CAlen%200));//æœ€åä¸€å¸§caæŠ¥æ–‡
             EbEditmsg(sendbuf,CAbuf, (CAlen%200)+3+5 ,0,0x75,(CAlen%200)+3);
             SendAuthDataToMISI(sendbuf,(CAlen%200)+3+5+ 6,wChanNo); 
         }
@@ -3221,10 +3221,10 @@ INT8U SgcCAmanageStepIII(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEnMsgByYWTool
-*¹¦ÄÜ£º´¦ÀíÏÖ³¡ÔËÎ¬¹¤¾ßÏÂ·¢µÄÊı¾İ
-*ÊäÈë£ºpdata£ºEB±¨ÎÄ»º³åÇø£¬rxbuff:Êı¾İ´æ·Å»º³åÇøwChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEnMsgByYWTool
+*åŠŸèƒ½ï¼šå¤„ç†ç°åœºè¿ç»´å·¥å…·ä¸‹å‘çš„æ•°æ®
+*è¾“å…¥ï¼špdataï¼šEBæŠ¥æ–‡ç¼“å†²åŒºï¼Œrxbuff:æ•°æ®å­˜æ”¾ç¼“å†²åŒºwChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U EnMsgByYWTool(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
@@ -3233,12 +3233,12 @@ INT8U EnMsgByYWTool(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
     INT8U bwlen = 0;
     INT8U rpbuf[25];
 	
-    wEblenth = pdata[2]+(pdata[1]<<8);//±¨ÎÄ³¤¶È(Êı¾İÍ·ÖÁĞ£ÑéÂë)
+    wEblenth = pdata[2]+(pdata[1]<<8);//æŠ¥æ–‡é•¿åº¦(æ•°æ®å¤´è‡³æ ¡éªŒç )
 
-    if((pdata[5]&0x08) != 0)//ÊÇ·ñ¼ÓÃÜ
+    if((pdata[5]&0x08) != 0)//æ˜¯å¦åŠ å¯†
     {
         rc = Sgc1161DecryptYWFileData(pdata + 6,wEblenth- 2,pdata + 6);
-        datalen = pdata[7]+(pdata[6]<<8);//½âÃÜºóÃ÷ÎÄÊı¾İ³¤¶È
+        datalen = pdata[7]+(pdata[6]<<8);//è§£å¯†åæ˜æ–‡æ•°æ®é•¿åº¦
         memcpy(pdata+6,pdata + 8,datalen);
     }
 
@@ -3271,7 +3271,7 @@ INT8U EnMsgByYWTool(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
     
     switch(pdata[6])
     {
-	    case 0x30://Ö¤Êé¹ÜÀí¹¤¾ßÈÏÖ¤ÇëÇó±¨ÎÄ
+	    case 0x30://è¯ä¹¦ç®¡ç†å·¥å…·è®¤è¯è¯·æ±‚æŠ¥æ–‡
 	        YWAuthEndflag = 0;
                SgcYWToolAuthReq(pdata,wEblenth,wChanNo);
                myTaskDelay(2);
@@ -3310,12 +3310,12 @@ INT8U EnMsgByYWTool(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                SgcYWToolGetPbKeyCer(wChanNo);
                    break;
            case 0x44://
-                   //Ö¤Êé¹ÜÀí¹¤¾ß·µ»ØÖ¤Êé·µ»Ø½á¹û
+                   //è¯ä¹¦ç®¡ç†å·¥å…·è¿”å›è¯ä¹¦è¿”å›ç»“æœ
                    break;
            case 0x45://
                 SgcYWWaittoSend(wChanNo);
                    break;
-           case 0x46://»Ö¸´ÃÜÔ¿
+           case 0x46://æ¢å¤å¯†é’¥
            
                SgcYWToolHFDCKey(pdata,wEblenth, wChanNo);
                                
@@ -3332,10 +3332,10 @@ INT8U EnMsgByYWTool(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolAuthReq
-*¹¦ÄÜ£ºÖ¤Êé¹¤¾ßÓëÖÕ¶ËÉí·İÈÏÖ¤µÚÒ»²½
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolAuthReq
+*åŠŸèƒ½ï¼šè¯ä¹¦å·¥å…·ä¸ç»ˆç«¯èº«ä»½è®¤è¯ç¬¬ä¸€æ­¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcYWToolAuthReq(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -3347,8 +3347,8 @@ INT8U SgcYWToolAuthReq(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U replybuf[100];
     INT8U *p;
 
-    p = ParaTempBuf+1024;//±ÜÃâºÍ101/104¹æÔ¼ÏÂ·¢Ö¤ÊéÊ±³åÍ»
-    datalen = pdata[8]+(pdata[7]<<8) - 11;//CerÊı¾İ°ü³¤¶È
+    p = ParaTempBuf+1024;//é¿å…å’Œ101/104è§„çº¦ä¸‹å‘è¯ä¹¦æ—¶å†²çª
+    datalen = pdata[8]+(pdata[7]<<8) - 11;//Ceræ•°æ®åŒ…é•¿åº¦
     
     if(pdata[EBAUDATASTARTSITE + 2] == (YWCernum + 1))
     {
@@ -3356,7 +3356,7 @@ INT8U SgcYWToolAuthReq(INT8U *pdata,INT16U len,INT16U wChanNo)
         YWCerlen += datalen;
         YWCernum++ ;
         
-        if(YWCernum == 1)//Ö¤Êé¹ÜÀí¹¤¾ßIDÖ»´æÒ»´Î¼´¿É
+        if(YWCernum == 1)//è¯ä¹¦ç®¡ç†å·¥å…·IDåªå­˜ä¸€æ¬¡å³å¯
         {
             memcpy(SgcCerToolIDbuf,(pdata+ EBAUDATASTARTSITE + 3+ datalen),8);
         }
@@ -3372,7 +3372,7 @@ INT8U SgcYWToolAuthReq(INT8U *pdata,INT16U len,INT16U wChanNo)
         return 0;
     }
     
-    if(YWCernum != pdata[EBAUDATASTARTSITE + 1])//»¹Î´½ÓÊÕÍê±Ï
+    if(YWCernum != pdata[EBAUDATASTARTSITE + 1])//è¿˜æœªæ¥æ”¶å®Œæ¯•
     {
         signbuf[0] = 0x90;
         signbuf[1] = 0x00;
@@ -3414,7 +3414,7 @@ INT8U SgcYWToolAuthReq(INT8U *pdata,INT16U len,INT16U wChanNo)
     memcpy(SgcRdDatatoYWbuf,SgcSelfRandbuf,8);
     for(i = 0;i < SGCRANDOMLEN;i++)
     {
-        SgcRdDatatoYWbuf[8 + i] = ~SgcRdDatatoYWbuf[i];//¶ÔÖ÷Õ¾R1°´Î»È¡·´
+        SgcRdDatatoYWbuf[8 + i] = ~SgcRdDatatoYWbuf[i];//å¯¹ä¸»ç«™R1æŒ‰ä½å–å
     }
     
     EbEditmsg(replybuf,SgcRdDatatoYWbuf,SGCRANDOMLEN + 5, 0x0040,0x31,SGCRANDOMLEN);
@@ -3423,10 +3423,10 @@ INT8U SgcYWToolAuthReq(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolAuthSdata
-*¹¦ÄÜ£ºÔËÎ¬¹¤¾ßÑéÖ¤ Ç©Ãû
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolAuthSdata
+*åŠŸèƒ½ï¼šè¿ç»´å·¥å…·éªŒè¯ ç­¾å
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcYWToolAuthSdata(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -3435,7 +3435,7 @@ INT8U SgcYWToolAuthSdata(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U signbuf[10];
     INT8U replybuf[20];
     
-    datalen = pdata[8]+(pdata[7]<<8) - 11;//Ö¤Êé¹¤¾ßÇ©ÃûÊı¾İ°ü³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8) - 11;//è¯ä¹¦å·¥å…·ç­¾åæ•°æ®åŒ…é•¿åº¦
     
     rc = Sgc1161VerifyMaintDevSigndata(pdata + EBAUDATASTARTSITE,datalen );
 
@@ -3464,10 +3464,10 @@ INT8U SgcYWToolAuthSdata(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcKeyVerforYWTool
-*¹¦ÄÜ£ºÖ¤Êé¹ÜÀí¹¤¾ßÌáÈ¡ÖÕ¶ËID
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcKeyVerforYWTool
+*åŠŸèƒ½ï¼šè¯ä¹¦ç®¡ç†å·¥å…·æå–ç»ˆç«¯ID
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 /*
 INT8U GetTerminalIdforYWTool(INT16U wChanNo)
@@ -3483,7 +3483,7 @@ INT8U GetTerminalIdforYWTool(INT16U wChanNo)
     
     memset(IDbuf,0,24);
     
-    memcpy(IDbuf,SgcSelfRandbuf,8); //ÖÕ¶ËËæ»úÊı   
+    memcpy(IDbuf,SgcSelfRandbuf,8); //ç»ˆç«¯éšæœºæ•°   
 
     EbEditmsg(replybuf,IDbuf,lenth + 5, 0x0040,0x37,lenth);
 	
@@ -3494,10 +3494,10 @@ INT8U GetTerminalIdforYWTool(INT16U wChanNo)
 }
 */
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcKeyVerforYWTool
-*¹¦ÄÜ£ºÖ¤Êé¹ÜÀí¹¤¾ßÌáÈ¡ÃÜÔ¿°æ±¾ºÅ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcKeyVerforYWTool
+*åŠŸèƒ½ï¼šè¯ä¹¦ç®¡ç†å·¥å…·æå–å¯†é’¥ç‰ˆæœ¬å·
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcKeyVerforYWTool(INT16U wChanNo)
@@ -3535,8 +3535,8 @@ INT8U SgcKeyVerforYWTool(INT16U wChanNo)
     memset(infobuf,0,9);
     memset(replybuf,0,25);
     
-    infobuf[0] = KeyVersion;//ÃÜÔ¿°æ±¾ºÅ
-    memcpy(infobuf+1,SgcSelfRandbuf,8); //ÖÕ¶ËËæ»úÊı   
+    infobuf[0] = KeyVersion;//å¯†é’¥ç‰ˆæœ¬å·
+    memcpy(infobuf+1,SgcSelfRandbuf,8); //ç»ˆç«¯éšæœºæ•°   
 
     EbEditmsg(replybuf,infobuf,9 + 5, 0x0040,0x35,9);
 	
@@ -3547,14 +3547,14 @@ INT8U SgcKeyVerforYWTool(INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcSerialNumforYWTool
-*¹¦ÄÜ£ºÖ¤Êé¹ÜÀí¹¤¾ßÌáÈ¡ÖÕ¶ËĞòÁĞºÅ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcSerialNumforYWTool
+*åŠŸèƒ½ï¼šè¯ä¹¦ç®¡ç†å·¥å…·æå–ç»ˆç«¯åºåˆ—å·
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U HostSerialNumforYWTool(INT16U wChanNo)
 {
-    char rbuf[24];//ÖÕ¶ËĞòÁĞºÅ
+    char rbuf[24];//ç»ˆç«¯åºåˆ—å·
     INT8U replybuf[40];
     INT8U lenth;
     INT16U wholelen,sdatalen;
@@ -3563,7 +3563,7 @@ INT8U HostSerialNumforYWTool(INT16U wChanNo)
     //rbuf[25] = 77;
     GetTerminalId(rbuf,&lenth);
     sdatalen = lenth - 1;
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
 	
     //memcpy(rbuf,rbuf + 2,sdatalen);
     EbEditmsg(replybuf,(INT8U *)rbuf,wholelen, 0x0040,0x37,sdatalen);
@@ -3573,10 +3573,10 @@ INT8U HostSerialNumforYWTool(INT16U wChanNo)
     return 0;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetPbKeyforYWTool
-*¹¦ÄÜ£ºÖ¤Êé¹ÜÀí¹¤¾ßÌáÈ¡¹«Ô¿
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetPbKeyforYWTool
+*åŠŸèƒ½ï¼šè¯ä¹¦ç®¡ç†å·¥å…·æå–å…¬é’¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcGetPbKeyforYWTool(INT16U wChanNo)
@@ -3607,8 +3607,8 @@ INT8U SgcGetPbKeyforYWTool(INT16U wChanNo)
     rc = Sgc1161EncryptPbKey(PbKeybuf,0x43);
     
     endatalen = PbKeybuf[1]+(PbKeybuf[0]<<8);
-    memcpy(PbKeybuf + 6, PbKeybuf + 2, endatalen);//½«¼ÓÃÜºóµÄÊı¾İ·ÅÖÁÓ¦ÓÃÀàĞÍÖ®ºó
-    endatalen += 2;//¼ÓÉÏ±¨ÎÄÀàĞÍÁ½×Ö½Ú×÷ÎªEb±¨ÎÄµÄ³¤¶È×Ö½Ú
+    memcpy(PbKeybuf + 6, PbKeybuf + 2, endatalen);//å°†åŠ å¯†åçš„æ•°æ®æ”¾è‡³åº”ç”¨ç±»å‹ä¹‹å
+    endatalen += 2;//åŠ ä¸ŠæŠ¥æ–‡ç±»å‹ä¸¤å­—èŠ‚ä½œä¸ºEbæŠ¥æ–‡çš„é•¿åº¦å­—èŠ‚
     
     PbKeybuf[0] = PbKeybuf[3] = 0xEB;
     PbKeybuf[1] = HIBYTE(endatalen);
@@ -3627,10 +3627,10 @@ INT8U SgcGetPbKeyforYWTool(INT16U wChanNo)
     return 0;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcSignYWtoolReqfile
-*¹¦ÄÜ£º¶ÔÖ¤Êé¹ÜÀí¹¤¾ßµÄÖ¤ÊéÇëÇóÎÄ¼şÇ©Ãû
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcSignYWtoolReqfile
+*åŠŸèƒ½ï¼šå¯¹è¯ä¹¦ç®¡ç†å·¥å…·çš„è¯ä¹¦è¯·æ±‚æ–‡ä»¶ç­¾å
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SgcSignYWtoolReqfile(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -3642,9 +3642,9 @@ INT8U SgcSignYWtoolReqfile(INT8U *pdata,INT16U len,INT16U wChanNo)
     //INT8U replybuf[1024];
     INT8U *p;
 
-    p = ParaTempBuf+1024;//±ÜÃâºÍ101/104¹æÔ¼ÏÂ·¢Ö¤ÊéÊ±³åÍ»
+    p = ParaTempBuf+1024;//é¿å…å’Œ101/104è§„çº¦ä¸‹å‘è¯ä¹¦æ—¶å†²çª
     
-    datalen = pdata[8]+(pdata[7]<<8) - 2;//Ö¤ÊéÇëÇóÊı¾İ³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8) - 2;//è¯ä¹¦è¯·æ±‚æ•°æ®é•¿åº¦
     
     if(pdata[EBAUDATASTARTSITE + 1] == (YWCernum + 1))
     {
@@ -3663,7 +3663,7 @@ INT8U SgcSignYWtoolReqfile(INT8U *pdata,INT16U len,INT16U wChanNo)
         return 0;
     }
     
-    if(YWCernum != pdata[EBAUDATASTARTSITE])//»¹Î´½ÓÊÕÍê±Ï
+    if(YWCernum != pdata[EBAUDATASTARTSITE])//è¿˜æœªæ¥æ”¶å®Œæ¯•
     {
         signbuf[9] = 0x90;
         signbuf[10] = 0x00;
@@ -3687,7 +3687,7 @@ INT8U SgcSignYWtoolReqfile(INT8U *pdata,INT16U len,INT16U wChanNo)
         return 0;
     } 
 
-    datalen = p[1]+(p[0]<<8);//Ö¤ÊéÇëÇóÊı¾İ³¤¶È
+    datalen = p[1]+(p[0]<<8);//è¯ä¹¦è¯·æ±‚æ•°æ®é•¿åº¦
     //memcpy(signbuf +9 ,p+2,datalen);
     
     EbEditmsg(signbuf,p+2,datalen + 5, 0x0040,0x3D,datalen);
@@ -3696,10 +3696,10 @@ INT8U SgcSignYWtoolReqfile(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolCAmanage
-*¹¦ÄÜ£º¶ÔÖ¤Êé¹ÜÀí¹¤¾ßµ¼ÈëÖ¤ÊéÊı¾İ´¦Àí
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolCAmanage
+*åŠŸèƒ½ï¼šå¯¹è¯ä¹¦ç®¡ç†å·¥å…·å¯¼å…¥è¯ä¹¦æ•°æ®å¤„ç†
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U SgcYWToolCAmanage(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -3710,9 +3710,9 @@ INT8U SgcYWToolCAmanage(INT8U *pdata,INT16U len,INT16U wChanNo)
     //INT8U CAbuf[];
     INT8U *p;
 
-    p = ParaTempBuf+1024;//±ÜÃâºÍ101/104¹æÔ¼ÏÂ·¢Ö¤ÊéÊ±³åÍ»
+    p = ParaTempBuf+1024;//é¿å…å’Œ101/104è§„çº¦ä¸‹å‘è¯ä¹¦æ—¶å†²çª
 
-    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAÊı¾İ°ü·Ö°ü³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAæ•°æ®åŒ…åˆ†åŒ…é•¿åº¦
     
     if(pdata[EBAUDATASTARTSITE + 2] == (YWCernum + 1))
     {
@@ -3730,7 +3730,7 @@ INT8U SgcYWToolCAmanage(INT8U *pdata,INT16U len,INT16U wChanNo)
         YWCernum = 0;
         return 0;
     }
-    if(YWCernum != pdata[EBAUDATASTARTSITE + 1])//»¹Î´½ÓÊÕÍê±Ï
+    if(YWCernum != pdata[EBAUDATASTARTSITE + 1])//è¿˜æœªæ¥æ”¶å®Œæ¯•
     {
         signbuf[0] = 0x90;
         signbuf[1] = 0x00;
@@ -3802,10 +3802,10 @@ INT8U SgcYWToolCAmanage(INT8U *pdata,INT16U len,INT16U wChanNo)
     //INT8U CAbuf[];
     INT8U *p;
 
-    p = cerbuf;//±ÜÃâºÍ101/104¹æÔ¼ÏÂ·¢Ö¤ÊéÊ±³åÍ»
+    p = cerbuf;//é¿å…å’Œ101/104è§„çº¦ä¸‹å‘è¯ä¹¦æ—¶å†²çª
 
     //CAVersion = pdata[EBAUDATASTARTSITE];
-    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAÊı¾İ°ü·Ö°ü³¤¶È
+    datalen = pdata[8]+(pdata[7]<<8) - 3;//CAæ•°æ®åŒ…åˆ†åŒ…é•¿åº¦
     
     if(pdata[EBAUDATASTARTSITE + 2] == (YWCernum + 1))
     {
@@ -3823,7 +3823,7 @@ INT8U SgcYWToolCAmanage(INT8U *pdata,INT16U len,INT16U wChanNo)
         YWCernum = 0;
         return 0;
     }
-    if(YWCernum != pdata[EBAUDATASTARTSITE + 1])//»¹Î´½ÓÊÕÍê±Ï
+    if(YWCernum != pdata[EBAUDATASTARTSITE + 1])//è¿˜æœªæ¥æ”¶å®Œæ¯•
     {
         replybuf[9] = 0x90;
         replybuf[10] = 0x00;
@@ -3884,10 +3884,10 @@ INT8U SgcYWToolCAmanage(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 */
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolReWritrOriCA
-*¹¦ÄÜ£º³õÊ¼Ö¤Êé»ØĞ´
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolReWritrOriCA
+*åŠŸèƒ½ï¼šåˆå§‹è¯ä¹¦å›å†™
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U SgcYWToolReWritrOriCA(INT16U wChanNo)
 {
@@ -3904,7 +3904,7 @@ INT8U SgcYWToolReWritrOriCA(INT16U wChanNo)
         return 0;
     } 
    
-    OriCalen = oricabuf[3]+(oricabuf[2]<<8);//³õÊ¼Ö¤Êé³¤¶È
+    OriCalen = oricabuf[3]+(oricabuf[2]<<8);//åˆå§‹è¯ä¹¦é•¿åº¦
     
     rc = Sgc1161GetOriCerData(oricabuf,OriCalen);
     //rc = Sgc1161CheckoutCer(oricabuf);
@@ -3939,10 +3939,10 @@ INT8U SgcYWToolReWritrOriCA(INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolGetPbKeyCer
-*¹¦ÄÜ£ºµ¼³ö¹«Ô¿Ö¤Êé(ÖÕ¶ËÖ¤Êé)¸øÖ¤Êé¹ÜÀí¹¤¾ß
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolGetPbKeyCer
+*åŠŸèƒ½ï¼šå¯¼å‡ºå…¬é’¥è¯ä¹¦(ç»ˆç«¯è¯ä¹¦)ç»™è¯ä¹¦ç®¡ç†å·¥å…·
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U SgcYWToolGetPbKeyCer(INT16U wChanNo)
 {
@@ -3978,13 +3978,13 @@ INT8U SgcYWToolGetPbKeyCer(INT16U wChanNo)
      }
      
      CAbuf[0] = 0x06;//
-     CAbuf[1] = Sendnum;//Ö¤Êé±¨ÎÄ×ÜÖ¡Êı
+     CAbuf[1] = Sendnum;//è¯ä¹¦æŠ¥æ–‡æ€»å¸§æ•°
      SendCount = 1 ;
-     CAbuf[2] = SendCount;//µ±Ç°Ö¡ĞòºÅ
+     CAbuf[2] = SendCount;//å½“å‰å¸§åºå·
      
      if(Sendnum > 1)
      {
-         memcpy(CAbuf+3,p+2,200);//Ã¿Ö¡´«Êä200×Ö½ÚcaÊı¾İ
+         memcpy(CAbuf+3,p+2,200);//æ¯å¸§ä¼ è¾“200å­—èŠ‚caæ•°æ®
          memcpy(CAbuf +9,CAbuf,203);
          
          EbEditmsg(CAbuf,CAbuf+9, 208,0x0040,0x43,203);
@@ -3992,7 +3992,7 @@ INT8U SgcYWToolGetPbKeyCer(INT16U wChanNo)
      }
      else
      {
-         memcpy(CAbuf+3,p+2,Sendlen);//×îºóÒ»Ö¡ca±¨ÎÄ
+         memcpy(CAbuf+3,p+2,Sendlen);//æœ€åä¸€å¸§caæŠ¥æ–‡
          memcpy(CAbuf +9,CAbuf,Sendlen+3);
          
          EbEditmsg(CAbuf,CAbuf+9, Sendlen+3+5 ,0x0040,0x43,Sendlen+3);
@@ -4003,17 +4003,17 @@ INT8U SgcYWToolGetPbKeyCer(INT16U wChanNo)
      for(i = 1;i <= msgnum; i++)
      {
      
-         CAbuf[2] = i;//µ±Ç°Ö¡ĞòºÅ
+         CAbuf[2] = i;//å½“å‰å¸§åºå·
          
          if(i < msgnum)
          {
-             memcpy(CAbuf+3,p+2+((i - 1) * 200),200);//Ã¿Ö¡´«Êä200×Ö½ÚcaÊı¾İ
+             memcpy(CAbuf+3,p+2+((i - 1) * 200),200);//æ¯å¸§ä¼ è¾“200å­—èŠ‚caæ•°æ®
              EbEditmsg(sendbuf,CAbuf, 208,0x0040,0x43,203);
              SendAuthDataToMISI(sendbuf,208+ 6,wChanNo); 
          }
          else
          {
-             memcpy(CAbuf+3,p+2+((i - 1) * 200),(CAlen%200));//×îºóÒ»Ö¡ca±¨ÎÄ
+             memcpy(CAbuf+3,p+2+((i - 1) * 200),(CAlen%200));//æœ€åä¸€å¸§caæŠ¥æ–‡
              EbEditmsg(sendbuf,CAbuf, (CAlen%200)+3+5 ,0x0040,0x43,(CAlen%200)+3);
              SendAuthDataToMISI(sendbuf,(CAlen%200)+3+5+ 6,wChanNo); 
          }
@@ -4025,10 +4025,10 @@ INT8U SgcYWToolGetPbKeyCer(INT16U wChanNo)
      return 0;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWWaittoSend
-*¹¦ÄÜ£º·¢³ö·ÖÖ¡´¦Àí±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWWaittoSend
+*åŠŸèƒ½ï¼šå‘å‡ºåˆ†å¸§å¤„ç†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U SgcYWWaittoSend(INT16U wChanNo)
 {
@@ -4042,14 +4042,14 @@ INT8U SgcYWWaittoSend(INT16U wChanNo)
     p = ParaTempBuf+1024;
 
     CAbuf[0] = 0x06;//
-    CAbuf[1] = Sendnum;//Ö¤Êé±¨ÎÄ×ÜÖ¡Êı
+    CAbuf[1] = Sendnum;//è¯ä¹¦æŠ¥æ–‡æ€»å¸§æ•°
 
     SendCount++;
-    CAbuf[2] = SendCount;//µ±Ç°Ö¡ĞòºÅ
+    CAbuf[2] = SendCount;//å½“å‰å¸§åºå·
     
     if(Sendnum > SendCount)
     {
-        memcpy(CAbuf+3,p+2+((SendCount - 1) * 200),200);//Ã¿Ö¡´«Êä200×Ö½ÚcaÊı¾İ
+        memcpy(CAbuf+3,p+2+((SendCount - 1) * 200),200);//æ¯å¸§ä¼ è¾“200å­—èŠ‚caæ•°æ®
         memcpy(CAbuf +9,CAbuf,203);
         
         EbEditmsg(CAbuf,CAbuf+9, 208,0x0040,0x43,203);
@@ -4057,7 +4057,7 @@ INT8U SgcYWWaittoSend(INT16U wChanNo)
     }
     else
     {
-        memcpy(CAbuf+3,p+2+((SendCount - 1) * 200),(Sendlen%200));//×îºóÒ»Ö¡ca±¨ÎÄ
+        memcpy(CAbuf+3,p+2+((SendCount - 1) * 200),(Sendlen%200));//æœ€åä¸€å¸§caæŠ¥æ–‡
         memcpy(CAbuf +9,CAbuf,((Sendlen%200) +3));
         
         EbEditmsg(CAbuf,CAbuf+9, (Sendlen%200)+3+5 ,0x0040,0x43,(Sendlen%200)+3);
@@ -4070,10 +4070,10 @@ INT8U SgcYWWaittoSend(INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolHFDCKey
-*¹¦ÄÜ£º¶ÔÖ¤Êé¹ÜÀí¹¤¾ß»Ö¸´ÖÕ¶Ë¶Ô³ÆÃÜÔ¿
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolHFDCKey
+*åŠŸèƒ½ï¼šå¯¹è¯ä¹¦ç®¡ç†å·¥å…·æ¢å¤ç»ˆç«¯å¯¹ç§°å¯†é’¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U SgcYWToolHFDCKey(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -4081,7 +4081,7 @@ INT8U SgcYWToolHFDCKey(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U signbuf[10];
     INT8U replybuf[20];
 
-    rc = Sgc1161RecoveryKeydata(pdata + EBAUDATASTARTSITE, 185);//ÃÜÔ¿»Ö¸´°ü×Ö½Ú¹Ì¶¨185¸ö
+    rc = Sgc1161RecoveryKeydata(pdata + EBAUDATASTARTSITE, 185);//å¯†é’¥æ¢å¤åŒ…å­—èŠ‚å›ºå®š185ä¸ª
 
     if(rc != 0)
     {
@@ -4102,10 +4102,10 @@ INT8U SgcYWToolHFDCKey(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºGetYWTooldataFromWHBuf
-*¹¦ÄÜ£º´ÓÎ¬»¤¿Ú»º³åÇøÕªÈ¡Ö¤Êé¹ÜÀí¹¤¾ßÏÂ·¢µÄÊı¾İ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šGetYWTooldataFromWHBuf
+*åŠŸèƒ½ï¼šä»ç»´æŠ¤å£ç¼“å†²åŒºæ‘˜å–è¯ä¹¦ç®¡ç†å·¥å…·ä¸‹å‘çš„æ•°æ®
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void GetYWTooldataFromWHBuf(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -4142,7 +4142,7 @@ void GetYWTooldataFromWHBuf(INT8U *pdata,INT16U len,INT16U wChanNo)
 
                 memcpy(pdata+i,(pdata+eblenth + 6 +i),(eblenth + 6));
                 i += (eblenth + 6);
-                totollen += (eblenth + 6);//¹¤¾ß¹ÜÀí±¨ÎÄÀÛ¼Æ³¤¶È
+                totollen += (eblenth + 6);//å·¥å…·ç®¡ç†æŠ¥æ–‡ç´¯è®¡é•¿åº¦
             }
             else
             {
@@ -4161,10 +4161,10 @@ void GetYWTooldataFromWHBuf(INT8U *pdata,INT16U len,INT16U wChanNo)
 
 #if 0
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcKeymanageStepI
-*¹¦ÄÜ£ºÖ÷Õ¾»Ö¸´ÖÕ¶ËÃÜÔ¿
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcKeymanageStepI
+*åŠŸèƒ½ï¼šä¸»ç«™æ¢å¤ç»ˆç«¯å¯†é’¥
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 SgcKeymanageStepIII(INT8U *pdata,INT16U len,INT16U wChanNo)
@@ -4196,11 +4196,11 @@ SgcKeymanageStepIII(INT8U *pdata,INT16U len,INT16U wChanNo)
 #endif
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSendAuthDataToMISI
-*¹¦ÄÜ£º·¢ËÍÈÏÖ¤Êı¾İ
-*ÊäÈë£ºsendbuf£º·¢ËÍÊı¾İ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©
-*      wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSendAuthDataToMISI
+*åŠŸèƒ½ï¼šå‘é€è®¤è¯æ•°æ®
+*è¾“å…¥ï¼šsendbufï¼šå‘é€æ•°æ®ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰
+*      wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 BOOL SendAuthDataToMISI(INT8U *sendbuf,INT16U len,INT16U wChanNo)
 {
@@ -4208,13 +4208,13 @@ BOOL SendAuthDataToMISI(INT8U *sendbuf,INT16U len,INT16U wChanNo)
     SendLen=(INT16U)MisiWrite(wChanNo,sendbuf,len,3);
     
     //myTaskDelay(5);
-    if(SendLen==0xffff)//Ğ´´íÎó
+    if(SendLen==0xffff)//å†™é”™è¯¯
     {
         //SendLen=(INT16U)MisiWrite(wChanNo,sendbuf,len,3);
         myTaskDelay(10);
     }
     
-    if(SendLen==0xffff)//Ğ´´íÎó
+    if(SendLen==0xffff)//å†™é”™è¯¯
     {
         return FALSE;
     }
@@ -4228,10 +4228,10 @@ BOOL SendAuthDataToMISI(INT8U *sendbuf,INT16U len,INT16U wChanNo)
 
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbEditmsg
-*¹¦ÄÜ£º±à¼­Eb°²È«±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ»º³åÇø£¬sdatabufÊı¾İ»º³åÇø£¬slen±¨ÎÄ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbEditmsg
+*åŠŸèƒ½ï¼šç¼–è¾‘Ebå®‰å…¨æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ç¼“å†²åŒºï¼Œsdatabufæ•°æ®ç¼“å†²åŒºï¼ŒslenæŠ¥æ–‡é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void EbEditmsg(INT8U *pdata,INT8U* sdatabuf,INT16U slen, INT16U ebtype,INT8U typeId,INT16U msglen)
 {
@@ -4253,10 +4253,10 @@ void EbEditmsg(INT8U *pdata,INT8U* sdatabuf,INT16U slen, INT16U ebtype,INT8U typ
     pdata[slen +  5] = 0xD7;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack104msgtoEb
-*¹¦ÄÜ£º½«104±¨ÎÄ×ª»»ÎªEB°²È«±¨ÎÄ
-*ÊäÈë£ºbuf£º±¨ÎÄ£¬SEBtaillen:°²È«Êı¾İ»º³åÇø£¬len±¨ÎÄ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack104msgtoEb
+*åŠŸèƒ½ï¼šå°†104æŠ¥æ–‡è½¬æ¢ä¸ºEBå®‰å…¨æŠ¥æ–‡
+*è¾“å…¥ï¼šbufï¼šæŠ¥æ–‡ï¼ŒSEBtaillen:å®‰å…¨æ•°æ®ç¼“å†²åŒºï¼ŒlenæŠ¥æ–‡é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
@@ -4274,7 +4274,7 @@ INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
 	{
 	    if((buf[i] == 0xEB)&&(buf[i+3] == 0xEB))
 	    {
-	        templen = buf[i+2]+(buf[i+1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+	        templen = buf[i+2]+(buf[i+1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
 	        i += templen;
                rc = i;
 	    }
@@ -4288,7 +4288,7 @@ INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
                    saveRecord(buf+i,len104,TXSAVEMODE,1);
                    PackFra104ToEb(buf+i ,len104,ebbuf,wChanNo);
 
-                    templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È
+                    templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦
                     
                     if(templen > 6)
      			    {
@@ -4322,7 +4322,7 @@ INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
                {
                    PackFixed104ToEb(buf+i,6,ebbuf);
                    tmp = i + 6;
-                   templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+                   templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                    if(tmp < len)
                    {
                        memcpy(buf+i+templen ,buf+tmp,len - tmp);
@@ -4341,7 +4341,7 @@ INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
 	    if((buf[i] == 0x10)&&(buf[i+5] == 0x16))
 	    {
 	        PackFra10ToEb(buf+i,fixmlen,ebbuf);
-               templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+               templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                memcpy(buf+rc,ebbuf,templen);
                rc += templen;
 	        i += fixmlen;
@@ -4353,7 +4353,7 @@ INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
                templen = templen + 6;
                
                PackFra68ToEb(buf+i ,templen,ebbuf);
-               templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+               templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                memcpy(buf+rc,ebbuf,templen);
                rc += templen;
                
@@ -4368,10 +4368,10 @@ INT16U Pack104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPackFra104ToEb
-*¹¦ÄÜ£º·â×°104±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:68±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPackFra104ToEb
+*åŠŸèƒ½ï¼šå°è£…104æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:68æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 void PackFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
@@ -4406,7 +4406,7 @@ void PackFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
         ensureflag = pdata[15];
         
 	    encot = pdata[8]&0x3F;
-        if((encot == 7)&&((ensureflag & 0x80) == 0))//Éı¼¶½áÊøÈ·ÈÏ
+        if((encot == 7)&&((ensureflag & 0x80) == 0))//å‡çº§ç»“æŸç¡®è®¤
         {
             Upendflag = 1;
         /*
@@ -4477,7 +4477,7 @@ void PackFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
         EbErrCodeSend(0x9109,0x1f,wChanNo);
         return ;
     }
-        //tsgcbuf:Á½×Ö½Ú68±¨ÎÄ³¤¶È+68±¨ÎÄ+Á½×Ö½ÚËæ»úÊı³¤¶È+Ëæ»úÊı
+        //tsgcbuf:ä¸¤å­—èŠ‚68æŠ¥æ–‡é•¿åº¦+68æŠ¥æ–‡+ä¸¤å­—èŠ‚éšæœºæ•°é•¿åº¦+éšæœºæ•°
 
     sum = GetEbMsgCheckSum(ebbuf);
     
@@ -4486,10 +4486,10 @@ void PackFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPackFixed104ToEb
-*¹¦ÄÜ£º·â×°10Ö¡±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:10±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPackFixed104ToEb
+*åŠŸèƒ½ï¼šå°è£…10å¸§æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:10æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 void PackFixed104ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
@@ -4498,7 +4498,7 @@ void PackFixed104ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     INT8U sum;
     INT16U slen;
 
-	slen = len + 6;//±¨ÎÄÀàĞÍ2£¬Ó¦ÓÃÀàĞÍ1£¬101³¤¶È×Ö½Ú1 Á½×Ö½ÚÀ©Õ¹Çø³¤¶È 00 00
+	slen = len + 6;//æŠ¥æ–‡ç±»å‹2ï¼Œåº”ç”¨ç±»å‹1ï¼Œ101é•¿åº¦å­—èŠ‚1 ä¸¤å­—èŠ‚æ‰©å±•åŒºé•¿åº¦ 00 00
 
     ebbuf[0] = ebbuf[3] = 0xEB;
     ebbuf[1] = HIBYTE(slen);
@@ -4508,7 +4508,7 @@ void PackFixed104ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     ebbuf[6] = 0x00;
     ebbuf[7] = (INT8U)len;
 	
-    memcpy(ebbuf + EBAUDATASTARTSITE - 1, pdata, len);//101±¨ÎÄ³¤¶È×Ö½ÚÖ»ÓĞ1¸ö£¬ËùÒÔÒª¼õÒ»
+    memcpy(ebbuf + EBAUDATASTARTSITE - 1, pdata, len);//101æŠ¥æ–‡é•¿åº¦å­—èŠ‚åªæœ‰1ä¸ªï¼Œæ‰€ä»¥è¦å‡ä¸€
     ebbuf[EBAUDATASTARTSITE + len ] =0x00;
     ebbuf[EBAUDATASTARTSITE + len + 1] =0x00;
 
@@ -4518,10 +4518,10 @@ void PackFixed104ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
 	
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack101msgtoEb
-*¹¦ÄÜ£º½«101±¨ÎÄ×ª»»ÎªEB°²È«±¨ÎÄ
-*ÊäÈë£ºbuf£º±¨ÎÄ£¬SEBtaillen:°²È«Êı¾İ»º³åÇø£¬len±¨ÎÄ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack101msgtoEb
+*åŠŸèƒ½ï¼šå°†101æŠ¥æ–‡è½¬æ¢ä¸ºEBå®‰å…¨æŠ¥æ–‡
+*è¾“å…¥ï¼šbufï¼šæŠ¥æ–‡ï¼ŒSEBtaillen:å®‰å…¨æ•°æ®ç¼“å†²åŒºï¼ŒlenæŠ¥æ–‡é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U Pack101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
@@ -4544,38 +4544,38 @@ INT16U Pack101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
        //logSysMsgNoTime("Pack101msgtoEb!",0,0,0,0);
 	if((buf[i] == 0xEB)&&(buf[i+3] == 0xEB))
 	{
-	    templen = buf[i+2]+(buf[i+1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+	    templen = buf[i+2]+(buf[i+1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
 	    i += templen;
            rc = i;
 	}
-       ///////////¶¨³¤101±¨ÎÄ
+       ///////////å®šé•¿101æŠ¥æ–‡
        if((buf[i] == 0x10)&&(buf[i+fixmlen-1] == 0x16))
 	{
 	    PackFra10ToEb(buf+i,fixmlen,ebbuf);
         
-           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
            tmp = i + fixmlen;
                
            if( tmp < len)
            {
-               memcpy((buf+i+templen) ,buf+tmp,len - tmp);//½«ºóĞø±¨ÎÄºóÒÆ
+               memcpy((buf+i+templen) ,buf+tmp,len - tmp);//å°†åç»­æŠ¥æ–‡åç§»
                len = len - fixmlen + templen;
            }
            memcpy((buf+i ),ebbuf,templen);
            i += templen;
            rc += templen;
 	}
-       else if((buf[i] == 0x68)&&(buf[i+3] == 0x68)&&(buf[i+1]==buf[i+2]))////////·Ç¶¨³¤101±¨ÎÄ
+       else if((buf[i] == 0x68)&&(buf[i+3] == 0x68)&&(buf[i+1]==buf[i+2]))////////éå®šé•¿101æŠ¥æ–‡
 	{
 
 	    templen = (INT16U)buf[i+1]&0x00FF;
-           templen = templen + 6;//101±¨ÎÄ³¤¶È
+           templen = templen + 6;//101æŠ¥æ–‡é•¿åº¦
            //buf[i+templen-2] = 0x68;           
            saveRecord(buf+i,templen,TXSAVEMODE,1);
            PackFra68ToEb(buf+i ,(INT8U)templen,ebbuf,wChanNo);
            
            tmp = i + templen;
-           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                
            if(tmp < len)
            {
@@ -4601,12 +4601,12 @@ INT16U Pack101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
     return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPackFra68ToEb
-*¹¦ÄÜ£º·â×°68Ö¡±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:68±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPackFra68ToEb
+*åŠŸèƒ½ï¼šå°è£…68å¸§æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:68æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
-//ºóÆÚ¿ÉÒÔ¿¼ÂÇ½«tsgcbuf¾«¼òµôZHANGLIANG
+//åæœŸå¯ä»¥è€ƒè™‘å°†tsgcbufç²¾ç®€æ‰ZHANGLIANG
 void PackFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 {
 
@@ -4620,7 +4620,7 @@ void PackFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 
     if(pdata[tilocation] == 203)
     {
-        ensureflag = pdata[fixmlen + 9];//ÌØÕ÷±êÊ¶·û()
+        ensureflag = pdata[fixmlen + 9];//ç‰¹å¾æ ‡è¯†ç¬¦()
         if(rmparaflag == 2)
         {
             ensureflag = 0;
@@ -4633,8 +4633,8 @@ void PackFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
     else if(pdata[tilocation] == 211)
     {
         ensureflag = pdata[len -3];
-        encot = pdata[fixmlen + 3]&0x3F;//´«ÊäÔ­Òò
-        if((encot == 7)&&((ensureflag & 0x80) == 0))//Éı¼¶½áÊøÈ·ÈÏ
+        encot = pdata[fixmlen + 3]&0x3F;//ä¼ è¾“åŸå› 
+        if((encot == 7)&&((ensureflag & 0x80) == 0))//å‡çº§ç»“æŸç¡®è®¤
         {
 
             Upendflag = 1;
@@ -4700,7 +4700,7 @@ void PackFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
         EbErrCodeSend(0x9109,0x1f,wChanNo);
         return ;
     }
-        //tsgcbuf:Á½×Ö½Ú68±¨ÎÄ³¤¶È+68±¨ÎÄ+Á½×Ö½ÚËæ»úÊı³¤¶È+Ëæ»úÊı
+        //tsgcbuf:ä¸¤å­—èŠ‚68æŠ¥æ–‡é•¿åº¦+68æŠ¥æ–‡+ä¸¤å­—èŠ‚éšæœºæ•°é•¿åº¦+éšæœºæ•°
 
     sum = GetEbMsgCheckSum(ebbuf);
     
@@ -4709,10 +4709,10 @@ void PackFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPackFra10ToEb
-*¹¦ÄÜ£º·â×°10Ö¡±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:10±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPackFra10ToEb
+*åŠŸèƒ½ï¼šå°è£…10å¸§æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:10æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 void PackFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
@@ -4721,7 +4721,7 @@ void PackFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     INT8U sum = 0;
     INT16U slen;
 
-    slen = len + 6;//±¨ÎÄÀàĞÍ2£¬Ó¦ÓÃÀàĞÍ1£¬101³¤¶È×Ö½Ú1 °²È«À©Õ¹Çø³¤¶È×Ö½Ú2
+    slen = len + 6;//æŠ¥æ–‡ç±»å‹2ï¼Œåº”ç”¨ç±»å‹1ï¼Œ101é•¿åº¦å­—èŠ‚1 å®‰å…¨æ‰©å±•åŒºé•¿åº¦å­—èŠ‚2
 
     ebbuf[0] = ebbuf[3] = 0xEB;
     ebbuf[1] = HIBYTE(slen);
@@ -4731,7 +4731,7 @@ void PackFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     ebbuf[6] = 0x00;
     ebbuf[7] = (INT8U)len;
 	
-    memcpy(ebbuf + EBAUDATASTARTSITE - 1, pdata, len);//101±¨ÎÄ³¤¶È×Ö½ÚÖ»ÓĞ1¸ö£¬ËùÒÔÒª¼õÒ»
+    memcpy(ebbuf + EBAUDATASTARTSITE - 1, pdata, len);//101æŠ¥æ–‡é•¿åº¦å­—èŠ‚åªæœ‰1ä¸ªï¼Œæ‰€ä»¥è¦å‡ä¸€
     ebbuf[EBAUDATASTARTSITE + len ] =0x00;
     ebbuf[EBAUDATASTARTSITE + len + 1] =0x00;
     
@@ -4781,7 +4781,7 @@ void PackFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     INT8U sum;
     INT16U slen;
 
-	slen = len + 4;//±¨ÎÄÀàĞÍ2£¬Ó¦ÓÃÀàĞÍ1£¬101³¤¶È×Ö½Ú1
+	slen = len + 4;//æŠ¥æ–‡ç±»å‹2ï¼Œåº”ç”¨ç±»å‹1ï¼Œ101é•¿åº¦å­—èŠ‚1
 
 	ebbuf[0] = ebbuf[3] = 0xEB;
     ebbuf[1] = HIBYTE(slen);
@@ -4791,7 +4791,7 @@ void PackFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     ebbuf[6] = 0x00;
     ebbuf[7] = (INT8U)len;
 	
-    memcpy(ebbuf + 9 - 1, pdata, len);//101±¨ÎÄ³¤¶È×Ö½ÚÖ»ÓĞ1¸ö£¬ËùÒÔÒª¼õÒ»
+    memcpy(ebbuf + 9 - 1, pdata, len);//101æŠ¥æ–‡é•¿åº¦å­—èŠ‚åªæœ‰1ä¸ªï¼Œæ‰€ä»¥è¦å‡ä¸€
     sum = GetEbMsgCheckSum(ebbuf);
 	ebbuf[slen +  4] = sum;
     ebbuf[slen +  5] = 0xD7;
@@ -4800,10 +4800,10 @@ void PackFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
 	
 */
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSGCReceiveData
-*¹¦ÄÜ£º½ÓÊÕSGC1161°²È«¼ÓÃÜĞ¾Æ¬·µ»ØµÄÊı¾İ
-*ÊäÈë£ºprcv£ºÊı¾İ»º³åÇø,len:³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSGCReceiveData
+*åŠŸèƒ½ï¼šæ¥æ”¶SGC1161å®‰å…¨åŠ å¯†èŠ¯ç‰‡è¿”å›çš„æ•°æ®
+*è¾“å…¥ï¼šprcvï¼šæ•°æ®ç¼“å†²åŒº,len:é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U SGCReceiveData(INT8U *prcv, INT16U len)
@@ -4819,7 +4819,7 @@ INT16U SGCReceiveData(INT8U *prcv, INT16U len)
     //    return -5;
     memset(data,0, 17);
     
-    //²éÕÒ0x55Í·,²éÕÒ10´Î,Ã¿´ÎÃ»ÕÒµ½¶¼ÑÓ³Ù100ms
+    //æŸ¥æ‰¾0x55å¤´,æŸ¥æ‰¾10æ¬¡,æ¯æ¬¡æ²¡æ‰¾åˆ°éƒ½å»¶è¿Ÿ100ms
     for(j=0;j<10;j++)
     {
 
@@ -4848,8 +4848,8 @@ INT16U SGCReceiveData(INT8U *prcv, INT16U len)
 
     if(j>=10)
     {
-        logSysMsgNoTime("Ã»ÓĞ¶Áµ½0x55Í·debug ",0,0,0,0);
-        HEPowerReset(10);//ÖØÆôSC1161Ğ¾Æ¬
+        logSysMsgNoTime("æ²¡æœ‰è¯»åˆ°0x55å¤´debug ",0,0,0,0);
+        HEPowerReset(10);//é‡å¯SC1161èŠ¯ç‰‡
         prcv[0] = 0x00;
         prcv[1] = 0x01;
         prcv[2] = 0x91;
@@ -4876,47 +4876,47 @@ INT16U SGCReceiveData(INT8U *prcv, INT16U len)
             else
             {
                 
-                rc = 4;        //¶ÁÈ¡»º³åÇø²»¹»´ó£¬ÈİÒ×Òç³ö
-                logSysMsgNoTime("Ğ¾Æ¬¶Á³¤¶È=%x,ÆÚÍû³¤¶È=%x£¬Ğ¾Æ¬Êı¾İ³¤¶È²»¶Ô",readlen,len,0,0);
+                rc = 4;        //è¯»å–ç¼“å†²åŒºä¸å¤Ÿå¤§ï¼Œå®¹æ˜“æº¢å‡º
+                logSysMsgNoTime("èŠ¯ç‰‡è¯»é•¿åº¦=%x,æœŸæœ›é•¿åº¦=%xï¼ŒèŠ¯ç‰‡æ•°æ®é•¿åº¦ä¸å¯¹",readlen,len,0,0);
                 readlen = len;
             }
         }
         else if(data[2] == 0x86)
         {
 
-            logSysMsgNoTime("ÑéÇ©Ê§°Ü,sw1=%x, sw2=%x",data[1],data[2],0,0);
+            logSysMsgNoTime("éªŒç­¾å¤±è´¥,sw1=%x, sw2=%x",data[1],data[2],0,0);
             rc = 1;
         }
         else
         {
             rc = 4;
-            logSysMsgNoTime("Ğ¾Æ¬·µ»ØÖµÒì³££¬sw1=%x,sw2=%x",data[1],data[2],0,0); 
+            logSysMsgNoTime("èŠ¯ç‰‡è¿”å›å€¼å¼‚å¸¸ï¼Œsw1=%x,sw2=%x",data[1],data[2],0,0); 
         }
         break;
     case 0x60:
         if((data[1] == 0x67)&&(data[1] == 0x00))
         {
-            logSysMsgNoTime("Ğ£ÑéÂë»ò³¤¶È´íÎó,sw1=%x, sw2=%x",data[1],data[2],0,0);
+            logSysMsgNoTime("æ ¡éªŒç æˆ–é•¿åº¦é”™è¯¯,sw1=%x, sw2=%x",data[1],data[2],0,0);
             rc = 5;
         }
         else if((data[1] == 0x6A)&&(data[2] == 0x90))
         {
             rc = 77;
-            logSysMsgNoTime("´«Êä´íÎó,sw1=%x, sw2=%x",data[1],data[2],0,0);
+            logSysMsgNoTime("ä¼ è¾“é”™è¯¯,sw1=%x, sw2=%x",data[1],data[2],0,0);
         }
         else
         {
-            logSysMsgNoTime("Ğ¾Æ¬±¨¸æÆäËû´íÎó,sw1=%x, sw2=%x",data[1],data[2],0,0);
+            logSysMsgNoTime("èŠ¯ç‰‡æŠ¥å‘Šå…¶ä»–é”™è¯¯,sw1=%x, sw2=%x",data[1],data[2],0,0);
             rc = 2;
         }
         //readlen = (data[3]<<8)+data[4];
         break;
     default: 
         readlen = 0;
-        logSysMsgNoTime("Ğ¾Æ¬Ó¦´ğ´íÎó,sw1=%x, sw2=%x",data[1],data[2],0,0);
-        HEClearNotReadData();   //°ÑÎ´¶Á³öµÄÊı¾İ¶Á³ö 
+        logSysMsgNoTime("èŠ¯ç‰‡åº”ç­”é”™è¯¯,sw1=%x, sw2=%x",data[1],data[2],0,0);
+        HEClearNotReadData();   //æŠŠæœªè¯»å‡ºçš„æ•°æ®è¯»å‡º 
         
-        ////HEPowerReset(10);//ÖØÆôSC1161Ğ¾Æ¬
+        ////HEPowerReset(10);//é‡å¯SC1161èŠ¯ç‰‡
         prcv[0] = 0x00;
         prcv[1] = 0x01;
         prcv[2] = 0x91;
@@ -4959,7 +4959,7 @@ INT16U SGCReceiveData(INT8U *prcv, INT16U len)
     }
     else
     {
-        //ÇåÊ£ÓàÊı¾İ²¢À­¸ßÆ¬Ñ¡
+        //æ¸…å‰©ä½™æ•°æ®å¹¶æ‹‰é«˜ç‰‡é€‰
         for(i=0;i<readlen;i++)
         { 
             data[0] = HE_SPI_READ_CODE;
@@ -4973,11 +4973,11 @@ INT16U SGCReceiveData(INT8U *prcv, INT16U len)
     return rc;
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  UpdateProgramMd5()
-º¯Êı¹¦ÄÜ£º  ¼ÆËã³ÌĞòÎÄ¼şµÄMD5Öµ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º  TRUE ±íÊ¾ÓĞMD5Öµ  FALSE ±íÊ¾Ã»ÓĞMD5Öµ
-±¸×¢£º      ÔÚ·¢ËÍÖ÷Õ¾µÄÉı¼¶½áÊøÈ·ÈÏÖ¡ºó£¬¿ªÊ¼¼ÆËã²¢Ğ£ÑéMD5
+å‡½æ•°åç§°ï¼š  UpdateProgramMd5()
+å‡½æ•°åŠŸèƒ½ï¼š  è®¡ç®—ç¨‹åºæ–‡ä»¶çš„MD5å€¼
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š  TRUE è¡¨ç¤ºæœ‰MD5å€¼  FALSE è¡¨ç¤ºæ²¡æœ‰MD5å€¼
+å¤‡æ³¨ï¼š      åœ¨å‘é€ä¸»ç«™çš„å‡çº§ç»“æŸç¡®è®¤å¸§åï¼Œå¼€å§‹è®¡ç®—å¹¶æ ¡éªŒMD5
 /------------------------------------------------------------------*/
 BOOL UpdateProgramMd5(void)
 {
@@ -4993,18 +4993,18 @@ BOOL UpdateProgramMd5(void)
     }
     memset(&temp, 0, sizeof(MD5state));
     GenerateMD5(p8, len, UoLoadMD5, &temp);
-    logSysMsgNoTime("MD5Öµ1 %x-%x-%x-%x", UoLoadMD5[0],UoLoadMD5[1],UoLoadMD5[2],UoLoadMD5[3]);
-    logSysMsgNoTime("MD5Öµ2 %x-%x-%x-%x", UoLoadMD5[12],UoLoadMD5[13],UoLoadMD5[14],UoLoadMD5[15]);
+    logSysMsgNoTime("MD5å€¼1 %x-%x-%x-%x", UoLoadMD5[0],UoLoadMD5[1],UoLoadMD5[2],UoLoadMD5[3]);
+    logSysMsgNoTime("MD5å€¼2 %x-%x-%x-%x", UoLoadMD5[12],UoLoadMD5[13],UoLoadMD5[14],UoLoadMD5[15]);
     
     return TRUE;
     
 }   
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  CheckEncrptchip()
-º¯Êı¹¦ÄÜ£º  ¼ì²â¼ÓÃÜĞ¾Æ¬ÊÇ·ñ¿ÉÕı³£Ê¹ÓÃ
-ÊäÈëËµÃ÷£º  CheckType:0±íÊ¾Î¬»¤Èí¼şµ÷ÓÃ£¬ÆäËû±íÊ¾¿ª»ú×Ô¼ì
-Êä³öËµÃ÷£º  0±íÊ¾Ğ¾Æ¬¿ÉÕı³£¹¤×÷
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  CheckEncrptchip()
+å‡½æ•°åŠŸèƒ½ï¼š  æ£€æµ‹åŠ å¯†èŠ¯ç‰‡æ˜¯å¦å¯æ­£å¸¸ä½¿ç”¨
+è¾“å…¥è¯´æ˜ï¼š  CheckType:0è¡¨ç¤ºç»´æŠ¤è½¯ä»¶è°ƒç”¨ï¼Œå…¶ä»–è¡¨ç¤ºå¼€æœºè‡ªæ£€
+è¾“å‡ºè¯´æ˜ï¼š  0è¡¨ç¤ºèŠ¯ç‰‡å¯æ­£å¸¸å·¥ä½œ
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 INT8U CheckEncrptchip(INT8U CheckType)
 {
@@ -5025,7 +5025,7 @@ INT8U CheckEncrptchip(INT8U CheckType)
         i++;
         if(i > 1)
         {
-            //logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬¼ì²âÒì³£.rc=%d",rc,0,0,0);
+            //logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡æ£€æµ‹å¼‚å¸¸.rc=%d",rc,0,0,0);
             i = 0;
             
             return 1;
@@ -5035,7 +5035,7 @@ INT8U CheckEncrptchip(INT8U CheckType)
     if(CheckType == 0)
     {
         memset(msgbuf,0,50);
-        sprintf(msgbuf,"¼ÓÃÜĞ¾Æ¬1161ĞòÁĞºÅ:%02x%02x%2x%02x%02x%02x%02x%02x\r\n",p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]);
+        sprintf(msgbuf,"åŠ å¯†èŠ¯ç‰‡1161åºåˆ—å·:%02x%02x%2x%02x%02x%02x%02x%02x\r\n",p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]);
         logSysMsgNoTime(msgbuf,0,0,0,0);
     }
 
@@ -5047,7 +5047,7 @@ INT8U CheckEncrptchip(INT8U CheckType)
         i++;
         if(i > 1)
         {
-            //logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬¼ì²âÒì³£.rc=%d",rc,0,0,0);
+            //logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡æ£€æµ‹å¼‚å¸¸.rc=%d",rc,0,0,0);
             i = 0;
             
             return 2;
@@ -5057,11 +5057,11 @@ INT8U CheckEncrptchip(INT8U CheckType)
     KeyVersion = p[2];
     if(CheckType == 0)
     {
-        logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬1161ÃÜÔ¿°æ±¾ºÅ:%d",KeyVersion,0,0,0);
+        logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡1161å¯†é’¥ç‰ˆæœ¬å·:%d",KeyVersion,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬1161×Ô¼ì³É¹¦£¬ÃÜÔ¿°æ±¾ºÅ:%d",KeyVersion,0,0,0);
+        logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡1161è‡ªæ£€æˆåŠŸï¼Œå¯†é’¥ç‰ˆæœ¬å·:%d",KeyVersion,0,0,0);
         return 0;
     }
 
@@ -5074,21 +5074,21 @@ INT8U CheckEncrptchip(INT8U CheckType)
         i++;
         if(i > 3)
         {
-            //logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬¼ì²âÒì³£.rc=%d",rc,0,0,0);
+            //logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡æ£€æµ‹å¼‚å¸¸.rc=%d",rc,0,0,0);
             i = 0;
             
             return 3;
         }
     }
-    //logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬¼ì²âÕı³£.rc=%d",rc,0,0,0);
+    //logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡æ£€æµ‹æ­£å¸¸.rc=%d",rc,0,0,0);
     return rc;
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcYWToolGetPbKeyCer
-*¹¦ÄÜ£ºµ¼³ö¹«Ô¿Ö¤Êé(ÖÕ¶ËÖ¤Êé)¸øÖ¤Êé¹ÜÀí¹¤¾ß
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬len£ºEB±¨ÎÄµÄ³¤¶È£¨±¨ÎÄÀàĞÍÖÁĞ£ÑéÂë£©wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcYWToolGetPbKeyCer
+*åŠŸèƒ½ï¼šå¯¼å‡ºå…¬é’¥è¯ä¹¦(ç»ˆç«¯è¯ä¹¦)ç»™è¯ä¹¦ç®¡ç†å·¥å…·
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œlenï¼šEBæŠ¥æ–‡çš„é•¿åº¦ï¼ˆæŠ¥æ–‡ç±»å‹è‡³æ ¡éªŒç ï¼‰wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U SgcMaintGetPbKeyCer(INT8U *p)
 {
@@ -5103,7 +5103,7 @@ INT8U SgcMaintGetPbKeyCer(INT8U *p)
      if(rc != 0)
      {
 
-         logSysMsgNoTime("ÖÕ¶ËÖ¤Êéµ¼³öÊ§°Ü.rc=%d",rc,0,0,0);
+         logSysMsgNoTime("ç»ˆç«¯è¯ä¹¦å¯¼å‡ºå¤±è´¥.rc=%d",rc,0,0,0);
          p = NULL;
          return 0;
 
@@ -5115,15 +5115,15 @@ INT8U SgcMaintGetPbKeyCer(INT8U *p)
 #if 0
 #endif
 ////////////////////////////////////////////////////////////////
-//ºşÄÏÅ©Íø¼ÓÃÜ½Ó¿Úsgc1120a
-//ÕÅÁ¼
+//æ¹–å—å†œç½‘åŠ å¯†æ¥å£sgc1120a
+//å¼ è‰¯
 ////////////////////////////////////////////////////////////////
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aGetChipSerialNumID
-*¹¦ÄÜ£º»ñÈ¡Ğ¾Æ¬ĞòÁĞºÅ
-*ÊäÈë£ºrcvbuf:Êı¾İ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aGetChipSerialNumID
+*åŠŸèƒ½ï¼šè·å–èŠ¯ç‰‡åºåˆ—å·
+*è¾“å…¥ï¼šrcvbuf:æ•°æ®å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aGetChipSerialNumID(INT8U *rcvbuf)
 {
@@ -5153,10 +5153,10 @@ INT8U Sgc1120aGetChipSerialNumID(INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aGetChipKeyVersion
-*¹¦ÄÜ£º»ñÈ¡Ğ¾Æ¬ÃÜÔ¿°æ±¾ºÅ
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aGetChipKeyVersion
+*åŠŸèƒ½ï¼šè·å–èŠ¯ç‰‡å¯†é’¥ç‰ˆæœ¬å·
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aGetChipKeyVersion(INT8U *rcvbuf)
 {
@@ -5187,10 +5187,10 @@ INT8U Sgc1120aGetChipKeyVersion(INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aGetRandomData
-*¹¦ÄÜ£º»ñÈ¡Ğ¾Æ¬Ëæ»úÊı
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aGetRandomData
+*åŠŸèƒ½ï¼šè·å–èŠ¯ç‰‡éšæœºæ•°
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aGetRandomData(INT8U *rcvbuf)
 {
@@ -5220,10 +5220,10 @@ INT8U Sgc1120aGetRandomData(INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcCalculateAuthRData
-*¹¦ÄÜ£º¼ÆËãÉí·İÈÏÖ¤Êı¾İ
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcCalculateAuthRData
+*åŠŸèƒ½ï¼šè®¡ç®—èº«ä»½è®¤è¯æ•°æ®
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aCalculateAuthRData(INT8U *rcvbuf)
 {
@@ -5253,10 +5253,10 @@ INT8U Sgc1120aCalculateAuthRData(INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetPKeyAuthData
-*¹¦ÄÜ£º»ñÈ¡¹«Ô¿¼ÓÃÜ½á¹û
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetPKeyAuthData
+*åŠŸèƒ½ï¼šè·å–å…¬é’¥åŠ å¯†ç»“æœ
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aGetPKeyAuthData(INT8U Fid,INT8U *pdata,INT8U *rcvbuf)
 {
@@ -5276,7 +5276,7 @@ INT8U Sgc1120aGetPKeyAuthData(INT8U Fid,INT8U *pdata,INT8U *rcvbuf)
     
     semTake(sem_qspiid, WAIT_FOREVER);
     myTaskDelay(1);    
-    HESendCmd(&hecmd,pdata,0x08);  //Ö÷Õ¾ÏÂ·¢µÄ¹«Ô¿ÑéÖ¤Ëæ»úÊı
+    HESendCmd(&hecmd,pdata,0x08);  //ä¸»ç«™ä¸‹å‘çš„å…¬é’¥éªŒè¯éšæœºæ•°
     
     myTaskDelay(50);    
     
@@ -5286,10 +5286,10 @@ INT8U Sgc1120aGetPKeyAuthData(INT8U Fid,INT8U *pdata,INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcGetKeyConsultData
-*¹¦ÄÜ£ºÃÜÔ¿Ğ­ÉÌ
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcGetKeyConsultData
+*åŠŸèƒ½ï¼šå¯†é’¥åå•†
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aGetKeyConsultData(INT8U Fid,INT8U *pdata,INT8U *rcvbuf)
 {
@@ -5323,10 +5323,10 @@ INT8U Sgc1120aGetKeyConsultData(INT8U Fid,INT8U *pdata,INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSGC1120aSginVerify
-*¹¦ÄÜ£ºÑéÖ¤¹«Ô¿¸üĞÂÇ©Ãû
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSGC1120aSginVerify
+*åŠŸèƒ½ï¼šéªŒè¯å…¬é’¥æ›´æ–°ç­¾å
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 /*
 INT8U Sgc1120aUploadPKeySignData(INT8U Kid,INT8U *pdata,INT8U *rcvbuf)
@@ -5344,14 +5344,14 @@ INT8U Sgc1120aUploadPKeySignData(INT8U Kid,INT8U *pdata,INT8U *rcvbuf)
 	
     hecmd.cla  = 0x80;
     hecmd.ins  = 0x5A;
-    hecmd.p1   = 0x80+Kid;//Ç©ÃûÃÜÔ¿Ë÷Òı
+    hecmd.p1   = 0x80+Kid;//ç­¾åå¯†é’¥ç´¢å¼•
     hecmd.p2   = 0x00;
     hecmd.len1 = 0x00;
     hecmd.len2 = 0x89;
 	
 	pHeSendBuf2[0] = Pid;
-    memcpy((&pHeSendBuf2[0]+1), pdata+1, SGCRANDOMLEN);//¸üĞÂ¹«Ô¿Ë÷Òı+ Ëæ»úÊı0x01+0x08
-    memcpy((&pHeSendBuf2[0]+9), pdata+9, 0x80);//¹«Ô¿Öµ+Ç©Ãû½á¹û0x40+0x40
+    memcpy((&pHeSendBuf2[0]+1), pdata+1, SGCRANDOMLEN);//æ›´æ–°å…¬é’¥ç´¢å¼•+ éšæœºæ•°0x01+0x08
+    memcpy((&pHeSendBuf2[0]+9), pdata+9, 0x80);//å…¬é’¥å€¼+ç­¾åç»“æœ0x40+0x40
 	HESendCmd(&hecmd, pHeSendBuf2,0x89); 
 	
     myTaskDelay(5);
@@ -5362,16 +5362,16 @@ INT8U Sgc1120aUploadPKeySignData(INT8U Kid,INT8U *pdata,INT8U *rcvbuf)
 */
 	
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º	SGCSginVerify()
-º¯Êı¹¦ÄÜ£º	ÑéÇ©()
-ÊäÈëËµÃ÷£º	
-			pkey 64×Ö½Ú¹«Ô¿Ö¸Õë  keyno ¹«Ô¿ĞòºÅ£¨0~3 ±íÊ¾1~4ºÅ¹«Ô¿)
-			pucDataInput Ç©ÃûÊı¾İÔ´ 
-			pucsign Ç©ÃûÖµ 
-Êä³öËµÃ÷£º	0 ³É¹¦ 
-			-10 ²ÎÊı´íÎó
-			ÆäËû Ê§°Ü
-±¸×¢£º		
+å‡½æ•°åç§°ï¼š	SGCSginVerify()
+å‡½æ•°åŠŸèƒ½ï¼š	éªŒç­¾()
+è¾“å…¥è¯´æ˜ï¼š	
+			pkey 64å­—èŠ‚å…¬é’¥æŒ‡é’ˆ  keyno å…¬é’¥åºå·ï¼ˆ0~3 è¡¨ç¤º1~4å·å…¬é’¥)
+			pucDataInput ç­¾åæ•°æ®æº 
+			pucsign ç­¾åå€¼ 
+è¾“å‡ºè¯´æ˜ï¼š	0 æˆåŠŸ 
+			-10 å‚æ•°é”™è¯¯
+			å…¶ä»– å¤±è´¥
+å¤‡æ³¨ï¼š		
 /------------------------------------------------------------------*/
 
 INT8U SGC1120aSginVerify(INT8U *DataInput, INT16U inputlen, INT8U *pucsign, INT16U signlen, INT8U keyno)
@@ -5396,7 +5396,7 @@ INT8U SGC1120aSginVerify(INT8U *DataInput, INT16U inputlen, INT8U *pucsign, INT1
     
     semTake(sem_qspiid, WAIT_FOREVER);
     myTaskDelay(1);    
-    HESendCmd(&hecmd,pHeSendBuf2,(inputlen+signlen));  //64×Ö½Ú
+    HESendCmd(&hecmd,pHeSendBuf2,(inputlen+signlen));  //64å­—èŠ‚
     
     myTaskDelay(50);    
     
@@ -5405,20 +5405,20 @@ INT8U SGC1120aSginVerify(INT8U *DataInput, INT16U inputlen, INT8U *pucsign, INT1
     
     if(rc == 0)
     {
-        logSysMsgNoTime("SGCSginVerify:ÑéÇ©ÕıÈ·",0,0,0,0);
+        logSysMsgNoTime("SGCSginVerify:éªŒç­¾æ­£ç¡®",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("SGCSginVerify:ÑéÇ©Ê§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("SGCSginVerify:éªŒç­¾å¤±è´¥.rc=%d",rc,0,0,0);
     }   
     return rc;   
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcUploadPKeyDataToChip
-*¹¦ÄÜ£º¸üĞÂ¹«Ô¿ÖÁĞ¾Æ¬
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcUploadPKeyDataToChip
+*åŠŸèƒ½ï¼šæ›´æ–°å…¬é’¥è‡³èŠ¯ç‰‡
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aUploadPKeyDataToChip(INT8U *pdata,INT8U *rcvbuf)
 {
@@ -5435,7 +5435,7 @@ INT8U Sgc1120aUploadPKeyDataToChip(INT8U *pdata,INT8U *rcvbuf)
 	
     hecmd.cla  = 0x80;
     hecmd.ins  = 0x52;
-    hecmd.p1   = 0x80+Pid;//¸üĞÂ¹«Ô¿Ë÷Òı
+    hecmd.p1   = 0x80+Pid;//æ›´æ–°å…¬é’¥ç´¢å¼•
     hecmd.p2   = 0x00;
     hecmd.len1 = 0x00;
     hecmd.len2 = 0x40;
@@ -5452,10 +5452,10 @@ INT8U Sgc1120aUploadPKeyDataToChip(INT8U *pdata,INT8U *rcvbuf)
 	return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgcUploadSymKeyDataToChip
-*¹¦ÄÜ£º¸üĞÂ¶Ô³ÆÃÜÔ¿ÖÁĞ¾Æ¬
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgcUploadSymKeyDataToChip
+*åŠŸèƒ½ï¼šæ›´æ–°å¯¹ç§°å¯†é’¥è‡³èŠ¯ç‰‡
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aUploadSymKeyDataToChip(INT8U *pdata,INT8U *rcvbuf)
 {
@@ -5469,7 +5469,7 @@ INT8U Sgc1120aUploadSymKeyDataToChip(INT8U *pdata,INT8U *rcvbuf)
 	
     hecmd.cla  = 0x84;
     hecmd.ins  = 0xD4;
-    hecmd.p1   = 0x01;//¸üĞÂ¹«Ô¿Ë÷Òı
+    hecmd.p1   = 0x01;//æ›´æ–°å…¬é’¥ç´¢å¼•
     hecmd.p2   = 0xFF;
     hecmd.len1 = 0x00;
     hecmd.len2 = 0x84;
@@ -5487,10 +5487,10 @@ INT8U Sgc1120aUploadSymKeyDataToChip(INT8U *pdata,INT8U *rcvbuf)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aDectyData
-*¹¦ÄÜ£º½âÃÜ
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aDectyData
+*åŠŸèƒ½ï¼šè§£å¯†
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aDectyData(INT8U *pdata,INT8U *rcvbuf,INT16U len)
 {
@@ -5504,7 +5504,7 @@ INT8U Sgc1120aDectyData(INT8U *pdata,INT8U *rcvbuf,INT16U len)
 	
     hecmd.cla  = 0x80;
     hecmd.ins  = 0x64;
-    hecmd.p1   = 0x00;//¸üĞÂ¹«Ô¿Ë÷Òı
+    hecmd.p1   = 0x00;//æ›´æ–°å…¬é’¥ç´¢å¼•
     hecmd.p2   = 0x00;
     hecmd.len1 = HIBYTE(len);
     hecmd.len2 = LOBYTE(len);
@@ -5526,7 +5526,7 @@ INT8U Sgc1120aDectyData(INT8U *pdata,INT8U *rcvbuf,INT16U len)
  
 		hecmd.cla	= 0x80;
 		hecmd.ins  = 0x64;
-		hecmd.p1	 = 0x00;//¸üĞÂ¹«Ô¿Ë÷Òı
+		hecmd.p1	 = 0x00;//æ›´æ–°å…¬é’¥ç´¢å¼•
 		hecmd.p2	 = 0x00;
 		hecmd.len1 = HIBYTE(len);
 		hecmd.len2 = LOBYTE(len);
@@ -5570,10 +5570,10 @@ INT8U Sgc1120aDectyData(INT8U *pdata,INT8U *rcvbuf,INT16U len)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aEnctyData
-*¹¦ÄÜ£º¼ÓÃÜ
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aEnctyData
+*åŠŸèƒ½ï¼šåŠ å¯†
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aEnctyData(INT8U *pdata,INT16U len)
 {
@@ -5588,7 +5588,7 @@ INT8U Sgc1120aEnctyData(INT8U *pdata,INT16U len)
 	
     hecmd.cla  = 0x80;
     hecmd.ins  = 0x62;
-    hecmd.p1   = 0x00;//¸üĞÂ¹«Ô¿Ë÷Òı
+    hecmd.p1   = 0x00;//æ›´æ–°å…¬é’¥ç´¢å¼•
     hecmd.p2   = 0x00;
     hecmd.len1 = HIBYTE((len+8));
     hecmd.len2 = LOBYTE((len+8));
@@ -5609,11 +5609,11 @@ INT8U Sgc1120aEnctyData(INT8U *pdata,INT16U len)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbSafetySearchFrame
-*¹¦ÄÜ£º½âÎöÊÕµ½µÄEB±¨ÎÄ£¬²¢½«±¨ÎÄ×ª»¯Îª101/104Ö¡
-*ÊäÈë£ºoribuf£ºEB±¨ÎÄ»º³åÇø,validbuf:101/104±¨ÎÄ´æ·Å»º³åÇø£¬
-*validtaillen:RxdTail£¬len£º½ÓÊÕµ½µÄEB»º³åÇø³¤¶È,wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbSafetySearchFrame
+*åŠŸèƒ½ï¼šè§£ææ”¶åˆ°çš„EBæŠ¥æ–‡ï¼Œå¹¶å°†æŠ¥æ–‡è½¬åŒ–ä¸º101/104å¸§
+*è¾“å…¥ï¼šoribufï¼šEBæŠ¥æ–‡ç¼“å†²åŒº,validbuf:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºï¼Œ
+*validtaillen:RxdTailï¼Œlenï¼šæ¥æ”¶åˆ°çš„EBç¼“å†²åŒºé•¿åº¦,wChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U Eb1120aSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaillen,INT16U len,INT16U wChanNo)
@@ -5642,7 +5642,7 @@ INT16U Eb1120aSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaille
 
             checklen = oribuf[i+2]+(oribuf[i+1]<<8);
 
-            if(checklen > (512 -6))//Èç¹ûchecklen>512»á³öÏÖ i ²»ÔÙÖ´ĞĞ++
+            if(checklen > (512 -6))//å¦‚æœchecklen>512ä¼šå‡ºç° i ä¸å†æ‰§è¡Œ++
             {
                 i++;
             }
@@ -5678,10 +5678,10 @@ INT16U Eb1120aSafetySearchFrame(INT8U *oribuf,void *validbuf,INT16U *validtaille
     return i;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºCheckEbMegSty
-*¹¦ÄÜ£º¼ìÑéÊÇ·ñEB±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šCheckEbMegSty
+*åŠŸèƒ½ï¼šæ£€éªŒæ˜¯å¦EBæŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 BOOL Check1120aEbMsgSty(INT8U *pdata)
 {
@@ -5712,10 +5712,10 @@ BOOL Check1120aEbMsgSty(INT8U *pdata)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbmegAnalysis
-*¹¦ÄÜ£º½âÎöEb¸ñÊ½±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬rxbuff:101/104±¨ÎÄ´æ·Å»º³åÇø£¬wChanNo:¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbmegAnalysis
+*åŠŸèƒ½ï¼šè§£æEbæ ¼å¼æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œrxbuff:101/104æŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒºï¼ŒwChanNo:ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 {
@@ -5724,13 +5724,13 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
     INT8U bwlen = 0;
     INT16U wEblenth;
 	
-    wEblenth = pdata[2]+(pdata[1]<<8);//±¨ÎÄ³¤¶È(±¨ÎÄÍ·ÖÁĞ£ÑéÂë)
+    wEblenth = pdata[2]+(pdata[1]<<8);//æŠ¥æ–‡é•¿åº¦(æŠ¥æ–‡å¤´è‡³æ ¡éªŒç )
 
-	if(pdata[5]&0x08)//ÊÇ·ñÃÜÎÄ
+	if(pdata[5]&0x08)//æ˜¯å¦å¯†æ–‡
     {
 		Encrptyflag = TRUE;
     }
-	else//·Ç¼ÓÃÜ±¨ÎÄ´¦Àí
+	else//éåŠ å¯†æŠ¥æ–‡å¤„ç†
 	{
 		Encrptyflag = FALSE;
 	}
@@ -5744,7 +5744,7 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
             bwlen = 0;
         }
         
-        bwlen = Eb1120aEncpytDataAnaly((pdata+6),(wEblenth-2),rxbuff,wChanNo);//½âÃÜ»ñµÃÃ÷ÎÄÊı¾İ
+        bwlen = Eb1120aEncpytDataAnaly((pdata+6),(wEblenth-2),rxbuff,wChanNo);//è§£å¯†è·å¾—æ˜æ–‡æ•°æ®
     }
     else
     {
@@ -5762,52 +5762,52 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 	    }
 	    switch(pdata[6])
 	    {
-	        case 0x50://Ö÷Õ¾»ñÈ¡ÖÕ¶ËĞ¾Æ¬ĞÅÏ¢
+	        case 0x50://ä¸»ç«™è·å–ç»ˆç«¯èŠ¯ç‰‡ä¿¡æ¯
 	            Sgc1120aMasterAuthI(pdata,wEblenth,wChanNo);
                 myTaskDelay(1);
 	            break;
-	        case 0x52://ÏµÍ³Éí·İÈÏÖ¤
+	        case 0x52://ç³»ç»Ÿèº«ä»½è®¤è¯
                 AuthEndflag = 0;
 	            Sgc1120aMasterAuthII(pdata,wEblenth,wChanNo);
                 myTaskDelay(1);
 	            break;     
-	        case 0x54://Ö÷Õ¾ÏòÖÕ¶Ë·µ»ØÈÏÖ¤½á¹û£¬ÔİÊ±²»×ö´¦Àí
+	        case 0x54://ä¸»ç«™å‘ç»ˆç«¯è¿”å›è®¤è¯ç»“æœï¼Œæš‚æ—¶ä¸åšå¤„ç†
 	            //SgcMasterauthenStepIII(0x55,wChanNo);
                 //myTaskDelay(2);
                 //AuthEndflag = wChanNo;  
 	            break;
-			case 0x55://¹«Ô¿ÑéÖ¤
+			case 0x55://å…¬é’¥éªŒè¯
 				Sgc1120aMasterAuthIV(pdata,wEblenth,wChanNo);
 				myTaskDelay(1);
 				break;
-			case 0x57://Ö÷Õ¾ÏòÖÕ¶Ë·µ»ØÈÏÖ¤½á¹û£¬ÔİÊ±²»×ö´¦Àí
+			case 0x57://ä¸»ç«™å‘ç»ˆç«¯è¿”å›è®¤è¯ç»“æœï¼Œæš‚æ—¶ä¸åšå¤„ç†
 				break;
-			case 0x58://ÃÜÔ¿Ğ­ÉÌ
+			case 0x58://å¯†é’¥åå•†
 				Sgc1120aMasterAuthV(pdata,wEblenth,wChanNo);
 				myTaskDelay(1);
 				break;
 			case 0x5A:
 				Sgc1120aMasterAuthVI(pdata,wEblenth,wChanNo);
 				break;
-            case 0x60://¹«Ô¿¸üĞÂ
+            case 0x60://å…¬é’¥æ›´æ–°
                 //if(AuthEndflag == 0)
                 {
-                    //logSysMsgNoTime("Ô½È¨¸üĞÂÃÜÔ¿1",0,0,0,0);
+                    //logSysMsgNoTime("è¶Šæƒæ›´æ–°å¯†é’¥1",0,0,0,0);
                     //EbErrCodeSend(0x9091,0x61,wChanNo);
                     //return 0;
                 }
                 Sgc1120aPKeyUpload(pdata,wEblenth,wChanNo);
                 break;
-            case 0x62://Ö÷Õ¾·µ»ØµÄÑéÖ¤½á¹û£¬ÔİÊ±²»´¦Àí
+            case 0x62://ä¸»ç«™è¿”å›çš„éªŒè¯ç»“æœï¼Œæš‚æ—¶ä¸å¤„ç†
                 //if(AuthEndflag == 0)
                 {
-                    //logSysMsgNoTime("Ô½È¨¸üĞÂÃÜÔ¿2",0,0,0,0);
+                    //logSysMsgNoTime("è¶Šæƒæ›´æ–°å¯†é’¥2",0,0,0,0);
                     //EbErrCodeSend(0x9091,0x63,wChanNo);
                     //return 0;
                 }
                 //SgcKeymanageStepII(pdata,wEblenth,wChanNo,0x62);
                 break;
-			case 0x63://¶Ô³ÆÃÜÔ¿¸üĞÂ
+			case 0x63://å¯¹ç§°å¯†é’¥æ›´æ–°
 				Sgc1120aSymKeyUploadI(pdata,wEblenth,wChanNo);
                 myTaskDelay(1);
 				break;
@@ -5815,7 +5815,7 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
             
                 //if(AuthEndflag == 0)
                 {
-                    //logSysMsgNoTime("Ô½È¨»Ö¸´ÃÜÔ¿",0,0,0,0);
+                    //logSysMsgNoTime("è¶Šæƒæ¢å¤å¯†é’¥",0,0,0,0);
                     //EbErrCodeSend(0x9092,0x65,wChanNo);
                     //return 0;
                 }
@@ -5824,11 +5824,11 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
                 break;
 		   case 0x66:
 		   	    break;
-	       case 0x00: //Ã÷ÎÄ±¨ÎÄÇÒ²»´ø°²È«À©Õ¹ÇøÊı¾İ 
+	       case 0x00: //æ˜æ–‡æŠ¥æ–‡ä¸”ä¸å¸¦å®‰å…¨æ‰©å±•åŒºæ•°æ® 
 			   ////rc = Sgc1120aJudgeWhetherEn((pdata+8),wChanNo);
                ////if(rc != 0)
                {
-				 //// logSysMsgNoTime("¼ÓÃÜ±¨ÎÄÊ¹ÓÃÃ÷ÎÄ´«Êä£¬²»ºÏ¹æ",0,0,0,0);
+				 //// logSysMsgNoTime("åŠ å¯†æŠ¥æ–‡ä½¿ç”¨æ˜æ–‡ä¼ è¾“ï¼Œä¸åˆè§„",0,0,0,0);
 				  ////EbErrCodeSend(0x9106,0x1f,wChanNo);
 				   ////bwlen = 0;
                }
@@ -5838,26 +5838,26 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 				   memcpy(rxbuff,pdata+8,bwlen);
 			   }
 	           break; 
-              case 0x01://Ğ´ÎÄ¼ş¼¤»î£¬Ã÷ÎÄµ«ÊÇ´øÇ©Ãû
+              case 0x01://å†™æ–‡ä»¶æ¿€æ´»ï¼Œæ˜æ–‡ä½†æ˜¯å¸¦ç­¾å
               /*ZHANGLIANG 20180211
 	            rc = Sgc1120aJudgeWhetherEn((pdata+8),wChanNo);
                   if(rc != 0)
                   {
-				   logSysMsgNoTime("¼ÓÃÜ±¨ÎÄÊ¹ÓÃÃ÷ÎÄ´«Êä£¬²»ºÏ¹æ1",0,0,0,0);
+				   logSysMsgNoTime("åŠ å¯†æŠ¥æ–‡ä½¿ç”¨æ˜æ–‡ä¼ è¾“ï¼Œä¸åˆè§„1",0,0,0,0);
 				   EbErrCodeSend(0x9106,0x1f,wChanNo);
 				   bwlen = 0;
                   }
   		   else
   		   */
   		   {
-  		       //if((pdata[8+fixmlen+9]==0x07)&&((pdata[8+fixmlen+3]&0x3F)==6))//Ğ´ÎÄ¼ş¼¤»î
+  		       //if((pdata[8+fixmlen+9]==0x07)&&((pdata[8+fixmlen+3]&0x3F)==6))//å†™æ–‡ä»¶æ¿€æ´»
   		       {
   			       bwlen = Eb1120aMsgWithSData((pdata+7),rxbuff,wChanNo);
   		       }
   			  // else
   			  // {
-  				   //EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
-  				   //logSysMsgNoTime("Ğ´ÎÄ¼ş¼¤»îÒµÎñÀàĞÍ´íÎó",0,0,0,0);
+  				   //EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
+  				   //logSysMsgNoTime("å†™æ–‡ä»¶æ¿€æ´»ä¸šåŠ¡ç±»å‹é”™è¯¯",0,0,0,0);
   				   //bwlen = 0;
   			   //}
   		   }
@@ -5866,8 +5866,8 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 			   bwlen = Eb1120aMsgUpLoadData((pdata+7));
 		   	   break;
 	       default:
-			   EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
-			   logSysMsgNoTime("Ã÷ÎÄÒµÎñÀàĞÍ´íÎó",0,0,0,0);
+			   EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
+			   logSysMsgNoTime("æ˜æ–‡ä¸šåŠ¡ç±»å‹é”™è¯¯",0,0,0,0);
 			   bwlen = 0;
                break;              
 	    }
@@ -5875,10 +5875,10 @@ INT16U Eb1120amsgAnalysis(INT8U* pdata,INT8U *rxbuff,INT16U wChanNo)
 	return bwlen;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aMasterAuthI
-*¹¦ÄÜ£º»ñÈ¡ÖÕ¶ËĞ¾Æ¬ĞÅÏ¢
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aMasterAuthI
+*åŠŸèƒ½ï¼šè·å–ç»ˆç«¯èŠ¯ç‰‡ä¿¡æ¯
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aMasterAuthI(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -5894,7 +5894,7 @@ INT16U Sgc1120aMasterAuthI(INT8U *pdata,INT16U len,INT16U wChanNo)
 		return rc;
 	}
 	
-    rbuf[0] = replybuf[2];//ÃÜÔ¿°æ±¾ºÅ
+    rbuf[0] = replybuf[2];//å¯†é’¥ç‰ˆæœ¬å·
     rc = Sgc1120aGetChipSerialNumID(replybuf);
 	
 	if(rc != 0)
@@ -5903,8 +5903,8 @@ INT16U Sgc1120aMasterAuthI(INT8U *pdata,INT16U len,INT16U wChanNo)
 		return rc;
 	}
 	
-    sdatalen = replybuf[1]+(replybuf[0]<<8)+1;//ĞòÁĞºÅ³¤¶È+ÃÜÔ¿°æ±¾ºÅ³¤¶È
-    wholelen = sdatalen+5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    sdatalen = replybuf[1]+(replybuf[0]<<8)+1;//åºåˆ—å·é•¿åº¦+å¯†é’¥ç‰ˆæœ¬å·é•¿åº¦
+    wholelen = sdatalen+5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
 	
     memcpy((rbuf+1),(replybuf+2),(sdatalen-1));
 		
@@ -5915,10 +5915,10 @@ INT16U Sgc1120aMasterAuthI(INT8U *pdata,INT16U len,INT16U wChanNo)
     return 0;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aMasterAuthII
-*¹¦ÄÜ£ºÖÕ¶ËÉú³ÉÈÏÖ¤Êı¾İ
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aMasterAuthII
+*åŠŸèƒ½ï¼šç»ˆç«¯ç”Ÿæˆè®¤è¯æ•°æ®
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aMasterAuthII(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -5933,13 +5933,13 @@ INT16U Sgc1120aMasterAuthII(INT8U *pdata,INT16U len,INT16U wChanNo)
 	rc = Sgc1120aCalculateAuthRData(authbuf);
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("»ñÈ¡ÈÏÖ¤Êı¾İÊ§°Ü",0,0,0,0);
-		EbErrCodeSend(0x9109,0x1f,wChanNo);//»ñÈ¡ÈÏÖ¤Êı¾İÊ§°Ü
+	    logSysMsgNoTime("è·å–è®¤è¯æ•°æ®å¤±è´¥",0,0,0,0);
+		EbErrCodeSend(0x9109,0x1f,wChanNo);//è·å–è®¤è¯æ•°æ®å¤±è´¥
 		return rc;
 	}
 	
     sdatalen = authbuf[1]+(authbuf[0]<<8);
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
     
     memcpy(authbuf,(authbuf+2),sdatalen);
 	
@@ -5948,10 +5948,10 @@ INT16U Sgc1120aMasterAuthII(INT8U *pdata,INT16U len,INT16U wChanNo)
 	return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aMasterAuthIV
-*¹¦ÄÜ£º´¦Àí¹«Ô¿ÑéÖ¤ÇëÇó
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aMasterAuthIV
+*åŠŸèƒ½ï¼šå¤„ç†å…¬é’¥éªŒè¯è¯·æ±‚
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aMasterAuthIV(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -5960,19 +5960,19 @@ INT16U Sgc1120aMasterAuthIV(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U replybuf[150];
     INT16U wholelen,sdatalen;
 
-	PKeyno = pdata[EBAUDATASTARTSITE];//¹«Ô¿Ë÷Òı
+	PKeyno = pdata[EBAUDATASTARTSITE];//å…¬é’¥ç´¢å¼•
 	
 	rc = Sgc1120aGetPKeyAuthData(PKeyno,(pdata+10),PKeyENCbuf);
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("»ñÈ¡¹«Ô¿¼ÓÃÜ½á¹ûÊ§°Ü",0,0,0,0);
+	    logSysMsgNoTime("è·å–å…¬é’¥åŠ å¯†ç»“æœå¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9109,0x1f,wChanNo);
 		return rc;
 	}
 	
 	memset(replybuf,0,150);
     sdatalen = PKeyENCbuf[1] + (PKeyENCbuf[0]<<8);
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
     
     memcpy(PKeyENCbuf,PKeyENCbuf+2,sdatalen);
 
@@ -5982,10 +5982,10 @@ INT16U Sgc1120aMasterAuthIV(INT8U *pdata,INT16U len,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aMasterAuthV
-*¹¦ÄÜ£º´¦ÀíÃÜÔ¿Ğ­ÉÌÇëÇó
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aMasterAuthV
+*åŠŸèƒ½ï¼šå¤„ç†å¯†é’¥åå•†è¯·æ±‚
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aMasterAuthV(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -5994,20 +5994,20 @@ INT16U Sgc1120aMasterAuthV(INT8U *pdata,INT16U len,INT16U wChanNo)
     INT8U replybuf[150];
     INT16U wholelen,sdatalen;
 
-	SignKeyno = pdata[EBAUDATASTARTSITE+SGCRANDOMLEN+SGCSIGNDATALEN];//Ç©ÃûÃÜÔ¿Ë÷Òı
+	SignKeyno = pdata[EBAUDATASTARTSITE+SGCRANDOMLEN+SGCSIGNDATALEN];//ç­¾åå¯†é’¥ç´¢å¼•
 
 	rc = Sgc1120aGetKeyConsultData(SignKeyno,(pdata+EBAUDATASTARTSITE),Consultbuf);
 	//rc = SGC1120aSKeyConsult(INT8U * pdata,INT8U * cdata,INT16U cdatalen,INT8U *signdata,INT16U signdatalen,INT8U keyno)
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("»ñÈ¡ÃÜÔ¿Ğ­ÉÌÊı¾İÊ§°Ü",0,0,0,0);
+	    logSysMsgNoTime("è·å–å¯†é’¥åå•†æ•°æ®å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9109,0x1f,wChanNo);
 		return rc;
 	}
 	
 	memset(replybuf,0,150);
     sdatalen = Consultbuf[1] + (Consultbuf[0]<<8);
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
     memcpy(Consultbuf,Consultbuf+2,sdatalen);
 
 	EbEditmsg(replybuf,Consultbuf,wholelen,0,0x59,sdatalen);
@@ -6015,25 +6015,25 @@ INT16U Sgc1120aMasterAuthV(INT8U *pdata,INT16U len,INT16U wChanNo)
 	return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aMasterAuthVI
-*¹¦ÄÜ£ºÃÜÔ¿Ğ­ÉÌ½á¹û´¦Àí
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aMasterAuthVI
+*åŠŸèƒ½ï¼šå¯†é’¥åå•†ç»“æœå¤„ç†
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aMasterAuthVI(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
     if((pdata[EBAUDATASTARTSITE]==0x90)&&(pdata[EBAUDATASTARTSITE+1]==0x00))
     {
-		AuthEndflag = wChanNo;	//ÈÏÖ¤Á÷³Ì³É¹¦×ßÍê£¬ÉèÖÃ±êÖ¾Î»
+		AuthEndflag = wChanNo;	//è®¤è¯æµç¨‹æˆåŠŸèµ°å®Œï¼Œè®¾ç½®æ ‡å¿—ä½
     }
 	return 0;
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aPKeyUpload
-*¹¦ÄÜ£º¹«Ô¿¸üĞÂÖ¸Áî
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aPKeyUpload
+*åŠŸèƒ½ï¼šå…¬é’¥æ›´æ–°æŒ‡ä»¤
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aPKeyUpload(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -6047,14 +6047,14 @@ INT16U Sgc1120aPKeyUpload(INT8U *pdata,INT16U len,INT16U wChanNo)
 	eblen = EBAUDATASTARTSITE+1+SGCRANDOMLEN+(SGCSIGNDATALEN*2);
 	SKeyno = pdata[eblen];
 	
-	slen = 1+SGCRANDOMLEN+SGCSIGNDATALEN;//Ç©ÃûÔ´Êı¾İ³¤¶È
+	slen = 1+SGCRANDOMLEN+SGCSIGNDATALEN;//ç­¾åæºæ•°æ®é•¿åº¦
 	//rc = Sgc1120aUploadPKeySignData(SKeyno,(pdata+EBAUDATASTARTSITE),EnRanbuf);
 	//rc = SGC1120aSginVerify((pdata+EBAUDATASTARTSITE),slen,(pdata+9+1+8+64),SGCSIGNDATALEN,SKeyno);
 
 	rc = SGC1120aSginVerify(p,slen,(p+slen),SGCSIGNDATALEN,SKeyno);
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("¹«Ô¿¸üĞÂÇ©ÃûÑéÖ¤Ê§°Ü",0,0,0,0);
+	    logSysMsgNoTime("å…¬é’¥æ›´æ–°ç­¾åéªŒè¯å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9004,0x1f,wChanNo);
 		return rc;
 	}
@@ -6062,21 +6062,21 @@ INT16U Sgc1120aPKeyUpload(INT8U *pdata,INT16U len,INT16U wChanNo)
 	rc = Sgc1120aUploadPKeyDataToChip(p,EnRanbuf);
 	if(rc != 0)
 	{
-		logSysMsgNoTime("¹«Ô¿Ğ´ÈëÊ§°Ü",0,0,0,0);
+		logSysMsgNoTime("å…¬é’¥å†™å…¥å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9004,0x1f,wChanNo);
 		return rc;
 	}
 	rc = Sgc1120aGetPKeyAuthData(NPKeyno,(p+1),EnRanbuf);
 	if(rc != 0)
 	{
-		logSysMsgNoTime("ĞÂ¹«Ô¿¼ÓÃÜÊ§°Ü",0,0,0,0);
+		logSysMsgNoTime("æ–°å…¬é’¥åŠ å¯†å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9004,0x1f,wChanNo);
 		return rc;
 	}
 	
 	memset(replybuf,0,150);
     sdatalen = EnRanbuf[1] + (EnRanbuf[0]<<8);
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
     memcpy(EnRanbuf,EnRanbuf+2,sdatalen);
 
 	EbEditmsg(replybuf,EnRanbuf,wholelen,0,0x61,sdatalen);
@@ -6084,10 +6084,10 @@ INT16U Sgc1120aPKeyUpload(INT8U *pdata,INT16U len,INT16U wChanNo)
 	return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aSymKeyUploadI
-*¹¦ÄÜ£º¶Ô³ÆÃÜÔ¿¸üĞÂÖ¸Áî
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aSymKeyUploadI
+*åŠŸèƒ½ï¼šå¯¹ç§°å¯†é’¥æ›´æ–°æŒ‡ä»¤
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aSymKeyUploadI(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -6099,13 +6099,13 @@ INT16U Sgc1120aSymKeyUploadI(INT8U *pdata,INT16U len,INT16U wChanNo)
     rc = Sgc1120aGetRandomData(rbuf);  
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("»ñÈ¡Ëæ»úÊıÊ§°Ü",0,0,0,0);
+	    logSysMsgNoTime("è·å–éšæœºæ•°å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9109,0x1f,wChanNo);
 		return rc;
 	}
 	
     sdatalen = rbuf[1]+(rbuf[0]<<8);
-    wholelen = sdatalen + 5;//±¨ÎÄÍ·ÖĞ³¤¶È
+    wholelen = sdatalen + 5;//æŠ¥æ–‡å¤´ä¸­é•¿åº¦
     
     memcpy(rbuf,(rbuf+2),sdatalen);
 	
@@ -6114,10 +6114,10 @@ INT16U Sgc1120aSymKeyUploadI(INT8U *pdata,INT16U len,INT16U wChanNo)
 	return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aSymKeyUploadII
-*¹¦ÄÜ£º¶Ô³ÆÃÜÔ¿¸üĞÂÊı¾İ´¦Àí
-*ÊäÈë£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aSymKeyUploadII
+*åŠŸèƒ½ï¼šå¯¹ç§°å¯†é’¥æ›´æ–°æ•°æ®å¤„ç†
+*è¾“å…¥ï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Sgc1120aSymKeyUploadII(INT8U *pdata,INT16U len,INT16U wChanNo)
 {
@@ -6134,14 +6134,14 @@ INT16U Sgc1120aSymKeyUploadII(INT8U *pdata,INT16U len,INT16U wChanNo)
 	rc = SGC1120aSginVerify(p,0x84,(p+0x84),SGCSIGNDATALEN,SKeyno);
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("¶Ô³ÆÃÜÔ¿¸üĞÂÑéÇ©Ê§°Ü",0,0,0,0);
+	    logSysMsgNoTime("å¯¹ç§°å¯†é’¥æ›´æ–°éªŒç­¾å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9109,0x1f,wChanNo);
 		return rc;
 	}
 	rc = Sgc1120aUploadSymKeyDataToChip(p,replybuf);
 	if(rc != 0)
 	{
-	    logSysMsgNoTime("¶Ô³ÆÃÜÔ¿¸üĞÂĞ´ÈëÊ§°Ü",0,0,0,0);
+	    logSysMsgNoTime("å¯¹ç§°å¯†é’¥æ›´æ–°å†™å…¥å¤±è´¥",0,0,0,0);
 		EbErrCodeSend(0x9109,0x1f,wChanNo);
 	}
 	else
@@ -6156,10 +6156,10 @@ INT16U Sgc1120aSymKeyUploadII(INT8U *pdata,INT16U len,INT16U wChanNo)
 	return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack101msgtoEb
-*¹¦ÄÜ£º½«101±¨ÎÄ×ª»»ÎªEB°²È«±¨ÎÄ
-*ÊäÈë£ºbuf£º±¨ÎÄ£¬SEBtaillen:°²È«Êı¾İ»º³åÇø£¬len±¨ÎÄ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack101msgtoEb
+*åŠŸèƒ½ï¼šå°†101æŠ¥æ–‡è½¬æ¢ä¸ºEBå®‰å…¨æŠ¥æ–‡
+*è¾“å…¥ï¼šbufï¼šæŠ¥æ–‡ï¼ŒSEBtaillen:å®‰å…¨æ•°æ®ç¼“å†²åŒºï¼ŒlenæŠ¥æ–‡é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT16U Pack1120a101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
 {
@@ -6181,38 +6181,38 @@ INT16U Pack1120a101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChan
        //logSysMsgNoTime("Pack101msgtoEb!",0,0,0,0);
 		if((buf[i] == 0xEB)&&(buf[i+3] == 0xEB))
 		{
-		    templen = buf[i+2]+(buf[i+1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+		    templen = buf[i+2]+(buf[i+1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
 		    i += templen;
 	        rc = i;
 		}
-	    ///////////¶¨³¤101±¨ÎÄ
+	    ///////////å®šé•¿101æŠ¥æ–‡
 	    if((buf[i] == 0x10)&&(buf[i+fixmlen-1] == 0x16))
 		{
 		   PackFra10ToEb(buf+i,fixmlen,ebbuf);
 	        
-           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
            tmp = i + fixmlen;
                
            if( tmp < len)
            {
-               memcpy((buf+i+templen) ,buf+tmp,len - tmp);//½«ºóĞø±¨ÎÄºóÒÆ
+               memcpy((buf+i+templen) ,buf+tmp,len - tmp);//å°†åç»­æŠ¥æ–‡åç§»
                len = len - fixmlen + templen;
            }
            memcpy((buf+i ),ebbuf,templen);
            i += templen;
            rc += templen;
 		}
-	    else if((buf[i] == 0x68)&&(buf[i+3] == 0x68)&&(buf[i+1]==buf[i+2]))////////·Ç¶¨³¤101±¨ÎÄ
+	    else if((buf[i] == 0x68)&&(buf[i+3] == 0x68)&&(buf[i+1]==buf[i+2]))////////éå®šé•¿101æŠ¥æ–‡
 		{
 
 		   templen = (INT16U)buf[i+1]&0x00FF;
-           templen = templen + 6;//101±¨ÎÄ³¤¶È
+           templen = templen + 6;//101æŠ¥æ–‡é•¿åº¦
            //buf[i+templen-2] = 0x68;           
            saveRecord(buf+i,templen,TXSAVEMODE,1);
            PackFra68ToEb(buf+i ,(INT8U)templen,ebbuf,wChanNo);
            
            tmp = i + templen;
-           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+           templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                
            if(tmp < len)
            {
@@ -6231,18 +6231,18 @@ INT16U Pack1120a101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChan
             i++;
         }
     }
-    if(rc > 0)//¸Ã·¢ËÍµÄÃÜÎÄ³¤¶È
+    if(rc > 0)//è¯¥å‘é€çš„å¯†æ–‡é•¿åº¦
     {
-        (*SEBtaillen) = i;//¼ÓÃÜºó»º³åÇø×Ü³¤¶È(ÒÑ¼ÓÃÜ±¨ÎÄ+Ê£ÓàÎ´¼ÓÃÜÃ÷ÎÄ)
+        (*SEBtaillen) = i;//åŠ å¯†åç¼“å†²åŒºæ€»é•¿åº¦(å·²åŠ å¯†æŠ¥æ–‡+å‰©ä½™æœªåŠ å¯†æ˜æ–‡)
     }
     return rc;
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPackFra10ToEb
-*¹¦ÄÜ£º·â×°10Ö¡±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:10±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPackFra10ToEb
+*åŠŸèƒ½ï¼šå°è£…10å¸§æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:10æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 void Pack1120aFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
@@ -6251,7 +6251,7 @@ void Pack1120aFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     INT8U sum = 0;
     INT16U slen;
 
-    slen = len + 6;//±¨ÎÄÀàĞÍ2£¬Ó¦ÓÃÀàĞÍ1£¬101³¤¶È×Ö½Ú1 °²È«À©Õ¹Çø³¤¶È×Ö½Ú2
+    slen = len + 6;//æŠ¥æ–‡ç±»å‹2ï¼Œåº”ç”¨ç±»å‹1ï¼Œ101é•¿åº¦å­—èŠ‚1 å®‰å…¨æ‰©å±•åŒºé•¿åº¦å­—èŠ‚2
 
     ebbuf[0] = ebbuf[3] = 0xEB;
     ebbuf[1] = HIBYTE(slen);
@@ -6261,7 +6261,7 @@ void Pack1120aFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
     ebbuf[6] = 0x00;
     ebbuf[7] = (INT8U)len;
 	
-    memcpy(ebbuf + EBAUDATASTARTSITE - 1, pdata, len);//101±¨ÎÄ³¤¶È×Ö½ÚÖ»ÓĞ1¸ö£¬ËùÒÔÒª¼õÒ»
+    memcpy(ebbuf + EBAUDATASTARTSITE - 1, pdata, len);//101æŠ¥æ–‡é•¿åº¦å­—èŠ‚åªæœ‰1ä¸ªï¼Œæ‰€ä»¥è¦å‡ä¸€
     ebbuf[EBAUDATASTARTSITE + len ] =0x00;
     ebbuf[EBAUDATASTARTSITE + len + 1] =0x00;
     
@@ -6272,13 +6272,13 @@ void Pack1120aFra10ToEb(INT8U *pdata,INT16U len,INT8U *ebbuf)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  SGCKeyConsult()
-º¯Êı¹¦ÄÜ£º  ÃÜÔ¿Ğ­ÉÌ
-ÊäÈëËµÃ÷£º  cdata Ğ­ÉÌÊı¾İ£¨Ö÷Õ¾Ëæ»úÊı£©
-                signdata Ç©Ãû  
-                keyno ¹«Ô¿ĞòºÅ
-Êä³öËµÃ÷£º  0 ³É¹¦ ÆäËû Ê§°Ü
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  SGCKeyConsult()
+å‡½æ•°åŠŸèƒ½ï¼š  å¯†é’¥åå•†
+è¾“å…¥è¯´æ˜ï¼š  cdata åå•†æ•°æ®ï¼ˆä¸»ç«™éšæœºæ•°ï¼‰
+                signdata ç­¾å  
+                keyno å…¬é’¥åºå·
+è¾“å‡ºè¯´æ˜ï¼š  0 æˆåŠŸ å…¶ä»– å¤±è´¥
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 INT8U SGC1120aSKeyConsult(INT8U * pdata,INT8U * cdata,INT16U cdatalen,INT8U *signdata,INT16U signdatalen,INT8U keyno)
 {
@@ -6307,20 +6307,20 @@ INT8U SGC1120aSKeyConsult(INT8U * pdata,INT8U * cdata,INT16U cdatalen,INT8U *sig
     semGive(sem_qspiid);
     if(rc==0)
     {
-        logSysMsgNoTime("Ğ­ÉÌ³É¹¦",0,0,0,0);
+        logSysMsgNoTime("åå•†æˆåŠŸ",0,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("Ğ­ÉÌÊ§°Ü.rc=%d",rc,0,0,0);
+        logSysMsgNoTime("åå•†å¤±è´¥.rc=%d",rc,0,0,0);
     }  
     return rc;    
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEb1120aEncpytDataAnaly
-*¹¦ÄÜ£º´¦ÀíºşÄÏÅ©ÍøÖ÷Õ¾ÏÂ·¢µÄÃÜÎÄÊı¾İ£¬½âÃÜ²¢·ÖÎö
-*ÊäÈë£ºpdata£º±¨ÎÄ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEb1120aEncpytDataAnaly
+*åŠŸèƒ½ï¼šå¤„ç†æ¹–å—å†œç½‘ä¸»ç«™ä¸‹å‘çš„å¯†æ–‡æ•°æ®ï¼Œè§£å¯†å¹¶åˆ†æ
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U Eb1120aEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wChanNo)
@@ -6330,47 +6330,47 @@ INT8U Eb1120aEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wCha
 	INT8U sgcbuf[330];
 	int rc;
 	 
-	rc = Sgc1120aDectyData(pdata,sgcbuf,lenth);//½âÃÜ»ñµÃÃ÷ÎÄÊı¾İ
+	rc = Sgc1120aDectyData(pdata,sgcbuf,lenth);//è§£å¯†è·å¾—æ˜æ–‡æ•°æ®
 
 	if(rc != 0)
 	{
-		EbErrCodeSend(0x9103,0x1f,wChanNo);//½âÃÜÊ§°Ü
+		EbErrCodeSend(0x9103,0x1f,wChanNo);//è§£å¯†å¤±è´¥
 		return 0;
 	}
 		
     p = sgcbuf + 2;
 	
-    ddatalen = sgcbuf[1]+(sgcbuf[0]<<8);//Ã÷ÎÄ±¨ÎÄ³¤¶È
+    ddatalen = sgcbuf[1]+(sgcbuf[0]<<8);//æ˜æ–‡æŠ¥æ–‡é•¿åº¦
     saveRecord(sgcbuf,ddatalen+2,RXSAVEMODE,0);
 	
 	rc = Sgc1120aJudgeWhetherEn((p+2),wChanNo);
 	if(rc == 0)
 	{
-		logSysMsgNoTime("Ã÷ÎÄ±¨ÎÄÊ¹ÓÃÃÜÎÄ´«Êä,²»ºÏ¹æ",0,0,0,0);
+		logSysMsgNoTime("æ˜æ–‡æŠ¥æ–‡ä½¿ç”¨å¯†æ–‡ä¼ è¾“,ä¸åˆè§„",0,0,0,0);
 		EbErrCodeSend(0x9106,0x1f,wChanNo);
         return 0;
 	}
 	
-	rc = Check1120AIllfgalType((p+2),p[0],wChanNo);//PµÚÒ»¸öÖ±½ÓÊÇÓ¦ÓÃÀàĞÍ£¬µÚ¶ş¸öÖ±½ÓÊÇ101±¨ÎÄ³¤¶È
+	rc = Check1120AIllfgalType((p+2),p[0],wChanNo);//Pç¬¬ä¸€ä¸ªç›´æ¥æ˜¯åº”ç”¨ç±»å‹ï¼Œç¬¬äºŒä¸ªç›´æ¥æ˜¯101æŠ¥æ–‡é•¿åº¦
     if(rc != 0)
     {
-        EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
-        logSysMsgNoTime("ÒµÎñÀàĞÍ´íÎó",0,0,0,0);
+        EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
+        logSysMsgNoTime("ä¸šåŠ¡ç±»å‹é”™è¯¯",0,0,0,0);
         return 0;
     }
 	
-    switch(p[0])//ÅĞ¶ÏÒµÎñÓ¦ÓÃÀàĞÍ£¬Ä¿Ç°Ö»ÓÃµ½ÁË00 01 02 03 05 07
+    switch(p[0])//åˆ¤æ–­ä¸šåŠ¡åº”ç”¨ç±»å‹ï¼Œç›®å‰åªç”¨åˆ°äº†00 01 02 03 05 07
     {
 	    case 0x00:
-			bwlen = p[1];//101±¨ÎÄ³¤¶È
+			bwlen = p[1];//101æŠ¥æ–‡é•¿åº¦
 			memcpy(dedata,p+2,bwlen);
 			break;
 	    case 0x01:
 			//bwlen = EbMsgWithSData(p,dedata,ddatalen,wChanNo);
 			bwlen = Eb1120aMsgWithSData((p+1),dedata,wChanNo);
 			break;
-	    case 0x02://ÖÕ¶Ë¶ÔÖ÷Õ¾µÄÈ·ÈÏ±¨ÎÄ£¬Ö÷Õ¾²»»áÏÂ·¢02
-            EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
+	    case 0x02://ç»ˆç«¯å¯¹ä¸»ç«™çš„ç¡®è®¤æŠ¥æ–‡ï¼Œä¸»ç«™ä¸ä¼šä¸‹å‘02
+            EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
             bwlen = 0;
 			break;
        case 0x03:
@@ -6384,11 +6384,11 @@ INT8U Eb1120aEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wCha
 			break;
        case 0x08:
             //bwlen = EbMsgUpLoadData(p,dedata,ddatalen,wChanNo);
-            EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
+            EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
             bwlen = 0;
 			break;
        default:            
-            EbErrCodeSend(0x9101,0x1f,wChanNo);//Ó¦ÓÃÀàĞÍ´íÎó
+            EbErrCodeSend(0x9101,0x1f,wChanNo);//åº”ç”¨ç±»å‹é”™è¯¯
             bwlen = 0;
 			break;
     }
@@ -6396,10 +6396,10 @@ INT8U Eb1120aEncpytDataAnaly(INT8U* pdata,INT16U lenth,INT8U *dedata,INT16U wCha
 	
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºCheck1120AIllfgalType
-*¹¦ÄÜ£º´¦ÀíÖ÷Õ¾ÏÂ·¢µÄ±¨ÎÄÓ¦ÓÃÀàĞÍÊÇ·ñºÏ·¨
-*ÊäÈë£ºpdata£º±¨ÎÄ£¬type:Ó¦ÓÃÀàĞÍ£¬wChanNo:¹æÔ¼¶Ë¿ÚºÅ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šCheck1120AIllfgalType
+*åŠŸèƒ½ï¼šå¤„ç†ä¸»ç«™ä¸‹å‘çš„æŠ¥æ–‡åº”ç”¨ç±»å‹æ˜¯å¦åˆæ³•
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡ï¼Œtype:åº”ç”¨ç±»å‹ï¼ŒwChanNo:è§„çº¦ç«¯å£å·
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
@@ -6411,7 +6411,7 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     
     int rc = 0;
     
-    if(wChanNo < 6)//101±¨ÎÄ
+    if(wChanNo < 6)//101æŠ¥æ–‡
     {
 	    DncryptTi = ptada[fixmlen + 1];
 	    DncryptCot = ptada[fixmlen + 3]&0x3F;
@@ -6421,14 +6421,14 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
             Filetype = ptada[fixmlen +10];
         }
     }
-    else if(wChanNo > 40)//104±¨ÎÄ
+    else if(wChanNo > 40)//104æŠ¥æ–‡
     {
         DncryptTi = ptada[6];
 	    DncryptCot = ptada[8]&0x3F;
 	    if(DncryptTi == 203)
 	    {
 	        DncryptPI = ptada[14];
-//ĞŞ¸Ä²ÎÊıµÄÌØÕ÷±êÊ¶±ÈÒ£¿ØºÍÈí¼şÉı¼¶ÍùÇ°Ò»¸ö×Ö½Ú£¨ÒòÎª¶¨ÖµÇøºÅÖ»ÓĞÁ½¸ö×Ö½Ú£©
+//ä¿®æ”¹å‚æ•°çš„ç‰¹å¾æ ‡è¯†æ¯”é¥æ§å’Œè½¯ä»¶å‡çº§å¾€å‰ä¸€ä¸ªå­—èŠ‚ï¼ˆå› ä¸ºå®šå€¼åŒºå·åªæœ‰ä¸¤ä¸ªå­—èŠ‚ï¼‰
 	    }
 	    else
 	    {
@@ -6443,18 +6443,18 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     switch(DncryptTi)
     {
     	case 45:
-    	case 46://Ò£¿ØTI
-			//Ô¤ÖÃ SE=1£¬cot=6
-			//Ö´ĞĞ SE=0£¬cot=6
-			//³·Ïú SE=0£¬cot=8
-    	    if(((DncryptPI&0x80) != 0)||(DncryptCot == 8))//Ò£¿ØÑ¡Ôñ/³·Ïú
+    	case 46://é¥æ§TI
+			//é¢„ç½® SE=1ï¼Œcot=6
+			//æ‰§è¡Œ SE=0ï¼Œcot=6
+			//æ’¤é”€ SE=0ï¼Œcot=8
+    	    if(((DncryptPI&0x80) != 0)||(DncryptCot == 8))//é¥æ§é€‰æ‹©/æ’¤é”€
     	    {
     	    	if(type != 0x05)
     	    	{
     	    	    rc = 1;
     	        }
     	    }
-    	    else//Ò£¿ØÖ´ĞĞÖ÷Õ¾ÏÂ·¢µÄÒ£¿ØÖ´ĞĞPI = 0
+    	    else//é¥æ§æ‰§è¡Œä¸»ç«™ä¸‹å‘çš„é¥æ§æ‰§è¡ŒPI = 0
     	    {
     	    	if(type != 0x07)
     	    	{
@@ -6462,7 +6462,7 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	        }    	    	
     	    }
     	    break;           
-    	case 210://Ğ´ÎÄ¼ş¼¤»î
+    	case 210://å†™æ–‡ä»¶æ¿€æ´»
     	    if((DncryptCot == 6)&&(Filetype == 0x07))//
     	    {
   	    	 if(type != 0x01)
@@ -6472,19 +6472,19 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	    }
     	    break;    	
     	case 203:  
-			//Ô¤ÖÃ SE=1£¬CR=0£¬cot=6
-			//Ö´ĞĞ SE=0£¬CR=0£¬cot=6
-			//³·Ïú SE=0£¬CR=1£¬cot=8
-    	    if((DncryptPI&0x80) != 0)//²ÎÊıÔ¤ÖÃ(ÖÕÖ¹µÄ»°ÊÇ0x40)
+			//é¢„ç½® SE=1ï¼ŒCR=0ï¼Œcot=6
+			//æ‰§è¡Œ SE=0ï¼ŒCR=0ï¼Œcot=6
+			//æ’¤é”€ SE=0ï¼ŒCR=1ï¼Œcot=8
+    	    if((DncryptPI&0x80) != 0)//å‚æ•°é¢„ç½®(ç»ˆæ­¢çš„è¯æ˜¯0x40)
     	    {
   	    	    if(type != 0x01)
     	    	{
     	    	    rc = 1;
     	        }
                 rmparaflag = 1;
-                logSysMsgNoTime("²ÎÊıÔ¤ÖÃ",0,0,0,0);         
+                logSysMsgNoTime("å‚æ•°é¢„ç½®",0,0,0,0);         
     	    }
-    	    else if((DncryptCot == 0x06)&&((DncryptPI&0x40) == 0))//²ÎÊı¹Ì»¯
+    	    else if((DncryptCot == 0x06)&&((DncryptPI&0x40) == 0))//å‚æ•°å›ºåŒ–
     	    {
   	    	    if(type != 0x03)
     	    	{
@@ -6492,27 +6492,27 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     	        }  
                 rmparaflag = 2;
                 
-                logSysMsgNoTime("²ÎÊı¹Ì»¯",0,0,0,0);         
+                logSysMsgNoTime("å‚æ•°å›ºåŒ–",0,0,0,0);         
     	    }
             else if((DncryptPI&0x40) != 0)
             {
-               //if((rmparaflag == 1)&&(type != 0x01))//²ÎÊıÔ¤ÖÃÈ¡Ïû
-               // ÏÖ³¡ËÄ·½Ö÷Õ¾ÏÂ·¢µÄ0x3,ÔİÊ±ĞŞ¸Ä
-               if((rmparaflag == 1)&&(type != 0x03))//²ÎÊıÔ¤ÖÃÈ¡Ïû 
+               //if((rmparaflag == 1)&&(type != 0x01))//å‚æ•°é¢„ç½®å–æ¶ˆ
+               // ç°åœºå››æ–¹ä¸»ç«™ä¸‹å‘çš„0x3,æš‚æ—¶ä¿®æ”¹
+               if((rmparaflag == 1)&&(type != 0x03))//å‚æ•°é¢„ç½®å–æ¶ˆ 
                {
                    rc = 1;
-                   logSysMsgNoTime("²ÎÊıÔ¤ÖÃÈ¡Ïû",0,0,0,0);         
+                   logSysMsgNoTime("å‚æ•°é¢„ç½®å–æ¶ˆ",0,0,0,0);         
                }
-               else if((rmparaflag == 2)&&(type != 0x03))//²ÎÊı¹Ì»¯È¡Ïû
+               else if((rmparaflag == 2)&&(type != 0x03))//å‚æ•°å›ºåŒ–å–æ¶ˆ
                {
                    rc = 1;
-                   logSysMsgNoTime("²ÎÊı¹Ì»¯È¡Ïû",0,0,0,0);         
+                   logSysMsgNoTime("å‚æ•°å›ºåŒ–å–æ¶ˆ",0,0,0,0);         
                }
                rmparaflag = 0;
            }
     	   break;
         case 211:
-    	    if(((DncryptPI&0x80) != 0)&&(DncryptCot == 6))//Éı¼¶Æô¶¯
+    	    if(((DncryptPI&0x80) != 0)&&(DncryptCot == 6))//å‡çº§å¯åŠ¨
     	    {
     	    	if(type != 0x01)
     	    	{
@@ -6526,11 +6526,11 @@ int Check1120AIllfgalType(INT8U *ptada,INT8U type,INT16U wChanNo)
     return rc;   
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSgc1120aJudgeWhetherEn
-*¹¦ÄÜ£ºÅĞ¶Ï¸Ã±¨ÎÄÊÇ·ñÓ¦¸Ã¼ÓÃÜ
-*ÊäÈë£ºPdata:Êı¾İ´æ·Å»º³åÇø
-*Êä³ö£ºrc = 1;±¨ÎÄĞèÒª¼ÓÃÜ£¬rc = 0;²»ĞèÒª¼ÓÃÜ
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSgc1120aJudgeWhetherEn
+*åŠŸèƒ½ï¼šåˆ¤æ–­è¯¥æŠ¥æ–‡æ˜¯å¦åº”è¯¥åŠ å¯†
+*è¾“å…¥ï¼šPdata:æ•°æ®å­˜æ”¾ç¼“å†²åŒº
+*è¾“å‡ºï¼šrc = 1;æŠ¥æ–‡éœ€è¦åŠ å¯†ï¼Œrc = 0;ä¸éœ€è¦åŠ å¯†
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Sgc1120aJudgeWhetherEn(INT8U *pdata,INT16U wChanNo)
 {
@@ -6544,7 +6544,7 @@ INT8U Sgc1120aJudgeWhetherEn(INT8U *pdata,INT16U wChanNo)
 	{
 	    return 0;
 	}
-    if(wChanNo < 6)//101±¨ÎÄ
+    if(wChanNo < 6)//101æŠ¥æ–‡
     {
 	    DncryptTi = pdata[fixmlen + 1];
 	    DncryptCot = pdata[fixmlen + 3]&0x3F;
@@ -6554,14 +6554,14 @@ INT8U Sgc1120aJudgeWhetherEn(INT8U *pdata,INT16U wChanNo)
                Filetype = pdata[fixmlen +10];
            }
     }
-    else if(wChanNo > 40)//104±¨ÎÄ
+    else if(wChanNo > 40)//104æŠ¥æ–‡
     {
         DncryptTi = pdata[6];
 	    DncryptCot = pdata[8]&0x3F;
 	    if(DncryptTi == 203)
 	    {
 	        DncryptPI = pdata[14];
-           //ĞŞ¸Ä²ÎÊıµÄÌØÕ÷±êÊ¶±ÈÒ£¿ØºÍÈí¼şÉı¼¶ÍùÇ°Ò»¸ö×Ö½Ú£¨ÒòÎª¶¨ÖµÇøºÅÖ»ÓĞÁ½¸ö×Ö½Ú£©
+           //ä¿®æ”¹å‚æ•°çš„ç‰¹å¾æ ‡è¯†æ¯”é¥æ§å’Œè½¯ä»¶å‡çº§å¾€å‰ä¸€ä¸ªå­—èŠ‚ï¼ˆå› ä¸ºå®šå€¼åŒºå·åªæœ‰ä¸¤ä¸ªå­—èŠ‚ï¼‰
 	    }
 	    else
 	    {
@@ -6576,20 +6576,20 @@ INT8U Sgc1120aJudgeWhetherEn(INT8U *pdata,INT16U wChanNo)
     switch(DncryptTi)
     {
         case 45:
-    	case 46://Ò£¿ØTI
+    	case 46://é¥æ§TI
     	    rc = 1;
             break;
         case 203:
             rc = 1;
             break;
         case 210:
-    	     if((DncryptCot == 6)&&(Filetype == 0x07))//Ğ´ÎÄ¼ş¼¤»îÏÖ³¡ÎªÃÜÎÄÏÂ·¢
+    	     if((DncryptCot == 6)&&(Filetype == 0x07))//å†™æ–‡ä»¶æ¿€æ´»ç°åœºä¸ºå¯†æ–‡ä¸‹å‘
     	     {
                  rc = 1;//ZHANGLIANG  20180211
     	     }
             break;
         case 211:
-            if((DncryptCot == 6)&&((DncryptPI&0x80) != 0))//Éı¼¶Æô¶¯
+            if((DncryptCot == 6)&&((DncryptPI&0x80) != 0))//å‡çº§å¯åŠ¨
             {
                 HnnwInf.UpgradeFlag = 1;
                 rc = 1;
@@ -6615,10 +6615,10 @@ INT8U Sgc1120aJudgeWhetherEn(INT8U *pdata,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEb1120aMsgWithSData
-*¹¦ÄÜ£º1120a´¦ÀíÖ»´øÇ©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEb1120aMsgWithSData
+*åŠŸèƒ½ï¼š1120aå¤„ç†åªå¸¦ç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Eb1120aMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 {
@@ -6626,13 +6626,13 @@ INT8U Eb1120aMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
     INT16U tmplen,extlen,seek;
     INT8U verbuf[64];
 
-	tmplen = pdata[0];//101/104±¨ÎÄ³¤¶È
-	extlen = pdata[tmplen+2]+(pdata[tmplen+1]<<8)-1;//Ç©Ãû³¤¶È
+	tmplen = pdata[0];//101/104æŠ¥æ–‡é•¿åº¦
+	extlen = pdata[tmplen+2]+(pdata[tmplen+1]<<8)-1;//ç­¾åé•¿åº¦
 
-	seek = tmplen+1+extlen+2;//Õû¸öÊı¾İÇø³¤¶È(1×Ö½Ú³¤¶È+Ô­Ê¼±¨ÎÄ+2×Ö½Ú³¤¶È+°²È«À©Õ¹ÇøÊı¾İ)
+	seek = tmplen+1+extlen+2;//æ•´ä¸ªæ•°æ®åŒºé•¿åº¦(1å­—èŠ‚é•¿åº¦+åŸå§‹æŠ¥æ–‡+2å­—èŠ‚é•¿åº¦+å®‰å…¨æ‰©å±•åŒºæ•°æ®)
 	KeyId = pdata[seek];
 	
-	seek = 1;//Ò»¸ö×Ö½ÚÔ­Ê¼±¨ÎÄ³¤¶È
+	seek = 1;//ä¸€ä¸ªå­—èŠ‚åŸå§‹æŠ¥æ–‡é•¿åº¦
 	seek += tmplen;
 	seek += 2;
 	memcpy(verbuf,pdata+seek,extlen);
@@ -6646,7 +6646,7 @@ INT8U Eb1120aMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 	else
 	{
        EbErrCodeSend(0x9102,0x1f,wChanNo);//
-       logSysMsgNoTime("Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+       logSysMsgNoTime("æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
        return 0;
 	}
 	
@@ -6654,10 +6654,10 @@ INT8U Eb1120aMsgWithSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEb1120aMsgUpLoadData
-*¹¦ÄÜ£º1120a´¦Àí´øÊ±¼äËæ»úÊıÒÔ¼°Ç©ÃûµÄÉı¼¶°üÑéÖ¤±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEb1120aMsgUpLoadData
+*åŠŸèƒ½ï¼š1120aå¤„ç†å¸¦æ—¶é—´éšæœºæ•°ä»¥åŠç­¾åçš„å‡çº§åŒ…éªŒè¯æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Eb1120aMsgUpLoadData(INT8U *pdata)
 {
@@ -6680,14 +6680,14 @@ INT8U Eb1120aMsgUpLoadData(INT8U *pdata)
 	seek += 64;
     UpLoadKeyId = pdata[seek];
 	
-	return 0;//´ı¶¨ 
+	return 0;//å¾…å®š 
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgWithRandSData
-*¹¦ÄÜ£º´¦Àí´øËæ»úÊıÒÔ¼°Ç©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgWithRandSData
+*åŠŸèƒ½ï¼šå¤„ç†å¸¦éšæœºæ•°ä»¥åŠç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Eb1120aMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 {
@@ -6698,8 +6698,8 @@ INT8U Eb1120aMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
     INT8U verbuf[72];
 
 	seek = 2;
-	tmplen = pdata[1];//101ÓĞĞ§Êı¾İ³¤¶È
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8)-1;//À©Õ¹Êı¾İÇø³¤¶È¼õÒ»¸ö×Ö½ÚË÷Òı³¤¶È
+	tmplen = pdata[1];//101æœ‰æ•ˆæ•°æ®é•¿åº¦
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8)-1;//æ‰©å±•æ•°æ®åŒºé•¿åº¦å‡ä¸€ä¸ªå­—èŠ‚ç´¢å¼•é•¿åº¦
 
 	seek += tmplen;
 	seek += 2;
@@ -6709,9 +6709,9 @@ INT8U Eb1120aMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
         EbErrCodeSend(0x9104,0x1f,wChanNo);//
         return 0;
     }
-	memcpy(verbuf,pdata+seek,extlen);//Ëæ»úÊı¼ÓÇ©ÃûÖµ
+	memcpy(verbuf,pdata+seek,extlen);//éšæœºæ•°åŠ ç­¾åå€¼
     seek += extlen;
-	KeyId = pdata[seek];//Ç©ÃûÃÜÔ¿Ë÷Òı
+	KeyId = pdata[seek];//ç­¾åå¯†é’¥ç´¢å¼•
 	
 	rc = SGC1120aSginVerify((pdata+2),tmplen, verbuf, extlen, KeyId);
 	if(rc == 0)
@@ -6721,7 +6721,7 @@ INT8U Eb1120aMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 	else
 	{
         EbErrCodeSend(0x9102,0x1f,wChanNo);//
-        logSysMsgNoTime("Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+        logSysMsgNoTime("æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 	
@@ -6729,10 +6729,10 @@ INT8U Eb1120aMsgWithRandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEb1120aMsgWithTandSData
-*¹¦ÄÜ£º1120a´¦Àí´øÊ±¼äÒÔ¼°Ç©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEb1120aMsgWithTandSData
+*åŠŸèƒ½ï¼š1120aå¤„ç†å¸¦æ—¶é—´ä»¥åŠç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Eb1120aMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 {
@@ -6743,8 +6743,8 @@ INT8U Eb1120aMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 
 	seek = 2;
 	//KeyId = pdata[len - 1];
-	tmplen = pdata[1];//101ÓĞĞ§Êı¾İ³¤¶È
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8)-1;//À©Õ¹Êı¾İÇø³¤¶È¼õÒ»¸ö×Ö½ÚµÄË÷Òı³¤¶È
+	tmplen = pdata[1];//101æœ‰æ•ˆæ•°æ®é•¿åº¦
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8)-1;//æ‰©å±•æ•°æ®åŒºé•¿åº¦å‡ä¸€ä¸ªå­—èŠ‚çš„ç´¢å¼•é•¿åº¦
 	seek += tmplen;
 	seek += 2;
 	memcpy(timebuf,pdata+seek,6);
@@ -6752,13 +6752,13 @@ INT8U Eb1120aMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
     if(CheckTimeAging(timebuf) != 0)
     {
         EbErrCodeSend(0x9105,0x1f,wChanNo);//
-        logSysMsgNoTime("Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+        logSysMsgNoTime("æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
         return 0;
     }
 	
 	memcpy(verbuf,pdata+seek,extlen);//
     seek += extlen;
-	KeyId = pdata[seek];//Ç©ÃûÃÜÔ¿Ë÷Òı
+	KeyId = pdata[seek];//ç­¾åå¯†é’¥ç´¢å¼•
 	
 	rc = SGC1120aSginVerify((pdata+2),tmplen, verbuf,extlen, KeyId);
 	if(rc == 0)
@@ -6768,17 +6768,17 @@ INT8U Eb1120aMsgWithTandSData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 	else
 	{
         EbErrCodeSend(0x9102,0x1f,wChanNo);//
-        logSysMsgNoTime("Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+        logSysMsgNoTime("æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 	
 	return tmplen;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºEbMsgWithAllData
-*¹¦ÄÜ£º´¦Àí´øÊ±¼äËæ»úÊıÒÔ¼°Ç©ÃûµÄ½âÃÜ±¨ÎÄ
-*ÊäÈë£ºpdata£º±¨ÎÄdecpbuf:±¨ÎÄÊı¾İ´æ·Å
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šEbMsgWithAllData
+*åŠŸèƒ½ï¼šå¤„ç†å¸¦æ—¶é—´éšæœºæ•°ä»¥åŠç­¾åçš„è§£å¯†æŠ¥æ–‡
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡decpbuf:æŠ¥æ–‡æ•°æ®å­˜æ”¾
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 INT8U Eb1120aMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 {
@@ -6792,13 +6792,13 @@ INT8U Eb1120aMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
     
 	seek = 2;
 	//KeyId = pdata[len - 1];
-	tmplen = pdata[1];//101±¨ÎÄ³¤¶È
-	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8)-1;//À©Õ¹Êı¾İÇø³¤¶È
+	tmplen = pdata[1];//101æŠ¥æ–‡é•¿åº¦
+	extlen = pdata[tmplen+3]+(pdata[tmplen+2]<<8)-1;//æ‰©å±•æ•°æ®åŒºé•¿åº¦
 
 	seek += tmplen;
 	seek += 2;
 	memcpy(timebuf,pdata+seek,6);
-	memcpy(verbuf,pdata+seek,extlen);//À©Õ¹ÇøÊı¾İÆ´½ÓÖÁ101±¨ÎÄºó£¬¼ÆËãÇ©ÃûÓÃ
+	memcpy(verbuf,pdata+seek,extlen);//æ‰©å±•åŒºæ•°æ®æ‹¼æ¥è‡³101æŠ¥æ–‡åï¼Œè®¡ç®—ç­¾åç”¨
 	seek += 6;
 	memcpy(randombuf,pdata+seek,8);
 	seek += 8;
@@ -6808,14 +6808,14 @@ INT8U Eb1120aMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
     if(CheckTimeAging(timebuf) != 0)
     {
         EbErrCodeSend(0x9105,0x1f,wChanNo);//
-        logSysMsgNoTime("07Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+        logSysMsgNoTime("07æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
         return 0;
     }
  
     if(memcmp(randombuf,SgcSelfRandbuf,8) != 0)
     {
         EbErrCodeSend(0x9104,0x1f,wChanNo);//
-        logSysMsgNoTime("07Ëæ»ú³öĞ£Ñé´íÎó:",0,0,0,0);         
+        logSysMsgNoTime("07éšæœºå‡ºæ ¡éªŒé”™è¯¯:",0,0,0,0);         
         return 0;
     }
 	//seek += 8;
@@ -6832,7 +6832,7 @@ INT8U Eb1120aMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 	else
 	{
         EbErrCodeSend(0x9102,0x1f,wChanNo);//
-        logSysMsgNoTime("Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+        logSysMsgNoTime("æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	    return 0;
 	}
 	
@@ -6840,10 +6840,10 @@ INT8U Eb1120aMsgWithAllData(INT8U *pdata,INT8U *decpbuf,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack1120aFor101msgtoEb
-*¹¦ÄÜ£º1120a½«101±¨ÎÄ×ª»»ÎªEB°²È«±¨ÎÄ
-*ÊäÈë£ºbuf£º±¨ÎÄ£¬SEBtaillen:°²È«Êı¾İ»º³åÇø£¬len±¨ÎÄ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack1120aFor101msgtoEb
+*åŠŸèƒ½ï¼š1120aå°†101æŠ¥æ–‡è½¬æ¢ä¸ºEBå®‰å…¨æŠ¥æ–‡
+*è¾“å…¥ï¼šbufï¼šæŠ¥æ–‡ï¼ŒSEBtaillen:å®‰å…¨æ•°æ®ç¼“å†²åŒºï¼ŒlenæŠ¥æ–‡é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U Pack1120aFor101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
@@ -6865,37 +6865,37 @@ INT16U Pack1120aFor101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wC
     {
 		if((buf[i] == 0xEB)&&(buf[i+3] == 0xEB))
 		{
-		    templen = buf[i+2]+(buf[i+1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+		    templen = buf[i+2]+(buf[i+1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
 		    i += templen;
 	        rc = i;
 		}
-       ///////////¶¨³¤101±¨ÎÄ
+       ///////////å®šé•¿101æŠ¥æ–‡
         if((buf[i] == 0x10)&&(buf[i+fixmlen-1] == 0x16))
 	    {
 	        PackFra10ToEb(buf+i,fixmlen,ebbuf);
         
-            templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+            templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
             tmp = i + fixmlen;
                 
             if( tmp < len)
             {
-                memcpy((buf+i+templen) ,buf+tmp,len - tmp);//½«ºóĞø±¨ÎÄºóÒÆ
+                memcpy((buf+i+templen) ,buf+tmp,len - tmp);//å°†åç»­æŠ¥æ–‡åç§»
                 len = len - fixmlen + templen;
             }
             memcpy((buf+i ),ebbuf,templen);
             i += templen;
             rc += templen;
 	    }
-        else if((buf[i] == 0x68)&&(buf[i+3] == 0x68)&&(buf[i+1]==buf[i+2]))////////·Ç¶¨³¤101±¨ÎÄ
+        else if((buf[i] == 0x68)&&(buf[i+3] == 0x68)&&(buf[i+1]==buf[i+2]))////////éå®šé•¿101æŠ¥æ–‡
 	    {
 
 	        templen = (INT16U)buf[i+1]&0x00FF;
-            templen = templen + 6;//101±¨ÎÄ³¤¶È
+            templen = templen + 6;//101æŠ¥æ–‡é•¿åº¦
             saveRecord(buf+i,templen,TXSAVEMODE,1);
             Pack1120aFra68ToEb(buf+i,(INT8U)templen,ebbuf,wChanNo);
             
             tmp = i + templen;
-            templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+            templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                 
             if(tmp < len)
             {
@@ -6921,10 +6921,10 @@ INT16U Pack1120aFor101msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wC
     return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack1120aFra68ToEb
-*¹¦ÄÜ£º1120a·â×°68Ö¡±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:68±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack1120aFra68ToEb
+*åŠŸèƒ½ï¼š1120aå°è£…68å¸§æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:68æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 {
@@ -6946,14 +6946,14 @@ void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 	
     if(DncryptTi == 203)
     {
-        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//²ÎÊıÔ¤ÖÃÈ·ÈÏ
+        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//å‚æ•°é¢„ç½®ç¡®è®¤
         {
             ensureflag = 1;
         }
     }
     else if((DncryptTi == 46)||(DncryptTi == 0X2D))
     {
-        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//Ò£¿ØÔ¤ÖÃÈ·ÈÏ
+        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//é¥æ§é¢„ç½®ç¡®è®¤
         {
             ensureflag = 1;
         }
@@ -6963,12 +6963,12 @@ void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
    
   	    if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//
   	    {
-  	        if(HnnwInf.UpgradeFlag == 1)//Éı¼¶Æô¶¯È·ÈÏ
+  	        if(HnnwInf.UpgradeFlag == 1)//å‡çº§å¯åŠ¨ç¡®è®¤
   	        {
 				ensureflag = 1;
 				HnnwInf.UpgradeFlag = 0;
   	        }
-			else//Éı¼¶½áÊøÈ·ÈÏ
+			else//å‡çº§ç»“æŸç¡®è®¤
 			{
 				ensureflag = 0;
 				Upendflag = 2;
@@ -6978,7 +6978,7 @@ void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
     
     memcpy(p+2,pdata,len);
     
-    if(ensureflag)//Ó¦ÓÃÀàĞÍÎª02
+    if(ensureflag)//åº”ç”¨ç±»å‹ä¸º02
     {
         rc = Sgc1120aGetRandomData(randbuf);
         if(rc != 0)
@@ -7005,13 +7005,13 @@ void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 		p[len + 2] = 0x00;
 		p[len + 3] = 0x00;
         rcI = Sgc1120aJudgeWhetherEn(pdata,wChanNo);
-		if(rcI == 1)//ĞèÒª¼ÓÃÜ
+		if(rcI == 1)//éœ€è¦åŠ å¯†
 		{
 			rc = Sgc1120aEnctyData(p,(len+4));
 		}
     }
 	
-    if(rcI == 0)//²»Ğè¼ÓÃÜ
+    if(rcI == 0)//ä¸éœ€åŠ å¯†
     {
         eblen = len + 6;
         ebbuf[1] = HIBYTE(eblen);
@@ -7027,7 +7027,7 @@ void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
         ebbuf[2] = LOBYTE(eblen);   
             
         ebbuf[4] = 0x00;   
-        ebbuf[5] = 0x08;//ÃÜÎÄÊı¾İ
+        ebbuf[5] = 0x08;//å¯†æ–‡æ•°æ®
         memcpy(ebbuf+6,p+2,eblen - 2);
     }
     else
@@ -7044,10 +7044,10 @@ void Pack1120aFra68ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack1120afor104msgtoEb
-*¹¦ÄÜ£º½«104±¨ÎÄ×ª»»ÎªEB°²È«±¨ÎÄ
-*ÊäÈë£ºbuf£º±¨ÎÄ£¬SEBtaillen:°²È«Êı¾İ»º³åÇø£¬len±¨ÎÄ³¤¶È
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack1120afor104msgtoEb
+*åŠŸèƒ½ï¼šå°†104æŠ¥æ–‡è½¬æ¢ä¸ºEBå®‰å…¨æŠ¥æ–‡
+*è¾“å…¥ï¼šbufï¼šæŠ¥æ–‡ï¼ŒSEBtaillen:å®‰å…¨æ•°æ®ç¼“å†²åŒºï¼ŒlenæŠ¥æ–‡é•¿åº¦
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT16U Pack1120afor104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wChanNo)
@@ -7065,7 +7065,7 @@ INT16U Pack1120afor104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wC
 	{
 	    if((buf[i] == 0xEB)&&(buf[i+3] == 0xEB))
 	    {
-	        templen = buf[i+2]+(buf[i+1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+	        templen = buf[i+2]+(buf[i+1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
 	        i += templen;
                rc = i;
 	    }
@@ -7080,7 +7080,7 @@ INT16U Pack1120afor104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wC
 
                    tmp = i + len104;
                    
-                   templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È    
+                   templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦    
                    if(tmp < len)
                    {
                        memcpy(buf+i+templen ,buf+tmp,len - tmp);
@@ -7094,7 +7094,7 @@ INT16U Pack1120afor104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wC
                {
                    PackFixed104ToEb(buf+i,6,ebbuf);
                    tmp = i + 6;
-                   templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EB±¨ÎÄ³¤¶È 
+                   templen = ebbuf[2]+(ebbuf[1]<<8) + 6;//EBæŠ¥æ–‡é•¿åº¦ 
                    if(tmp < len)
                    {
                        memcpy(buf+i+templen ,buf+tmp,len - tmp);
@@ -7117,10 +7117,10 @@ INT16U Pack1120afor104msgtoEb(INT8U *buf,INT16U len,INT16U *SEBtaillen,INT16U wC
        return rc;
 }
 /********************************************************************
-*º¯ÊıÃû³Æ£ºPack1120aFra104ToEb
-*¹¦ÄÜ£º·â×°104±¨ÎÄÖÁEB°ü
-*ÊäÈë£ºpdata£º±¨ÎÄ,len:68±¨ÎÄ³¤¶È£¬ebbuf:EB±¨ÎÄ´æ·Å»º³åÇø
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šPack1120aFra104ToEb
+*åŠŸèƒ½ï¼šå°è£…104æŠ¥æ–‡è‡³EBåŒ…
+*è¾“å…¥ï¼špdataï¼šæŠ¥æ–‡,len:68æŠ¥æ–‡é•¿åº¦ï¼Œebbuf:EBæŠ¥æ–‡å­˜æ”¾ç¼“å†²åŒº
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
@@ -7145,7 +7145,7 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
     if(pdata[6] == 203)
     {
         DncryptPI = pdata[14];
-        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//²ÎÊıÔ¤ÖÃÈ·ÈÏ
+        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//å‚æ•°é¢„ç½®ç¡®è®¤
         {
             ensureflag = 1;
         }
@@ -7154,7 +7154,7 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
     {
 	 DncryptPI = pdata[15];
         //ensureflag = pdata[15];
-        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//Ò£¿ØÔ¤ÖÃÈ·ÈÏ
+        if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//é¥æ§é¢„ç½®ç¡®è®¤
         {
             ensureflag = 1;
         }
@@ -7165,18 +7165,18 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 		
 	    if((DncryptCot == 7)&&((DncryptPI&0x80)!=0))//
   	    {
-  	        if(HnnwInf.UpgradeFlag == 1)//Éı¼¶Æô¶¯È·ÈÏ
+  	        if(HnnwInf.UpgradeFlag == 1)//å‡çº§å¯åŠ¨ç¡®è®¤
   	        {
 		      ensureflag = 1;
 		      HnnwInf.UpgradeFlag = 0;
   	        }
-		 else//Éı¼¶½áÊøÈ·ÈÏ
+		 else//å‡çº§ç»“æŸç¡®è®¤
 		 {
 		     ensureflag = 0;
 		     Upendflag = 2;
 		 }
   	    }
-        //if((DncryptCot == 7)&&((ensureflag & 0x80) == 0))//Éı¼¶½áÊøÈ·ÈÏ
+        //if((DncryptCot == 7)&&((ensureflag & 0x80) == 0))//å‡çº§ç»“æŸç¡®è®¤
         //{
             //Upendflag = 1;
         //}
@@ -7185,7 +7185,7 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 
     memcpy(p+2,pdata,len);
     
-    if(ensureflag)//Ó¦ÓÃÀàĞÍÎª02
+    if(ensureflag)//åº”ç”¨ç±»å‹ä¸º02
     {
         rc = Sgc1120aGetRandomData(randbuf);
         
@@ -7221,7 +7221,7 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
   	 }
     }
     
-    if(rcI == 0)//²»Ğè¼ÓÃÜ
+    if(rcI == 0)//ä¸éœ€åŠ å¯†
     {
         eblen = len + 6;
         ebbuf[1] = HIBYTE(eblen);
@@ -7243,7 +7243,7 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
         ebbuf[2] = LOBYTE(eblen);   
             
         ebbuf[4] = 0x00;   
-        ebbuf[5] = 0x08;//ÃÜÎÄÊı¾İ
+        ebbuf[5] = 0x08;//å¯†æ–‡æ•°æ®
         memcpy(ebbuf+6,p+2,eblen - 2);
     }
     else
@@ -7252,7 +7252,7 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
         EbErrCodeSend(0x9109,0x1f,wChanNo);
         return ;
     }
-        //tsgcbuf:Á½×Ö½Ú68±¨ÎÄ³¤¶È+68±¨ÎÄ+Á½×Ö½ÚËæ»úÊı³¤¶È+Ëæ»úÊı
+        //tsgcbuf:ä¸¤å­—èŠ‚68æŠ¥æ–‡é•¿åº¦+68æŠ¥æ–‡+ä¸¤å­—èŠ‚éšæœºæ•°é•¿åº¦+éšæœºæ•°
 
     sum = GetEbMsgCheckSum(ebbuf);
     
@@ -7262,10 +7262,10 @@ void Pack1120aFra104ToEb(INT8U *pdata,INT8U len,INT8U *ebbuf,INT16U wChanNo)
 }
 
 /********************************************************************
-*º¯ÊıÃû³Æ£ºSGC1120aVerifyUpLoadData
-*¹¦ÄÜ£º1120aÑéÖ¤Éı¼¶°üÑéÖ¤Êı¾İ
-*ÊäÈë£ºpdata£º
-*ÑĞ·¢ÈË£ºÕÅÁ¼
+*å‡½æ•°åç§°ï¼šSGC1120aVerifyUpLoadData
+*åŠŸèƒ½ï¼š1120aéªŒè¯å‡çº§åŒ…éªŒè¯æ•°æ®
+*è¾“å…¥ï¼špdataï¼š
+*ç ”å‘äººï¼šå¼ è‰¯
 *********************************************************************/
 
 INT8U SGC1120aVerifyUpLoadData(INT16U wChanNo)
@@ -7278,7 +7278,7 @@ INT8U SGC1120aVerifyUpLoadData(INT16U wChanNo)
     {
         ClearProgramUpdate();
         EbErrCodeSend(0x9105,0x1f,wChanNo);//
-        logSysMsgNoTime("08Êı¾İÊ±¼ä´ÁĞ£Ñé´íÎó:",0,0,0,0);
+        logSysMsgNoTime("08æ•°æ®æ—¶é—´æˆ³æ ¡éªŒé”™è¯¯:",0,0,0,0);
         return 0;
     }
     
@@ -7286,7 +7286,7 @@ INT8U SGC1120aVerifyUpLoadData(INT16U wChanNo)
     {
         ClearProgramUpdate();
         EbErrCodeSend(0x9104,0x1f,wChanNo);//
-        logSysMsgNoTime("08Ëæ»ú³öĞ£Ñé´íÎó:",0,0,0,0);         
+        logSysMsgNoTime("08éšæœºå‡ºæ ¡éªŒé”™è¯¯:",0,0,0,0);         
         return 0;
     }
     
@@ -7297,7 +7297,7 @@ INT8U SGC1120aVerifyUpLoadData(INT16U wChanNo)
 	rc = SGC1120aSginVerify(verbuf,30,UpLoadSdata,64,UpLoadKeyId);
     if(rc == 0)
     {
-       // EbErrCodeSend(0x9000,0x1f,wChanNo);//³É¹¦²»·µ»Ø´¦Àí½á¹û
+       // EbErrCodeSend(0x9000,0x1f,wChanNo);//æˆåŠŸä¸è¿”å›å¤„ç†ç»“æœ
         StartProgramUpdate();
         return 0;
     }
@@ -7305,17 +7305,17 @@ INT8U SGC1120aVerifyUpLoadData(INT16U wChanNo)
     {
         ClearProgramUpdate();
         EbErrCodeSend(0x9102,0x1f,wChanNo);//
-        logSysMsgNoTime("08Êı¾İÑéÖ¤Ç©Ãû´íÎó:",0,0,0,0);
+        logSysMsgNoTime("08æ•°æ®éªŒè¯ç­¾åé”™è¯¯:",0,0,0,0);
 	 return 0;
     }
     
 }
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  Check1120aEncrptchip()
-º¯Êı¹¦ÄÜ£º  ¼ì²â¼ÓÃÜĞ¾Æ¬1120aÊÇ·ñ¿ÉÕı³£Ê¹ÓÃ
-ÊäÈëËµÃ÷£º  CheckType:0±íÊ¾Î¬»¤Èí¼şµ÷ÓÃ£¬ÆäËû±íÊ¾¿ª»ú×Ô¼ì
-Êä³öËµÃ÷£º  0±íÊ¾Ğ¾Æ¬¿ÉÕı³£¹¤×÷
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  Check1120aEncrptchip()
+å‡½æ•°åŠŸèƒ½ï¼š  æ£€æµ‹åŠ å¯†èŠ¯ç‰‡1120aæ˜¯å¦å¯æ­£å¸¸ä½¿ç”¨
+è¾“å…¥è¯´æ˜ï¼š  CheckType:0è¡¨ç¤ºç»´æŠ¤è½¯ä»¶è°ƒç”¨ï¼Œå…¶ä»–è¡¨ç¤ºå¼€æœºè‡ªæ£€
+è¾“å‡ºè¯´æ˜ï¼š  0è¡¨ç¤ºèŠ¯ç‰‡å¯æ­£å¸¸å·¥ä½œ
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 INT8U Check1120aEncrptchip(INT8U CheckType)
 {
@@ -7336,7 +7336,7 @@ INT8U Check1120aEncrptchip(INT8U CheckType)
         i++;
         if(i > 1)
         {
-            //logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬¼ì²âÒì³£.rc=%d",rc,0,0,0);
+            //logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡æ£€æµ‹å¼‚å¸¸.rc=%d",rc,0,0,0);
             i = 0;
             
             return 2;
@@ -7346,11 +7346,11 @@ INT8U Check1120aEncrptchip(INT8U CheckType)
     KeyVersion = p[2];
     if(CheckType == 0)
     {
-        logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬1120aÃÜÔ¿°æ±¾ºÅ:%d",KeyVersion,0,0,0);
+        logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡1120aå¯†é’¥ç‰ˆæœ¬å·:%d",KeyVersion,0,0,0);
     }
     else
     {
-        logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬1120a×Ô¼ì³É¹¦£¬ÃÜÔ¿°æ±¾ºÅ:%d",KeyVersion,0,0,0);
+        logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡1120aè‡ªæ£€æˆåŠŸï¼Œå¯†é’¥ç‰ˆæœ¬å·:%d",KeyVersion,0,0,0);
         return 0;
     }
     myTaskDelay(20);    
@@ -7363,7 +7363,7 @@ INT8U Check1120aEncrptchip(INT8U CheckType)
         i++;
         if(i > 1)
         {
-            //logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬¼ì²âÒì³£.rc=%d",rc,0,0,0);
+            //logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡æ£€æµ‹å¼‚å¸¸.rc=%d",rc,0,0,0);
             i = 0;
             
            return 1;
@@ -7373,7 +7373,7 @@ INT8U Check1120aEncrptchip(INT8U CheckType)
     //if(CheckType == 1)
     {
         memset(msgbuf,0,50);
-        sprintf(msgbuf,"¼ÓÃÜĞ¾Æ¬1120aĞòÁĞºÅ:%02x%02x%2x%02x%02x%02x%02x%02x\r\n",p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]);
+        sprintf(msgbuf,"åŠ å¯†èŠ¯ç‰‡1120aåºåˆ—å·:%02x%02x%2x%02x%02x%02x%02x%02x\r\n",p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]);
         logSysMsgNoTime(msgbuf,0,0,0,0);
     }
     myTaskDelay(20);    
@@ -7381,22 +7381,22 @@ INT8U Check1120aEncrptchip(INT8U CheckType)
    // if(rc  == 0)
     //{
         //memset(msgbuf,0,50);
-        //sprintf(msgbuf,"¼ÓÃÜĞ¾Æ¬Ëæ»úÊı:%02x%02x%2x%02x%02x%02x%02x%02x\r\n",p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]);
+        //sprintf(msgbuf,"åŠ å¯†èŠ¯ç‰‡éšæœºæ•°:%02x%02x%2x%02x%02x%02x%02x%02x\r\n",p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9]);
         //logSysMsgNoTime(msgbuf,0,0,0,0);
     //}
     //else
     //{
-        //logSysMsgNoTime("Ëæ»úÊı»ñÈ¡Ê§°Ü",0,0,0,0);
+        //logSysMsgNoTime("éšæœºæ•°è·å–å¤±è´¥",0,0,0,0);
     //}
     return rc;
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  EncrptyChiptest(INT8U type)
-º¯Êı¹¦ÄÜ£º  ¼ì²â°²È«¼ÓÃÜĞ¾Æ¬ÀàĞÍ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º 1:1161,2:1120a,0:ÎŞ¼ÓÃÜĞ¾Æ¬
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  EncrptyChiptest(INT8U type)
+å‡½æ•°åŠŸèƒ½ï¼š  æ£€æµ‹å®‰å…¨åŠ å¯†èŠ¯ç‰‡ç±»å‹
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š 1:1161,2:1120a,0:æ— åŠ å¯†èŠ¯ç‰‡
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 INT8U EncrptyChiptest(INT8U type)
 {
@@ -7411,24 +7411,24 @@ INT8U EncrptyChiptest(INT8U type)
 	}
 	else
 	{
-	    ////logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬ĞÍºÅ1161",0,0,0,0);
+	    ////logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡å‹å·1161",0,0,0,0);
 	    return 1;
 	}
 	if(rc == 0)
 	{
-		////logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬ĞÍºÅ1120a",0,0,0,0);
+		////logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡å‹å·1120a",0,0,0,0);
 	    return 2;
 	}
-	logSysMsgNoTime("¼ÓÃÜĞ¾Æ¬²»´æÔÚ",0,0,0,0);
+	logSysMsgNoTime("åŠ å¯†èŠ¯ç‰‡ä¸å­˜åœ¨",0,0,0,0);
 	return 0;
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  Packf68ToOld1120aEn(INT8U type)
-º¯Êı¹¦ÄÜ£º  ·â×°ºşÄÏÀÏ¼ÓÃÜ±¨ÎÄ
-ÊäÈëËµÃ÷£º  
-Êä³öËµÃ÷£º 
-±¸×¢£º      
+å‡½æ•°åç§°ï¼š  Packf68ToOld1120aEn(INT8U type)
+å‡½æ•°åŠŸèƒ½ï¼š  å°è£…æ¹–å—è€åŠ å¯†æŠ¥æ–‡
+è¾“å…¥è¯´æ˜ï¼š  
+è¾“å‡ºè¯´æ˜ï¼š 
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 void Packf68ToOld1120aEn(INT8U *oribuf)
 {
@@ -7439,9 +7439,9 @@ void Packf68ToOld1120aEn(INT8U *oribuf)
 	tivalue = oribuf[tilocation];
 	len = oribuf[1]-3;
        ////g_EnDone = 1;
-       buf[0] = len;//ĞèÒª½«´ı¼ÓÃÜÊı¾İ³¤¶ÈĞ´ÈëÃÜÎÄ
+       buf[0] = len;//éœ€è¦å°†å¾…åŠ å¯†æ•°æ®é•¿åº¦å†™å…¥å¯†æ–‡
 	memcpy((buf+1),oribuf+7,len);
-	switch(tivalue)//Ò£ĞÅ£¬Ò£²â£¬Ò£¿Ø£¬ĞÅÏ¢ÉÏ±¨¶¼Òª¼ÓÃÜ
+	switch(tivalue)//é¥ä¿¡ï¼Œé¥æµ‹ï¼Œé¥æ§ï¼Œä¿¡æ¯ä¸ŠæŠ¥éƒ½è¦åŠ å¯†
 	{
 		case 0x01:
 		case 0x03:
@@ -7455,7 +7455,7 @@ void Packf68ToOld1120aEn(INT8U *oribuf)
 			if(rc == 0)
 			{
 				oribuf[0]=oribuf[3]=0x69;
-				enlen = (buf[0]<<8)+buf[1];//¼ÓÃÜºóÃÜÎÄ+MAC³¤¶È
+				enlen = (buf[0]<<8)+buf[1];//åŠ å¯†åå¯†æ–‡+MACé•¿åº¦
 
 				oribuf[1]=oribuf[2]=enlen+3;
 				memcpy((oribuf+7),(buf+2),enlen);
@@ -7463,13 +7463,13 @@ void Packf68ToOld1120aEn(INT8U *oribuf)
 			else
 			{
                            myTaskDelay(20);
-                           logSysMsgNoTime("¼ÓÃÜÊ§°ÜI!rc==%d",rc,0,0,0);
+                           logSysMsgNoTime("åŠ å¯†å¤±è´¥I!rc==%d",rc,0,0,0);
                            memcpy((buf+1),oribuf+7,len);
                            rc = Sgc1120aEnctyData(buf,(len+1));
                            if(rc == 0)
                            {
                                oribuf[0]=oribuf[3]=0x69;
-                               enlen = (buf[0]<<8)+buf[1];//¼ÓÃÜºóÃÜÎÄ+MAC³¤¶È
+                               enlen = (buf[0]<<8)+buf[1];//åŠ å¯†åå¯†æ–‡+MACé•¿åº¦
                        
                                oribuf[1]=oribuf[2]=enlen+3;
                                memcpy((oribuf+7),(buf+2),enlen);
@@ -7477,13 +7477,13 @@ void Packf68ToOld1120aEn(INT8U *oribuf)
                            else
                            {
                                myTaskDelay(20);
-                               logSysMsgNoTime("¼ÓÃÜÊ§°ÜII!rc==%d",rc,0,0,0);
+                               logSysMsgNoTime("åŠ å¯†å¤±è´¥II!rc==%d",rc,0,0,0);
                                memcpy((buf+1),oribuf+7,len);
                                rc = Sgc1120aEnctyData(buf,(len+1));
                                if(rc == 0)
                                {
                                    oribuf[0]=oribuf[3]=0x69;
-                                   enlen = (buf[0]<<8)+buf[1];//¼ÓÃÜºóÃÜÎÄ+MAC³¤¶È
+                                   enlen = (buf[0]<<8)+buf[1];//åŠ å¯†åå¯†æ–‡+MACé•¿åº¦
                            
                                    oribuf[1]=oribuf[2]=enlen+3;
                                    memcpy((oribuf+7),(buf+2),enlen);
@@ -7492,7 +7492,7 @@ void Packf68ToOld1120aEn(INT8U *oribuf)
                            
                            if(rc != 0)
                            {
-                               logSysMsgNoTime("¼ÓÃÜÊ§°ÜIII!rc==%d",rc,0,0,0);
+                               logSysMsgNoTime("åŠ å¯†å¤±è´¥III!rc==%d",rc,0,0,0);
                                oribuf[0]=oribuf[3]=0;
                                oribuf[1]=oribuf[2]=0;
     				    ////oribuf[1]=oribuf[2]=12;
@@ -7514,13 +7514,13 @@ void Packf68ToOld1120aEn(INT8U *oribuf)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  SGCOldPkeyUpdate()
-º¯Êı¹¦ÄÜ£º  ¹«Ô¿¸üĞÂ
-ÊäÈëËµÃ÷£º  pdata:Ö÷Õ¾½ÓÊÕÊı¾İ
-            sdata ¹«Ô¿¼ÓÃÜºóµÃµ½µÄÃÜÎÄ
+å‡½æ•°åç§°ï¼š  SGCOldPkeyUpdate()
+å‡½æ•°åŠŸèƒ½ï¼š  å…¬é’¥æ›´æ–°
+è¾“å…¥è¯´æ˜ï¼š  pdata:ä¸»ç«™æ¥æ”¶æ•°æ®
+            sdata å…¬é’¥åŠ å¯†åå¾—åˆ°çš„å¯†æ–‡
 
-Êä³öËµÃ÷£º  0 ³É¹¦ ÆäËû Ê§°Ü -10 ²ÎÊı´íÎó
-±¸×¢£º      
+è¾“å‡ºè¯´æ˜ï¼š  0 æˆåŠŸ å…¶ä»– å¤±è´¥ -10 å‚æ•°é”™è¯¯
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 int SGCOldPkeyUpdate(INT8U *pdata,INT8U *sdata)
 {
@@ -7566,7 +7566,7 @@ int SGCOldPkeyUpdate(INT8U *pdata,INT8U *sdata)
 	rc = Sgc1120aUploadPKeyDataToChip(tmp,sdata);
     if(rc != 0)
     {
-        logSysMsgNoTime("¹«Ô¿Ğ´Èë´íÎó",0,0,0,0);  	
+        logSysMsgNoTime("å…¬é’¥å†™å…¥é”™è¯¯",0,0,0,0);  	
     	return -2;
     }
     //memset(encryptdata,0,68);
@@ -7574,7 +7574,7 @@ int SGCOldPkeyUpdate(INT8U *pdata,INT8U *sdata)
 	rc = Sgc1120aGetPKeyAuthData(newkeyno,random,sdata);
     if(rc != 0)
     {
-        logSysMsgNoTime("¹«Ô¿¼ÓÃÜÊ§°Ü",0,0,0,0);  	
+        logSysMsgNoTime("å…¬é’¥åŠ å¯†å¤±è´¥",0,0,0,0);  	
     	return -3;
     }
     return rc;
@@ -7582,12 +7582,12 @@ int SGCOldPkeyUpdate(INT8U *pdata,INT8U *sdata)
 }
 
 /*------------------------------------------------------------------/
-º¯ÊıÃû³Æ£º  SGCOldSymkeyUpdate()
-º¯Êı¹¦ÄÜ£º  ¶Ô³ÆÃÜÔ¿¸üĞÂ
-ÊäÈëËµÃ÷£º  pdata:Ö÷Õ¾½ÓÊÕÊı¾İ
+å‡½æ•°åç§°ï¼š  SGCOldSymkeyUpdate()
+å‡½æ•°åŠŸèƒ½ï¼š  å¯¹ç§°å¯†é’¥æ›´æ–°
+è¾“å…¥è¯´æ˜ï¼š  pdata:ä¸»ç«™æ¥æ”¶æ•°æ®
 
-Êä³öËµÃ÷£º  0 ³É¹¦ ÆäËû Ê§°Ü -10 ²ÎÊı´íÎó
-±¸×¢£º      
+è¾“å‡ºè¯´æ˜ï¼š  0 æˆåŠŸ å…¶ä»– å¤±è´¥ -10 å‚æ•°é”™è¯¯
+å¤‡æ³¨ï¼š      
 /------------------------------------------------------------------*/
 int SGCOldSymkeyUpdate(INT8U *pdata)
 {
@@ -7606,9 +7606,9 @@ int SGCOldSymkeyUpdate(INT8U *pdata)
     {
         keyno = keyno - 0x80;
     }
-    memcpy(ekeydata,pdata+loc,132);//ËÄÌõ¶Ô³ÆÃÜÔ¿ÃÜÎÄÊı¾İ¼°MACĞ£ÑéÊı¾İ
+    memcpy(ekeydata,pdata+loc,132);//å››æ¡å¯¹ç§°å¯†é’¥å¯†æ–‡æ•°æ®åŠMACæ ¡éªŒæ•°æ®
     loc = loc + 132;
-    memcpy(signdata,pdata+loc,64);//Ç©Ãû
+    memcpy(signdata,pdata+loc,64);//ç­¾å
     	    
 	//rc = SGCSginVerify(ekeydata,132,signdata,64,keyno);
 	rc = SGC1120aSginVerify(ekeydata,0x84,signdata,SGCSIGNDATALEN,keyno);
@@ -7620,7 +7620,7 @@ int SGCOldSymkeyUpdate(INT8U *pdata)
 	rc = Sgc1120aUploadSymKeyDataToChip(ekeydata,signdata);
     if(rc != 0)
     {
-    	logSysMsgNoTime("¶Ô³ÆÃÜÔ¿Ğ´ÈëÊ§°Ü",0,0,0,0);  	
+    	logSysMsgNoTime("å¯¹ç§°å¯†é’¥å†™å…¥å¤±è´¥",0,0,0,0);  	
     	return -2;
     }
     return rc;

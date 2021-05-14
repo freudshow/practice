@@ -29,13 +29,13 @@ extern "C" {
 #define SCHEDULE_FT_FREVENT        0x4000 
 #define SCHEDULE_RMTPARA           0x8000
 
-/*����Ϊ6�¹�Լʵʩ�淶*/
+/*以下为6月规约实施规范*/
 #define SCHEDULE_FT_DIR_STD                0x00010000
 #define SCHEDULE_FT_FILE_READY_STD         0x00020000 
 #define SCHEDULE_FT_SECTION_READY_STD      0x00040000
 #define SCHEDULE_FT_DATA_STD               0x00080000
 #define SCHEDULE_FT_LAST_SECTION_FILE_STD  0x00100000    
-#define SCHEDULE_XSFILESYNFINISH          0x00400000   //�ļ�ͬ����cl 20180314
+#define SCHEDULE_XSFILESYNFINISH          0x00400000   //文件同步；cl 20180314
 
 #define PTL104_CLOCK_READ			0X01     
 #define PTL104_CLOCK_WRITE			0X02 
@@ -65,8 +65,8 @@ struct PDevData
     struct PNva	*AIData;
     short *AIMaxVal;
     short *AIMaxValTrue;
-    INT16U  *AItype;  //�������ݵ����ͣ�1-�з��� 0-�޷���
-    INT8U *AIporperty;//ai��������
+    INT16U  *AItype;  //发送数据的类型，1-有符号 0-无符号
+    INT8U *AIporperty;//ai数据属性
 };
 
 struct PDevInfo
@@ -88,62 +88,62 @@ struct PData1
 
 struct PGroupTrn
 {
-    INT8U TypeID;       //��ʾ�������ͣ���Ϊվ�ٻ��͵���������
+    INT8U TypeID;       //标示总招类型，分为站召唤和电能量总招
     BOOL First;
-    INT8U COT;          //���д���ԭ���������������л��Ƿ����ٻ�
+    INT8U COT;          //总招传送原因，用于区分是总招还是分组召唤
     INT16U PubAddr;
     INT16U DevIndex;
-    INT16U GroupNo;     //�����1~8Ϊң�ţ�9~14Ϊң�⡣���ݸ���ſ��Ʒ���ң�Ż���ң�⡣104ÿ128��ң��Ϊһ��
-    INT32U InfoAddr;    //��Ϣ���ַ������ȷ���Ƿ�����ɡ�
+    INT16U GroupNo;     //组序号1~8为遥信，9~14为遥测。根据该序号控制发送遥信还是遥测。104每128个遥信为一组
+    INT32U InfoAddr;    //信息体地址，用于确定是否发送完成。
     INT8U Description;
-    INT8U  HaveSendDBI; //DBI���ͱ�־����������˫��ң������
-    INT16U SoeStartPtr; //soe���ٻ��Ŀ�ʼָ�롣��������
+    INT8U  HaveSendDBI; //DBI传送标志。用于启动双点遥信启动
+    INT16U SoeStartPtr; //soe总召唤的开始指针。（广西）
 
 };
 #define STANDARDFILETRANS104 1
 
-/*���������������ͨѶ�ϸ�λ������£���ʱ30����ûͨ��λ����ʱ�����wjr 2010.5.30*/
+/*重新启动后如果是通讯断复位的情况下，定时30分钟没通则复位，定时器事项。wjr 2010.5.30*/
 #define EV_SYSRET         0x00010000
-#define MAXBREAKNUM     600         /*��·ͨ�������10����û���յ�����ding20100115*/
+#define MAXBREAKNUM     600         /*网路通的情况下10分钟没有收到数据ding20100115*/
 
-//#define SFILETRANAPP104    1     /*�����ļ��������*/ 
+//#define SFILETRANAPP104    1     /*调用文件传输操作*/ 
 #ifdef SFILETRANAPP104
-#undef STANDARDFILETRANS104              //�����������ļ������й�ͬ�����ͱ�ʶ�����������֮ǰ���ļ��������ʱ����׼�ļ�������̲������á�
-#define CSFileTran      New104Sec       //��������Ŀ�ģ��ǰ�CSFileTran���滻��New104Sec�࣬�������FileTranApp.h�ļ��е���������һ�飬ʵ����û��ʹ��FileTranApp.h�ļ� ll
+#undef STANDARDFILETRANS104              //由于这两类文件传输有共同的类型标识符，因此在用之前的文件传输机制时，标准文件传输过程不起作用。
+#define CSFileTran      New104Sec       //这样做的目的，是把CSFileTran类替换到New104Sec类，在下面把FileTranApp.h文件中的又声明了一遍，实际上没有使用FileTranApp.h文件 ll
 
 /***********************************************/
 
-#define SFTYPECALLYC            192         /*�ٻ�ң�⣨��չ���*/
-#define SFTYPESELECTFILE        193         /*ѡ���ļ�����չ���*/
+#define SFTYPECALLYC            192         /*召唤遥测（扩展命令）*/
+#define SFTYPESELECTFILE        193         /*选择文件（扩展命令）*/
 
-/*����Ϊ�ļ�������չ���*/
-#define SFTFYC                  192         /*��ʷң���ļ�*/
-#define SFTFDD                  193         /*��ʷ����ļ�*/
-#define SFTFMAX                 194         /*����ֵ�ļ�*/
-#define SFTFMIN                 195         /*��Сֵ�ļ�*/
+/*以下为文件名（扩展命令）*/
+#define SFTFYC                  192         /*历史遥测文件*/
+#define SFTFDD                  193         /*历史电度文件*/
+#define SFTFMAX                 194         /*极大值文件*/
+#define SFTFMIN                 195         /*极小值文件*/
 
 
-#define	SF_SC_NA        		122         /*�ٻ�Ŀ¼�pѡ���ļ��p�ٻ��ļ��p�ٻ���*/
-#define	SF_AF_NA        		124         /*ȷ���ļ��pȷ�Ͻ�*/
-#define	SFREQ       		    5           /*����ԭ�򣭣����������*/
-#define	SFACTCON		        7 	        /*����ȷ��*/
-#define	SFACTTERM		        10 	        /*�������*/
-#define	SFILE               	13 	        /*����ԭ�򣭣��ļ�����*/
-#define SFUNKNOWNTYPEID         44          /*����ԭ�򣭣�δ֪�����ͱ�ʶ*/
-#define SFUNKNOWNCOT            45          /*����ԭ�򣭣�δ֪�Ĵ���ԭ��*/
-#define SFUNKNOWNPUBADDR        46          /*����ԭ�򣭣�δ֪��Ӧ�÷������ݵ�Ԫ������ַ*/
-#define SFUNKNOWNTINFOADDR      47          /*����ԭ�򣭣�δ֪����Ϣ�����ַ*/
+#define	SF_SC_NA        		122         /*召唤目录﹑选择文件﹑召唤文件﹑召唤节*/
+#define	SF_AF_NA        		124         /*确认文件﹑确认节*/
+#define	SFREQ       		    5           /*传送原因－－请求或被请求*/
+#define	SFACTCON		        7 	        /*激活确认*/
+#define	SFACTTERM		        10 	        /*激活结束*/
+#define	SFILE               	13 	        /*传送原因－－文件传送*/
+#define SFUNKNOWNTYPEID         44          /*传送原因－－未知的类型标识*/
+#define SFUNKNOWNCOT            45          /*传送原因－－未知的传送原因*/
+#define SFUNKNOWNPUBADDR        46          /*传送原因－－未知的应用服务数据单元公共地址*/
+#define SFUNKNOWNTINFOADDR      47          /*传送原因－－未知的信息对象地址*/
 #define SFLAI                   0x4001
 
-#define SFFILEHEADLEN           17          /*�ļ�ͷ����*/
-#define SFSectionLen            64000       /*�ڳ���*/
+#define SFFILEHEADLEN           17          /*文件头长度*/
+#define SFSectionLen            64000       /*节长度*/
 
 
 enum FileStatus {FileOver=0,CallDir,SelectFile,CallFile,CallSection,
                  SendSegment,LastSegment,LastSection,LastFile};
 enum CallYcStatus {CYNouse=0, CYAck, CYCall, CYEnd, CYError};
 
-struct SFileInfo_t{         /*������Ϣ*/
+struct SFileInfo_t{         /*运行信息*/
     enum FileStatus FileStep;
     
     INT8U   RxID;
@@ -156,13 +156,13 @@ struct SFileInfo_t{         /*������Ϣ*/
     struct Iec101ClockTime_t    RxTimeStart;
     struct Iec101ClockTime_t    RxTimeEnd;
     
-    INT16U  FileName;       /*�ļ���*/
-    INT8U   SectionName;    /*����*/    
+    INT16U  FileName;       /*文件名*/
+    INT8U   SectionName;    /*节名*/    
     
-    /*����Ϊstruct FileOPData*/
-    INT16U  FDataPer;           /*���ݵ�ʱ��������λ�����ӣ�*/
-    INT16U  FDataNum;           /*��ϢԪ����*/
-    INT32U  FDataClock;         /*��ʼ����ʱ��*/
+    /*以下为struct FileOPData*/
+    INT16U  FDataPer;           /*数据的时间间隔（单位：分钟）*/
+    INT16U  FDataNum;           /*信息元素数*/
+    INT32U  FDataClock;         /*起始绝对时间*/
 
     INT32U  FileLen;
     INT32U  SectLen;
@@ -172,13 +172,13 @@ struct SFileInfo_t{         /*������Ϣ*/
     INT8U   FileChs;
     INT8U   SectChs;
     
-    /*�ٻ�ң��*/
+    /*召唤遥测*/
     INT16U  AllYCNum;
     enum CallYcStatus   CallYcStep;
     INT8U   RxYcLen;
     INT8U   RxYcData[250];
     INT8U   InfoNum;
-    INT16U  InfoAddr[127];  /*֧��ң���0��65535*/
+    INT16U  InfoAddr[127];  /*支持遥测号0～65535*/
 };
 
 #endif  //end of #ifdef SFILETRANAPP104
@@ -188,9 +188,9 @@ struct SFileInfo_t{         /*������Ϣ*/
 enum FileStatus {FileOver=0,CallDir,SelectFile,CallFile,CallSection,
                  SendSegment,LastSegment,LastSection,LastFile};
 enum AckStatus{NOTUSED=0,ACKFILEPOS,ACKFILENEG,ACKSECTPOS,ACKSECTNEG};  
-#define	SFREQ       		    5           /*����ԭ�򣭣����������*/  
-#define	SFILE               	13 	        /*����ԭ�򣭣��ļ�����*/             
-struct StdFileInfo_t{         /*������Ϣ*/
+#define	SFREQ       		    5           /*传送原因－－请求或被请求*/  
+#define	SFILE               	13 	        /*传送原因－－文件传送*/             
+struct StdFileInfo_t{         /*运行信息*/
     enum FileStatus FileStep;
     enum AckStatus  ackstatus;
     INT8U   RxID;
@@ -203,14 +203,14 @@ struct StdFileInfo_t{         /*������Ϣ*/
     struct Iec101ClockTime_t    RxTimeStart;
     struct Iec101ClockTime_t    RxTimeEnd;
     
-    INT16U  FileName;       /*�ļ���*/
-    INT8U   SectionName;    /*����*/    
+    INT16U  FileName;       /*文件名*/
+    INT8U   SectionName;    /*节名*/    
     INT8U   SectionNum;
     
-    /*����Ϊstruct FileOPData*/
-    INT16U  FDataPer;           /*���ݵ�ʱ��������λ�����ӣ�*/
-    INT16U  FDataNum;           /*��ϢԪ����*/
-    INT32U  FDataClock;         /*��ʼ����ʱ��*/
+    /*以下为struct FileOPData*/
+    INT16U  FDataPer;           /*数据的时间间隔（单位：分钟）*/
+    INT16U  FDataNum;           /*信息元素数*/
+    INT32U  FDataClock;         /*起始绝对时间*/
 
     INT32U  FileLen;
     INT32U  SectLen;
@@ -250,26 +250,26 @@ private:
     struct PDevInfo *DevList;
     struct PSec104Pad Sec104Pad;
 
-    /*Ϊ���������·�����������ĸĶ� wjr 2010.5.21*/
-    INT16U LinkConnect;       /*����ͨ�ϵı�־  wjr  2010.5.21*/
-    INT16U LinkBreakCounter;  /*��·ͨ�������û���յ����ݵļ����� wjr  2010.5.21*/
+    /*为解决北京网路死问题所做的改动 wjr 2010.5.21*/
+    INT16U LinkConnect;       /*网络通上的标志  wjr  2010.5.21*/
+    INT16U LinkBreakCounter;  /*网路通的情况下没有收到数据的计数器 wjr  2010.5.21*/
     
     INT8U *RxMsg;
     INT8U *TxMsg;
-    INT8U DBData[2048];//�����ݿ�ȡ����ʱʹ�õ���ʱ������
+    INT8U DBData[2048];//向数据库取数据时使用的临时缓冲区
     
-    UINT16  LBIinfoaddr;  //����ң����Ϣ���ַ       2008.11.5
-    UINT16  LDBIinfoaddr; //˫��ң����Ϣ���ַ       2008.11.5
+    UINT16  LBIinfoaddr;  //单点遥信信息体地址       2008.11.5
+    UINT16  LDBIinfoaddr; //双点遥信信息体地址       2008.11.5
     
-    struct BIEWithTimeData_t DBIDBData[100];        //�����ݿ�ȡ����ʱʹ�õ���ʱ������   wjr
-    struct BIEWithoutTimeData_t DBICOSDBData[100];  //�����ݿ�ȡ����ʱʹ�õ���ʱ������   wjr
-    INT16U DBISOEnum;   //�յ���˫��ң�ŵ�soe��
-    INT16U DBICOSnum;   //�յ���˫��ң�ŵ�cos��
-    INT16U DBIDevIndex;    //��Ҫ����˫��ң��soe���豸��
-    INT16U DBICOSDevIndex;    //��Ҫ����˫��ң��cos���豸��
+    struct BIEWithTimeData_t DBIDBData[100];        //向数据库取数据时使用的临时缓冲区   wjr
+    struct BIEWithoutTimeData_t DBICOSDBData[100];  //向数据库取数据时使用的临时缓冲区   wjr
+    INT16U DBISOEnum;   //收到的双点遥信的soe数
+    INT16U DBICOSnum;   //收到的双点遥信的cos数
+    INT16U DBIDevIndex;    //需要发送双点遥信soe的设备号
+    INT16U DBICOSDevIndex;    //需要发送双点遥信cos的设备号
 
     
-    INT16U AsduHeadLength;//ASDUͷ���ȣ����ͱ�־����Ϣ���ַ
+    INT16U AsduHeadLength;//ASDU头长度，类型标志到信息体地址
     INT16U PubAddrSize;
     INT16U CotSize;
     INT16U InfoAddrSize;
@@ -305,36 +305,36 @@ private:
     INT32U CounterCount;
     INT32U NvaCount;
 
-    INT8U InitFlag;             // ��ʼ����־
+    INT8U InitFlag;             // 初始化标志
     INT8U YKTypeID;
     
-    BOOL   FirstCallAllData;   //��һ�����в�����Ϲ��ܣ�0xff-�Ѿ����й���0-δ���й�����1�����н������ٷ����������ݡ�
+    BOOL   FirstCallAllData;   //第一次总招不被打断功能，0xff-已经总招过，0-未总招过。第1次总招结束后再发送其他数据。
     INT16U WaitCallAllDelay;
     
-    BOOL GYKZ2015Flag;        //2015��104��Լ��չ����涨����
-    INT16U SendCOS;         //�ڹ�ѡ2015��չ��ʱ�������Ҫ����cos����
-    //BOOL RMTParaGHSimple;       //debug 2017-3-1 Զ�̲����̻����̲����Я���Ĳ�����
-    //BOOL HisFileTxt;            //debug ��ʷ�����ı���ʽ
+    BOOL GYKZ2015Flag;        //2015版104规约扩展特殊规定处理
+    INT16U SendCOS;         //在勾选2015扩展版时如果还需要发送cos，则
+    //BOOL RMTParaGHSimple;       //debug 2017-3-1 远程参数固化过程不检查携带的参数。
+    //BOOL HisFileTxt;            //debug 历史数据文本方式
     
-    INT16U RMTHaveReadParaFlag;     //���ֶ�ȡʱ����Ϊ�Ѷ�ȡ��š�ȫ����ȡʱ��Ϊ��ȡλ�ñ��
-    BOOL   RMTParaReadAllFlag;      //��ȫ��������־
-    INT16U RMTSectionNo;            //��ʱ����һ����Ӧ����ǰ���š�
+    INT16U RMTHaveReadParaFlag;     //部分读取时，作为已读取序号。全部读取时作为读取位置标号
+    BOOL   RMTParaReadAllFlag;      //读全部参数标志
+    INT16U RMTSectionNo;            //暂时定义一个，应付当前区号。
     INT16U RMTSectionNo2;
-    INT16U RMTParaNum;              //����д�ĸ���
+    INT16U RMTParaNum;              //读或写的个数
     INT16U RMTParaInfo[RMT_RW_MAXNUM];
     float  RMTParaValue[RMT_RW_MAXNUM];
-    INT16U RMTTimeOut;                 //Ԥ�ñ�־��ʱ����
-    BOOL   RMTParaYZ;               //Ԥ�ñ�־
+    INT16U RMTTimeOut;                 //预置标志超时处理
+    BOOL   RMTParaYZ;               //预置标志
     
-    //ң����˫��ң�ŷ���-�㶫��ɽ
+    //遥信以双点遥信发送-广东佛山
     BOOL  bSendAllDBI;
     
-    //����Զ����ά
+    //广西远程运维
     INT8U Roi;
     INT8U Qpa;
     INT16U GXTimeOut;
-    BOOL   GXParaYZ;               //����Ԥ�ñ�־
-    INT16U GXParaNum;              //����д�ĸ���
+    BOOL   GXParaYZ;               //广西预置标志
+    INT16U GXParaNum;              //读或写的个数
     //BOOL GXvsqflag;
     INT8U GXReturnCot;
     INT8U GXParaControl;
@@ -367,7 +367,7 @@ private:
     #endif
     /***********************************************/
     
-    /****NEW�ļ�����START***********/
+    /****NEW文件传输START***********/
     struct FTFileTransfer_t  FtInfo;
     
     void ProcFileInit(void);
@@ -384,14 +384,14 @@ private:
     void ProcFT_WriteFileData(void);
     void ProcFT_WriteFileDataConf(void);
     
-    void ProcFileSyn(void);//����ģ��2018��׼���ļ�ͬ����cl 20180314
-    void SendFreezeEvent2Pri101(void);//��101��վ������Ϣ����˲ʱ����
+    void ProcFileSyn(void);//线损模块2018标准，文件同步；cl 20180314
+    void SendFreezeEvent2Pri101(void);//给101主站发送消息进行瞬时冻结
     
-    /****NEW�ļ�����END***********/
+    /****NEW文件传输END***********/
     
     
     
-    /****6�·�NEW�ļ�����START***********/
+    /****6月份NEW文件传输START***********/
     #ifdef STANDARDFILETRANS104
     struct StdFileInfo_t StdFileInfo; 
     struct StdFileTransfer_t  StdFtInfo;
@@ -406,7 +406,7 @@ private:
     void StdProcFT_EncodeLastSegSect();
     void StdProcFT_ReadFile();
     #endif
-    /****6�·�NEW�ļ�����END***********/
+    /****6月份NEW文件传输END***********/
     void ProcSetSectionNo(void);
     void ProcReadSectionNo(void);
     void ProcReadPara(void);
@@ -459,14 +459,14 @@ private:
     INT16U EnCodeAllSta(INT16U BeginNo,INT16U EndNo,INT16U *pNum);
     INT16U EnCodeAllLastSoe(INT16U BeginNo);
     
-    void EnCodeNACK(INT16U Cot);//�񶨻ش�ӿں���  CL
-    void ProcInitEnd(void); //��ʼ������֡��������ʼ������ CL
+    void EnCodeNACK(INT16U Cot);//否定回答接口函数  CL
+    void ProcInitEnd(void); //初始化结束帧处理：初始化结束 CL
 
     BOOL EnCodeNVA(void);
     BOOL EnCodeSOE(void);
     BOOL EnCodeBIENT(void);
-    void EnCodeDBIENT(void);  //�༭˫��ң��COS   
-    void EnCodeDBISOE(void); //�༭˫��ң��SOE  
+    void EnCodeDBIENT(void);  //编辑双点遥信COS   
+    void EnCodeDBISOE(void); //编辑双点遥信SOE  
     INT8U EnCodeCounter(INT16U BeginNo,INT16U EndNo,INT16U *pNum);
     void EnCodeReadData(void);
 
@@ -475,10 +475,10 @@ private:
     
     BOOL WritePara(void);
     void EnCodeClock(INT8U flag);
-    BOOL EnCodeInitEnd(void);               //wjr��ʼ������
+    BOOL EnCodeInitEnd(void);               //wjr初始化结束
     void ProcXsFileSynFinish(void);
     
-    /*****�㶫Զ�̲���*******/
+    /*****广东远程参数*******/
     void ProcReadParaGD(void);
     void ProcWritePara_GD(void);
     void EncodeRMTReadPara_GD(void);  
@@ -499,7 +499,7 @@ private:
 public:
     INT32U ScanTimerID;
 
-    INT16U *LinkFlag;       /* 2010.5.30  ��ͨѶͨ��֮��6����û�����ݺ�Ͽ��������������֮����Сʱ֮��û�����Ͼ���Ϊ����û�лظ�����������*/
+    INT16U *LinkFlag;       /* 2010.5.30  当通讯通上之后6分钟没有数据后断开重启，如果启动之后半个小时之后还没连接上就认为错误没有回复再重新启动*/
     
     New104DataLink *pDLink;
 
