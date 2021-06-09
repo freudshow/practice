@@ -103,4 +103,19 @@
   \end{center}
 \end{figure}
 
+\begin{tikzpicture}
+\draw[->](-0.5,0)--(3.5,0) node[below] {$x$};
+%绘制（draw）x轴，线到箭头（->），从(-0.5,0)到(3.5,0)，文字（$x$）显示在线下方（below）
+\draw[->](0,-0.5)--(0,3) node[right] {$y$};
+%绘制（draw）y轴，线到箭头（->），从(-0.5,0)到(3.5,0)，文字（$y$）显示在线右侧（below）
+\draw plot[smooth, domain = -0.25:3.25] (\x,{\x^2 - 3*\x + 2}) node[above] {$y = x^2 - 3x + 2$};
+%绘制（draw）x（\x）到y = x^2 - 3x + 2（{\x^2 - 3*\x + 2}）的映射，平滑化（smooth），x取值范围为(-0.25,3.25)，文字（$y = x^2 - 3x + 2$）显示在图像上方（above）
+\foreach \x in {1,2,3} {\draw(\x,0)--(\x,0.1) node[below, font = \tiny] at(\x,0) {\x};}
+%x轴上的点：(1,0)、(2,0)、(3,0)（\foreach \x in {1,2,3}），在其位置（at(\x,0)）绘制（draw）从(x,0)到(x,0.1)，字体（font = \tiny），文字（\x）显示在下方（below）
+\foreach \y in {1,2} {\draw(0,\y)--(0.1,\y) node[left, font=\tiny] at(0,\y) {\y};}
+%y轴上的点：(0,1)、(0,2)（\foreach \y in {1,2}），在其位置（at(0,\y)）绘制（draw）从(0,y)到(0.1,y)，字体（font = \tiny），文字（\y）显示在下方（below）
+\draw(0,0) node[below] {$o$};
+%在(0,0)处绘制（draw）零点，字体（$o$）显示在下方（below）
+\end{tikzpicture}
+
 \end{document}
