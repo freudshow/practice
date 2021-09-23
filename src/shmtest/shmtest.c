@@ -34,8 +34,10 @@ void doTask(int i) {
 int main(int argc, char **argv) {
 	pid_t p1[20];
 	int i;
+
 	srand(time(0));
-//	printf("%d, %d, %d\n",!(1111), !(0), !(-1));
+	init_region();
+	init_sem_set();
 
 	/*
 	 * C provides a compile-time unary operator called sizeof that can be used to compute the size
@@ -45,7 +47,7 @@ int main(int argc, char **argv) {
 		if ((p1[i] = fork()) == 0) {
 			while (1) {
 				doTask(i);
-				usleep(100);
+				usleep(2000);
 			}
 		}
 	}
