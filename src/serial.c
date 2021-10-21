@@ -547,7 +547,7 @@ int main(int argc, char *argv[])
 			timeout.tv_usec = 0;
 
 			while (cnt < options.wait) {
-				sleep(1);
+				usleep(options.inv * 1000);
 				nready = select(fd + 1, &fds, NULL, NULL, &timeout);
 				if (nready > 0) {
 					readcom(fd, rbuf, &rbufSize);
@@ -559,7 +559,7 @@ int main(int argc, char *argv[])
 		}
 	} else if (SLAVE_DEV == options.master) { //从机, 收到报文后1秒钟应答
 		while (1) {
-			sleep(1);
+			usleep(options.inv * 1000);
 			nready = 0;
 			FD_ZERO(&fds);
 			FD_SET(fd, &fds);
@@ -569,7 +569,7 @@ int main(int argc, char *argv[])
 			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
 			if (nready > 0) {
 				readcom(fd, rbuf, &rbufSize);
-				sleep(1);
+				usleep(options.inv * 1000);
 				sendcom(fd, sbuf, sbufSize);
 			}
 		}
