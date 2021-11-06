@@ -307,18 +307,16 @@ s8 sendcom(int fd, u8 *buf, u32 bufSize)
 	return TRUE;
 }
 
-void readcom(int fd, u8 *buf, u32 *bufSize)
+void readcom(int fd, u8 *buf, u32 bufSize)
 {
-	if ( NULL == bufSize || NULL == buf)
+	if ( 0 == bufSize || NULL == buf)
 		return;
 
-	*bufSize = read(fd, buf, 2048);
+	int ret = read(fd, buf, bufSize);
 
-	if (*bufSize > 0) {
-		DEBUG_OUT("[read]bufSize:%d; ", *bufSize);
-		printBuf(buf, *bufSize);
-	} else {
-		DEBUG_OUT("[read]no data\n", bufSize);
+	if (ret > 0) {
+		DEBUG_OUT("[read]bufSize: %d; ", ret);
+		printBuf(buf, ret);
 	}
 }
 
@@ -517,18 +515,9 @@ int main(int argc, char *argv[])
 
 	if (1 == options.listen) { //一直监听串口
 		while (1) {
-			usleep(options.inv * 1000);
+			usleep(50 * 1000);
+			readcom(fd, rbuf, rbufSize);
 
-			nready = 0;
-			FD_ZERO(&fds);
-			FD_SET(fd, &fds);
-
-			timeout.tv_sec = 1;
-			timeout.tv_usec = 0;
-			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
-			if (nready > 0) {
-				readcom(fd, rbuf, &rbufSize);
-			}
 		}
 	} else if (MASTER_DEV == options.master) { //主机, 发送报文并监听串口
 		sendcnt = 0;
@@ -539,39 +528,21 @@ int main(int argc, char *argv[])
 			}
 
 			cnt = 0;
-			nready = 0;
-			FD_ZERO(&fds);
-			FD_SET(fd, &fds);
-
-			timeout.tv_sec = 1;
-			timeout.tv_usec = 0;
 
 			while (cnt < options.wait) {
-				usleep(options.inv * 1000);
-				nready = select(fd + 1, &fds, NULL, NULL, &timeout);
-				if (nready > 0) {
-					readcom(fd, rbuf, &rbufSize);
-				}
+				usleep(50 * 1000);
+				readcom(fd, rbuf, rbufSize);
 				cnt++;
 			}
 
 			sendcnt++;
 		}
-	} else if (SLAVE_DEV == options.master) { //从机, 收到报文后1秒钟应答
+	} else if (SLAVE_DEV == options.master) { //从机, 收到报文后应答
 		while (1) {
+			usleep(50 * 1000);
+			readcom(fd, rbuf, rbufSize);
 			usleep(options.inv * 1000);
-			nready = 0;
-			FD_ZERO(&fds);
-			FD_SET(fd, &fds);
-			timeout.tv_sec = 1;
-			timeout.tv_usec = 0;
-
-			nready = select(fd + 1, &fds, NULL, NULL, &timeout);
-			if (nready > 0) {
-				readcom(fd, rbuf, &rbufSize);
-				usleep(options.inv * 1000);
-				sendcom(fd, sbuf, sbufSize);
-			}
+			sendcom(fd, sbuf, sbufSize);
 		}
 	}
 

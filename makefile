@@ -34,7 +34,7 @@ $(MKCJQIII): $(SRC)
 
 $(MKTTU): $(SRC)
 	$(CC) $(OBJ) $(CFLAS) $(SRC) $(INC) $(DEFINETTU)
-	scp -P 8888  ${BIN} sysadm@192.168.1.101:/home/sysadm/bin/
+	scp -P 8888  ${BIN} sysadm@192.168.31.101:/home/sysadm/bin/
 
 $(DEFINCJQIII): $(SRC)
 	$(CC) $(MKCJQIIILISTEN) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII)
