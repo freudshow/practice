@@ -30,6 +30,8 @@ void printDir(char *path)
 				printf("[%s] it is a dir\n", file_path);
 			}
 		}
+
+		closedir(dp);
 	}
 	else if(S_ISREG(s_buf.st_mode))
 	{
