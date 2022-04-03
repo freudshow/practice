@@ -73,8 +73,8 @@ typedef double fp64;
  * example: BCD_TO_ASCII_H(0x56), return '5',
  * 			BCD_TO_ASCII_L(0x56), return '6'.
  * ***********************************************************/
-#define BCD_TO_ASCII_H(x)			HEX_TO_ASCII((((x)>>4)&0x0F))
-#define BCD_TO_ASCII_L(x)			HEX_TO_ASCII(((x)&0x0F))
+#define BCD_TO_ASCII_H(x)			HEX_TO_ASCII((((x)>>4)&0x0F) + 0x30)
+#define BCD_TO_ASCII_L(x)			HEX_TO_ASCII(((x)&0x0F) + 0x30)
 
 /*************************************************************
  * get n binary of byte, n is 1 based.
