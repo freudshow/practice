@@ -17,14 +17,14 @@ extern "C" {
 /*
  ********************************************************************
  *																	*
- * 1-OOP–≠“Èø‚»´æ÷ ˝æ›¿‡–Õ∂®“Â                                          *
+ * 1-OOPÂçèËÆÆÂ∫ìÂÖ®Â±ÄÊï∞ÊçÆÁ±ªÂûãÂÆö‰πâ                                          *
  *																	*
  ********************************************************************
 */
 
-#define OOP_MODULE_NAME		"oop"		/**< –≠“Èø‚ƒ£øÈ√˚		*/
+#define OOP_MODULE_NAME		"oop"		/**< ÂçèËÆÆÂ∫ìÊ®°ÂùóÂêç		*/
 
-/** @brief ±Í◊º ˝æ›¿‡–Õ√∂æŸ	*/
+/** @brief Ê†áÂáÜÊï∞ÊçÆÁ±ªÂûãÊûö‰∏æ	*/
 typedef enum tag_OOP_DATATYPE
 {
 	DT_NULL					= 0,		/**< NULL				*/
@@ -54,180 +54,180 @@ typedef enum tag_OOP_DATATYPE
 	DT_OAD					= 81,		/**< OOP_OAD_U			*/
 	DT_ROAD					= 82,		/**< OOP_ROAD_T			*/
 	DT_OMD					= 83,		/**< OOP_OMD_U			*/
-	DT_TI					= 84,		/**<  ±º‰º‰∏Ù			*/
-	DT_TSA					= 85,		/**< …Ë±∏µÿ÷∑			*/
-	DT_MAC					= 86,		/**< OOP_MAC_T«©√˚		*/
-	DT_RN					= 87,		/**< ÀÊª˙ ˝				*/
-	DT_REGION				= 88,		/**< «¯º‰¿‡–Õ			*/
-	DT_SCALER_UNIT			= 89,		/**< ªªÀ„µ•Œª			*/
-	DT_RSD					= 90,		/**< ––—°‘Ò∑˚			*/
-	DT_CSD					= 91,		/**< ¡–—°‘Ò∑˚			*/
-	DT_MS					= 92,		/**< µÁƒ‹±ÌºØ∫œ			*/
-	DT_SID                  = 93,       /**< ∞≤»´±Í ∂			*/
-    DT_SIDMAC               = 94,       /**< ∞≤»´±Í ∂+OOP_MAC_T	*/
-	DT_COMDCB				= 95,		/**< ¥Æø⁄Õ®—∂øÿ÷∆øÈ		*/
-	DT_RCSD					= 96,		/**< º«¬º¡–—°‘Ò√Ë ˆ∑˚	*/	
-	DT_VQDS 				= 97,		/**< ¥¯∆∑÷ µƒ±‰ÃÂ ˝æ›¿‡–Õ	*/
-	DT_UNKNOW				= 255		/**< Œ¥÷™				*/
+	DT_TI					= 84,		/**< Êó∂Èó¥Èó¥Èöî			*/
+	DT_TSA					= 85,		/**< ËÆæÂ§áÂú∞ÂùÄ			*/
+	DT_MAC					= 86,		/**< OOP_MAC_TÁ≠æÂêç		*/
+	DT_RN					= 87,		/**< ÈöèÊú∫Êï∞				*/
+	DT_REGION				= 88,		/**< Âå∫Èó¥Á±ªÂûã			*/
+	DT_SCALER_UNIT			= 89,		/**< Êç¢ÁÆóÂçï‰Ωç			*/
+	DT_RSD					= 90,		/**< Ë°åÈÄâÊã©Á¨¶			*/
+	DT_CSD					= 91,		/**< ÂàóÈÄâÊã©Á¨¶			*/
+	DT_MS					= 92,		/**< ÁîµËÉΩË°®ÈõÜÂêà			*/
+	DT_SID                  = 93,       /**< ÂÆâÂÖ®Ê†áËØÜ			*/
+    DT_SIDMAC               = 94,       /**< ÂÆâÂÖ®Ê†áËØÜ+OOP_MAC_T	*/
+	DT_COMDCB				= 95,		/**< ‰∏≤Âè£ÈÄöËÆØÊéßÂà∂Âùó		*/
+	DT_RCSD					= 96,		/**< ËÆ∞ÂΩïÂàóÈÄâÊã©ÊèèËø∞Á¨¶	*/	
+	DT_VQDS 				= 97,		/**< Â∏¶ÂìÅË¥®ÁöÑÂèò‰ΩìÊï∞ÊçÆÁ±ªÂûã	*/
+	DT_UNKNOW				= 255		/**< Êú™Áü•				*/
 }OOP_DATATYPE_E;
 
-/** @brief Ω”ø⁄¿‡√∂æŸ	*/
+/** @brief Êé•Âè£Á±ªÊûö‰∏æ	*/
 typedef enum tag_OOP_CLASS
 {
-	OOC_ENERGY				= 1,		/**< µÁƒ‹¡ø¿‡				*/
-	OOC_DEMAND				= 2,		/**< ◊Ó¥Û–Ë¡ø¿‡				*/
-	OOC_PHASEDATA			= 3,		/**< ∑÷œ‡±‰¡ø¿‡				*/
-	OOC_POWER				= 4,		/**< π¶¬ ¿‡					*/
-	OOC_HARMONIC			= 5,		/**< –≥≤®¿‡					*/
-	OOC_DATA				= 6,		/**<  ˝æ›±‰¡ø¿‡				*/
-	OOC_EVENT				= 7,		/**<  ¬º˛±‰¡ø¿‡				*/
-	OOC_PARAM				= 8,		/**< ≤Œ ˝±‰¡ø¿‡				*/
-	OOC_FROZEN				= 9,		/**< ∂≥Ω·±‰¡ø¿‡				*/
-	OOC_COLLECT				= 10,		/**< ≤…ºØº‡øÿ¿‡				*/
-	OOC_ARRAY				= 11,		/**< ºØ∫œΩ”ø⁄¿‡				*/
-	OOC_PULSE				= 12,		/**< ÷˜∂Ø…œ±®Ω”ø⁄¿‡			*/
-	OOC_CONTROL				= 13,		/**< øÿ÷∆Ω”ø⁄¿‡				*/
-	OOC_REGION				= 14,		/**< «¯º‰≥¨œﬁÕ≥º∆¿‡			*/
-	OOC_RECKON				= 15,		/**< ¿€º”∆Ωæ˘¿‡				*/
-	OOC_EXTREME				= 16,		/**< º´÷µπ§æﬂ¿‡				*/
-	OOC_DISPLAY				= 17,		/**< œ‘ æΩ”ø⁄¿‡				*/
-	OOC_FTP					= 18,		/**< FTPΩ”ø⁄¿‡				*/
-	OOC_DEVICEMANAGE		= 19,		/**< …Ë±∏π‹¿ÌΩ”ø⁄¿‡			*/
-	OOC_ASSOCIATION			= 20,		/**< ”¶”√¡¨Ω”Ω”ø⁄¿‡			*/
-	OOC_ESAM				= 21,		/**< ESAMΩ”ø⁄¿‡				*/
-	OOC_IO					= 22,		/**<  ‰»Î ‰≥ˆΩ”ø⁄¿‡			*/
-	OOC_TG					= 23,		/**< ◊‹º”◊ÈΩ”ø⁄¿‡			*/
-	OOC_MULTIEVENT			= 24,		/**< ∑÷œÓ ¬º˛¿‡				*/
-	OOC_GPRS				= 25,		/**< Œﬁœﬂπ´Õ¯Ω”ø⁄¿‡			*/
-	OOC_ETHERNET			= 26,		/**< “‘Ã´Õ¯Ω”ø⁄¿‡			*/
-	OOC_MAXNUM				= 27		/**< ◊Ó¥ÛΩ”ø⁄¿‡ ˝¡ø			*/
+	OOC_ENERGY				= 1,		/**< ÁîµËÉΩÈáèÁ±ª				*/
+	OOC_DEMAND				= 2,		/**< ÊúÄÂ§ßÈúÄÈáèÁ±ª				*/
+	OOC_PHASEDATA			= 3,		/**< ÂàÜÁõ∏ÂèòÈáèÁ±ª				*/
+	OOC_POWER				= 4,		/**< ÂäüÁéáÁ±ª					*/
+	OOC_HARMONIC			= 5,		/**< Ë∞êÊ≥¢Á±ª					*/
+	OOC_DATA				= 6,		/**< Êï∞ÊçÆÂèòÈáèÁ±ª				*/
+	OOC_EVENT				= 7,		/**< ‰∫ã‰ª∂ÂèòÈáèÁ±ª				*/
+	OOC_PARAM				= 8,		/**< ÂèÇÊï∞ÂèòÈáèÁ±ª				*/
+	OOC_FROZEN				= 9,		/**< ÂÜªÁªìÂèòÈáèÁ±ª				*/
+	OOC_COLLECT				= 10,		/**< ÈááÈõÜÁõëÊéßÁ±ª				*/
+	OOC_ARRAY				= 11,		/**< ÈõÜÂêàÊé•Âè£Á±ª				*/
+	OOC_PULSE				= 12,		/**< ‰∏ªÂä®‰∏äÊä•Êé•Âè£Á±ª			*/
+	OOC_CONTROL				= 13,		/**< ÊéßÂà∂Êé•Âè£Á±ª				*/
+	OOC_REGION				= 14,		/**< Âå∫Èó¥Ë∂ÖÈôêÁªüËÆ°Á±ª			*/
+	OOC_RECKON				= 15,		/**< Á¥ØÂä†Âπ≥ÂùáÁ±ª				*/
+	OOC_EXTREME				= 16,		/**< ÊûÅÂÄºÂ∑•ÂÖ∑Á±ª				*/
+	OOC_DISPLAY				= 17,		/**< ÊòæÁ§∫Êé•Âè£Á±ª				*/
+	OOC_FTP					= 18,		/**< FTPÊé•Âè£Á±ª				*/
+	OOC_DEVICEMANAGE		= 19,		/**< ËÆæÂ§áÁÆ°ÁêÜÊé•Âè£Á±ª			*/
+	OOC_ASSOCIATION			= 20,		/**< Â∫îÁî®ËøûÊé•Êé•Âè£Á±ª			*/
+	OOC_ESAM				= 21,		/**< ESAMÊé•Âè£Á±ª				*/
+	OOC_IO					= 22,		/**< ËæìÂÖ•ËæìÂá∫Êé•Âè£Á±ª			*/
+	OOC_TG					= 23,		/**< ÊÄªÂä†ÁªÑÊé•Âè£Á±ª			*/
+	OOC_MULTIEVENT			= 24,		/**< ÂàÜÈ°π‰∫ã‰ª∂Á±ª				*/
+	OOC_GPRS				= 25,		/**< Êó†Á∫øÂÖ¨ÁΩëÊé•Âè£Á±ª			*/
+	OOC_ETHERNET			= 26,		/**< ‰ª•Â§™ÁΩëÊé•Âè£Á±ª			*/
+	OOC_MAXNUM				= 27		/**< ÊúÄÂ§ßÊé•Âè£Á±ªÊï∞Èáè			*/
 }OOP_CLASS_E;
 
-/** @brief ”¶”√ ˝æ›µ•‘™√∂æŸ	*/
+/** @brief Â∫îÁî®Êï∞ÊçÆÂçïÂÖÉÊûö‰∏æ	*/
 typedef enum tag_OOP_TAG
 {
-	OOP_LINK_REQUEST		 	= 1,		/**< ¡¥¬∑Œ¨ª§«Î«Û		*/
-	OOP_CONNECT_REQUEST		 	= 2,		/**< ”¶”√¡¨Ω”«Î«Û		*/
-	OOP_RELEASE_REQUEST		 	= 3,		/**< ∂œø™”¶”√¡¨Ω”«Î«Û	*/
-	OOP_GET_REQUEST			 	= 5,		/**< ∂¡»°«Î«Û			*/
-	OOP_SET_REQUEST			 	= 6,		/**< …Ë÷√«Î«Û			*/
-	OOP_ACTION_REQUEST		 	= 7,		/**< ≤Ÿ◊˜«Î«Û			*/
-	OOP_REPORT_RESPONSE		 	= 8,		/**< ÷˜∂Ø…œ±®”¶¥		*/
-	OOP_PROXY_REQUEST		 	= 9,		/**< ¥˙¿Ì«Î«Û			*/
-	OOP_SECURITY_REQUEST	 	= 16,		/**< ∞≤»´¥´ ‰«Î«Û		*/
-	OOP_CLIENT_ERROR_RESPONSE 	= 110,		/**< øÕªß∂À“Ï≥£œÏ”¶		*/
-	OOP_LINK_RESPONSE		 	= 129,		/**< ¡¥¬∑Œ¨ª§œÏ”¶		*/
-	OOP_CONNECT_RESPONSE	 	= 130,		/**< ”¶”√¡¨Ω””¶¥		*/
-	OOP_RELEASE_RESPONSE	 	= 131,		/**< ∂œø™”¶”√¡¨Ω””¶¥	*/
-	OOP_RELEASE_NOTIFICATION 	= 132,		/**< ∂œø™”¶”√¡¨Ω”Õ®÷™	*/
-	OOP_GET_RESPONSE		 	= 133,		/**< ∂¡»°”¶¥			*/
-	OOP_SET_RESPONSE		 	= 134,		/**< …Ë÷√”¶¥			*/
-	OOP_ACTION_RESPONSE		 	= 135,		/**< ≤Ÿ◊˜”¶¥			*/
-	OOP_REPORT_NOTIFICATION	 	= 136,		/**< ÷˜∂Ø…œ±®Õ®÷™		*/
-	OOP_PROXY_RESPONSE		 	= 137,		/**< ¥˙¿Ì”¶¥			*/
-	OOP_SECURITY_RESPONSE	 	= 144,		/**< ∞≤»´¥´ ‰”¶¥		*/
-	OOP_SERVER_ERROR_RESPONSE	= 238		/**< ∑˛ŒÒ∆˜∂À“≈≤˙œÏ”¶	*/
+	OOP_LINK_REQUEST		 	= 1,		/**< ÈìæË∑ØÁª¥Êä§ËØ∑Ê±Ç		*/
+	OOP_CONNECT_REQUEST		 	= 2,		/**< Â∫îÁî®ËøûÊé•ËØ∑Ê±Ç		*/
+	OOP_RELEASE_REQUEST		 	= 3,		/**< Êñ≠ÂºÄÂ∫îÁî®ËøûÊé•ËØ∑Ê±Ç	*/
+	OOP_GET_REQUEST			 	= 5,		/**< ËØªÂèñËØ∑Ê±Ç			*/
+	OOP_SET_REQUEST			 	= 6,		/**< ËÆæÁΩÆËØ∑Ê±Ç			*/
+	OOP_ACTION_REQUEST		 	= 7,		/**< Êìç‰ΩúËØ∑Ê±Ç			*/
+	OOP_REPORT_RESPONSE		 	= 8,		/**< ‰∏ªÂä®‰∏äÊä•Â∫îÁ≠î		*/
+	OOP_PROXY_REQUEST		 	= 9,		/**< ‰ª£ÁêÜËØ∑Ê±Ç			*/
+	OOP_SECURITY_REQUEST	 	= 16,		/**< ÂÆâÂÖ®‰º†ËæìËØ∑Ê±Ç		*/
+	OOP_CLIENT_ERROR_RESPONSE 	= 110,		/**< ÂÆ¢Êà∑Á´ØÂºÇÂ∏∏ÂìçÂ∫î		*/
+	OOP_LINK_RESPONSE		 	= 129,		/**< ÈìæË∑ØÁª¥Êä§ÂìçÂ∫î		*/
+	OOP_CONNECT_RESPONSE	 	= 130,		/**< Â∫îÁî®ËøûÊé•Â∫îÁ≠î		*/
+	OOP_RELEASE_RESPONSE	 	= 131,		/**< Êñ≠ÂºÄÂ∫îÁî®ËøûÊé•Â∫îÁ≠î	*/
+	OOP_RELEASE_NOTIFICATION 	= 132,		/**< Êñ≠ÂºÄÂ∫îÁî®ËøûÊé•ÈÄöÁü•	*/
+	OOP_GET_RESPONSE		 	= 133,		/**< ËØªÂèñÂ∫îÁ≠î			*/
+	OOP_SET_RESPONSE		 	= 134,		/**< ËÆæÁΩÆÂ∫îÁ≠î			*/
+	OOP_ACTION_RESPONSE		 	= 135,		/**< Êìç‰ΩúÂ∫îÁ≠î			*/
+	OOP_REPORT_NOTIFICATION	 	= 136,		/**< ‰∏ªÂä®‰∏äÊä•ÈÄöÁü•		*/
+	OOP_PROXY_RESPONSE		 	= 137,		/**< ‰ª£ÁêÜÂ∫îÁ≠î			*/
+	OOP_SECURITY_RESPONSE	 	= 144,		/**< ÂÆâÂÖ®‰º†ËæìÂ∫îÁ≠î		*/
+	OOP_SERVER_ERROR_RESPONSE	= 238		/**< ÊúçÂä°Âô®Á´ØÈÅó‰∫ßÂìçÂ∫î	*/
 }OOP_TAG_E;
 
-#define	OOP_LINK_REQUEST_NAME		 	"¡¥¬∑Œ¨ª§«Î«Û"
-#define	OOP_CONNECT_REQUEST_NAME		"”¶”√¡¨Ω”«Î«Û"
-#define	OOP_RELEASE_REQUEST_NAME		"∂œø™”¶”√¡¨Ω”«Î«Û"
-#define	OOP_GET_REQUEST_NAME			"∂¡»°«Î«Û"
-#define	OOP_SET_REQUEST_NAME			"…Ë÷√«Î«Û"
-#define	OOP_ACTION_REQUEST_NAME			"≤Ÿ◊˜«Î«Û"
-#define	OOP_REPORT_RESPONSE_NAME		"÷˜∂Ø…œ±®”¶¥"
-#define	OOP_PROXY_REQUEST_NAME			"¥˙¿Ì«Î«Û"
-#define	OOP_SECURITY_REQUEST_NAME		"∞≤»´¥´ ‰«Î«Û"
-#define	OOP_LINK_RESPONSE_NAME			"¡¥¬∑Œ¨ª§œÏ”¶"
-#define	OOP_CONNECT_RESPONSE_NAME		"”¶”√¡¨Ω””¶¥"
-#define	OOP_RELEASE_RESPONSE_NAME	 	"∂œø™”¶”√¡¨Ω””¶¥"
-#define	OOP_RELEASE_NOTIFICATION_NAME 	"∂œø™”¶”√¡¨Ω”Õ®÷™"
-#define	OOP_GET_RESPONSE_NAME		 	"∂¡»°”¶¥"
-#define	OOP_SET_RESPONSE_NAME		 	"…Ë÷√”¶¥"
-#define	OOP_ACTION_RESPONSE_NAME		"≤Ÿ◊˜”¶¥"
-#define	OOP_REPORT_NOTIFICATION_NAME	"÷˜∂Ø…œ±®Õ®÷™"
-#define	OOP_PROXY_RESPONSE_NAME		 	"¥˙¿Ì”¶¥"
-#define	OOP_SECURITY_RESPONSE_NAME	 	"∞≤»´¥´ ‰”¶¥"
+#define	OOP_LINK_REQUEST_NAME		 	"ÈìæË∑ØÁª¥Êä§ËØ∑Ê±Ç"
+#define	OOP_CONNECT_REQUEST_NAME		"Â∫îÁî®ËøûÊé•ËØ∑Ê±Ç"
+#define	OOP_RELEASE_REQUEST_NAME		"Êñ≠ÂºÄÂ∫îÁî®ËøûÊé•ËØ∑Ê±Ç"
+#define	OOP_GET_REQUEST_NAME			"ËØªÂèñËØ∑Ê±Ç"
+#define	OOP_SET_REQUEST_NAME			"ËÆæÁΩÆËØ∑Ê±Ç"
+#define	OOP_ACTION_REQUEST_NAME			"Êìç‰ΩúËØ∑Ê±Ç"
+#define	OOP_REPORT_RESPONSE_NAME		"‰∏ªÂä®‰∏äÊä•Â∫îÁ≠î"
+#define	OOP_PROXY_REQUEST_NAME			"‰ª£ÁêÜËØ∑Ê±Ç"
+#define	OOP_SECURITY_REQUEST_NAME		"ÂÆâÂÖ®‰º†ËæìËØ∑Ê±Ç"
+#define	OOP_LINK_RESPONSE_NAME			"ÈìæË∑ØÁª¥Êä§ÂìçÂ∫î"
+#define	OOP_CONNECT_RESPONSE_NAME		"Â∫îÁî®ËøûÊé•Â∫îÁ≠î"
+#define	OOP_RELEASE_RESPONSE_NAME	 	"Êñ≠ÂºÄÂ∫îÁî®ËøûÊé•Â∫îÁ≠î"
+#define	OOP_RELEASE_NOTIFICATION_NAME 	"Êñ≠ÂºÄÂ∫îÁî®ËøûÊé•ÈÄöÁü•"
+#define	OOP_GET_RESPONSE_NAME		 	"ËØªÂèñÂ∫îÁ≠î"
+#define	OOP_SET_RESPONSE_NAME		 	"ËÆæÁΩÆÂ∫îÁ≠î"
+#define	OOP_ACTION_RESPONSE_NAME		"Êìç‰ΩúÂ∫îÁ≠î"
+#define	OOP_REPORT_NOTIFICATION_NAME	"‰∏ªÂä®‰∏äÊä•ÈÄöÁü•"
+#define	OOP_PROXY_RESPONSE_NAME		 	"‰ª£ÁêÜÂ∫îÁ≠î"
+#define	OOP_SECURITY_RESPONSE_NAME	 	"ÂÆâÂÖ®‰º†ËæìÂ∫îÁ≠î"
 
-/** @brief ∂¡»°∑˛ŒÒ¿‡–Õ√∂æŸ	*/
+/** @brief ËØªÂèñÊúçÂä°Á±ªÂûãÊûö‰∏æ	*/
 typedef enum tag_OOP_GET_TYPE
 {
-	OOP_GET_NORMAL				= 1,		/**< ∂¡»°“ª∏ˆ∂‘œÛ Ù–‘						*/
-	OOP_GET_NORMALLIST			= 2,		/**< ∂¡»°∂‡∏ˆ∂‘œÛ Ù–‘						*/
-	OOP_GET_RECORD				= 3,		/**< ∂¡»°“ª∏ˆº«¬º–Õ∂‘œÛ Ù–‘					*/
-	OOP_GET_RECORDLIST			= 4,		/**< ∂¡»°∂‡∏ˆº«¬º–Õ∂‘œÛ Ù–‘					*/
-	OOP_GET_NEXT				= 5,		/**< ∂¡»°∑÷÷°œÏ”¶µƒœ¬“ª∏ˆ ˝æ›øÈ					*/
-	OOP_GET_MD5					= 6,		/**< ∂¡»°“ª∏ˆ∂‘œÛ Ù–‘µƒMD5					*/
-	OOP_GET_SIMPLY				= 23		/**< ∂¡»°“ª∏ˆæ´ºÚµƒº«¬º–Õ∂‘œÛ Ù–‘					*/
+	OOP_GET_NORMAL				= 1,		/**< ËØªÂèñ‰∏Ä‰∏™ÂØπË±°Â±ûÊÄß						*/
+	OOP_GET_NORMALLIST			= 2,		/**< ËØªÂèñÂ§ö‰∏™ÂØπË±°Â±ûÊÄß						*/
+	OOP_GET_RECORD				= 3,		/**< ËØªÂèñ‰∏Ä‰∏™ËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄß					*/
+	OOP_GET_RECORDLIST			= 4,		/**< ËØªÂèñÂ§ö‰∏™ËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄß					*/
+	OOP_GET_NEXT				= 5,		/**< ËØªÂèñÂàÜÂ∏ßÂìçÂ∫îÁöÑ‰∏ã‰∏Ä‰∏™Êï∞ÊçÆÂùó					*/
+	OOP_GET_MD5					= 6,		/**< ËØªÂèñ‰∏Ä‰∏™ÂØπË±°Â±ûÊÄßÁöÑMD5					*/
+	OOP_GET_SIMPLY				= 23		/**< ËØªÂèñ‰∏Ä‰∏™Á≤æÁÆÄÁöÑËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄß					*/
 }OOP_GET_TYPE_E;
 
-/** @brief …Ë÷√∑˛ŒÒ¿‡–Õ√∂æŸ	*/
+/** @brief ËÆæÁΩÆÊúçÂä°Á±ªÂûãÊûö‰∏æ	*/
 typedef enum tag_OOP_SET_TYPE
 {
-	OOP_SET_NORMAL				= 1,		/**< …Ë÷√“ª∏ˆ∂‘œÛ Ù–‘						*/
-	OOP_SET_LIST				= 2,		/**< …Ë÷√∂‡∏ˆ∂‘œÛ Ù–‘						*/
-	OOP_SET_WITHGETLIST			= 3			/**< …Ë÷√∫Û∂¡»°∂‡∏ˆ∂‘œÛ Ù–‘«Î«Û					*/
+	OOP_SET_NORMAL				= 1,		/**< ËÆæÁΩÆ‰∏Ä‰∏™ÂØπË±°Â±ûÊÄß						*/
+	OOP_SET_LIST				= 2,		/**< ËÆæÁΩÆÂ§ö‰∏™ÂØπË±°Â±ûÊÄß						*/
+	OOP_SET_WITHGETLIST			= 3			/**< ËÆæÁΩÆÂêéËØªÂèñÂ§ö‰∏™ÂØπË±°Â±ûÊÄßËØ∑Ê±Ç					*/
 }OOP_SET_TYPE_E;
 
-/** @brief ≤Ÿ◊˜∑˛ŒÒ¿‡–Õ√∂æŸ	*/
+/** @brief Êìç‰ΩúÊúçÂä°Á±ªÂûãÊûö‰∏æ	*/
 typedef enum tag_OOP_ACTION_TYPE
 {
-	OOP_ACTION_NORMAL			= 1,		/**< ≤Ÿ◊˜“ª∏ˆ∂‘œÛ Ù–‘						*/
-	OOP_ACTION_LIST				= 2,		/**< ≤Ÿ◊˜∂‡∏ˆ∂‘œÛ Ù–‘						*/
-	OOP_ACTION_WITHGETLIST		= 3			/**< ≤Ÿ◊˜∫Û∂¡»°∂‡∏ˆ∂‘œÛ Ù–‘«Î«Û					*/
+	OOP_ACTION_NORMAL			= 1,		/**< Êìç‰Ωú‰∏Ä‰∏™ÂØπË±°Â±ûÊÄß						*/
+	OOP_ACTION_LIST				= 2,		/**< Êìç‰ΩúÂ§ö‰∏™ÂØπË±°Â±ûÊÄß						*/
+	OOP_ACTION_WITHGETLIST		= 3			/**< Êìç‰ΩúÂêéËØªÂèñÂ§ö‰∏™ÂØπË±°Â±ûÊÄßËØ∑Ê±Ç					*/
 }OOP_ACTION_TYPE_E;
 
-typedef uint16	OI;						/**< ∂‘œÛ±Í ∂			*/
+typedef uint16	OI;						/**< ÂØπË±°Ê†áËØÜ			*/
 
-/** @brief  ˝æ›ª∫≥Â«¯-128 byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-128 byte	*/
 typedef struct tag_OOP_BUF128
 {
 	int64	buf[128/sizeof(int64)];
 }OOP_BUF128_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-256 byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-256 byte	*/
 typedef struct tag_OOP_BUF256
 {
 	int64	buf[256/sizeof(int64)];
 }OOP_BUF256_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-512 byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-512 byte	*/
 typedef struct tag_OOP_BUF512
 {
 	int64	buf[512/sizeof(int64)];
 }OOP_BUF512_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-1K byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-1K byte	*/
 typedef struct tag_OOP_BUF1K
 {
 	int64	buf[1024/sizeof(int64)];
 }OOP_BUF1K_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-2K byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-2K byte	*/
 typedef struct tag_OOP_BUF2K
 {
 	int64	buf[2048/sizeof(int64)];
 }OOP_BUF2K_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-3K byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-3K byte	*/
 typedef struct tag_OOP_BUF3K
 {
 	int64	buf[1024*3/sizeof(int64)];
 }OOP_BUF3K_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-4K byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-4K byte	*/
 typedef struct tag_OOP_BUF4K
 {
 	int64	buf[1024*4/sizeof(int64)];
 }OOP_BUF4K_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-5K byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-5K byte	*/
 typedef struct tag_OOP_BUF5K
 {
 	int64	buf[1024*5/sizeof(int64)];
 }OOP_BUF5K_T;
 
-/** @brief  ˝æ›ª∫≥Â«¯-8K byte	*/
+/** @brief Êï∞ÊçÆÁºìÂÜ≤Âå∫-8K byte	*/
 typedef struct tag_OOP_BUF8K
 {
 	int64	buf[1024*8/sizeof(int64)];
@@ -236,235 +236,235 @@ typedef struct tag_OOP_BUF8K
 /*
  ********************************************************************
  *																	*
- * 2-Õ®”√ ˝æ›¿‡–Õ∂®“Â		                                        *
+ * 2-ÈÄöÁî®Êï∞ÊçÆÁ±ªÂûãÂÆö‰πâ		                                        *
  *																	*
  ********************************************************************
 */
 
-/** @brief  ˝æ›∑√Œ Ω·π˚√∂æŸ	*/
+/** @brief Êï∞ÊçÆËÆøÈóÆÁªìÊûúÊûö‰∏æ	*/
 typedef enum Data_Access_Result
 {
-	DATA_SUCCESS						= 0,			/**< ≥…π¶					*/
-	DATA_HARDWARE_FAULT					= 1,			/**< ”≤º˛ ß–ß				*/
-	DATA_TEMPORARY_FAILURE				= 2,			/**< ‘› ± ß–ß				*/
-	DATA_READ_WRITE_DENIED				= 3,			/**< æˆæ¯∂¡–¥				*/
-	DATA_OBJECT_UNDEFINED				= 4,			/**< ∂‘œÛŒ¥∂®“Â				*/
-	DATA_OBJECT_CLASS_INCONSISTENT		= 5,			/**< ∂‘œÛΩ”ø⁄¿‡≤ª∑˚∫œ		*/
-	DATA_OBJECT_UNAVAILABLE				= 6,			/**< ∂‘œÛ≤ª¥Ê‘⁄				*/
-	DATA_TYPE_UNMATCHED					= 7,			/**< ¿‡–Õ≤ª∆•≈‰				*/
-	DATA_SCOPE_OF_ACCESS_VIOLATED		= 8,			/**< ‘ΩΩÁ					*/
-	DATA_DATA_BLOCK_UNAVAILABLE			= 9,			/**<  ˝æ›øÈ≤ªø…”√			*/
-	DATA_LONG_GET_ABORTED				= 10,			/**< ∑÷÷°¥´ ‰“—»°œ˚			*/
-	DATA_NO_LONG_GET_IN_PROGRESS		= 11,			/**< ≤ª¥¶”⁄∑÷÷°¥´ ‰◊¥Ã¨		*/
-	DATA_LONG_SET_ABORTED				= 12,			/**< øÈ–¥»°œ˚				*/
-	DATA_NO_LONG_SET_IN_PROGRESS		= 13,			/**< ≤ª¥¶”⁄øÈ–¥◊¥Ã¨			*/
-	DATA_INVALID_BLOCKNO				= 14,			/**<  ˝æ›øÈ–Ú∫≈Œﬁ–ß			*/
-	DATA_PASSWORD_FAILURE				= 15,			/**< √‹¬Î¥Ì/Œ¥ ⁄»®			*/
-	DATA_SPEED_NOACCESS					= 16,			/**< Õ®–≈ÀŸ¬ ≤ªƒ‹∏¸∏ƒ		*/
-	DATA_TIMEZONE_OVER					= 17,			/**< ƒÍ ±«¯ ˝≥¨				*/
-	DATA_TIMEPERIOD_OVER				= 18,			/**< »’ ±∂Œ ˝≥¨				*/
-	DATA_FEERATE_OVER					= 19,			/**< ∑—¬  ˝≥¨				*/
-	DATA_SECURITY_UNMATCHED				= 20,			/**< ∞≤»´»œ÷§≤ª∆•≈‰			*/
-	DATA_RECHARGE_REPEAT				= 21,			/**< ÷ÿ∏¥≥‰÷µ				*/
-	DATA_ESAM_FAILURE					= 22,			/**< ESAM—È÷§ ß∞‹			*/
-	DATA_SECURITY_FAILURE				= 23,			/**< ∞≤»´»œ÷§ ß∞‹			*/
-	DATA_CUSTOMENO_INCONSISTENT			= 24,			/**< øÕªß±‡∫≈≤ª∆•≈‰			*/
-	DATA_RECHARGE_NUM_ERROR				= 25,			/**< ≥‰÷µ¥Œ ˝¥ÌŒÛ			*/
-	DATA_RECHARGE_VALUE_OVER			= 26,			/**< π∫µÁ≥¨∂⁄ª˝				*/
-	DATA_ADDRESS_EXCEPTION				= 27,			/**< µÿ÷∑“Ï≥£				*/
-	DATA_SYMMETRIC_DECRYPTION_FAILURE	= 28,			/**< ∂‘≥∆Ω‚√‹¥ÌŒÛ			*/
-	DATA_ASYMMETRIC_DECRYPTION_FAILURE	= 29,			/**< ∑«∂‘≥∆Ω‚√‹¥ÌŒÛ			*/
-	DATA_SIGNATURE_FAILURE				= 30,			/**< «©√˚¥ÌŒÛ				*/
-	DATA_METER_SUSPEND					= 31,			/**< µÁƒ‹±Ìπ“∆				*/
-	DATA_TIMEFLAG_INVALID				= 32,			/**<  ±º‰±Í«©Œﬁ–ß			*/
-	DATA_REQUEST_TIMEOUT				= 33,			/**< «Î«Û≥¨ ±				*/
-	DATA_ESAM_P1P2_FAILURE				= 34,			/**< ESAMµƒP1P2≤ª’˝»∑		*/
-	DATA_ESAM_LC_FAILURE				= 35,			/**< ESAMµƒLC¥ÌŒÛ			*/
-	DATA_OTHER_REASON					= 255			/**< ∆‰À˚					*/
+	DATA_SUCCESS						= 0,			/**< ÊàêÂäü					*/
+	DATA_HARDWARE_FAULT					= 1,			/**< Á°¨‰ª∂Â§±Êïà				*/
+	DATA_TEMPORARY_FAILURE				= 2,			/**< ÊöÇÊó∂Â§±Êïà				*/
+	DATA_READ_WRITE_DENIED				= 3,			/**< ÂÜ≥ÁªùËØªÂÜô				*/
+	DATA_OBJECT_UNDEFINED				= 4,			/**< ÂØπË±°Êú™ÂÆö‰πâ				*/
+	DATA_OBJECT_CLASS_INCONSISTENT		= 5,			/**< ÂØπË±°Êé•Âè£Á±ª‰∏çÁ¨¶Âêà		*/
+	DATA_OBJECT_UNAVAILABLE				= 6,			/**< ÂØπË±°‰∏çÂ≠òÂú®				*/
+	DATA_TYPE_UNMATCHED					= 7,			/**< Á±ªÂûã‰∏çÂåπÈÖç				*/
+	DATA_SCOPE_OF_ACCESS_VIOLATED		= 8,			/**< Ë∂äÁïå					*/
+	DATA_DATA_BLOCK_UNAVAILABLE			= 9,			/**< Êï∞ÊçÆÂùó‰∏çÂèØÁî®			*/
+	DATA_LONG_GET_ABORTED				= 10,			/**< ÂàÜÂ∏ß‰º†ËæìÂ∑≤ÂèñÊ∂à			*/
+	DATA_NO_LONG_GET_IN_PROGRESS		= 11,			/**< ‰∏çÂ§Ñ‰∫éÂàÜÂ∏ß‰º†ËæìÁä∂ÊÄÅ		*/
+	DATA_LONG_SET_ABORTED				= 12,			/**< ÂùóÂÜôÂèñÊ∂à				*/
+	DATA_NO_LONG_SET_IN_PROGRESS		= 13,			/**< ‰∏çÂ§Ñ‰∫éÂùóÂÜôÁä∂ÊÄÅ			*/
+	DATA_INVALID_BLOCKNO				= 14,			/**< Êï∞ÊçÆÂùóÂ∫èÂè∑Êó†Êïà			*/
+	DATA_PASSWORD_FAILURE				= 15,			/**< ÂØÜÁ†ÅÈîô/Êú™ÊéàÊùÉ			*/
+	DATA_SPEED_NOACCESS					= 16,			/**< ÈÄö‰ø°ÈÄüÁéá‰∏çËÉΩÊõ¥Êîπ		*/
+	DATA_TIMEZONE_OVER					= 17,			/**< Âπ¥Êó∂Âå∫Êï∞Ë∂Ö				*/
+	DATA_TIMEPERIOD_OVER				= 18,			/**< Êó•Êó∂ÊÆµÊï∞Ë∂Ö				*/
+	DATA_FEERATE_OVER					= 19,			/**< Ë¥πÁéáÊï∞Ë∂Ö				*/
+	DATA_SECURITY_UNMATCHED				= 20,			/**< ÂÆâÂÖ®ËÆ§ËØÅ‰∏çÂåπÈÖç			*/
+	DATA_RECHARGE_REPEAT				= 21,			/**< ÈáçÂ§çÂÖÖÂÄº				*/
+	DATA_ESAM_FAILURE					= 22,			/**< ESAMÈ™åËØÅÂ§±Ë¥•			*/
+	DATA_SECURITY_FAILURE				= 23,			/**< ÂÆâÂÖ®ËÆ§ËØÅÂ§±Ë¥•			*/
+	DATA_CUSTOMENO_INCONSISTENT			= 24,			/**< ÂÆ¢Êà∑ÁºñÂè∑‰∏çÂåπÈÖç			*/
+	DATA_RECHARGE_NUM_ERROR				= 25,			/**< ÂÖÖÂÄºÊ¨°Êï∞ÈîôËØØ			*/
+	DATA_RECHARGE_VALUE_OVER			= 26,			/**< Ë¥≠ÁîµË∂ÖÂõ§ÁßØ				*/
+	DATA_ADDRESS_EXCEPTION				= 27,			/**< Âú∞ÂùÄÂºÇÂ∏∏				*/
+	DATA_SYMMETRIC_DECRYPTION_FAILURE	= 28,			/**< ÂØπÁß∞Ëß£ÂØÜÈîôËØØ			*/
+	DATA_ASYMMETRIC_DECRYPTION_FAILURE	= 29,			/**< ÈùûÂØπÁß∞Ëß£ÂØÜÈîôËØØ			*/
+	DATA_SIGNATURE_FAILURE				= 30,			/**< Á≠æÂêçÈîôËØØ				*/
+	DATA_METER_SUSPEND					= 31,			/**< ÁîµËÉΩË°®ÊåÇËµ∑				*/
+	DATA_TIMEFLAG_INVALID				= 32,			/**< Êó∂Èó¥Ê†áÁ≠æÊó†Êïà			*/
+	DATA_REQUEST_TIMEOUT				= 33,			/**< ËØ∑Ê±ÇË∂ÖÊó∂				*/
+	DATA_ESAM_P1P2_FAILURE				= 34,			/**< ESAMÁöÑP1P2‰∏çÊ≠£Á°Æ		*/
+	DATA_ESAM_LC_FAILURE				= 35,			/**< ESAMÁöÑLCÈîôËØØ			*/
+	DATA_OTHER_REASON					= 255			/**< ÂÖ∂‰ªñ					*/
 }OOP_DAR_E;
 
-/** @brief ÷¥–––Ú∫≈∫Õ”≈œ»º∂	*/
+/** @brief ÊâßË°åÂ∫èÂè∑Âíå‰ºòÂÖàÁ∫ß	*/
 typedef union Invoke_ID_And_Priority
 {
 	uint8 value;
 	struct
 	{
-		uint8 invoke_id : 6;			/**< ÷¥–––Ú∫≈		*/
-		uint8 ACD		: 1;			/**< ACDŒª			*/
-		uint8 priority  : 1;			/**< ”≈œ»º∂			*/
+		uint8 invoke_id : 6;			/**< ÊâßË°åÂ∫èÂè∑		*/
+		uint8 ACD		: 1;			/**< ACD‰Ωç			*/
+		uint8 priority  : 1;			/**< ‰ºòÂÖàÁ∫ß			*/
 	};
 }OOP_PIID_U;
 
-/** @brief ≥§ ±º‰∏Ò Ω »’∆⁄- ±º‰	*/
+/** @brief ÈïøÊó∂Èó¥Ê†ºÂºè Êó•Êúü-Êó∂Èó¥	*/
 typedef struct tag_DATETIME
 {
-	uint16	year;		/**< ƒÍ			*/
-	uint8	month;		/**< ‘¬			*/
-	uint8	mday;		/**< »’			*/
-	uint8	wday;		/**< ÷‹			*/
-	uint8	hour;		/**<  ±			*/
-	uint8	minute;		/**< ∑÷			*/
-	uint8	second;		/**< √Î			*/
-	uint16	msec;		/**< ∫¡√Î		*/
+	uint16	year;		/**< Âπ¥			*/
+	uint8	month;		/**< Êúà			*/
+	uint8	mday;		/**< Êó•			*/
+	uint8	wday;		/**< Âë®			*/
+	uint8	hour;		/**< Êó∂			*/
+	uint8	minute;		/**< ÂàÜ			*/
+	uint8	second;		/**< Áßí			*/
+	uint16	msec;		/**< ÊØ´Áßí		*/
 }OOP_DATETIME_T;
 
-/** @brief ∂Ã ±º‰∏Ò Ω »’∆⁄- ±º‰	*/
+/** @brief Áü≠Êó∂Èó¥Ê†ºÂºè Êó•Êúü-Êó∂Èó¥	*/
 typedef struct tag_DATETIME_S
 {
-	uint16	year;		/**< ƒÍ			*/
-	uint8	month;		/**< ‘¬			*/
-	uint8	day;		/**< »’			*/
-	uint8	hour;		/**<  ±			*/
-	uint8	minute;		/**< ∑÷			*/
-	uint8	second;		/**< √Î			*/
-	uint8	week;		/**< ÷‹			*/
+	uint16	year;		/**< Âπ¥			*/
+	uint8	month;		/**< Êúà			*/
+	uint8	day;		/**< Êó•			*/
+	uint8	hour;		/**< Êó∂			*/
+	uint8	minute;		/**< ÂàÜ			*/
+	uint8	second;		/**< Áßí			*/
+	uint8	week;		/**< Âë®			*/
 }OOP_DATETIME_S_T;
 
-/** @brief »’∆⁄	*/
+/** @brief Êó•Êúü	*/
 typedef struct tag_Date
 {
-	uint16	year;		/**< ƒÍ			*/
-	uint8	month;		/**< ‘¬			*/
-	uint8	mday;		/**< »’			*/
-	uint8	wday;		/**< ÷‹			*/
+	uint16	year;		/**< Âπ¥			*/
+	uint8	month;		/**< Êúà			*/
+	uint8	mday;		/**< Êó•			*/
+	uint8	wday;		/**< Âë®			*/
 }OOP_DATE_T;
 
-/** @brief  ±º‰	*/
+/** @brief Êó∂Èó¥	*/
 typedef struct tag_Time
 {
-	uint8	hour;		/**<  ±			*/
-	uint8	minute;		/**< ∑÷			*/
-	uint8	second;		/**< √Î			*/
+	uint8	hour;		/**< Êó∂			*/
+	uint8	minute;		/**< ÂàÜ			*/
+	uint8	second;		/**< Áßí			*/
 }OOP_TIME_T;
 
-/** @brief ∂‘œÛ Ù–‘√Ë ˆ∑˚	*/
+/** @brief ÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶	*/
 typedef union Object_Attribute_Descriptor
 {
-	uint32			value;				/**< OOP_OAD_U÷µ					*/
+	uint32			value;				/**< OOP_OAD_UÂÄº					*/
 	struct
 	{
-		uint8		nIndex;				/**<  Ù–‘ ˝æ›À˜“˝			*/
+		uint8		nIndex;				/**< Â±ûÊÄßÊï∞ÊçÆÁ¥¢Âºï			*/
 		struct
 		{
-			uint8	attID  : 5;			/**<  Ù–‘ID					*/
-			uint8	attPro : 3;			/**<  Ù–‘±Í ∂(”√”⁄ ¬º˛)		*/
+			uint8	attID  : 5;			/**< Â±ûÊÄßID					*/
+			uint8	attPro : 3;			/**< Â±ûÊÄßÊ†áËØÜ(Áî®‰∫é‰∫ã‰ª∂)		*/
 		};
-		OI			nObjID;				/**< ∂‘œÛ±Í ∂				*/
+		OI			nObjID;				/**< ÂØπË±°Ê†áËØÜ				*/
 	};
 }OOP_OAD_U;
 
-/** @brief ∂‘œÛ Ù–‘Ãÿ’˜√Ë ˆ∑˚∂®“Â	*/
+/** @brief ÂØπË±°Â±ûÊÄßÁâπÂæÅÊèèËø∞Á¨¶ÂÆö‰πâ	*/
 typedef enum
 {
-	OOP_ATTPRO_CUR = 0,		/**<  µ ± ˝æ› Ù–‘		*/
-	OOP_ATTRPO_SEC,			/**< √Î∂≥Ω· Ù–‘			*/
-	OOP_ATTPRO_MIN,			/**< ∑÷÷”∂≥Ω· Ù–‘		*/
-	OOP_ATTPRO_HOUR,		/**< –° ±∂≥Ω· Ù–‘		*/
-	OOP_ATTPRO_DAY,			/**< »’∂≥Ω· Ù–‘			*/
-	OOP_ATTPRO_MON,			/**< ‘¬∂≥Ω· Ù–‘			*/
-	OOP_ATTPRO_YEAR,		/**< ƒÍ∂≥Ω· Ù–‘			*/
+	OOP_ATTPRO_CUR = 0,		/**< ÂÆûÊó∂Êï∞ÊçÆÂ±ûÊÄß		*/
+	OOP_ATTRPO_SEC,			/**< ÁßíÂÜªÁªìÂ±ûÊÄß			*/
+	OOP_ATTPRO_MIN,			/**< ÂàÜÈíüÂÜªÁªìÂ±ûÊÄß		*/
+	OOP_ATTPRO_HOUR,		/**< Â∞èÊó∂ÂÜªÁªìÂ±ûÊÄß		*/
+	OOP_ATTPRO_DAY,			/**< Êó•ÂÜªÁªìÂ±ûÊÄß			*/
+	OOP_ATTPRO_MON,			/**< ÊúàÂÜªÁªìÂ±ûÊÄß			*/
+	OOP_ATTPRO_YEAR,		/**< Âπ¥ÂÜªÁªìÂ±ûÊÄß			*/
 }OOP_ATTPRO_E;
 
 //
-// πÿ¡™∂‘œÛ Ù–‘√Ë ˆ∑˚
+// ÂÖ≥ËÅîÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶
 //
 
-#define OOP_MAX_OADS		(16)		/**< º«¬º¡–πÿ¡™OOP_OAD_U◊Ó¥Û∏ˆ ˝			*/
-#define OOP_MAX_CSDS_DEL	(32)		/**< º«¬º¡–◊Ó¥Û∏ˆ ˝(æ…)					*/
-#define OOP_MAX_CSDS		(36)		/**< º«¬º¡–◊Ó¥Û∏ˆ ˝					*/
-#define OOP_MAX_COAD		(64)		/**< ∏¥∫œ–Õ∂‘œÛ◊Ó¥Ûø…∞¸∫¨OOP_OAD_U∏ˆ ˝	*/
-#define OOP_MAX_RCSD		(64)		/**< APDU∑√Œ ◊Ó¥Ûø…¥¯¡–(OOP_CSD_T)∏ˆ ˝	*/
+#define OOP_MAX_OADS		(16)		/**< ËÆ∞ÂΩïÂàóÂÖ≥ËÅîOOP_OAD_UÊúÄÂ§ß‰∏™Êï∞			*/
+#define OOP_MAX_CSDS_DEL	(32)		/**< ËÆ∞ÂΩïÂàóÊúÄÂ§ß‰∏™Êï∞(Êóß)					*/
+#define OOP_MAX_CSDS		(36)		/**< ËÆ∞ÂΩïÂàóÊúÄÂ§ß‰∏™Êï∞					*/
+#define OOP_MAX_COAD		(64)		/**< Â§çÂêàÂûãÂØπË±°ÊúÄÂ§ßÂèØÂåÖÂê´OOP_OAD_U‰∏™Êï∞	*/
+#define OOP_MAX_RCSD		(64)		/**< APDUËÆøÈóÆÊúÄÂ§ßÂèØÂ∏¶Âàó(OOP_CSD_T)‰∏™Êï∞	*/
 
-/** @brief “ª◊È∂‘œÛ Ù–‘√Ë ˆ∑˚(≤Œ ˝)	*/
+/** @brief ‰∏ÄÁªÑÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶(ÂèÇÊï∞)	*/
 typedef struct Object_Attribute_Descriptor_Group
 {
-	uint32		nNum;					/**< πÿ¡™∂‘œÛ Ù–‘∏ˆ ˝			*/
+	uint32		nNum;					/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄß‰∏™Êï∞			*/
 	uint32		rsv;
-	OOP_OAD_U	oad[OOP_MAX_OADS];		/**< πÿ¡™∂‘œÛ Ù–‘¡–±Ì			*/
+	OOP_OAD_U	oad[OOP_MAX_OADS];		/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄßÂàóË°®			*/
 }OOP_OADS_T;
 
-/** @brief º«¬º–Õ∂‘œÛ Ù–‘√Ë ˆ∑˚(≤Œ ˝)	*/
+/** @brief ËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶(ÂèÇÊï∞)	*/
 typedef struct Record_Object_Attribute_Descriptor
 {
-	OOP_OAD_U		oadMain;			/**< ÷˜OOP_OAD_U			*/
-	OOP_OADS_T		oadCols;			/**< πÿ¡™∂‘œÛ Ù–‘			*/
+	OOP_OAD_U		oadMain;			/**< ‰∏ªOOP_OAD_U			*/
+	OOP_OADS_T		oadCols;			/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄß			*/
 }OOP_ROAD_T;
 
-/** @brief ∂‘œÛ∑Ω∑®√Ë ˆ∑˚	*/
+/** @brief ÂØπË±°ÊñπÊ≥ïÊèèËø∞Á¨¶	*/
 typedef union Object_Method_Descriptor
 {
-	uint32		value;		/**< OMD÷µ				*/
+	uint32		value;		/**< OMDÂÄº				*/
 	struct
 	{
-		uint8	nMode;		/**< ≤Ÿ◊˜ƒ£ Ω			*/
-		uint8	nModID;		/**< ∑Ω∑®ID				*/
-		OI		nObjID;		/**< ∂‘œÛ±Í ∂			*/
+		uint8	nMode;		/**< Êìç‰ΩúÊ®°Âºè			*/
+		uint8	nModID;		/**< ÊñπÊ≥ïID				*/
+		OI		nObjID;		/**< ÂØπË±°Ê†áËØÜ			*/
 	};
 }OOP_OMD_U;
 
-/** @brief ¡–¿‡–Õ		*/
+/** @brief ÂàóÁ±ªÂûã		*/
 typedef enum Column_Selection_Type
 {
-	CSD_NORMAL = 0,		/**< ∆’Õ®OOP_OAD_U¿‡–Õ	*/
-	CSD_RECORD = 1		/**< º«¬º–Õ∏¥∫œOOP_OAD_U	*/
+	CSD_NORMAL = 0,		/**< ÊôÆÈÄöOOP_OAD_UÁ±ªÂûã	*/
+	CSD_RECORD = 1		/**< ËÆ∞ÂΩïÂûãÂ§çÂêàOOP_OAD_U	*/
 }OOP_CST_E;
 
-/** @brief ¡–—°‘Ò√Ë ˆ∑˚(≤Œ ˝)	*/
+/** @brief ÂàóÈÄâÊã©ÊèèËø∞Á¨¶(ÂèÇÊï∞)	*/
 typedef struct Column_Selection_Descriptor
 {
-	uint8			choice;		/**< ¿‡–Õ±Í ∂			*/
+	uint8			choice;		/**< Á±ªÂûãÊ†áËØÜ			*/
 	union
 	{
-		OOP_OAD_U	oad;		/**< µ•OOP_OAD_U		*/
-		OOP_ROAD_T	road;		/**< º«¬º–ÕOOP_OAD_U	*/
+		OOP_OAD_U	oad;		/**< ÂçïOOP_OAD_U		*/
+		OOP_ROAD_T	road;		/**< ËÆ∞ÂΩïÂûãOOP_OAD_U	*/
 	};
 }OOP_CSD_T;
 
-/** @brief “ª◊È¡–∂‘œÛ Ù–‘√Ë ˆ∑˚(≤Œ ˝)	*/
+/** @brief ‰∏ÄÁªÑÂàóÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶(ÂèÇÊï∞)	*/
 typedef struct Parm_Column_Selection_Descriptor
 {
-	uint32		nNum;				/**<  ˝◊È¡–µƒ∏ˆ ˝		*/
-	uint32		rsv;				/**< ±£¡Ù				*/
-	OOP_CSD_T	cols[OOP_MAX_CSDS];	/**<  ˝◊È¡–			*/
+	uint32		nNum;				/**< Êï∞ÁªÑÂàóÁöÑ‰∏™Êï∞		*/
+	uint32		rsv;				/**< ‰øùÁïô				*/
+	OOP_CSD_T	cols[OOP_MAX_CSDS];	/**< Êï∞ÁªÑÂàó			*/
 }OOP_PCSD_T;
 
-/** @brief º«¬º–Õ∂‘œÛ Ù–‘√Ë ˆ∑˚(APDU)	*/
+/** @brief ËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶(APDU)	*/
 typedef struct
 {
-	OOP_OAD_U			oadMain;				/**< ÷˜OOP_OAD_U		*/
+	OOP_OAD_U			oadMain;				/**< ‰∏ªOOP_OAD_U		*/
 	struct
 	{
-		uint32			nNum;					/**< πÿ¡™∂‘œÛ Ù–‘∏ˆ ˝		*/
+		uint32			nNum;					/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄß‰∏™Êï∞		*/
 		uint32			rsv;
-		OOP_OAD_U		oad[OOP_MAX_COAD];		/**< πÿ¡™∂‘œÛ Ù–‘¡–±Ì		*/
+		OOP_OAD_U		oad[OOP_MAX_COAD];		/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄßÂàóË°®		*/
 	}oadCols;
 }OOP_COAD_T;
 
-/** @brief ¡–∂‘œÛ Ù–‘√Ë ˆ∑˚(APDU)	*/
+/** @brief ÂàóÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶(APDU)	*/
 typedef struct
 {
-	uint8			choice;		/**< ¿‡–Õ±Í ∂			*/
+	uint8			choice;		/**< Á±ªÂûãÊ†áËØÜ			*/
 	union
 	{
-		OOP_OAD_U	oad;		/**< µ•OOP_OAD_U		*/
-		OOP_COAD_T	road;		/**< º«¬º–ÕOOP_OAD_U		*/
+		OOP_OAD_U	oad;		/**< ÂçïOOP_OAD_U		*/
+		OOP_COAD_T	road;		/**< ËÆ∞ÂΩïÂûãOOP_OAD_U		*/
 	};
 }OOP_CCSD_T;
 
-/** @brief æ´ºÚ«˙œﬂ	*/
+/** @brief Á≤æÁÆÄÊõ≤Á∫ø	*/
 typedef struct
 {
-	OOP_OAD_U		oadMain;				/**< ÷˜OOP_OAD_U		*/
+	OOP_OAD_U		oadMain;				/**< ‰∏ªOOP_OAD_U		*/
 	struct
 	{
-		uint32		nNum;					/**< πÿ¡™∂‘œÛ Ù–‘∏ˆ ˝		*/
+		uint32		nNum;					/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄß‰∏™Êï∞		*/
 		uint32		rsv;
-		OOP_OAD_U	oad[OOP_MAX_COAD];		/**< πÿ¡™∂‘œÛ Ù–‘¡–±Ì		*/
-		uint8		type[OOP_MAX_COAD];		/**< ¡– ˝æ›¿‡–Õ			*/
+		OOP_OAD_U	oad[OOP_MAX_COAD];		/**< ÂÖ≥ËÅîÂØπË±°Â±ûÊÄßÂàóË°®		*/
+		uint8		type[OOP_MAX_COAD];		/**< ÂàóÊï∞ÊçÆÁ±ªÂûã			*/
 	}oadCols;
 }OOP_SOAD_T;
 
-/** @brief ¡–∂‘œÛ Ù–‘√Ë ˆ∑˚ ˝◊È(APDU)	*/
+/** @brief ÂàóÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶Êï∞ÁªÑ(APDU)	*/
 typedef struct Record_Column_Selection_Descriptor
 {
 	uint32		nNum;
@@ -472,7 +472,7 @@ typedef struct Record_Column_Selection_Descriptor
 	OOP_CCSD_T	cols[OOP_MAX_RCSD];
 }OOP_RCSD_T;
 
-/** @brief  ±º‰º‰∏Ùµ•Œª	*/
+/** @brief Êó∂Èó¥Èó¥ÈöîÂçï‰Ωç	*/
 typedef enum tag_Time_Interval_Span
 {
 	TI_SEC	= 0,
@@ -483,56 +483,56 @@ typedef enum tag_Time_Interval_Span
 	TI_YEAR = 5
 }OOP_TI_SPAN_E;
 
-/** @brief  ±º‰º‰∏Ù		*/
+/** @brief Êó∂Èó¥Èó¥Èöî		*/
 typedef struct tag_Time_Interval
 {
-	uint8		unit;					/**< º‰∏Ùµ•Œª(º˚OOP_TI_SPAN_E)	*/
-	uint16		value;					/**< º‰∏Ù÷µ						*/
+	uint8		unit;					/**< Èó¥ÈöîÂçï‰Ωç(ËßÅOOP_TI_SPAN_E)	*/
+	uint16		value;					/**< Èó¥ÈöîÂÄº						*/
 }OOP_TI_T;
 
 //
-// µÿ÷∑”Ú
+// Âú∞ÂùÄÂüü
 //
-#define OOP_TSA_SIZE	(16)			/**< ∑˛ŒÒ∆˜µÿ÷∑◊Ó¥Û≥§∂»			*/
+#define OOP_TSA_SIZE	(16)			/**< ÊúçÂä°Âô®Âú∞ÂùÄÊúÄÂ§ßÈïøÂ∫¶			*/
 
-/** @brief µÿ÷∑”Úµÿ÷∑¿‡–Õ		*/
+/** @brief Âú∞ÂùÄÂüüÂú∞ÂùÄÁ±ªÂûã		*/
 typedef enum tag_AddFlag
 {
-	AF_Single    = 0,			/**< µ•µÿ÷∑			*/
-	AF_Adapter   = 1,			/**< Õ®≈‰µÿ÷∑		*/
-	AF_Group     = 2,			/**< ◊Èµÿ÷∑			*/
-	AF_Broadcast = 3			/**< π„≤•µÿ÷∑		*/
+	AF_Single    = 0,			/**< ÂçïÂú∞ÂùÄ			*/
+	AF_Adapter   = 1,			/**< ÈÄöÈÖçÂú∞ÂùÄ		*/
+	AF_Group     = 2,			/**< ÁªÑÂú∞ÂùÄ			*/
+	AF_Broadcast = 3			/**< ÂπøÊí≠Âú∞ÂùÄ		*/
 }OOP_ADDFLAG_E;
 
-/** @brief µÿ÷∑”Ú±Í÷æ		*/
+/** @brief Âú∞ÂùÄÂüüÊ†áÂøó		*/
 typedef union tag_AF
 {
 	uint8		body;
 	struct
 	{
-		uint8	len	 : 4;				/**< µÿ÷∑≥§∂»			*/
-		uint8	vxd	 : 2;				/**< ¬ﬂº≠µÿ÷∑			*/
-		uint8	type : 2;				/**< µÿ÷∑¿‡–Õ			*/
+		uint8	len	 : 4;				/**< Âú∞ÂùÄÈïøÂ∫¶			*/
+		uint8	vxd	 : 2;				/**< ÈÄªËæëÂú∞ÂùÄ			*/
+		uint8	type : 2;				/**< Âú∞ÂùÄÁ±ªÂûã			*/
 	};
 }OOP_AF_U;
 
-/** @brief µÿ÷∑”Ú±Í÷æ¿©’π		*/
+/** @brief Âú∞ÂùÄÂüüÊ†áÂøóÊâ©Â±ï		*/
 typedef union tag_AF_EX
 {
 	uint8		body;
 	struct
 	{
-		uint8	len		: 4;				/**< µÿ÷∑≥§∂»								*/
-		uint8	vxdl	: 1;				/**< bit4»°÷µ0∫Õ1∑÷±±Ì æ¬ﬂº≠µÿ÷∑0∫Õ1			*/
-		uint8	vxdh	: 1;				/**< ”–¿©’π¬ﬂº≠µÿ÷∑							*/
-		uint8	type	: 2;				/**< µÿ÷∑¿‡–Õ								*/
+		uint8	len		: 4;				/**< Âú∞ÂùÄÈïøÂ∫¶								*/
+		uint8	vxdl	: 1;				/**< bit4ÂèñÂÄº0Âíå1ÂàÜÂà´Ë°®Á§∫ÈÄªËæëÂú∞ÂùÄ0Âíå1			*/
+		uint8	vxdh	: 1;				/**< ÊúâÊâ©Â±ïÈÄªËæëÂú∞ÂùÄ							*/
+		uint8	type	: 2;				/**< Âú∞ÂùÄÁ±ªÂûã								*/
 	};
 }OOP_AF_EX_U;
 
 /**
- * @brief ƒø±Í∑˛ŒÒ∆˜µÿ÷∑		
+ * @brief ÁõÆÊ†áÊúçÂä°Âô®Âú∞ÂùÄ		
  * @note
- *		µÁƒ‹±Ìµÿ÷∑ «1£¨µÿ÷∑”Ú(add)≈≈¡–À≥–Ú»Áœ¬
+ *		ÁîµËÉΩË°®Âú∞ÂùÄÊòØ1ÔºåÂú∞ÂùÄÂüü(add)ÊéíÂàóÈ°∫Â∫èÂ¶Ç‰∏ã
  *      OOP_TSA_T.len = 5
  *      OOP_TSA_T.add[0] = 0x00;
  *      OOP_TSA_T.add[1] = 0x00;
@@ -548,36 +548,36 @@ typedef struct Target_Server_Address
 		uint8		af;
 		struct
 		{
-			uint8	len	 : 4;		/**< µÿ÷∑≥§∂»»°÷µ∑∂Œß£∫0°≠15£¨∂‘”¶±Ì æ1°≠16∏ˆ◊÷Ω⁄≥§∂»					*/
-			uint8	vxd	 : 2;		/**< ¬ﬂº≠µÿ÷∑														*/
-			uint8	type : 2;		/**< µÿ÷∑¿‡–Õ0±Ì æµ•µÿ÷∑£¨1±Ì æÕ®≈‰µÿ÷∑£¨2±Ì æ◊Èµÿ÷∑£¨3±Ì æπ„≤•µÿ÷∑	*/
+			uint8	len	 : 4;		/**< Âú∞ÂùÄÈïøÂ∫¶ÂèñÂÄºËåÉÂõ¥Ôºö0‚Ä¶15ÔºåÂØπÂ∫îË°®Á§∫1‚Ä¶16‰∏™Â≠óËäÇÈïøÂ∫¶					*/
+			uint8	vxd	 : 2;		/**< ÈÄªËæëÂú∞ÂùÄ														*/
+			uint8	type : 2;		/**< Âú∞ÂùÄÁ±ªÂûã0Ë°®Á§∫ÂçïÂú∞ÂùÄÔºå1Ë°®Á§∫ÈÄöÈÖçÂú∞ÂùÄÔºå2Ë°®Á§∫ÁªÑÂú∞ÂùÄÔºå3Ë°®Á§∫ÂπøÊí≠Âú∞ÂùÄ	*/
 		};
 	};
-	uint8 add[OOP_TSA_SIZE];		/**< µÿ÷∑”Ú			*/
+	uint8 add[OOP_TSA_SIZE];		/**< Âú∞ÂùÄÂüü			*/
 }OOP_TSA_T;
 
-/** @brief ∑˛ŒÒ∆˜µÿ÷∑		*/
+/** @brief ÊúçÂä°Âô®Âú∞ÂùÄ		*/
 typedef struct tag_SA
 {
 	uint8	len;
 	uint8	add[OOP_TSA_SIZE];
 }OOP_SA_T;
 
-/** @brief ªªÀ„∫Õµ•Œª		*/
+/** @brief Êç¢ÁÆóÂíåÂçï‰Ωç		*/
 typedef struct tag_Scaler_Unit
 {
-	uint8	unit;			/**< µ•Œª			*/
-	int8	scaler;			/**< ªªÀ„“Ú◊”		*/
+	uint8	unit;			/**< Âçï‰Ωç			*/
+	int8	scaler;			/**< Êç¢ÁÆóÂõ†Â≠ê		*/
 }OOP_SCALER_UNIT_T;
 
-/** @brief  ±º‰¥¡–≈œ¢		*/
+/** @brief Êó∂Èó¥Êà≥‰ø°ÊÅØ		*/
 typedef struct tag_TimeFlag
 {
-	OOP_DATETIME_S_T	tmSend;		/**< ∑¢ÀÕ ±º‰			*/
-	OOP_TI_T			tmDelay;	/**< —” ± ±º‰			*/
+	OOP_DATETIME_S_T	tmSend;		/**< ÂèëÈÄÅÊó∂Èó¥			*/
+	OOP_TI_T			tmDelay;	/**< Âª∂Êó∂Êó∂Èó¥			*/
 }OOP_TIMEFLAG_T;
 
-/** @brief ≤®Ãÿ¬ ∂®“Â	*/
+/** @brief Ê≥¢ÁâπÁéáÂÆö‰πâ	*/
 typedef enum tag_OOP_BAUD
 {
 	BPS300		= 0,
@@ -591,10 +591,10 @@ typedef enum tag_OOP_BAUD
 	BPS38400	= 8,
 	BPS57600	= 9,
 	BPS115200	= 10,
-	BPSDEF		= 255	/**< ◊‘  ”¶			*/
+	BPSDEF		= 255	/**< Ëá™ÈÄÇÂ∫î			*/
 }OOP_BAUD_E;
 
-/** @brief –£—ÈŒª	*/
+/** @brief Ê†°È™å‰Ωç	*/
 typedef enum tag_OOP_PARITY
 {
 	NoParity   = 0,
@@ -602,7 +602,7 @@ typedef enum tag_OOP_PARITY
 	EvenParity = 2
 }OOP_PARITY_E;
 
-/** @brief  ˝æ›Œª	*/
+/** @brief Êï∞ÊçÆ‰Ωç	*/
 typedef enum tag_OOP_DataBits
 {
 	DB5 = 5,
@@ -611,61 +611,61 @@ typedef enum tag_OOP_DataBits
 	DB8 = 8
 }OOP_DATABITS_E;
 
-/** @brief	Õ£÷πŒª	*/
+/** @brief	ÂÅúÊ≠¢‰Ωç	*/
 typedef enum tag_OOP_StopBits
 {
 	STOPBIT1 = 1,
 	STOPBIT2 = 2
 }OOP_STOPBITS_E;
 
-/** @brief ¡˜øÿ	*/
+/** @brief ÊµÅÊéß	*/
 typedef enum tag_OOP_FlowCtrl
 {
-	FLOWCTRL_NONE = 0,	/**< Œﬁ				*/
-	FLOWCTRL_HARD = 1,	/**< ”≤º˛¡˜øÿ		*/
-	FLOWCTRL_SOFT = 2	/**< ◊‘  ”¶			*/
+	FLOWCTRL_NONE = 0,	/**< Êó†				*/
+	FLOWCTRL_HARD = 1,	/**< Á°¨‰ª∂ÊµÅÊéß		*/
+	FLOWCTRL_SOFT = 2	/**< Ëá™ÈÄÇÂ∫î			*/
 }OOP_FLOWCTRL_E;
 
 /*
 *********************************************************************
- OOP_COMDCB_T°À=SEQUENCE
+ OOP_COMDCB_T‚à∑=SEQUENCE
  {
-	≤®Ãÿ¬     ENUMERATED
+	Ê≥¢ÁâπÁéá    ENUMERATED
 	{
-		300bps(0)£¨	600bps(1)£¨	  1200bps(2)£¨
-		2400bps(3)£¨  4800bps(4)£¨    7200bps(5)£¨
-		9600bps(6)£¨  19200bps(7)£¨   38400bps(8)£¨
-		57600bps(9)£¨ 115200bps(10)£¨ ◊‘  ”¶(255)
-	}£¨
-	–£—ÈŒª  ENUMERATED {Œﬁ–£—È(0)£¨∆Ê–£—È(1)£¨≈º–£—È(2)}£¨
-	 ˝æ›Œª  ENUMERATED {5(5)£¨6(6)£¨7(7)£¨8(8)}£¨
-	Õ£÷πŒª  ENUMERATED {1(1)£¨2(2)}£¨
-	¡˜øÿ	ENUMERATED {Œﬁ(0)£¨”≤º˛(1)£¨»Ìº˛(2)}
+		300bps(0)Ôºå	600bps(1)Ôºå	  1200bps(2)Ôºå
+		2400bps(3)Ôºå  4800bps(4)Ôºå    7200bps(5)Ôºå
+		9600bps(6)Ôºå  19200bps(7)Ôºå   38400bps(8)Ôºå
+		57600bps(9)Ôºå 115200bps(10)Ôºå Ëá™ÈÄÇÂ∫î(255)
+	}Ôºå
+	Ê†°È™å‰Ωç  ENUMERATED {Êó†Ê†°È™å(0)ÔºåÂ•áÊ†°È™å(1)ÔºåÂÅ∂Ê†°È™å(2)}Ôºå
+	Êï∞ÊçÆ‰Ωç  ENUMERATED {5(5)Ôºå6(6)Ôºå7(7)Ôºå8(8)}Ôºå
+	ÂÅúÊ≠¢‰Ωç  ENUMERATED {1(1)Ôºå2(2)}Ôºå
+	ÊµÅÊéß	ENUMERATED {Êó†(0)ÔºåÁ°¨‰ª∂(1)ÔºåËΩØ‰ª∂(2)}
  }
 *********************************************************************
 */
 
-/** @brief ¥Æø⁄Õ®–≈øÿ÷∆øÈ	*/
+/** @brief ‰∏≤Âè£ÈÄö‰ø°ÊéßÂà∂Âùó	*/
 typedef struct tag_ComDCB
 {
-	uint8	baud;			/**< ≤®Ãÿ¬ 				*/
-	uint8	parity;			/**< –£—ÈŒª				*/
-	uint8	databits;		/**<  ˝æ›Œª				*/
-	uint8	stopbits;		/**< Õ£÷πŒª				*/
-	uint8	flowctrl;		/**< ¡˜øÿ				*/
+	uint8	baud;			/**< Ê≥¢ÁâπÁéá				*/
+	uint8	parity;			/**< Ê†°È™å‰Ωç				*/
+	uint8	databits;		/**< Êï∞ÊçÆ‰Ωç				*/
+	uint8	stopbits;		/**< ÂÅúÊ≠¢‰Ωç				*/
+	uint8	flowctrl;		/**< ÊµÅÊéß				*/
 }OOP_COMDCB_T;
 
-// ◊Ó¥Û…œ±®Õ®µ¿
+// ÊúÄÂ§ß‰∏äÊä•ÈÄöÈÅì
 #define OOP_MAX_CHANNEL	(4)
 
 //
-// µÁ±ÌºØ∫œ
+// ÁîµË°®ÈõÜÂêà
 //
 
-#define OOP_MAX_MSPARAM		(32)	/**< µÁ±ÌºØ∫œ ˝			*/
-#define OOP_MAX_MSREAD		(128)	/**< µÁ±ÌºØ≥≠∂¡∫œ ˝	*/
+#define OOP_MAX_MSPARAM		(32)	/**< ÁîµË°®ÈõÜÂêàÊï∞			*/
+#define OOP_MAX_MSREAD		(128)	/**< ÁîµË°®ÈõÜÊäÑËØªÂêàÊï∞	*/
 
-/** @brief “ª◊È”√ªß¿‡–Õ		*/
+/** @brief ‰∏ÄÁªÑÁî®Êà∑Á±ªÂûã		*/
 typedef struct Meter_Set_Type
 {
 	uint16	size;
@@ -678,7 +678,7 @@ typedef struct Meter_Coll_Type
 	uint8	type[OOP_MAX_MSREAD];
 }OOP_MCT_T;
 
-/** @brief “ª◊È”√ªßµÿ÷∑		*/
+/** @brief ‰∏ÄÁªÑÁî®Êà∑Âú∞ÂùÄ		*/
 typedef struct Meter_Set_Add
 {
 	uint16		size;
@@ -691,7 +691,7 @@ typedef struct Meter_Coll_Add
 	OOP_TSA_T  add[OOP_MAX_MSREAD];
 } OOP_MCA_T;
 
-/** @brief “ª◊È”√ªß≈‰÷√–Ú∫≈		*/
+/** @brief ‰∏ÄÁªÑÁî®Êà∑ÈÖçÁΩÆÂ∫èÂè∑		*/
 typedef struct Meter_Set_Index
 {
 	uint16 size;
@@ -704,7 +704,7 @@ typedef struct Meter_Coll_Index
 	uint16 idx[OOP_MAX_MSREAD];
 }OOP_MCI_T;
 
-/** @brief ”√ªß¿‡–Õ«¯º‰		*/
+/** @brief Áî®Êà∑Á±ªÂûãÂå∫Èó¥		*/
 typedef struct Meter_Region_Type
 {
 	uint8	nType;
@@ -712,7 +712,7 @@ typedef struct Meter_Region_Type
 	uint8	end;
 }OOP_MRT_T;
 
-/** @brief ”√ªßµÿ÷∑«¯º‰		*/
+/** @brief Áî®Êà∑Âú∞ÂùÄÂå∫Èó¥		*/
 typedef struct Meter_Region_TSA
 {
 	uint8		nType;
@@ -720,7 +720,7 @@ typedef struct Meter_Region_TSA
 	OOP_TSA_T	end;
 }OOP_MRA_T;
 
-/** @brief ”√ªß≈‰÷√–Ú∫≈«¯º‰		*/
+/** @brief Áî®Êà∑ÈÖçÁΩÆÂ∫èÂè∑Âå∫Èó¥		*/
 typedef struct Meter_Region_Index
 {
 	uint8	nType;
@@ -728,7 +728,7 @@ typedef struct Meter_Region_Index
 	uint16	end;
 }OOP_MRI_T;
 
-/** @brief “ª◊È”√ªß¿‡–Õ«¯º‰		*/
+/** @brief ‰∏ÄÁªÑÁî®Êà∑Á±ªÂûãÂå∫Èó¥		*/
 typedef struct Meter_Set_Region_Type
 {
 	uint16		size;
@@ -741,7 +741,7 @@ typedef struct Meter_Coll_Region_Type
 	OOP_MRT_T	region[OOP_MAX_MSREAD];
 }OOP_MCRT_T;
 
-/** @brief “ª◊È”√ªßµÿ÷∑«¯º‰		*/
+/** @brief ‰∏ÄÁªÑÁî®Êà∑Âú∞ÂùÄÂå∫Èó¥		*/
 typedef struct Meter_Set_Region_TSA
 {
 	uint16		size;
@@ -754,7 +754,7 @@ typedef struct Meter_Coll_Region_TSA
 	OOP_MRA_T	region[OOP_MAX_MSREAD];
 }OOP_MCRA_T;
 
-/** @brief “ª◊È”√ªß≈‰÷√–Ú∫≈«¯º‰		*/
+/** @brief ‰∏ÄÁªÑÁî®Êà∑ÈÖçÁΩÆÂ∫èÂè∑Âå∫Èó¥		*/
 typedef struct Meter_Set_Region_Index
 {
 	uint16		size;
@@ -767,50 +767,50 @@ typedef struct Meter_Coll_Region_Index
 	OOP_MRI_T	region[OOP_MAX_MSREAD];
 }OOP_MCRI_T;
 
-/** @brief µÁƒ‹±Ì—°‘Ò¿‡–Õ	*/
+/** @brief ÁîµËÉΩË°®ÈÄâÊã©Á±ªÂûã	*/
 typedef enum tag_MS_CHOICE
 {
-	MS_NULL			= 0,	/**< ŒﬁµÁƒ‹±Ì				*/
-	MS_ALL			= 1,	/**< À˘”–µÁƒ‹±Ì				*/
-	MS_TYPE			= 2,	/**< ”√ªß¿‡–Õ				*/
-	MS_TSA			= 3,	/**< ”√ªßµÿ÷∑				*/
-	MS_INDEX		= 4,	/**< ”√ªß–Ú∫≈				*/
-	MS_REGION_TYPE	= 5,	/**< ”√ªß¿‡–Õ«¯º‰			*/
-	MS_REGION_TSA	= 6,	/**< ”√ªßµÿ÷∑«¯º‰			*/
-	MS_REGION_IDX	= 7		/**< ”√ªß–Ú∫≈«¯º‰			*/
+	MS_NULL			= 0,	/**< Êó†ÁîµËÉΩË°®				*/
+	MS_ALL			= 1,	/**< ÊâÄÊúâÁîµËÉΩË°®				*/
+	MS_TYPE			= 2,	/**< Áî®Êà∑Á±ªÂûã				*/
+	MS_TSA			= 3,	/**< Áî®Êà∑Âú∞ÂùÄ				*/
+	MS_INDEX		= 4,	/**< Áî®Êà∑Â∫èÂè∑				*/
+	MS_REGION_TYPE	= 5,	/**< Áî®Êà∑Á±ªÂûãÂå∫Èó¥			*/
+	MS_REGION_TSA	= 6,	/**< Áî®Êà∑Âú∞ÂùÄÂå∫Èó¥			*/
+	MS_REGION_IDX	= 7		/**< Áî®Êà∑Â∫èÂè∑Âå∫Èó¥			*/
 }OOP_MS_CHOICE_E;
 
-/** @brief µÁ±ÌºØ∫œ(≤Œ ˝)	*/
+/** @brief ÁîµË°®ÈõÜÂêà(ÂèÇÊï∞)	*/
 typedef struct Meter_Set_Param
 {
-	uint8				choice;		/**< choice = 0(ŒﬁµÁƒ‹±Ì)				*/
-									/**< choice = 1(À˘”–µÁƒ‹±Ì)				*/
+	uint8				choice;		/**< choice = 0(Êó†ÁîµËÉΩË°®)				*/
+									/**< choice = 1(ÊâÄÊúâÁîµËÉΩË°®)				*/
 	union
 	{
 		uint16			size;
-		OOP_MST_T		mst;		/**< choice = 2(“ª◊È”√ªß¿‡–Õ)			*/
-		OOP_MSA_T		msa;		/**< choice = 3(“ª◊È”√ªßµÿ÷∑)			*/
-		OOP_MSI_T		msi;		/**< choice = 4(“ª◊È”√ªß≈‰÷√–Ú∫≈)		*/
-		OOP_MSRT_T		msrt;		/**< choice = 5(“ª◊È”√ªß¿‡–Õ«¯º‰)		*/
-		OOP_MSRA_T		msra;		/**< choice = 6(“ª◊È”√ªßµÿ÷∑«¯º‰)		*/
-		OOP_MSRI_T		msri;		/**< choice = 7(“ª◊È”√ªß–Ú∫≈«¯º‰)		*/
+		OOP_MST_T		mst;		/**< choice = 2(‰∏ÄÁªÑÁî®Êà∑Á±ªÂûã)			*/
+		OOP_MSA_T		msa;		/**< choice = 3(‰∏ÄÁªÑÁî®Êà∑Âú∞ÂùÄ)			*/
+		OOP_MSI_T		msi;		/**< choice = 4(‰∏ÄÁªÑÁî®Êà∑ÈÖçÁΩÆÂ∫èÂè∑)		*/
+		OOP_MSRT_T		msrt;		/**< choice = 5(‰∏ÄÁªÑÁî®Êà∑Á±ªÂûãÂå∫Èó¥)		*/
+		OOP_MSRA_T		msra;		/**< choice = 6(‰∏ÄÁªÑÁî®Êà∑Âú∞ÂùÄÂå∫Èó¥)		*/
+		OOP_MSRI_T		msri;		/**< choice = 7(‰∏ÄÁªÑÁî®Êà∑Â∫èÂè∑Âå∫Èó¥)		*/
 	};
 }OOP_MSP_T;
 
-/** @brief µÁ±ÌºØ∫œ(≥≠∂¡)	*/
+/** @brief ÁîµË°®ÈõÜÂêà(ÊäÑËØª)	*/
 typedef struct Meter_Set_Coll
 {
-	uint8				choice;		/**< choice = 0(ŒﬁµÁƒ‹±Ì)				*/
-									/**< choice = 1(À˘”–µÁƒ‹±Ì)				*/
+	uint8				choice;		/**< choice = 0(Êó†ÁîµËÉΩË°®)				*/
+									/**< choice = 1(ÊâÄÊúâÁîµËÉΩË°®)				*/
 	union
 	{
 		uint16			size;
-		OOP_MCT_T		mst;		/**< choice = 2(“ª◊È”√ªß¿‡–Õ)			*/
-		OOP_MCA_T		msa;		/**< choice = 3(“ª◊È”√ªßµÿ÷∑)			*/
-		OOP_MCI_T		msi;		/**< choice = 4(“ª◊È”√ªß≈‰÷√–Ú∫≈)		*/
-		OOP_MCRT_T		msrt;		/**< choice = 5(“ª◊È”√ªß¿‡–Õ«¯º‰)		*/
-		OOP_MCRA_T		msra;		/**< choice = 6(“ª◊È”√ªßµÿ÷∑«¯º‰)		*/
-		OOP_MCRI_T		msri;		/**< choice = 7(“ª◊È”√ªß–Ú∫≈«¯º‰)		*/
+		OOP_MCT_T		mst;		/**< choice = 2(‰∏ÄÁªÑÁî®Êà∑Á±ªÂûã)			*/
+		OOP_MCA_T		msa;		/**< choice = 3(‰∏ÄÁªÑÁî®Êà∑Âú∞ÂùÄ)			*/
+		OOP_MCI_T		msi;		/**< choice = 4(‰∏ÄÁªÑÁî®Êà∑ÈÖçÁΩÆÂ∫èÂè∑)		*/
+		OOP_MCRT_T		msrt;		/**< choice = 5(‰∏ÄÁªÑÁî®Êà∑Á±ªÂûãÂå∫Èó¥)		*/
+		OOP_MCRA_T		msra;		/**< choice = 6(‰∏ÄÁªÑÁî®Êà∑Âú∞ÂùÄÂå∫Èó¥)		*/
+		OOP_MCRI_T		msri;		/**< choice = 7(‰∏ÄÁªÑÁî®Êà∑Â∫èÂè∑Âå∫Èó¥)		*/
 	};
 }OOP_MSC_T;
 
@@ -876,28 +876,28 @@ typedef struct tag_OOP_VISIBLEVAR32
 	char 	value[32];
 }OOP_VISIBLEVAR32_T;
 
-/** @brief visible-string(±‰≥§)	*/
+/** @brief visible-string(ÂèòÈïø)	*/
 typedef struct tag_OOP_VISIBLESTR
 {
 	uint32	nNum;
 	char	value[64];
 }OOP_VISIBLEVAR_T;
 
-/** @brief visible-string128(±‰≥§)	*/
+/** @brief visible-string128(ÂèòÈïø)	*/
 typedef struct tag_OOP_VISIBLESTR128
 {
 	uint32	nNum;
 	char	value[128];
 }OOP_VISIBLEVAR128_T;
 
-/** @brief visible-string256(±‰≥§)	*/
+/** @brief visible-string256(ÂèòÈïø)	*/
 typedef struct tag_OOP_VISIBLESTR256
 {
 	uint32	nNum;
 	char	value[256];
 }OOP_VISIBLEVAR256_T;
 
-/** @brief visible-string1K(±‰≥§)	*/
+/** @brief visible-string1K(ÂèòÈïø)	*/
 typedef struct tag_OOP_VISIBLESTR1K
 {
 	uint32	nNum;
@@ -940,7 +940,7 @@ typedef struct tag_OOP_OCTETSTR32
 	uint8 nValue[32];
 }OOP_OCTETSTR32_T;
 
-/** @brief octet-string(ø…±‰)	*/
+/** @brief octet-string(ÂèØÂèò)	*/
 typedef struct tag_OOP_OCTETVAR
 {
 	uint32	nNum;
@@ -1059,10 +1059,10 @@ typedef struct tag_OOP_BITSTRV1K
 	uint8	nValue[1024];
 }OOP_BITSTRV1K_T;
 
-/** @brief DT_DATA¿‡–Õ µœ÷	*/
+/** @brief DT_DATAÁ±ªÂûãÂÆûÁé∞	*/
 typedef struct tag_Variant
 {
-	uint8					type;		/**<  ˝æ›¿‡–Õ						*/
+	uint8					type;		/**< Êï∞ÊçÆÁ±ªÂûã						*/
 	union
 	{
 		char				cVal;		/**< DT_INTEGER					*/
@@ -1092,10 +1092,10 @@ typedef struct tag_Variant
 	};
 }OOP_VARIANT_T;
 
-/** @brief VQDS ˝æ›¿‡–Õ	*/
+/** @brief VQDSÊï∞ÊçÆÁ±ªÂûã	*/
 typedef struct tag_VQDS
 {
-	uint8					nChoice;	/**<  ˝æ›¿‡–Õ						*/
+	uint8					nChoice;	/**< Êï∞ÊçÆÁ±ªÂûã						*/
 	union
 	{
 		char				cVal;		/**< DT_INTEGER					*/
@@ -1109,7 +1109,7 @@ typedef struct tag_VQDS
 		float32				fVal;		/**< DT_FLOAT32					*/
 		float64				dbVal;		/**< DT_FLOAT64					*/
 	};
-	OOP_BITSTR8_T			qds;		/**< ∆∑÷ ±Í÷æ				*/
+	OOP_BITSTR8_T			qds;		/**< ÂìÅË¥®Ê†áÂøó				*/
 }OOP_VQDS_T;
 
 /** @brief OOP_RSD_T-selector0	*/
@@ -1134,7 +1134,7 @@ typedef struct tag_Selector2
 	OOP_VARIANT_T	span;
 }OOP_SELECTOR2_T;
 
-#define MAX_SELECTOR2_NUM	(4)	/**<  “ª◊Èselector2µƒ◊Ó¥Û∏ˆ ˝	*/
+#define MAX_SELECTOR2_NUM	(4)	/**<  ‰∏ÄÁªÑselector2ÁöÑÊúÄÂ§ß‰∏™Êï∞	*/
 
 /** @brief OOP_RSD_T-selector3	*/
 typedef struct tag_Selector3
@@ -1256,13 +1256,13 @@ typedef struct tag_Selector11
 	OOP_MSC_T			ms;
 }OOP_SELECTOR11_T;
 
-/** @brief º«¬º––—°‘Ò√Ë ˆ∑˚	*/
+/** @brief ËÆ∞ÂΩïË°åÈÄâÊã©ÊèèËø∞Á¨¶	*/
 typedef struct tag_PRSD
 {
-	uint8					choice;		/**<  OOP_RSD_T—°‘Ò¿‡–Õ			*/
+	uint8					choice;		/**<  OOP_RSD_TÈÄâÊã©Á±ªÂûã			*/
 	union
 	{
-		OOP_SELECTOR1_T		sel0;		/**<  selector0-Œﬁ—°‘Ò		*/
+		OOP_SELECTOR1_T		sel0;		/**<  selector0-Êó†ÈÄâÊã©		*/
 		OOP_SELECTOR1_T		sel1;		/**<  selector1				*/
 		OOP_SELECTOR2_T		sel2;		/**<  selector2				*/
 		OOP_SELECTOR3_T		sel3;		/**<  selector3				*/
@@ -1279,10 +1279,10 @@ typedef struct tag_PRSD
 
 typedef struct tag_RSD
 {
-	uint8					choice;		/**<  OOP_RSD_T—°‘Ò¿‡–Õ			*/
+	uint8					choice;		/**<  OOP_RSD_TÈÄâÊã©Á±ªÂûã			*/
 	union
 	{
-		OOP_SELECTOR1_T		sel0;		/**<  selector0-Œﬁ—°‘Ò		*/
+		OOP_SELECTOR1_T		sel0;		/**<  selector0-Êó†ÈÄâÊã©		*/
 		OOP_SELECTOR1_T		sel1;		/**<  selector1				*/
 		OOP_SELECTOR2_T		sel2;		/**<  selector2				*/
 		OOP_SELECTOR3_T		sel3;		/**<  selector3				*/
@@ -1300,29 +1300,29 @@ typedef struct tag_RSD
 /*
  ********************************************************************
  *																	*
- * 3-APDU ˝æ›µ•‘™∂®“Â		                                        *
+ * 3-APDUÊï∞ÊçÆÂçïÂÖÉÂÆö‰πâ		                                        *
  *																	*
  ********************************************************************
 */
 
 /*
 *********************************************************************
-* 3.1-∞≤»´ ˝æ›¥´ ‰
+* 3.1-ÂÆâÂÖ®Êï∞ÊçÆ‰º†Ëæì
 *********************************************************************
 */
 
-#define OOP_MAC_LEN		(16)	/**< OOP_MAC_Tµƒ≥§∂»		*/
-#define OOP_RN_LEN		(128)	/**< RANDµƒ≥§∂»				*/
-#define OOP_MAX_DSLEN	(128)	/**<  ˝◊÷«©√˚◊Ó¥Û≥§∂»		*/
+#define OOP_MAC_LEN		(16)	/**< OOP_MAC_TÁöÑÈïøÂ∫¶		*/
+#define OOP_RN_LEN		(128)	/**< RANDÁöÑÈïøÂ∫¶				*/
+#define OOP_MAX_DSLEN	(128)	/**< Êï∞Â≠óÁ≠æÂêçÊúÄÂ§ßÈïøÂ∫¶		*/
 
-/** @brief  ˝æ›—È÷§¬Î	*/
+/** @brief Êï∞ÊçÆÈ™åËØÅÁ†Å	*/
 typedef struct tag_MAC
 {
 	uint32 		nDNum;
 	uint8 		data[OOP_MAC_LEN];
 }OOP_MAC_T;
 
-/** @brief ∞≤»´±Í ∂	*/
+/** @brief ÂÆâÂÖ®Ê†áËØÜ	*/
 typedef struct tag_SSID
 {
 	uint32		nKNum;
@@ -1333,14 +1333,14 @@ typedef struct tag_SSID
 	};
 }OOP_SSID_T;
 
-/** @brief ÀÊª˙ ˝	*/
+/** @brief ÈöèÊú∫Êï∞	*/
 typedef struct tag_RN
 {
     uint32	len;
 	uint8	data[OOP_RN_LEN];
 }OOP_RN_T;
 
-/** @brief  ˝◊÷«©√˚	*/
+/** @brief Êï∞Â≠óÁ≠æÂêç	*/
 typedef struct tag_DS
 {
 	uint8 len;
@@ -1349,35 +1349,35 @@ typedef struct tag_DS
 
 /*
 *********************************************************************
-* 3.2-”¶”√¡¨Ω”π‹¿Ì
+* 3.2-Â∫îÁî®ËøûÊé•ÁÆ°ÁêÜ
 *********************************************************************
 */
 
-#define OOP_PWD_LEN				(8)		/**< √‹¬Î”Ú≥§∂»				*/
-#define OOP_MAX_SECURITYINFO	(128)	/**< ∞≤»´–≈œ¢◊Ó¥Û≥§∂»		*/
-#define OOC_MAX_METHODS			(10)	/**< ◊Ó¥Û∑Ω∑®∏ˆ ˝			*/
+#define OOP_PWD_LEN				(8)		/**< ÂØÜÁ†ÅÂüüÈïøÂ∫¶				*/
+#define OOP_MAX_SECURITYINFO	(128)	/**< ÂÆâÂÖ®‰ø°ÊÅØÊúÄÂ§ßÈïøÂ∫¶		*/
+#define OOC_MAX_METHODS			(10)	/**< ÊúÄÂ§ßÊñπÊ≥ï‰∏™Êï∞			*/
 
-/** @brief ∞≤»´»œ÷§º”√‹–≈œ¢	*/
+/** @brief ÂÆâÂÖ®ËÆ§ËØÅÂä†ÂØÜ‰ø°ÊÅØ	*/
 typedef struct tag_SecurityContext
 {
-	uint8		len;							/**< ∞≤»´»œ÷§–≈œ¢≥§∂»	*/
-	uint8		info[OOP_MAX_SECURITYINFO];		/**< ∞≤»´»œ÷§–≈œ¢ƒ⁄»›	*/
-	OOP_DS_T	ds;								/**<  ˝◊÷«©√˚			*/
+	uint8		len;							/**< ÂÆâÂÖ®ËÆ§ËØÅ‰ø°ÊÅØÈïøÂ∫¶	*/
+	uint8		info[OOP_MAX_SECURITYINFO];		/**< ÂÆâÂÖ®ËÆ§ËØÅ‰ø°ÊÅØÂÜÖÂÆπ	*/
+	OOP_DS_T	ds;								/**< Êï∞Â≠óÁ≠æÂêç			*/
 }OOP_SECURITYCONTEXT_T;
 
-/** @brief ∞≤»´»œ÷§¿‡–Õ	*/
+/** @brief ÂÆâÂÖ®ËÆ§ËØÅÁ±ªÂûã	*/
 typedef enum tag_SecurityType
 {
-	SecurityOfNull       = 0,			/**< π´π≤¡¨Ω”			*/
-	SecurityOfPassword   = 1,			/**< “ª∞„√‹¬Î			*/
-	SecurityOfSymmetry   = 2,			/**< ∂‘≥∆º”√‹			*/
-	SecurtiyOfSignature  = 3			/**<  ˝◊÷«©√˚			*/
+	SecurityOfNull       = 0,			/**< ÂÖ¨ÂÖ±ËøûÊé•			*/
+	SecurityOfPassword   = 1,			/**< ‰∏ÄËà¨ÂØÜÁ†Å			*/
+	SecurityOfSymmetry   = 2,			/**< ÂØπÁß∞Âä†ÂØÜ			*/
+	SecurtiyOfSignature  = 3			/**< Êï∞Â≠óÁ≠æÂêç			*/
 }OOP_SECURITYTYPE_E;
 
-/** @brief ∞≤»´»œ÷§∑Ω∞∏	*/
+/** @brief ÂÆâÂÖ®ËÆ§ËØÅÊñπÊ°à	*/
 typedef struct tag_SecurityMechanismInfo
 {
-	uint8						choice;					/**< choice = 0(π´π≤¡¨Ω”)	*/
+	uint8						choice;					/**< choice = 0(ÂÖ¨ÂÖ±ËøûÊé•)	*/
 	union
 	{
 		char					password[OOP_PWD_LEN];	/**< choice = 1				*/
@@ -1386,69 +1386,69 @@ typedef struct tag_SecurityMechanismInfo
 	};
 }OOP_SECURITYMECHANISMINFO_T;
 
-/** @brief ∞≤»´»œ÷§»∑»œ ˝æ›”Ú	*/
+/** @brief ÂÆâÂÖ®ËÆ§ËØÅÁ°ÆËÆ§Êï∞ÊçÆÂüü	*/
 typedef struct tag_SecurityData
 {
-	OOP_RN_T	rand;		/**< ÀÊª˙ ˝			*/
-	OOP_DS_T	ds;			/**<  ˝◊÷«©√˚		*/
+	OOP_RN_T	rand;		/**< ÈöèÊú∫Êï∞			*/
+	OOP_DS_T	ds;			/**< Êï∞Â≠óÁ≠æÂêç		*/
 }OOP_SECURITYDATA_T;
 
-/** @brief ”¶”√¡¨Ω”«Î«Û»œ÷§µƒΩ·π˚	*/
+/** @brief Â∫îÁî®ËøûÊé•ËØ∑Ê±ÇËÆ§ËØÅÁöÑÁªìÊûú	*/
 typedef enum Connect_Result
 {
-	CONNECT_SUCCESS							= 0,			/**< ‘ –ÌΩ®¡¢”¶”√¡¨Ω”	*/
-	CONNECT_PASSWORD_ERROR					= 1,			/**< √‹¬Î¥ÌŒÛ			*/
-	CONNECT_SYMMETRIC_DECRYPTION_FAILURE	= 2,			/**< ∂‘≥∆Ω‚√‹¥ÌŒÛ		*/
-	CONNECT_ASYMMETRIC_DECRYPTION_FAILURE	= 3,			/**< ∑«∂‘≥∆Ω‚√‹¥ÌŒÛ		*/
-	CONNECT_SIGNATURE_FAILURE				= 4,			/**< «©√˚¥ÌŒÛ			*/
-	CONNECT_PROTOCOL_VERSION_UNMATCHED		= 5,			/**< –≠“È∞Ê±æ≤ª∆•≈‰		*/
-	CONNECT_OTHER_REASON					= 255			/**< ∆‰À˚¥ÌŒÛ 			*/
+	CONNECT_SUCCESS							= 0,			/**< ÂÖÅËÆ∏Âª∫Á´ãÂ∫îÁî®ËøûÊé•	*/
+	CONNECT_PASSWORD_ERROR					= 1,			/**< ÂØÜÁ†ÅÈîôËØØ			*/
+	CONNECT_SYMMETRIC_DECRYPTION_FAILURE	= 2,			/**< ÂØπÁß∞Ëß£ÂØÜÈîôËØØ		*/
+	CONNECT_ASYMMETRIC_DECRYPTION_FAILURE	= 3,			/**< ÈùûÂØπÁß∞Ëß£ÂØÜÈîôËØØ		*/
+	CONNECT_SIGNATURE_FAILURE				= 4,			/**< Á≠æÂêçÈîôËØØ			*/
+	CONNECT_PROTOCOL_VERSION_UNMATCHED		= 5,			/**< ÂçèËÆÆÁâàÊú¨‰∏çÂåπÈÖç		*/
+	CONNECT_OTHER_REASON					= 255			/**< ÂÖ∂‰ªñÈîôËØØ 			*/
 }OOP_CR_E;
 
-/** @brief ∞≤»´»œ÷§»∑»œΩ·π˚	*/
+/** @brief ÂÆâÂÖ®ËÆ§ËØÅÁ°ÆËÆ§ÁªìÊûú	*/
 typedef struct tag_SecurityResponseInfo
 {
-	uint8				result;	/**< ∞≤»´»œ÷§Ω·π˚			*/
-	BOOLEAN				bData;	/**<  «∑Ò∞¸∫¨ ˝æ›”Ú			*/
-	OOP_SECURITYDATA_T	data;	/**<  ˝æ›”Úƒ⁄»›				*/
+	uint8				result;	/**< ÂÆâÂÖ®ËÆ§ËØÅÁªìÊûú			*/
+	BOOLEAN				bData;	/**< ÊòØÂê¶ÂåÖÂê´Êï∞ÊçÆÂüü			*/
+	OOP_SECURITYDATA_T	data;	/**< Êï∞ÊçÆÂüüÂÜÖÂÆπ				*/
 }OOP_SECURITYRESPONSEINFO_T;
 
-/** @brief “ª∏ˆ∂‘œÛ∑√Œ »®œﬁ√Ë ˆ	*/
+/** @brief ‰∏Ä‰∏™ÂØπË±°ËÆøÈóÆÊùÉÈôêÊèèËø∞	*/
 typedef struct tag_Object
 {
-	OI			object;							/**< ∂‘œÛOI				*/
-	uint8		nClass;							/**< Ω”ø⁄¿‡				*/
-	uint32		attNoAccess;					/**< ≤ªø…∑√Œ »®œﬁ		*/
-	uint32		attRead;						/**< ÷ª∂¡»®œﬁ			*/
-	uint32		attWrite;						/**< ÷ª–¥»®œﬁ			*/
-	uint32		attReadWrite;					/**< ø…∂¡–¥»®œﬁ			*/
-	uint8		funNum;							/**< ø…÷¥––∑Ω∑®∏ˆ ˝		*/
-	uint8		method[OOC_MAX_METHODS];		/**< ø…÷¥––∑Ω∑®ID		*/
+	OI			object;							/**< ÂØπË±°OI				*/
+	uint8		nClass;							/**< Êé•Âè£Á±ª				*/
+	uint32		attNoAccess;					/**< ‰∏çÂèØËÆøÈóÆÊùÉÈôê		*/
+	uint32		attRead;						/**< Âè™ËØªÊùÉÈôê			*/
+	uint32		attWrite;						/**< Âè™ÂÜôÊùÉÈôê			*/
+	uint32		attReadWrite;					/**< ÂèØËØªÂÜôÊùÉÈôê			*/
+	uint8		funNum;							/**< ÂèØÊâßË°åÊñπÊ≥ï‰∏™Êï∞		*/
+	uint8		method[OOC_MAX_METHODS];		/**< ÂèØÊâßË°åÊñπÊ≥ïID		*/
 }OOP_OBJECT_T;
 
-/** @brief ”¶”√¡¨Ω”∂‘œÛ√Ë ˆ	*/
+/** @brief Â∫îÁî®ËøûÊé•ÂØπË±°ÊèèËø∞	*/
 typedef struct tag_ASSOCIATION
 {
-	uint8			nSecret;					/**< ∞≤»´¿‡–Õ				*/
-	uint32			VER;						/**< –≠“È∞Ê±æ				*/
-	OOP_OBJECT_T*	arrObjs;					/**< ∂‘œÛ¡–±Ì				*/
-	uint16			nCount;						/**< ∂‘œÛ¡–±Ì ˝¡ø			*/
-	uint16			nRecvSize;					/**< ◊Ó¥ÛΩ” ‹APDU≥ﬂ¥Áµ•‘™	*/
-	uint16			nSendSize;					/**< ◊Ó¥Û∑¢ÀÕAPDU≥ﬂ¥Áµ•‘™	*/
-	uint8			nPDUWindows;				/**< ∑¢ÀÕ¥∞ø⁄≥ﬂ¥Á			*/
-	uint16			nMaxPDUSize;				/**< ◊Ó¥Ûø…¥¶¿ÌPDU≥ﬂ¥Á		*/
-	uint8			PCB[8];						/**< –≠“È“ª÷¬–‘				*/
-	uint8			FCB[16];					/**< π¶ƒ‹“ª÷¬–‘				*/
-	uint32			nTimeout;					/**< æ≤Ã¨≥¨ ± ±º‰			*/
+	uint8			nSecret;					/**< ÂÆâÂÖ®Á±ªÂûã				*/
+	uint32			VER;						/**< ÂçèËÆÆÁâàÊú¨				*/
+	OOP_OBJECT_T*	arrObjs;					/**< ÂØπË±°ÂàóË°®				*/
+	uint16			nCount;						/**< ÂØπË±°ÂàóË°®Êï∞Èáè			*/
+	uint16			nRecvSize;					/**< ÊúÄÂ§ßÊé•ÂèóAPDUÂ∞∫ÂØ∏ÂçïÂÖÉ	*/
+	uint16			nSendSize;					/**< ÊúÄÂ§ßÂèëÈÄÅAPDUÂ∞∫ÂØ∏ÂçïÂÖÉ	*/
+	uint8			nPDUWindows;				/**< ÂèëÈÄÅÁ™óÂè£Â∞∫ÂØ∏			*/
+	uint16			nMaxPDUSize;				/**< ÊúÄÂ§ßÂèØÂ§ÑÁêÜPDUÂ∞∫ÂØ∏		*/
+	uint8			PCB[8];						/**< ÂçèËÆÆ‰∏ÄËá¥ÊÄß				*/
+	uint8			FCB[16];					/**< ÂäüËÉΩ‰∏ÄËá¥ÊÄß				*/
+	uint32			nTimeout;					/**< ÈùôÊÄÅË∂ÖÊó∂Êó∂Èó¥			*/
 }OOP_ASSOCIATION_T;
 
 /*
 *********************************************************************
-* 3.3-¡¥¬∑π‹¿Ì
+* 3.3-ÈìæË∑ØÁÆ°ÁêÜ
 *********************************************************************
 */
 
-/** @brief ¡¥¬∑π‹¿Ì¿‡–Õ	*/
+/** @brief ÈìæË∑ØÁÆ°ÁêÜÁ±ªÂûã	*/
 typedef enum tag_LinkType
 {
 	Link_Login		= 0,
@@ -1456,19 +1456,19 @@ typedef enum tag_LinkType
 	Link_Logout		= 2
 }OOP_LINKTYPE_E;
 
-/** @brief ¡¥¬∑π‹¿ÌΩ·π˚	*/
+/** @brief ÈìæË∑ØÁÆ°ÁêÜÁªìÊûú	*/
 typedef union tag_LinkResult
 {
 	struct
 	{
-		uint8	ret			: 3;			/**< ¡¥¬∑Œ¨ª§Ω·π˚	*/
-		uint8	resv		: 4;			/**< ±£¡Ù			*/
-		uint8	clockFlag	: 1;			/**<  º÷’ø…–≈±Í÷æ	*/
+		uint8	ret			: 3;			/**< ÈìæË∑ØÁª¥Êä§ÁªìÊûú	*/
+		uint8	resv		: 4;			/**< ‰øùÁïô			*/
+		uint8	clockFlag	: 1;			/**< ÂßãÁªàÂèØ‰ø°Ê†áÂøó	*/
 	};
 	uint8		value;
 }OOP_LINKRESULT_E;
 
-/** @brief ¡¥¬∑π‹¿Ì«Î«Û	*/
+/** @brief ÈìæË∑ØÁÆ°ÁêÜËØ∑Ê±Ç	*/
 typedef struct tag_LinkRequest
 {
 	uint8				nType;
@@ -1476,7 +1476,7 @@ typedef struct tag_LinkRequest
 	OOP_DATETIME_T		clock;
 }OOP_LINKREQUEST_T;
 
-/** @brief ¡¥¬∑π‹¿ÌœÏ”¶	*/
+/** @brief ÈìæË∑ØÁÆ°ÁêÜÂìçÂ∫î	*/
 typedef struct tag_LinkResponse
 {
 	OOP_LINKRESULT_E	result;
@@ -1488,21 +1488,21 @@ typedef struct tag_LinkResponse
 /*
  ********************************************************************
  *																	*
- * 4-Ω”ø⁄¿‡ ˝æ›Ω·ππ			                                        *
+ * 4-Êé•Âè£Á±ªÊï∞ÊçÆÁªìÊûÑ			                                        *
  *																	*
  ********************************************************************
 */
 
 /*
 *********************************************************************
-* 4.1-class1-µÁƒ‹¡ø¿‡
+* 4.1-class1-ÁîµËÉΩÈáèÁ±ª
 *********************************************************************
 */
 
-#define OOP_MAX_RATES		(4)					/**< ∑—¬ ∏ˆ ˝		*/
-#define OOP_FULL_RATES		(OOP_MAX_RATES+1)	/**< ◊‹º∞∑÷∑—¬ ∏ˆ ˝	*/
+#define OOP_MAX_RATES		(4)					/**< Ë¥πÁéá‰∏™Êï∞		*/
+#define OOP_FULL_RATES		(OOP_MAX_RATES+1)	/**< ÊÄªÂèäÂàÜË¥πÁéá‰∏™Êï∞	*/
 
-/** @brief 0xxx-µÁƒ‹¡ø(¥¯∑˚∫≈)			*/
+/** @brief 0xxx-ÁîµËÉΩÈáè(Â∏¶Á¨¶Âè∑)			*/
 typedef struct tag_OOP_ENERGY
 {
 	uint32          nNum;
@@ -1510,7 +1510,7 @@ typedef struct tag_OOP_ENERGY
 	uint32          nValue[OOP_FULL_RATES];
 }OOP_ENERGY_T;
 
-/** @brief 0xxx-µÁƒ‹¡ø(≤ª¥¯∑˚∫≈)		*/
+/** @brief 0xxx-ÁîµËÉΩÈáè(‰∏çÂ∏¶Á¨¶Âè∑)		*/
 typedef struct tag_OOP_ENERGYS
 {
 	uint32          nNum;
@@ -1518,7 +1518,7 @@ typedef struct tag_OOP_ENERGYS
 	int32           nValue[OOP_FULL_RATES];
 }OOP_ENERGYS_T;
 
-/** @brief 0xxx-∏ﬂæ´∂»µÁƒ‹¡ø(≤ª¥¯∑˚∫≈)	*/
+/** @brief 0xxx-È´òÁ≤æÂ∫¶ÁîµËÉΩÈáè(‰∏çÂ∏¶Á¨¶Âè∑)	*/
 typedef struct tag_OOP_HENERGY
 {
 	uint32          nNum;
@@ -1526,7 +1526,7 @@ typedef struct tag_OOP_HENERGY
 	uint64			nValue[OOP_FULL_RATES];
 }OOP_HENERGY_T;
 
-/** @brief 0xxx-∏ﬂæ´∂»µÁƒ‹¡ø(¥¯∑˚∫≈)	*/
+/** @brief 0xxx-È´òÁ≤æÂ∫¶ÁîµËÉΩÈáè(Â∏¶Á¨¶Âè∑)	*/
 typedef struct tag_OOP_HENERGYS
 {
 	uint32          nNum;
@@ -1536,25 +1536,25 @@ typedef struct tag_OOP_HENERGYS
 
 /*
 *********************************************************************
-* 4.2-class2-–Ë¡ø¿‡
+* 4.2-class2-ÈúÄÈáèÁ±ª
 *********************************************************************
 */
 
-/** @brief 1xxx-–Ë¡ø(≤ª¥¯∑˚∫≈)	*/
+/** @brief 1xxx-ÈúÄÈáè(‰∏çÂ∏¶Á¨¶Âè∑)	*/
 typedef struct tag_DEMAND
 {
 	uint32				nValue;
 	OOP_DATETIME_S_T	time;
 }DEMAND;
 
-/** @brief 1xxx-–Ë¡ø(¥¯∑˚∫≈)	*/
+/** @brief 1xxx-ÈúÄÈáè(Â∏¶Á¨¶Âè∑)	*/
 typedef struct tag_DEMANDS
 {
 	int32					nValue;
 	OOP_DATETIME_S_T	time;
 }DEMANDS;
 
-/** @brief –Ë¡ø ˝◊È(≤ª¥¯∑˚∫≈)	*/
+/** @brief ÈúÄÈáèÊï∞ÁªÑ(‰∏çÂ∏¶Á¨¶Âè∑)	*/
 typedef struct tag_OOP_DEMAND
 {
 	uint32	        nNum;
@@ -1562,7 +1562,7 @@ typedef struct tag_OOP_DEMAND
 	DEMAND	        demand[OOP_FULL_RATES];
 }OOP_DEMAND_T;
 
-/** @brief –Ë¡ø ˝◊È(¥¯∑˚∫≈)	*/
+/** @brief ÈúÄÈáèÊï∞ÁªÑ(Â∏¶Á¨¶Âè∑)	*/
 typedef struct tag_OOP_DEMANDS
 {
 	uint32	        nNum;
@@ -1572,7 +1572,7 @@ typedef struct tag_OOP_DEMANDS
 
 /*
 *********************************************************************
-* 4.3-class3-∑÷œ‡±‰¡ø¿‡
+* 4.3-class3-ÂàÜÁõ∏ÂèòÈáèÁ±ª
 *********************************************************************
 */
 
@@ -1610,7 +1610,7 @@ typedef struct tag_OOP_INT3V
 
 /*
 *********************************************************************
-* 4.4-class4-π¶¬ ¿‡
+* 4.4-class4-ÂäüÁéáÁ±ª
 *********************************************************************
 */
 
@@ -1646,16 +1646,16 @@ typedef struct tag_OOP_INT4V
 
 /*
 *********************************************************************
-* 4.5-class5-–≥≤®
+* 4.5-class5-Ë∞êÊ≥¢
 *********************************************************************
 */
 
-#define OOP_MAX_HARMONIC	(21)				/**< –≥≤®¥Œ ˝		*/
+#define OOP_MAX_HARMONIC	(21)				/**< Ë∞êÊ≥¢Ê¨°Êï∞		*/
 
 /** 
-* @brief 	–≥≤®∫¨”–¡ø-				\n
-*			200D-µÁ—π–≥≤®∫¨”–¡ø		\n
-*			200E-µÁ¡˜–≥≤®∫¨”–¡ø
+* @brief 	Ë∞êÊ≥¢Âê´ÊúâÈáè-				\n
+*			200D-ÁîµÂéãË∞êÊ≥¢Âê´ÊúâÈáè		\n
+*			200E-ÁîµÊµÅË∞êÊ≥¢Âê´ÊúâÈáè
 */
 typedef struct tag_OOP_HARMONIC
 {
@@ -1664,7 +1664,7 @@ typedef struct tag_OOP_HARMONIC
 	int16		    nValue[OOP_MAX_HARMONIC];
 }OOP_HARMONIC_T;
 
-/** @brief 2033-µÁ—π–≥≤®∫¨”–¡ø			*/
+/** @brief 2033-ÁîµÂéãË∞êÊ≥¢Âê´ÊúâÈáè			*/
 typedef struct tag_OOP_HARMONIC_VOL
 {
 	uint32		    nNum;
@@ -1672,7 +1672,7 @@ typedef struct tag_OOP_HARMONIC_VOL
 	uint16		    nValue[OOP_MAX_HARMONIC];
 }OOP_HARMONIC_VOL_T;
 
-/** @brief 2034-µÁ¡˜–≥≤®∫¨”–¡ø			*/
+/** @brief 2034-ÁîµÊµÅË∞êÊ≥¢Âê´ÊúâÈáè			*/
 typedef struct tag_OOP_HARMONIC_AMP
 {
 	uint32		    nNum;
@@ -1682,14 +1682,14 @@ typedef struct tag_OOP_HARMONIC_AMP
 
 /*
 *********************************************************************
-* 4.6-class07- ¬º˛∂‘œÛΩ”ø⁄¿‡
+* 4.6-class07-‰∫ã‰ª∂ÂØπË±°Êé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_REPORTCHANNEL	(4)		/**<  ¬º˛…œ±®Õ®µ¿◊Ó¥Û∏ˆ ˝	*/
-#define OOP_EVT_BUFSIZE			(256)	/**<  ¬º˛ ˝æ›ª∫≥Â«¯≥ﬂ¥Á		*/
+#define OOP_MAX_REPORTCHANNEL	(4)		/**< ‰∫ã‰ª∂‰∏äÊä•ÈÄöÈÅìÊúÄÂ§ß‰∏™Êï∞	*/
+#define OOP_EVT_BUFSIZE			(256)	/**< ‰∫ã‰ª∂Êï∞ÊçÆÁºìÂÜ≤Âå∫Â∞∫ÂØ∏		*/
 
-/** @brief  ¬º˛∑¢…˙‘¥	*/
+/** @brief ‰∫ã‰ª∂ÂèëÁîüÊ∫ê	*/
 typedef struct tag_OOP_EVTSOURCE
 {
 	uint8			choice;
@@ -1702,7 +1702,7 @@ typedef struct tag_OOP_EVTSOURCE
 	};
 }OOP_EVTSOURCE_T;
 
-/** @brief  ¬º˛µ±«∞÷µµ•‘™	*/
+/** @brief ‰∫ã‰ª∂ÂΩìÂâçÂÄºÂçïÂÖÉ	*/
 typedef struct tag_EVTSTATE
 {
 	OOP_EVTSOURCE_T	source;
@@ -1712,7 +1712,7 @@ typedef struct tag_EVTSTATE
 	uint32			dbIdx;
 }EVTSTATE;
 
-/** @brief  ¬º˛ ±º‰◊¥Ã¨µ•‘™	*/
+/** @brief ‰∫ã‰ª∂Êó∂Èó¥Áä∂ÊÄÅÂçïÂÖÉ	*/
 typedef struct tag_EVTTIME_BYSRC
 {
 	OOP_EVTSOURCE_T		source;
@@ -1721,9 +1721,9 @@ typedef struct tag_EVTTIME_BYSRC
 	uint32				dbIdx;
 }EVTTIME;
 
-#define OOP_MAX_EVTSTAT		(48)	/**< ◊Ó¥Û ¬º˛◊¥Ã¨ ˝	*/
+#define OOP_MAX_EVTSTAT		(48)	/**< ÊúÄÂ§ß‰∫ã‰ª∂Áä∂ÊÄÅÊï∞	*/
 
-/** @brief  ¬º˛µ±«∞÷µ	*/
+/** @brief ‰∫ã‰ª∂ÂΩìÂâçÂÄº	*/
 typedef struct tag_OOP_EVTSTAT
 {
 	uint32		nNum;
@@ -1731,7 +1731,7 @@ typedef struct tag_OOP_EVTSTAT
     EVTSTATE    stat[OOP_MAX_EVTSTAT];
 }OOP_EVTSTAT_T;
 
-/** @brief  ¬º˛ ±º‰◊¥Ã¨º«¬º±Ì	*/
+/** @brief ‰∫ã‰ª∂Êó∂Èó¥Áä∂ÊÄÅËÆ∞ÂΩïË°®	*/
 typedef struct tag_OOP_EVTTIME
 {
 	uint32		nNum;
@@ -1739,14 +1739,14 @@ typedef struct tag_OOP_EVTTIME
     EVTTIME		stat[OOP_MAX_EVTSTAT];
 }OOP_EVTTIME_T;
 
-/** @brief  ¬º˛…œ±®◊¥Ã¨	*/
+/** @brief ‰∫ã‰ª∂‰∏äÊä•Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_REPORTSTATE
 {
-	OOP_OAD_U		oad;		/**< Õ®µ¿		*/
-	uint8			state;		/**< …œ±®◊¥Ã¨	*/
+	OOP_OAD_U		oad;		/**< ÈÄöÈÅì		*/
+	uint8			state;		/**< ‰∏äÊä•Áä∂ÊÄÅ	*/
 }OOP_REPORTSTATE_T;
 
-/** @brief  ¬º˛…œ±®◊¥Ã¨”Ú	*/
+/** @brief ‰∫ã‰ª∂‰∏äÊä•Áä∂ÊÄÅÂüü	*/
 typedef struct tag_OOP_REPORTS
 {
 	uint32				nNum;
@@ -1754,7 +1754,7 @@ typedef struct tag_OOP_REPORTS
 	OOP_REPORTSTATE_T	state[OOP_MAX_REPORTCHANNEL];
 }OOP_REPORTS_T;
 
-/** @brief  ¬º˛πÿ¡™∂‘œÛ”Ú(ø…±‰)	*/
+/** @brief ‰∫ã‰ª∂ÂÖ≥ËÅîÂØπË±°Âüü(ÂèØÂèò)	*/
 typedef struct tag_OOP_EVTBUF
 {
 	OOP_OADS_T		cols;
@@ -1764,18 +1764,18 @@ typedef struct tag_OOP_EVTBUF
 	uint8			oadNum;
 }OOP_EVTBUF_T;
 
-/** @brief  ¬º˛º«¬º	*/
+/** @brief ‰∫ã‰ª∂ËÆ∞ÂΩï	*/
 typedef struct tag_OOP_EVENT
 {
-	uint32				nIndex;			/**<  ¬º˛º«¬º–Ú∫≈	*/
-	OOP_DATETIME_S_T	tmStart;		/**<  ¬º˛∑¢…˙ ±º‰	*/
-	OOP_DATETIME_S_T	tmEnd;			/**<  ¬º˛Ω· ¯ ±º‰	*/
-	OOP_REPORTS_T		state;			/**<  ¬º˛…œ±®◊¥Ã¨	*/
+	uint32				nIndex;			/**< ‰∫ã‰ª∂ËÆ∞ÂΩïÂ∫èÂè∑	*/
+	OOP_DATETIME_S_T	tmStart;		/**< ‰∫ã‰ª∂ÂèëÁîüÊó∂Èó¥	*/
+	OOP_DATETIME_S_T	tmEnd;			/**< ‰∫ã‰ª∂ÁªìÊùüÊó∂Èó¥	*/
+	OOP_REPORTS_T		state;			/**< ‰∫ã‰ª∂‰∏äÊä•Áä∂ÊÄÅ	*/
 	OOP_EVTSOURCE_T		source;
 	OOP_EVTBUF_T		data;
 }OOP_EVENT_T;
 
-/** @brief ¥•∑¢ ¬º˛	*/
+/** @brief Ëß¶Âèë‰∫ã‰ª∂	*/
 typedef struct tag_OOP_TOUCHEVENT
 {
 	OOP_EVTSOURCE_T	srce;
@@ -1788,13 +1788,13 @@ typedef int32 (*pfUpdEvtData)(OI obj, OOP_EVENT_T *pData, OOP_EVTSOURCE_T *pSrce
 
 /*
 *********************************************************************
-* 4.7-class09-∂≥Ω·Ω”ø⁄¿‡
+* 4.7-class09-ÂÜªÁªìÊé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_FROZENOBJ	(64)	/**< ◊Ó¥Û∂≥Ω·∂‘œÛ∏ˆ ˝			*/
+#define OOP_MAX_FROZENOBJ	(64)	/**< ÊúÄÂ§ßÂÜªÁªìÂØπË±°‰∏™Êï∞			*/
 
-/** @brief ∂≥Ω·∂‘œÛ∂®“Â	*/
+/** @brief ÂÜªÁªìÂØπË±°ÂÆö‰πâ	*/
 typedef struct tag_OOP_FROZENOBJ
 {
 	OOP_OAD_U		oad;
@@ -1802,7 +1802,7 @@ typedef struct tag_OOP_FROZENOBJ
 	uint16			nDepth;
 }OOP_FROZENOBJ_T;
 
-/** @brief ∂≥Ω·≈‰÷√		*/
+/** @brief ÂÜªÁªìÈÖçÁΩÆ		*/
 typedef struct tag_OOP_FROZENSETS
 {
 	uint32          nNum;
@@ -1810,7 +1810,7 @@ typedef struct tag_OOP_FROZENSETS
 	OOP_FROZENOBJ_T	objs[OOP_MAX_FROZENOBJ];
 }OOP_FROZENSETS_T;
 
-/** @brief ≤π∂≥Ω·≈‰÷√	*/
+/** @brief Ë°•ÂÜªÁªìÈÖçÁΩÆ	*/
 typedef struct tag_OOP_FROZENTEST
 {
 	OOP_DATETIME_S_T	start;
@@ -1819,20 +1819,20 @@ typedef struct tag_OOP_FROZENTEST
 
 /*
 *********************************************************************
-* 4.8-class12-¬ˆ≥Âº∆¡øΩ”ø⁄¿‡
+* 4.8-class12-ËÑâÂÜ≤ËÆ°ÈáèÊé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_PULSESETS	(8)		/**< ◊Ó¥Û¬ˆ≥Â ˝			*/
+#define OOP_MAX_PULSESETS	(8)		/**< ÊúÄÂ§ßËÑâÂÜ≤Êï∞			*/
 
-/** @brief PT/CT≤Œ ˝	*/
+/** @brief PT/CTÂèÇÊï∞	*/
 typedef struct tag_OOP_PTCT
 {
 	uint16	pt;
 	uint16	ct;
 }OOP_PTCT_T;
 
-/** @brief ¬ˆ≥Â≈‰÷√	*/
+/** @brief ËÑâÂÜ≤ÈÖçÁΩÆ	*/
 typedef struct tag_OOP_PULSECFG
 {
 	OOP_OAD_U		port;
@@ -1840,7 +1840,7 @@ typedef struct tag_OOP_PULSECFG
 	uint16			K;
 }OOP_PULSECFG_T;
 
-/** @brief “ª◊È¬ˆ≥Â≈‰÷√µ•‘™	*/
+/** @brief ‰∏ÄÁªÑËÑâÂÜ≤ÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OO_PULSESETS
 {
 	uint32			nNum;
@@ -1848,7 +1848,7 @@ typedef struct tag_OO_PULSESETS
 	OOP_PULSECFG_T	pulse[OOP_MAX_PULSESETS];
 }OOP_PULSESETS_T;
 
-/** @brief ¬ˆ≥Âµ•Œª	*/
+/** @brief ËÑâÂÜ≤Âçï‰Ωç	*/
 typedef struct tag_OOP_PULSEUNIT
 {
 	OOP_SCALER_UNIT_T		unit5;
@@ -1869,20 +1869,20 @@ typedef struct tag_OOP_PULSEUNIT
 
 /*
 *********************************************************************
-* 4.9-class13-øÿ÷∆∂‘œÛΩ”ø⁄¿‡
+* 4.9-class13-ÊéßÂà∂ÂØπË±°Êé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_TG			(8)				/**< ◊Ó¥Û◊‹º”◊È∂‘œÛ ˝¡ø	*/
+#define OOP_MAX_TG			(8)				/**< ÊúÄÂ§ßÊÄªÂä†ÁªÑÂØπË±°Êï∞Èáè	*/
 
-/** @brief ◊‹º”◊È◊¥Ã¨	*/
+/** @brief ÊÄªÂä†ÁªÑÁä∂ÊÄÅ	*/
 typedef struct tag_OOP_TGSTATE
 {
 	OI		obj;
 	uint8	state;
 }TGSTATE;
 
-/** @brief “ª◊È◊‹º”◊È	*/
+/** @brief ‰∏ÄÁªÑÊÄªÂä†ÁªÑ	*/
 typedef struct tag_OOP_TGSTATES
 {
 	uint32		nNum;
@@ -1890,14 +1890,14 @@ typedef struct tag_OOP_TGSTATES
 	TGSTATE		item[OOP_MAX_TG];
 }OOP_TGSTATES_T;
 
-/** @brief ¬÷¥Œ◊¥Ã¨		*/
+/** @brief ËΩÆÊ¨°Áä∂ÊÄÅ		*/
 typedef struct tag_OOP_TURNSTATE
 {
 	OI				obj;
 	OOP_BITSTR8_T	state;
 }TURNSTATE;
 
-/** @brief “ª◊È¬÷¥Œ◊¥Ã¨	*/
+/** @brief ‰∏ÄÁªÑËΩÆÊ¨°Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_TURNSTATES
 {
 	uint32		nNum;
@@ -1907,16 +1907,16 @@ typedef struct tag_OOP_TURNSTATES
 
 /*
 *********************************************************************
-* 4.10-class14-«¯º‰Õ≥º∆Ω”ø⁄¿‡
+* 4.10-class14-Âå∫Èó¥ÁªüËÆ°Êé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_STATIS		(64)	/**< ◊Ó¥ÛÕ≥º∆º«¬º∏ˆ ˝			*/
+#define OOP_MAX_STATIS		(64)	/**< ÊúÄÂ§ßÁªüËÆ°ËÆ∞ÂΩï‰∏™Êï∞			*/
 
-#define OOP_MAX_REGION		(3)		/**< ◊Ó¥Û«¯º‰∏ˆ ˝				*/
-#define OOP_REGION_OBJS		(8)		/**< ◊Ó¥Û÷ß≥÷«¯º‰Õ≥º∆∂‘œÛ∏ˆ ˝	*/
+#define OOP_MAX_REGION		(3)		/**< ÊúÄÂ§ßÂå∫Èó¥‰∏™Êï∞				*/
+#define OOP_REGION_OBJS		(8)		/**< ÊúÄÂ§ßÊîØÊåÅÂå∫Èó¥ÁªüËÆ°ÂØπË±°‰∏™Êï∞	*/
 
-/** @brief  ˝÷µ¿‡–Õ∂®“Â	*/
+/** @brief Êï∞ÂÄºÁ±ªÂûãÂÆö‰πâ	*/
 typedef struct tag_OOP_DIGIT
 {
 	uint8			choice;
@@ -1948,7 +1948,7 @@ typedef struct tag_OOP_DOMAIN_T
 	};
 }OOP_DOMAIN_T;
 
-/** @brief «¯º‰Õ≥º∆∂‘œÛ	*/
+/** @brief Âå∫Èó¥ÁªüËÆ°ÂØπË±°	*/
 typedef struct tag_OOP_REGIONOBJ
 {
 	OOP_OAD_U		obj;
@@ -1958,14 +1958,14 @@ typedef struct tag_OOP_REGIONOBJ
 	OOP_TI_T		freq;
 }OOP_REGIONOBJ_T;
 
-/** @brief «¯º‰Õ≥º∆÷µ∂®“Â	*/
+/** @brief Âå∫Èó¥ÁªüËÆ°ÂÄºÂÆö‰πâ	*/
 typedef struct tag_OOP_REGIONRES
 {
 	uint32		dwTimes;
 	uint32		dwCount;
 }OOP_REGIONRES_T;
 
-/** @brief «¯º‰Õ≥º∆Ω·π˚ºØ∫œ	*/
+/** @brief Âå∫Èó¥ÁªüËÆ°ÁªìÊûúÈõÜÂêà	*/
 typedef struct tag_OOP_REGION
 {
 	OOP_OAD_U		obj;
@@ -1973,7 +1973,7 @@ typedef struct tag_OOP_REGION
 	OOP_REGIONRES_T	value[OOP_MAX_REGION+1];
 }OOP_REGION_T;
 
-/** @brief «¯º‰Õ≥º∆∂‘œÛºØ∫œ	*/
+/** @brief Âå∫Èó¥ÁªüËÆ°ÂØπË±°ÈõÜÂêà	*/
 typedef struct tag_OOP_REGIONS
 {
 	uint32			nNum;
@@ -1983,11 +1983,11 @@ typedef struct tag_OOP_REGIONS
 
 /*
 *********************************************************************
-* 4.11-class15-¿€º”∆Ωæ˘Ω”ø⁄¿‡
+* 4.11-class15-Á¥ØÂä†Âπ≥ÂùáÊé•Âè£Á±ª
 *********************************************************************
 */
 
-/** @brief ¿€º∆∆Ωæ˘÷µ∂®“Â	*/
+/** @brief Á¥ØËÆ°Âπ≥ÂùáÂÄºÂÆö‰πâ	*/
 typedef struct tag_OOP_TOTALAVG
 {
 	OOP_OAD_U		obj;
@@ -1995,7 +1995,7 @@ typedef struct tag_OOP_TOTALAVG
 	float64			dbAvg;
 }OOP_TOTALAVG_T;
 
-/** @brief ¿€º”∆Ωæ˘πÿ¡™∂‘œÛ	*/
+/** @brief Á¥ØÂä†Âπ≥ÂùáÂÖ≥ËÅîÂØπË±°	*/
 typedef struct tag_OOP_COGNATEOBJ
 {
 	OOP_OAD_U		obj;
@@ -2003,9 +2003,9 @@ typedef struct tag_OOP_COGNATEOBJ
 	OOP_TI_T		freq;
 }OOP_COGNATEOBJ_T;
 
-#define OOP_COGNATE_OBJS	(8)		/**< ◊Ó¥Û÷ß≥÷¿€º”∆Ωæ˘∂‘œÛ∏ˆ ˝			*/
+#define OOP_COGNATE_OBJS	(8)		/**< ÊúÄÂ§ßÊîØÊåÅÁ¥ØÂä†Âπ≥ÂùáÂØπË±°‰∏™Êï∞			*/
 
-/** @brief ¿€º”∆Ωæ˘πÿ¡™∂‘œÛºØ∫œ	*/
+/** @brief Á¥ØÂä†Âπ≥ÂùáÂÖ≥ËÅîÂØπË±°ÈõÜÂêà	*/
 typedef struct tag_OOP_COGNATES
 {
 	uint32				nNum;
@@ -2015,11 +2015,11 @@ typedef struct tag_OOP_COGNATES
 
 /*
 *********************************************************************
-* 4.12-class16-º´÷µΩ”ø⁄¿‡
+* 4.12-class16-ÊûÅÂÄºÊé•Âè£Á±ª
 *********************************************************************
 */
 
-/** @brief º´÷µÕ≥º∆Ω·π˚	*/
+/** @brief ÊûÅÂÄºÁªüËÆ°ÁªìÊûú	*/
 typedef struct tag_OOP_EXTREMERES
 {
 	OOP_OAD_U			obj;
@@ -2031,21 +2031,21 @@ typedef struct tag_OOP_EXTREMERES
 
 /*
 *********************************************************************
-* 4.13-class18-Œƒº˛¥´ ‰Ω”ø⁄¿‡
+* 4.13-class18-Êñá‰ª∂‰º†ËæìÊé•Âè£Á±ª
 *********************************************************************
 */
 
 /*
 *********************************************************************
-* 4.14-class19-…Ë±∏π‹¿ÌΩ”ø⁄¿‡
+* 4.14-class19-ËÆæÂ§áÁÆ°ÁêÜÊé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_SUBDEVICE	(8)			/**< ◊Ó¥Û◊”…Ë±∏∏ˆ ˝			*/
-#define OOP_MAX_PROTOCOL	(8)			/**< ◊Ó¥Û÷ß≥÷–≠“È ˝			*/
-#define OOP_MAX_SERVICES	(8)			/**< ◊Ó¥Û÷ß≥÷∑˛ŒÒ ˝			*/
+#define OOP_MAX_SUBDEVICE	(8)			/**< ÊúÄÂ§ßÂ≠êËÆæÂ§á‰∏™Êï∞			*/
+#define OOP_MAX_PROTOCOL	(8)			/**< ÊúÄÂ§ßÊîØÊåÅÂçèËÆÆÊï∞			*/
+#define OOP_MAX_SERVICES	(8)			/**< ÊúÄÂ§ßÊîØÊåÅÊúçÂä°Êï∞			*/
 
-/** @brief ÷ß≥÷µƒ–≠“È	*/
+/** @brief ÊîØÊåÅÁöÑÂçèËÆÆ	*/
 typedef struct tag_OOP_PROTOCOL
 {
     uint32				nNum;
@@ -2053,7 +2053,7 @@ typedef struct tag_OOP_PROTOCOL
     OOP_VISIBLEVAR_T	value[OOP_MAX_PROTOCOL];
 }OOP_PROTOCOL_T;
 
-/** @brief …œ±®Õ®µ¿	*/
+/** @brief ‰∏äÊä•ÈÄöÈÅì	*/
 typedef struct tag_OOP_CHANNEL
 {
 	uint32 		nNum;
@@ -2061,7 +2061,7 @@ typedef struct tag_OOP_CHANNEL
 	OOP_OAD_U 	port[OOP_MAX_REPORTCHANNEL];
 }OOP_CHANNEL_T;
 
-/** @brief ◊”…Ë±∏	*/
+/** @brief Â≠êËÆæÂ§á	*/
 typedef struct tag_OIS
 {
 	uint32 	nNum;
@@ -2069,14 +2069,14 @@ typedef struct tag_OIS
 	OI	    oi[OOP_MAX_SUBDEVICE];
 }OOP_OIS_T;
 
-/** @brief ∑˛ŒÒ ⁄»®◊¥Ã¨	*/
+/** @brief ÊúçÂä°ÊéàÊùÉÁä∂ÊÄÅ	*/
 typedef struct tag_OOP_SERVICE
 {
 	uint8	type;
 	uint8	times;
 }OOP_SERVICE_T;
 
-/** @brief “ª◊È∑˛ŒÒ ⁄»®◊¥Ã¨	*/
+/** @brief ‰∏ÄÁªÑÊúçÂä°ÊéàÊùÉÁä∂ÊÄÅ	*/
 typedef struct tag_OOP_SERVICES
 {
 	uint32			nNum;
@@ -2084,43 +2084,43 @@ typedef struct tag_OOP_SERVICES
 	OOP_SERVICE_T	item[OOP_MAX_SERVICES];
 }OOP_SERVICES_T;
 
-/** @brief …Ë±∏‘À–––≈œ¢ */
+/** @brief ËÆæÂ§áËøêË°å‰ø°ÊÅØ */
 typedef struct tag_OOP_DEVICERUNSTAT
 {
-	uint8				cpuCoreNum;		/**< cpu∫À ˝ */ 
-	uint16				cpuMainFrq;		/**< cpu÷˜∆µ */
-	uint16				cpuCache;		/**< cpuª∫¥Ê */
-	OOP_VISIBLEVAR_T 	cpuArchi;		/**< cpuº‹ππ */
-	uint32				phyMem;			/**< ŒÔ¿Ìƒ⁄¥Ê */
-	uint32				virMem;			/**< –Èƒ‚ƒ⁄¥Ê */
-	uint32				diskSpace;		/**< ¥≈≈Ã◊‹ø’º‰ */
-	uint16				memUsage;		/**< ƒ⁄¥Ê π”√¬  */
-	uint16				diskUsage;		/**< ¥≈≈Ã π”√¬  */
-	uint16				cpuUsage;		/**< cpu π”√¬  */
-	OOP_VISIBLEVAR_T	osName;			/**< ≤Ÿ◊˜œµÕ≥√˚≥∆ */
-	OOP_VISIBLEVAR_T	osVer;			/**< ≤Ÿ◊˜œµÕ≥∞Ê±æ */
-	OOP_VISIBLEVAR_T	osKernel;		/**< ≤Ÿ◊˜œµÕ≥ƒ⁄∫À */
-	OOP_DATETIME_S_T	sysStrtm;		/**< œµÕ≥∆Ù∂Ø ±º‰ */
+	uint8				cpuCoreNum;		/**< cpuÊ†∏Êï∞ */ 
+	uint16				cpuMainFrq;		/**< cpu‰∏ªÈ¢ë */
+	uint16				cpuCache;		/**< cpuÁºìÂ≠ò */
+	OOP_VISIBLEVAR_T 	cpuArchi;		/**< cpuÊû∂ÊûÑ */
+	uint32				phyMem;			/**< Áâ©ÁêÜÂÜÖÂ≠ò */
+	uint32				virMem;			/**< ËôöÊãüÂÜÖÂ≠ò */
+	uint32				diskSpace;		/**< Á£ÅÁõòÊÄªÁ©∫Èó¥ */
+	uint16				memUsage;		/**< ÂÜÖÂ≠ò‰ΩøÁî®Áéá */
+	uint16				diskUsage;		/**< Á£ÅÁõò‰ΩøÁî®Áéá */
+	uint16				cpuUsage;		/**< cpu‰ΩøÁî®Áéá */
+	OOP_VISIBLEVAR_T	osName;			/**< Êìç‰ΩúÁ≥ªÁªüÂêçÁß∞ */
+	OOP_VISIBLEVAR_T	osVer;			/**< Êìç‰ΩúÁ≥ªÁªüÁâàÊú¨ */
+	OOP_VISIBLEVAR_T	osKernel;		/**< Êìç‰ΩúÁ≥ªÁªüÂÜÖÊ†∏ */
+	OOP_DATETIME_S_T	sysStrtm;		/**< Á≥ªÁªüÂêØÂä®Êó∂Èó¥ */
 }OOP_DEVICERUNSTAT_T;
 
 /*
 *********************************************************************
-* 4.15-class20-”¶”√¡¨Ω”Ω”ø⁄¿‡
+* 4.15-class20-Â∫îÁî®ËøûÊé•Êé•Âè£Á±ª
 *********************************************************************
 */
 
-/** @brief ∞Ê±æ–≈œ¢ 	*/
+/** @brief ÁâàÊú¨‰ø°ÊÅØ 	*/
 typedef struct tag_OOP_VERSION
 {
-	OOP_VISIBLESTR4_T	szFactory;	/**< ≥ß…Ã¥˙¬Î 			*/
-	OOP_VISIBLESTR4_T	szSoftVer;	/**< »Ìº˛∞Ê±æ∫≈			*/
-	OOP_VISIBLESTR6_T	szSoftDate;	/**< »Ìº˛∞Ê±æ»’∆⁄		*/
-	OOP_VISIBLESTR4_T	szHardVer;	/**< ”≤º˛∞Ê±æ∫≈			*/
-	OOP_VISIBLESTR6_T	szHardDate;	/**< ”≤º˛∞Ê±æ»’∆⁄		*/
-	OOP_VISIBLESTR8_T	szExtend;	/**< ≥ßº“¿©’π–≈œ¢		*/
+	OOP_VISIBLESTR4_T	szFactory;	/**< ÂéÇÂïÜ‰ª£Á†Å 			*/
+	OOP_VISIBLESTR4_T	szSoftVer;	/**< ËΩØ‰ª∂ÁâàÊú¨Âè∑			*/
+	OOP_VISIBLESTR6_T	szSoftDate;	/**< ËΩØ‰ª∂ÁâàÊú¨Êó•Êúü		*/
+	OOP_VISIBLESTR4_T	szHardVer;	/**< Á°¨‰ª∂ÁâàÊú¨Âè∑			*/
+	OOP_VISIBLESTR6_T	szHardDate;	/**< Á°¨‰ª∂ÁâàÊú¨Êó•Êúü		*/
+	OOP_VISIBLESTR8_T	szExtend;	/**< ÂéÇÂÆ∂Êâ©Â±ï‰ø°ÊÅØ		*/
 }OOP_VERSION_T;
 
-/** @brief ”¶”√¡¨Ω”«Î«Û	*/
+/** @brief Â∫îÁî®ËøûÊé•ËØ∑Ê±Ç	*/
 typedef struct tag_ConnectRequest
 {
 	uint16						VER;
@@ -2134,7 +2134,7 @@ typedef struct tag_ConnectRequest
 	OOP_SECURITYMECHANISMINFO_T	szSecurity;
 }OOP_CONNECTREQUEST_T;
 
-/** @brief ”¶”√¡¨Ω”«Î«Û”¶¥	*/
+/** @brief Â∫îÁî®ËøûÊé•ËØ∑Ê±ÇÂ∫îÁ≠î	*/
 typedef struct tag_ConnectResponse
 {
 	OOP_VERSION_T				info;
@@ -2149,19 +2149,19 @@ typedef struct tag_ConnectResponse
 	OOP_SECURITYRESPONSEINFO_T	szResult;
 }OOP_CONNECTRESPONSE_T;
 
-/** @brief ”¶”√¡¨Ω”…œœ¬Œƒ–≈œ¢	*/
+/** @brief Â∫îÁî®ËøûÊé•‰∏ä‰∏ãÊñá‰ø°ÊÅØ	*/
 typedef struct tag_Association_Context
 {
-	uint16	VER;				/**< –≠“È∞Ê±æ				*/
-	uint16	nRecvSize;			/**< ◊Ó¥ÛΩ” ’APDU≥ﬂ¥Áµ•‘™	*/
-	uint16	nSendSize;			/**< ◊Ó¥Û∑¢ÀÕAPDU≥ﬂ¥Áµ•‘™	*/
-	uint16	nMaxPDUSize;		/**< ◊Ó¥Ûø…¥¶¿ÌAPDU≥ﬂ¥Á		*/
-	uint8	PCB[8];				/**< –≠“È“ª÷¬–‘øÈ			*/
-	uint8	FCB[16];			/**< π¶ƒ‹“ª÷¬–‘øÈ			*/
-	uint32	nTimeout;			/**< æ≤Ã¨≥¨ ± ±º‰			*/
+	uint16	VER;				/**< ÂçèËÆÆÁâàÊú¨				*/
+	uint16	nRecvSize;			/**< ÊúÄÂ§ßÊé•Êî∂APDUÂ∞∫ÂØ∏ÂçïÂÖÉ	*/
+	uint16	nSendSize;			/**< ÊúÄÂ§ßÂèëÈÄÅAPDUÂ∞∫ÂØ∏ÂçïÂÖÉ	*/
+	uint16	nMaxPDUSize;		/**< ÊúÄÂ§ßÂèØÂ§ÑÁêÜAPDUÂ∞∫ÂØ∏		*/
+	uint8	PCB[8];				/**< ÂçèËÆÆ‰∏ÄËá¥ÊÄßÂùó			*/
+	uint8	FCB[16];			/**< ÂäüËÉΩ‰∏ÄËá¥ÊÄßÂùó			*/
+	uint32	nTimeout;			/**< ÈùôÊÄÅË∂ÖÊó∂Êó∂Èó¥			*/
 }OOP_ASSOCIATION_CONTEXT_T;
 
-/** @brief  Ù–‘µƒ∑√Œ »®œﬁ√∂æŸ	*/
+/** @brief Â±ûÊÄßÁöÑËÆøÈóÆÊùÉÈôêÊûö‰∏æ	*/
 typedef enum tag_Attribute_Access
 {
 	NOACCESS  = 0,
@@ -2171,21 +2171,21 @@ typedef enum tag_Attribute_Access
 	NOOBJECT  = 0x10
 }OOP_ATTRIBUTE_ACESS_E;
 
-/** @brief ∑Ω∑®∑√Œ »®œﬁ∂®“Â		*/
+/** @brief ÊñπÊ≥ïËÆøÈóÆÊùÉÈôêÂÆö‰πâ		*/
 typedef enum tag_Action_Access
 {
 	NOAUTHORITY = 0,
 	ACCESS		= 1
 }OOP_ACTION_ACCESS_E;
 
-/** @brief “ª∏ˆ Ù–‘∑√Œ »®œﬁ		*/
+/** @brief ‰∏Ä‰∏™Â±ûÊÄßËÆøÈóÆÊùÉÈôê		*/
 typedef struct tag_Attribute_Access_Security
 {
 	uint8	index;
 	uint8	rw;
 }OOP_AAS_T;
 
-/** @brief “ª∏ˆ∑Ω∑®µƒ∑√Œ »®œﬁ	*/
+/** @brief ‰∏Ä‰∏™ÊñπÊ≥ïÁöÑËÆøÈóÆÊùÉÈôê	*/
 typedef struct tag_Method_Access_Security
 {
 	uint8	index;
@@ -2194,72 +2194,72 @@ typedef struct tag_Method_Access_Security
 
 /*
 *********************************************************************
-* 4.16-class21-ESAMΩ”ø⁄¿‡
+* 4.16-class21-ESAMÊé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_OI	(32)		/**< ◊Ó¥Û∂‘œÛ∏ˆ ˝	*/
+#define OOP_MAX_OI	(32)		/**< ÊúÄÂ§ßÂØπË±°‰∏™Êï∞	*/
 
-/** @brief ÷§ È∞Ê±æ–≈œ¢	*/
+/** @brief ËØÅ‰π¶ÁâàÊú¨‰ø°ÊÅØ	*/
 typedef struct tag_OOP_LICENSEVER
 {
-	OOP_OCTETVAR16_T  data1;		/**< ÷’∂À÷§ È∞Ê±æ	*/
-	OOP_OCTETVAR16_T  data2;		/**< ÷˜’æ÷§ È∞Ê±æ 	*/
+	OOP_OCTETVAR16_T  data1;		/**< ÁªàÁ´ØËØÅ‰π¶ÁâàÊú¨	*/
+	OOP_OCTETVAR16_T  data2;		/**< ‰∏ªÁ´ôËØÅ‰π¶ÁâàÊú¨ 	*/
 }OOP_LICENSEVER_T;
 
-/** @brief √ÿ‘ø∏¸–¬–≈œ¢	*/
+/** @brief ÁßòÈí•Êõ¥Êñ∞‰ø°ÊÅØ	*/
 typedef struct tag_KEY_INFO
 {
-    uint8    nNum;				/**< √‹‘ø◊‹Ãı ˝								*/
-    uint8    nCurNum;			/**< µ±«∞∑¢ÀÕµƒ√‹‘øÃı ˝						*/
-    uint8    nLen;				/**< √øÃı√‹‘ø≥§∂»							*/
-    uint8    nFlag;				/**< √‹‘ø◊¥Ã¨±Í÷æŒª£∫00≤‚ ‘√‹‘ø£¨01’˝ Ω√‹‘ø	*/
+    uint8    nNum;				/**< ÂØÜÈí•ÊÄªÊù°Êï∞								*/
+    uint8    nCurNum;			/**< ÂΩìÂâçÂèëÈÄÅÁöÑÂØÜÈí•Êù°Êï∞						*/
+    uint8    nLen;				/**< ÊØèÊù°ÂØÜÈí•ÈïøÂ∫¶							*/
+    uint8    nFlag;				/**< ÂØÜÈí•Áä∂ÊÄÅÊ†áÂøó‰ΩçÔºö00ÊµãËØïÂØÜÈí•Ôºå01Ê≠£ÂºèÂØÜÈí•	*/
 }OOP_KEY_INFO_T;
 
-/** @brief SID-OOP_MAC_T ˝æ›—È÷§¬Î	*/
+/** @brief SID-OOP_MAC_TÊï∞ÊçÆÈ™åËØÅÁ†Å	*/
 typedef struct tag_SID_MAC
 {
-    OOP_SSID_T            sid;		/**< ∞≤»´±Í ∂		*/
-    OOP_MAC_T             mac;		/**<  ˝æ›OOP_MAC_T	*/
+    OOP_SSID_T            sid;		/**< ÂÆâÂÖ®Ê†áËØÜ		*/
+    OOP_MAC_T             mac;		/**< Êï∞ÊçÆOOP_MAC_T	*/
 }OOP_SID_MAC_T;
 
-/** @brief ESAM∑Ω∑®7-√ÿ‘ø∏¸–¬	*/
+/** @brief ESAMÊñπÊ≥ï7-ÁßòÈí•Êõ¥Êñ∞	*/
 typedef struct tag_OOPM_ESAM_7
 {
-    OOP_OCTETVAR2K_T	data;		/**< √‹‘ø√‹Œƒ	*/
+    OOP_OCTETVAR2K_T	data;		/**< ÂØÜÈí•ÂØÜÊñá	*/
     OOP_SID_MAC_T		sidMac;
 }OOPM_ESAM_7_T;
 
-/** @brief ESAM∑Ω∑®8-÷§ È∏¸–¬	*/
+/** @brief ESAMÊñπÊ≥ï8-ËØÅ‰π¶Êõ¥Êñ∞	*/
 typedef struct tag_OOPM_ESAM_8
 {
-    OOP_OCTETVAR2K_T	data;		/**< √˜Œƒ ˝æ›	*/
-    OOP_SSID_T          sid;		/**< ∞≤»´±Í ∂	*/
+    OOP_OCTETVAR2K_T	data;		/**< ÊòéÊñáÊï∞ÊçÆ	*/
+    OOP_SSID_T          sid;		/**< ÂÆâÂÖ®Ê†áËØÜ	*/
 }OOPM_ESAM_8_T;
 
-/** @brief ESAM∑Ω∑®13-ƒ⁄≤ø»œ÷§	*/
+/** @brief ESAMÊñπÊ≥ï13-ÂÜÖÈÉ®ËÆ§ËØÅ	*/
 typedef struct tag_OOPM_ESAM_13
 {
-	OOP_OCTETVAR2K_T R4;			/**< ÀÊª˙ ˝√‹Œƒ */
-	OOP_OCTETVAR2K_T R5;			/**< ÀÊª˙ ˝ */
+	OOP_OCTETVAR2K_T R4;			/**< ÈöèÊú∫Êï∞ÂØÜÊñá */
+	OOP_OCTETVAR2K_T R5;			/**< ÈöèÊú∫Êï∞ */
 }OOPM_ESAM_13_T;
 
 /*
 *********************************************************************
-* 4.17-class22- ‰»Î ‰≥ˆΩ”ø⁄¿‡
+* 4.17-class22-ËæìÂÖ•ËæìÂá∫Êé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_COM				(8)		/**< ◊Ó¥Û¥Æø⁄ ˝¡ø						*/
+#define OOP_MAX_COM				(8)		/**< ÊúÄÂ§ß‰∏≤Âè£Êï∞Èáè						*/
 
-/** @brief ∂Àø⁄ ⁄»®	*/
+/** @brief Á´ØÂè£ÊéàÊùÉ	*/
 typedef struct tag_OOPM_ADDPORT
 {
-	uint8		index;		/**< ∂Àø⁄–Ú∫≈	*/
-	uint8		times;		/**< ø™∆Ù ±≥§	*/
+	uint8		index;		/**< Á´ØÂè£Â∫èÂè∑	*/
+	uint8		times;		/**< ÂºÄÂêØÊó∂Èïø	*/
 }OOPM_ADDPORT_T;
 
-/** @brief ∂Àø⁄ ⁄»®◊¥Ã¨	*/
+/** @brief Á´ØÂè£ÊéàÊùÉÁä∂ÊÄÅ	*/
 typedef struct tag_OOP_PORTS
 {
 	uint32		nNum;
@@ -2269,13 +2269,13 @@ typedef struct tag_OOP_PORTS
 
 /*
 *********************************************************************
-* 4.18-class23-◊‹º”◊ÈΩ”ø⁄¿‡
+* 4.18-class23-ÊÄªÂä†ÁªÑÊé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_TGSETS	(16)		/**< ◊Ó¥Û◊‹º”◊È∏ˆ ˝	*/
+#define OOP_MAX_TGSETS	(16)		/**< ÊúÄÂ§ßÊÄªÂä†ÁªÑ‰∏™Êï∞	*/
 
-/** @brief ◊‹º”◊È≈‰÷√µ•‘™	*/
+/** @brief ÊÄªÂä†ÁªÑÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OOP_TG
 {
 	OOP_TSA_T	add;
@@ -2283,7 +2283,7 @@ typedef struct tag_OOP_TG
 	uint8		opFlag;
 }OOP_TG_T;
 
-/** @brief ◊‹º”◊È≈‰÷√	*/
+/** @brief ÊÄªÂä†ÁªÑÈÖçÁΩÆ	*/
 typedef struct tag_OOP_TGSETS
 {
 	uint32		nNum;
@@ -2291,7 +2291,7 @@ typedef struct tag_OOP_TGSETS
 	OOP_TG_T	tg[OOP_MAX_TGSETS];
 }OOP_TGSETS_T;
 
-/** @brief ◊‹º”◊Èøÿ÷∆…Ë÷√◊¥Ã¨	*/
+/** @brief ÊÄªÂä†ÁªÑÊéßÂà∂ËÆæÁΩÆÁä∂ÊÄÅ	*/
 typedef struct tag_OOP_TGSETTING
 {
 	uint8				idxPeriod;
@@ -2302,7 +2302,7 @@ typedef struct tag_OOP_TGSETTING
 	OOP_BITSTR8_T		ecTurn;
 }OOP_TGSETTING_T;
 
-/** @brief ◊‹º”◊Èµ±«∞◊¥Ã¨	*/
+/** @brief ÊÄªÂä†ÁªÑÂΩìÂâçÁä∂ÊÄÅ	*/
 typedef struct tag_OOP_TGCURSTATE
 {
 	int64				pwSetting;
@@ -2314,7 +2314,7 @@ typedef struct tag_OOP_TGCURSTATE
 	OOP_BITSTR8_T		ecWarn;
 }OOP_TGCURSTATE_T;
 
-/** @brief ◊‹º”◊Èµ•Œªº∞ªªÀ„	*/
+/** @brief ÊÄªÂä†ÁªÑÂçï‰ΩçÂèäÊç¢ÁÆó	*/
 typedef struct tag_OOP_TGUNIT
 {
 	OOP_SCALER_UNIT_T		unit3;
@@ -2331,30 +2331,30 @@ typedef struct tag_OOP_TGUNIT
 
 /*
 *********************************************************************
-* 4.19-class24-∑÷œ‡ ¬º˛∂‘œÛΩ”ø⁄¿‡
+* 4.19-class24-ÂàÜÁõ∏‰∫ã‰ª∂ÂØπË±°Êé•Âè£Á±ª
 *********************************************************************
 */
 
-/** @brief ∑÷œ‡ ¬º˛◊¥Ã¨∂®“Â	*/
+/** @brief ÂàÜÁõ∏‰∫ã‰ª∂Áä∂ÊÄÅÂÆö‰πâ	*/
 typedef struct tag_MEVTSTATE
 {
     uint32       	dwCount;
     uint32       	dwTimes;
 	uint32			tmStart;
 	uint32			dbIdx;	
-	uint32			index;		/**< ∑÷œ‡ ¬º˛–Ú∫≈	*/
+	uint32			index;		/**< ÂàÜÁõ∏‰∫ã‰ª∂Â∫èÂè∑	*/
 }MEVTSTATE;
 
-/** @brief ∑÷œ‡ ¬º˛Õ≥º∆÷µ∂®“Â	*/
+/** @brief ÂàÜÁõ∏‰∫ã‰ª∂ÁªüËÆ°ÂÄºÂÆö‰πâ	*/
 typedef struct tag_MEVTTIME
 {
     OOP_DATETIME_S_T    tmStart;
     OOP_DATETIME_S_T    tmEnd;
 	uint32				dbIdx;
-	uint32				index;	/**< ∑÷œ‡ ¬º˛–Ú∫≈	*/
+	uint32				index;	/**< ÂàÜÁõ∏‰∫ã‰ª∂Â∫èÂè∑	*/
 }MEVTTIME;
 
-/** @brief ∑÷œ‡ ¬º˛º«¬º	*/
+/** @brief ÂàÜÁõ∏‰∫ã‰ª∂ËÆ∞ÂΩï	*/
 typedef struct tag_OOP_MEVENT
 {
 	uint32				nIndex;
@@ -2364,9 +2364,9 @@ typedef struct tag_OOP_MEVENT
 	OOP_EVTBUF_T		data;
 }OOP_MEVENT_T;
 
-#define OOP_MAX_MEVTSTAT		(4)		/**< ◊Ó¥Û∂‡œÓ ¬º˛◊¥Ã¨∏ˆ ˝	*/
+#define OOP_MAX_MEVTSTAT		(4)		/**< ÊúÄÂ§ßÂ§öÈ°π‰∫ã‰ª∂Áä∂ÊÄÅ‰∏™Êï∞	*/
 
-/** @brief ∑÷œ‡ ¬º˛◊¥Ã¨	*/
+/** @brief ÂàÜÁõ∏‰∫ã‰ª∂Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_MEVTSTAT
 {
 	uint32			  nNum;
@@ -2374,7 +2374,7 @@ typedef struct tag_OOP_MEVTSTAT
     MEVTSTATE    	  stat[OOP_MAX_MEVTSTAT];
 }OOP_MEVTSTAT_T;
 
-/** @brief ∑÷œ‡ ¬º˛Õ≥º∆÷µ	*/
+/** @brief ÂàÜÁõ∏‰∫ã‰ª∂ÁªüËÆ°ÂÄº	*/
 typedef struct tag_OOP_MEVTTIME
 {
 	uint32			 nNum;
@@ -2382,7 +2382,7 @@ typedef struct tag_OOP_MEVTTIME
     MEVTTIME    	 stat[OOP_MAX_MEVTSTAT];
 }OOP_MEVTTIME_T;
 
-/** @brief ¥•∑¢∑÷œ‡ ¬º˛	*/
+/** @brief Ëß¶ÂèëÂàÜÁõ∏‰∫ã‰ª∂	*/
 typedef struct tag_OOP_TOUCHMEVENT
 {
 	uint8		type;
@@ -2395,105 +2395,105 @@ typedef int32 (*pfUpdMEvtData)(OI obj, OOP_MEVENT_T *pData);
 
 /*
 *********************************************************************
-* 4.20-class25-π´Õ¯Õ®–≈Ω”ø⁄¿‡
+* 4.20-class25-ÂÖ¨ÁΩëÈÄö‰ø°Êé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_GPRSOBJ			(2)				/**< ◊Ó¥ÛŒﬁœﬂπ´Õ¯ƒ£øÈ∏ˆ ˝	*/
-#define OOP_MAX_HOST			(4)				/**< ◊Ó¥Ûø…¡¨Ω”÷˜’æ ˝		*/
-#define OOP_MAX_LISTENS			(4)				/**< ◊Ó¥Û÷°Ã˝∂Àø⁄ ˝			*/
+#define OOP_MAX_GPRSOBJ			(2)				/**< ÊúÄÂ§ßÊó†Á∫øÂÖ¨ÁΩëÊ®°Âùó‰∏™Êï∞	*/
+#define OOP_MAX_HOST			(4)				/**< ÊúÄÂ§ßÂèØËøûÊé•‰∏ªÁ´ôÊï∞		*/
+#define OOP_MAX_LISTENS			(4)				/**< ÊúÄÂ§ßÂ∏ßÂê¨Á´ØÂè£Êï∞			*/
 
-/** @brief π§◊˜ƒ£ Ω	*/
+/** @brief Â∑•‰ΩúÊ®°Âºè	*/
 typedef enum tag_WORKMODE
 {
-	MODE_MIX	= 0,	/**< ªÏ∫œƒ£ Ω		*/
-	MODE_CLIENT,		/**< øÕªßª˙ƒ£ Ω	*/
-	MODE_SERVER,		/**< ∑˛ŒÒ∆˜ƒ£ Ω	*/
-	MODE_MQTT			/**< MQTTƒ£ Ω		*/
+	MODE_MIX	= 0,	/**< Ê∑∑ÂêàÊ®°Âºè		*/
+	MODE_CLIENT,		/**< ÂÆ¢Êà∑Êú∫Ê®°Âºè	*/
+	MODE_SERVER,		/**< ÊúçÂä°Âô®Ê®°Âºè	*/
+	MODE_MQTT			/**< MQTTÊ®°Âºè		*/
 }OOP_WORKMODE_E;
 
-/** @brief ¡¨Ω”∑Ω Ω	*/
+/** @brief ËøûÊé•ÊñπÂºè	*/
 typedef enum tag_CONNECTTYPE
 {
 	TYPE_TCP	= 0,	/**< TCP	*/
 	TYPE_UDP			/**< UDP	*/
 }OOP_CONNECTTYPE_E;
 
-/** @brief ‘⁄œﬂ∑Ω Ω	*/
+/** @brief Âú®Á∫øÊñπÂºè	*/
 typedef enum tag_LINETYPE
 {
-	LINE_FOREVER	= 0,	/**< ”¿æ√‘⁄œﬂ	*/
-	LINE_PASSIVE			/**< ±ª∂Øº§ªÓ	*/
+	LINE_FOREVER	= 0,	/**< Ê∞∏‰πÖÂú®Á∫ø	*/
+	LINE_PASSIVE			/**< Ë¢´Âä®ÊøÄÊ¥ª	*/
 }OOP_LINETYPE_E;
 
-/** @brief ¡¨Ω””¶”√∑Ω Ω	*/
+/** @brief ËøûÊé•Â∫îÁî®ÊñπÂºè	*/
 typedef enum tag_CONNECTMODE
 {
-	MODE_ZB	= 0,		/**< ÷˜±∏ƒ£ Ω	*/
-	MODE_DLJ			/**< ∂‡¡¨Ω”ƒ£ Ω	*/
+	MODE_ZB	= 0,		/**< ‰∏ªÂ§áÊ®°Âºè	*/
+	MODE_DLJ			/**< Â§öËøûÊé•Ê®°Âºè	*/
 }OOP_CONNECTMODE_E;
 
-/** @brief ≥¨ ± ±º‰”Î÷ÿ≤•¥Œ ˝	*/
+/** @brief Ë∂ÖÊó∂Êó∂Èó¥‰∏éÈáçÊí≠Ê¨°Êï∞	*/
 typedef union tag_TIMEDAIL
 {
 	uint8		body;
 	struct
 	{
-		uint8	dailcnt  : 2;			/**< ÷ÿ∑¢¥Œ ˝D1-D0	*/
-		uint8	dailtime : 6;			/**< ≥¨ ± ±º‰D7-D2	*/
+		uint8	dailcnt  : 2;			/**< ÈáçÂèëÊ¨°Êï∞D1-D0	*/
+		uint8	dailtime : 6;			/**< Ë∂ÖÊó∂Êó∂Èó¥D7-D2	*/
 	}mask;
 }OOP_TIMEDAIL_U;
 
-/** @brief APN≤Œ ˝	*/
+/** @brief APNÂèÇÊï∞	*/
 typedef struct tag_OOP_APN
 {
 	OOP_VISIBLEVAR_T 	apn;						/**< APN			*/
-	OOP_VISIBLEVAR_T 	username;					/**< ”√ªß√˚			*/
-	OOP_VISIBLEVAR_T 	pwd;						/**< √‹¬Î			*/
-	uint8 				proxyip[4];					/**< ¥˙¿Ì∑˛ŒÒ∆˜µÿ÷∑	*/
-	uint16 				proxyport;					/**< ¥˙¿Ì∂Àø⁄		*/
+	OOP_VISIBLEVAR_T 	username;					/**< Áî®Êà∑Âêç			*/
+	OOP_VISIBLEVAR_T 	pwd;						/**< ÂØÜÁ†Å			*/
+	uint8 				proxyip[4];					/**< ‰ª£ÁêÜÊúçÂä°Âô®Âú∞ÂùÄ	*/
+	uint16 				proxyport;					/**< ‰ª£ÁêÜÁ´ØÂè£		*/
 }OOP_APN_T;
 
-/** @brief GPRSÕ®–≈≈‰÷√	*/
+/** @brief GPRSÈÄö‰ø°ÈÖçÁΩÆ	*/
 typedef struct tag_OOP_GPRSCONFIG
 {
-	uint8 			workmode;					/**< π§◊˜ƒ£ Ω			*/
-	uint8 			linetype;					/**< ‘⁄œﬂ∑Ω Ω			*/
-	uint8 			contype;					/**< ¡¨Ω”∑Ω Ω			*/
-	uint8			conmode;					/**< ¡¨Ω””¶”√∑Ω Ω		*/
-	uint32			listenNum;					/**< ’ÏÃ˝∂Àø⁄∏ˆ ˝		*/
-	uint16			listen[OOP_MAX_LISTENS];	/**< ÷°Ã˝∂Àø⁄¡–±Ì		*/
+	uint8 			workmode;					/**< Â∑•‰ΩúÊ®°Âºè			*/
+	uint8 			linetype;					/**< Âú®Á∫øÊñπÂºè			*/
+	uint8 			contype;					/**< ËøûÊé•ÊñπÂºè			*/
+	uint8			conmode;					/**< ËøûÊé•Â∫îÁî®ÊñπÂºè		*/
+	uint32			listenNum;					/**< ‰æ¶Âê¨Á´ØÂè£‰∏™Êï∞		*/
+	uint16			listen[OOP_MAX_LISTENS];	/**< Â∏ßÂê¨Á´ØÂè£ÂàóË°®		*/
 	OOP_APN_T		apn;
-	OOP_TIMEDAIL_U	dail;						/**< ≥¨ ± ±º‰º∞÷ÿ∑¢¥Œ ˝	*/
-	uint16 			heart;						/**< –ƒÃ¯÷‹∆⁄(√Î)		*/
+	OOP_TIMEDAIL_U	dail;						/**< Ë∂ÖÊó∂Êó∂Èó¥ÂèäÈáçÂèëÊ¨°Êï∞	*/
+	uint16 			heart;						/**< ÂøÉË∑≥Âë®Êúü(Áßí)		*/
 }OOP_GPRSCONFIG_T;
 
-/** @brief ∂Ã–≈∫≈¬Î∂®“Â	*/
+/** @brief Áü≠‰ø°Âè∑Á†ÅÂÆö‰πâ	*/
 typedef struct tag_OOP_SMS_HOST
 {
 	uint32				nNum;
 	OOP_VISIBLESTR16_T	item[OOP_MAX_HOST];
 }OOP_SMS_HOST_T;
 
-/** @brief ∂Ã–≈≤Œ ˝	*/
+/** @brief Áü≠‰ø°ÂèÇÊï∞	*/
 typedef struct tag_OOP_SMS
 {	
-	char			centernum[17];		/**< ∂Ã–≈÷––ƒ∫≈¬Î		*/
-	OOP_SMS_HOST_T	hostnum;			/**< ÷˜’æ∫≈¬Î			*/
-	OOP_SMS_HOST_T	localnum;			/**< ∂Ã–≈Õ®÷™ƒøµƒ∫≈¬Î	*/
+	char			centernum[17];		/**< Áü≠‰ø°‰∏≠ÂøÉÂè∑Á†Å		*/
+	OOP_SMS_HOST_T	hostnum;			/**< ‰∏ªÁ´ôÂè∑Á†Å			*/
+	OOP_SMS_HOST_T	localnum;			/**< Áü≠‰ø°ÈÄöÁü•ÁõÆÁöÑÂè∑Á†Å	*/
 }OOP_SMS_T;
 
-#define OOP_MAX_MASTER	(4)			/**< ◊Ó¥Û¡¨Ω”÷˜’æ ˝	*/
-#define OOP_MAX_NETTYPE (8)			/**< ◊Ó¥ÛÕ¯¬Á¿‡–Õ	*/
+#define OOP_MAX_MASTER	(4)			/**< ÊúÄÂ§ßËøûÊé•‰∏ªÁ´ôÊï∞	*/
+#define OOP_MAX_NETTYPE (8)			/**< ÊúÄÂ§ßÁΩëÁªúÁ±ªÂûã	*/
 
-/** @brief ÷˜’æ≤Œ ˝	*/
+/** @brief ‰∏ªÁ´ôÂèÇÊï∞	*/
 typedef struct tag_OOP_MASTERPARAM
 {
-	uint8 			ip[4];			/**< IPµÿ÷∑	*/
-	uint16 			port;			/**< ∂Àø⁄	*/
+	uint8 			ip[4];			/**< IPÂú∞ÂùÄ	*/
+	uint16 			port;			/**< Á´ØÂè£	*/
 }OOP_MASTERPARAM_T;
 
-/** @brief ÷˜’æ≤Œ ˝ºØ∫œ	*/
+/** @brief ‰∏ªÁ´ôÂèÇÊï∞ÈõÜÂêà	*/
 typedef struct tag_OOP_MASTERPARAMS
 {
 	uint32				nNum;
@@ -2501,7 +2501,7 @@ typedef struct tag_OOP_MASTERPARAMS
 	OOP_MASTERPARAM_T	master[OOP_MAX_MASTER];
 }OOP_MASTERPARAMS_T;
 
-/** @brief ‘À”™…Ã–≈œ¢	*/
+/** @brief ËøêËê•ÂïÜ‰ø°ÊÅØ	*/
 typedef enum tag_OOP_NETOPT
 {
 	OOP_CMCC = 0,
@@ -2510,7 +2510,7 @@ typedef enum tag_OOP_NETOPT
 	OOP_OPT_NONE = 255
 }OOP_NETOPT_E;
 
-/** @brief Õ¯¬Á¿‡–Õ√∂æŸ	*/
+/** @brief ÁΩëÁªúÁ±ªÂûãÊûö‰∏æ	*/
 typedef enum tag_OOP_NETTYPE
 {
 	OOP_2G = 0,
@@ -2520,7 +2520,7 @@ typedef enum tag_OOP_NETTYPE
 	OOP_NET_UNKNOW = 255
 }OOP_NETTYPE_E;
 
-/** @brief º¯»®∑Ω Ω	*/
+/** @brief Èâ¥ÊùÉÊñπÂºè	*/
 typedef enum tag_OOP_AUTH
 {
 	AUTH_NULL = 0,
@@ -2530,17 +2530,17 @@ typedef enum tag_OOP_AUTH
 	AUTH_UNKNOW = 255
 }OOP_AUTH_E;
 
-/** @brief Œﬁœﬂπ´Õ¯Õ¯¬Á≈‰÷√	*/
+/** @brief Êó†Á∫øÂÖ¨ÁΩëÁΩëÁªúÈÖçÁΩÆ	*/
 typedef struct tag_OOP_NETCONFIG
 {
-	uint8				factory;					/**< ‘À”™…Ã		*/
-	uint8				network;					/**< Õ¯¬Á¿‡–Õ	*/
-	OOP_APN_T			apn;						/**< APN ≤Œ ˝	*/
-	uint8				auth;						/**< º¯»®∑Ω Ω	*/
-	OOP_MASTERPARAMS_T	master;						/**< ÷˜’æ≤Œ ˝	*/
+	uint8				factory;					/**< ËøêËê•ÂïÜ		*/
+	uint8				network;					/**< ÁΩëÁªúÁ±ªÂûã	*/
+	OOP_APN_T			apn;						/**< APN ÂèÇÊï∞	*/
+	uint8				auth;						/**< Èâ¥ÊùÉÊñπÂºè	*/
+	OOP_MASTERPARAMS_T	master;						/**< ‰∏ªÁ´ôÂèÇÊï∞	*/
 }OOP_NETCONFIG_T;
 
-/** @brief Œﬁœﬂπ´Õ¯∂‡Õ¯¬Á≈‰÷√	*/
+/** @brief Êó†Á∫øÂÖ¨ÁΩëÂ§öÁΩëÁªúÈÖçÁΩÆ	*/
 typedef struct tag_OOP_APNGROUP
 {
 	uint32			nNum;
@@ -2548,7 +2548,7 @@ typedef struct tag_OOP_APNGROUP
 	OOP_NETCONFIG_T	net[OOP_MAX_NETTYPE];
 }OOP_APNGROUP_T;
 
-/** @brief ‘À”™…Ãº∞Õ¯¬Á÷∆ Ω	*/
+/** @brief ËøêËê•ÂïÜÂèäÁΩëÁªúÂà∂Âºè	*/
 typedef struct tag_OOP_NETINFO
 {
 	uint8	nNetOpt;
@@ -2557,27 +2557,27 @@ typedef struct tag_OOP_NETINFO
 
 /*
 *********************************************************************
-* 4.21-class26-“‘Ã´Õ¯Õ®–≈Ω”ø⁄¿‡
+* 4.21-class26-‰ª•Â§™ÁΩëÈÄö‰ø°Êé•Âè£Á±ª
 *********************************************************************
 */
 
-#define OOP_MAX_ETHEROBJ		(8)				/**< ◊Ó¥Û“‘Ã´Õ¯∏ˆ ˝		*/
+#define OOP_MAX_ETHEROBJ		(8)				/**< ÊúÄÂ§ß‰ª•Â§™ÁΩë‰∏™Êï∞		*/
 
-/** @brief “‘Ã´Õ¯Õ®–≈≈‰÷√	*/
+/** @brief ‰ª•Â§™ÁΩëÈÄö‰ø°ÈÖçÁΩÆ	*/
 typedef struct tag_OOP_ETHCONFIG
 {
-	uint8 			workmode;					/**< π§◊˜ƒ£ Ω			*/
-	uint8 			contype;					/**< ¡¨Ω”∑Ω Ω			*/
-	uint8			conmode;					/**< ¡¨Ω””¶”√∑Ω Ω		*/
-	uint32			listenNum;					/**< ’ÏÃ˝∂Àø⁄∏ˆ ˝		*/
-	uint16			listen[OOP_MAX_LISTENS];	/**< ÷°Ã˝∂Àø⁄¡–±Ì		*/
-	uint8 			proxyip[4];					/**< ¥˙¿Ì∑˛ŒÒ∆˜µÿ÷∑		*/
-	uint16 			proxyport;					/**< ¥˙¿Ì∂Àø⁄			*/
-	OOP_TIMEDAIL_U	dail;						/**< ≥¨ ± ±º‰º∞÷ÿ∑¢¥Œ ˝	*/
-	uint16 			heart;						/**< –ƒÃ¯÷‹∆⁄(√Î)		*/
+	uint8 			workmode;					/**< Â∑•‰ΩúÊ®°Âºè			*/
+	uint8 			contype;					/**< ËøûÊé•ÊñπÂºè			*/
+	uint8			conmode;					/**< ËøûÊé•Â∫îÁî®ÊñπÂºè		*/
+	uint32			listenNum;					/**< ‰æ¶Âê¨Á´ØÂè£‰∏™Êï∞		*/
+	uint16			listen[OOP_MAX_LISTENS];	/**< Â∏ßÂê¨Á´ØÂè£ÂàóË°®		*/
+	uint8 			proxyip[4];					/**< ‰ª£ÁêÜÊúçÂä°Âô®Âú∞ÂùÄ		*/
+	uint16 			proxyport;					/**< ‰ª£ÁêÜÁ´ØÂè£			*/
+	OOP_TIMEDAIL_U	dail;						/**< Ë∂ÖÊó∂Êó∂Èó¥ÂèäÈáçÂèëÊ¨°Êï∞	*/
+	uint16 			heart;						/**< ÂøÉË∑≥Âë®Êúü(Áßí)		*/
 }OOP_ETHCONFIG_T;
 
-/** @brief “‘Ã´Õ¯±æµÿIP≈‰÷√	*/
+/** @brief ‰ª•Â§™ÁΩëÊú¨Âú∞IPÈÖçÁΩÆ	*/
 typedef struct tag_OOP_ETHIP
 {
 	uint8				ipConfig;
@@ -2588,13 +2588,13 @@ typedef struct tag_OOP_ETHIP
 	OOP_VISIBLEVAR_T	pppoePwd;
 }OOP_ETHIP_T;
 
-/** @brief IPµÿ÷∑	*/
+/** @brief IPÂú∞ÂùÄ	*/
 typedef struct tag_OOP_IP
 {
     uint8    data[4];
 }OOP_IP_T;
 
-/** @brief “‘Ã´Õ¯OOP_MAC_Tµÿ÷∑	*/
+/** @brief ‰ª•Â§™ÁΩëOOP_MAC_TÂú∞ÂùÄ	*/
 typedef struct tag_OOP_ETHMAC
 {
     uint8    data[6];
@@ -2603,14 +2603,14 @@ typedef struct tag_OOP_ETHMAC
 /*
  ********************************************************************
  *																	*
- * 5-∏Ω¬º∂‘œÛ ˝æ›Ω·ππ		                                        *
+ * 5-ÈôÑÂΩïÂØπË±°Êï∞ÊçÆÁªìÊûÑ		                                        *
  *																	*
  ********************************************************************
 */
 
 /*
 *********************************************************************
-* A.4 ±‰¡ø¿‡∂‘œÛ
+* A.4 ÂèòÈáèÁ±ªÂØπË±°
 *********************************************************************
 */
 
@@ -2629,9 +2629,9 @@ typedef struct tag_OOP_DWORD3
 	uint32   nValue3;
 }OOP_DWORD3_T;
 
-#define OOP_METWORD_NUM		(7)					/**< µÁ±Ì◊¥Ã¨◊÷∏ˆ ˝	*/
+#define OOP_METWORD_NUM		(7)					/**< ÁîµË°®Áä∂ÊÄÅÂ≠ó‰∏™Êï∞	*/
 
-/** @brief 2014-µÁƒ‹±Ì‘À––◊¥Ã¨◊÷	*/
+/** @brief 2014-ÁîµËÉΩË°®ËøêË°åÁä∂ÊÄÅÂ≠ó	*/
 typedef struct tag_OOP_METWORD
 {
 	uint32			nNum;	
@@ -2639,7 +2639,7 @@ typedef struct tag_OOP_METWORD
 	uint16          metWord[OOP_METWORD_NUM];
 }OOP_METWORD_T;
 
-/** @brief 2050-µÁ¡˜ªÿ¬∑◊¥Ã¨ */
+/** @brief 2050-ÁîµÊµÅÂõûË∑ØÁä∂ÊÄÅ */
 #define OOP_LOOPSTAT_NUM	(3)
 typedef struct tag_OOP_LOOPSTAT
 {
@@ -2649,11 +2649,11 @@ typedef struct tag_OOP_LOOPSTAT
 }OOP_LOOPSTAT_T;
 
 /** 
-* @brief 	µÁ—π∫œ∏Ò¬ Õ≥º∆÷µ-	\n
-*			2130-◊‹µÁ—π∫œ∏Ò¬ 	\n
-*			2131-Aœ‡µÁ—π∫œ∏Ò¬ 	\n
-*			2132-Bœ‡µÁ—π∫œ∏Ò¬ 	\n
-*			2133-Cœ‡µÁ—π∫œ∏Ò¬ 
+* @brief 	ÁîµÂéãÂêàÊ†ºÁéáÁªüËÆ°ÂÄº-	\n
+*			2130-ÊÄªÁîµÂéãÂêàÊ†ºÁéá	\n
+*			2131-AÁõ∏ÁîµÂéãÂêàÊ†ºÁéá	\n
+*			2132-BÁõ∏ÁîµÂéãÂêàÊ†ºÁéá	\n
+*			2133-CÁõ∏ÁîµÂéãÂêàÊ†ºÁéá
 */
 typedef struct tag_OOP_VOLTQR
 {
@@ -2664,143 +2664,143 @@ typedef struct tag_OOP_VOLTQR
 	uint32	dwTime4;
 }OOP_VOLTQR_T;
 
-/** @brief µÁ—π∫œ∏Ò¬ Õ≥º∆	*/
+/** @brief ÁîµÂéãÂêàÊ†ºÁéáÁªüËÆ°	*/
 typedef struct tag_OOP_VOLTSTAT
 {
 	OOP_VOLTQR_T	day;
 	OOP_VOLTQR_T	mon;
 }OOP_VOLTSTAT_T;
 
-/** @brief 2204-∏¥Œª¥Œ ˝	*/
+/** @brief 2204-Â§ç‰ΩçÊ¨°Êï∞	*/
 typedef struct tag_OOP_WORD2
 {
-	uint16	nValue1;	/**< »’∏¥Œª¿€º∆¥Œ ˝			*/
-	uint16  nValue2;	/**< ‘¬∏¥Œª¿€º∆¥Œ ˝			*/
+	uint16	nValue1;	/**< Êó•Â§ç‰ΩçÁ¥ØËÆ°Ê¨°Êï∞			*/
+	uint16  nValue2;	/**< ÊúàÂ§ç‰ΩçÁ¥ØËÆ°Ê¨°Êï∞			*/
 }OOP_WORD2_T;
 
-/** @brief 2506-(“«±Ì)◊¥Ã¨ST	*/
+/** @brief 2506-(‰ª™Ë°®)Áä∂ÊÄÅST	*/
 typedef struct tag_OOP_ST
 {
-	uint8	nTap;       /**< ∑ß√≈◊¥Ã¨(enum)	*/
-	uint8	nBattery;   /**< µÁ≥ÿµÁ—π(enum)	*/
+	uint8	nTap;       /**< ÈòÄÈó®Áä∂ÊÄÅ(enum)	*/
+	uint8	nBattery;   /**< ÁîµÊ±†ÁîµÂéã(enum)	*/
 }OOP_ST_T;
 
-/** @brief 26F0-–È“£–≈ */
+/** @brief 26F0-ËôöÈÅ•‰ø° */
 typedef struct tag_OOP_VIRTUAL_YX
 {
-	uint32   di;                   /**<  ˝æ›œÓ±Í ∂ */ 
-	OOP_OCTETVAR256_T  data;        /**< “£–≈º«¬º ˝æ› */
+	uint32   di;                   /**< Êï∞ÊçÆÈ°πÊ†áËØÜ */ 
+	OOP_OCTETVAR256_T  data;        /**< ÈÅ•‰ø°ËÆ∞ÂΩïÊï∞ÊçÆ */
 }OOP_VIRTUAL_YX_T;
 
-/** @brief 2800-µ±«∞ £”‡µÁ¡˜◊Ó¥Ûœ‡º∞ £”‡µÁ¡˜÷µ*/
+/** @brief 2800-ÂΩìÂâçÂâ©‰ΩôÁîµÊµÅÊúÄÂ§ßÁõ∏ÂèäÂâ©‰ΩôÁîµÊµÅÂÄº*/
 typedef struct tag_OOP_RESIVALUE
 {
-	uint8 nPhase;            /**>  £”‡µÁ¡˜◊Ó¥Ûœ‡			*/
-	int16 nValue;            /**>  £”‡µÁ¡˜÷µ				*/
+	uint8 nPhase;            /**> Ââ©‰ΩôÁîµÊµÅÊúÄÂ§ßÁõ∏			*/
+	int16 nValue;            /**> Ââ©‰ΩôÁîµÊµÅÂÄº				*/
 }OOP_RESIVALUE_T;
 
-/** @brief 2801-µ±«∞ £”‡µÁ¡˜∂Ø◊˜÷µº∞«˝∂Ø ±º‰*/
+/** @brief 2801-ÂΩìÂâçÂâ©‰ΩôÁîµÊµÅÂä®‰ΩúÂÄºÂèäÈ©±Âä®Êó∂Èó¥*/
 typedef struct tag_OOP_RESIACTION
 {
-	int32   nAmp;			 /**> £”‡µÁ¡˜∂Ø◊˜÷µ*/
-	uint16  nTime;			 /**>º´œﬁ≤ª«˝∂Ø ±º‰*/
+	int32   nAmp;			 /**>Ââ©‰ΩôÁîµÊµÅÂä®‰ΩúÂÄº*/
+	uint16  nTime;			 /**>ÊûÅÈôê‰∏çÈ©±Âä®Êó∂Èó¥*/
 }OOP_RESIACTION_T;
 
-/** @brief 2802- £”‡µÁ¡˜»’◊Ó¥Ûœ‡£¨◊Ó¥Û÷µº∞∑¢…˙µƒ ±øÃ*/
+/** @brief 2802-Ââ©‰ΩôÁîµÊµÅÊó•ÊúÄÂ§ßÁõ∏ÔºåÊúÄÂ§ßÂÄºÂèäÂèëÁîüÁöÑÊó∂Âàª*/
 typedef struct tag_OOP_RESICUR
 {
-	uint8 				nMaxPhase;      /**>  £”‡µÁ¡˜◊Ó¥Ûœ‡ */
-	int16 				nMaxValue;      /**>  £”‡µÁ¡˜◊Ó¥Û÷µ */
-	OOP_DATETIME_S_T 	tmHappen;   	/**> ∑¢…˙ ±øÃ 			*/
+	uint8 				nMaxPhase;      /**> Ââ©‰ΩôÁîµÊµÅÊúÄÂ§ßÁõ∏ */
+	int16 				nMaxValue;      /**> Ââ©‰ΩôÁîµÊµÅÊúÄÂ§ßÂÄº */
+	OOP_DATETIME_S_T 	tmHappen;   	/**> ÂèëÁîüÊó∂Âàª 			*/
 }OOP_CURMAXPHASE_T;
 
-/** @brief 2805-µÁ¡˜»’◊Ó¥Û÷µ∑¢…˙ ±øÃº∞»˝œ‡µÁ¡˜÷µ*/
+/** @brief 2805-ÁîµÊµÅÊó•ÊúÄÂ§ßÂÄºÂèëÁîüÊó∂ÂàªÂèä‰∏âÁõ∏ÁîµÊµÅÂÄº*/
 typedef struct tag_OOP_CURMAX
 {
-	OOP_DATETIME_S_T 	tmHappen;   /**>∑÷œ‡µÁ¡˜»’◊Ó¥Û∑¢…˙ ±øÃ*/
+	OOP_DATETIME_S_T 	tmHappen;   /**>ÂàÜÁõ∏ÁîµÊµÅÊó•ÊúÄÂ§ßÂèëÁîüÊó∂Âàª*/
 	uint32 				nAmpA;     	
 	uint32 				nAmpB;
 	uint32 				nAmpC;	
 }OOP_CURMAX_T;
 
-/** @brief 280A-Ã¯’¢¥Œ ˝≤Œ ˝ƒ£øÈ*/
+/** @brief 280A-Ë∑≥Èó∏Ê¨°Êï∞ÂèÇÊï∞Ê®°Âùó*/
 typedef struct tag_OOP_TRIPCNT
 {
-	/**< ◊‹Ã¯’¢¥Œ ˝								
-		 ±’À¯–‘Ã¯’¢¥Œ ˝							
-		  £”‡µÁ¡˜±£ª§Ã¯’¢¥Œ ˝							
-		 µÁ¡˜±£ª§¥Œ ˝£®π˝‘ÿ°¢∂Ã¬∑£©				
-		 µÁ—π±£ª§¥Œ ˝£®»±œ‡°¢«∑—π°¢π˝—π£©	
-		  ÷∂Ø±’À¯Ã¯’¢¥Œ ˝							
-		 »±¡„±£ª§Ã¯’¢¥Œ ˝							
-		  ‘—ÈÃ¯’¢¥Œ ˝£®∂® ±°¢‘∂≥Ã°¢∞¥º¸£©	
-		 ∂Ã¬∑∂Ã—” ±Ã¯’¢¥Œ ˝							
-		 ∂Ã¬∑À≤ ±Ã¯’¢¥Œ ˝							*/
+	/**< ÊÄªË∑≥Èó∏Ê¨°Êï∞								
+		 Èó≠ÈîÅÊÄßË∑≥Èó∏Ê¨°Êï∞							
+		 Ââ©‰ΩôÁîµÊµÅ‰øùÊä§Ë∑≥Èó∏Ê¨°Êï∞							
+		 ÁîµÊµÅ‰øùÊä§Ê¨°Êï∞ÔºàËøáËΩΩ„ÄÅÁü≠Ë∑ØÔºâ				
+		 ÁîµÂéã‰øùÊä§Ê¨°Êï∞ÔºàÁº∫Áõ∏„ÄÅÊ¨†Âéã„ÄÅËøáÂéãÔºâ	
+		 ÊâãÂä®Èó≠ÈîÅË∑≥Èó∏Ê¨°Êï∞							
+		 Áº∫Èõ∂‰øùÊä§Ë∑≥Èó∏Ê¨°Êï∞							
+		 ËØïÈ™åË∑≥Èó∏Ê¨°Êï∞ÔºàÂÆöÊó∂„ÄÅËøúÁ®ã„ÄÅÊåâÈîÆÔºâ	
+		 Áü≠Ë∑ØÁü≠Âª∂Êó∂Ë∑≥Èó∏Ê¨°Êï∞							
+		 Áü≠Ë∑ØÁû¨Êó∂Ë∑≥Èó∏Ê¨°Êï∞							*/
 	uint16 nCnt[10];
 	
-	/**<  £”‡µÁ¡˜≥¨œﬁ–¬‘ˆ¥Œ ˝							
-		 œﬂ¬∑»±œ‡–¬‘ˆ¥Œ ˝							
-		  £”‡µÁ¡˜±£ª§ÕÀ≥ˆ–¬‘ˆ¥Œ ˝					
-		 ≥ˆœﬂ∂À ßµÁ–¬‘ˆ¥Œ ˝					
-		  £”‡µÁ¡˜≤…—˘ªÿ¬∑∂œœﬂ–¬‘ˆ¥Œ ˝						*/
+	/**< Ââ©‰ΩôÁîµÊµÅË∂ÖÈôêÊñ∞Â¢ûÊ¨°Êï∞							
+		 Á∫øË∑ØÁº∫Áõ∏Êñ∞Â¢ûÊ¨°Êï∞							
+		 Ââ©‰ΩôÁîµÊµÅ‰øùÊä§ÈÄÄÂá∫Êñ∞Â¢ûÊ¨°Êï∞					
+		 Âá∫Á∫øÁ´ØÂ§±ÁîµÊñ∞Â¢ûÊ¨°Êï∞					
+		 Ââ©‰ΩôÁîµÊµÅÈááÊ†∑ÂõûË∑ØÊñ≠Á∫øÊñ∞Â¢ûÊ¨°Êï∞						*/
 	uint8 nNewCnt[5];
 }OOP_TRIPCNT_T;
 
-/** @brief 280C-ª•∏–∆˜µÁ—π∫œ∏Ò¬ »’Õ≥º∆ ˝æ›*/
+/** @brief 280C-‰∫íÊÑüÂô®ÁîµÂéãÂêàÊ†ºÁéáÊó•ÁªüËÆ°Êï∞ÊçÆ*/
 typedef struct tag_OOP_VOLTSTIC
 {
-	uint32 		nTotaltime;             /**> µÁ—πº‡≤‚ ±º‰ 			*/
-	uint32 		nSval;                  /**> µÁ—π∫œ∏Ò¬         		*/
-	uint32 		nOval;                  /**> µÁ—π‘Ωœﬁ¬         		*/
-	uint32 		nOverTime;              /**> ≥¨…œœﬁ ±º‰        		*/
-	uint32 		nLowTime;               /**> ≥¨œ¬œﬁ ±º‰        		*/
-	uint16 		nHighVol;               /**> ◊Ó∏ﬂµÁ—π				*/
-	OOP_DATE_T 	stHighTime;          	/**> ◊Ó∏ﬂµÁ—π≥ˆœ÷ ±øÃ			*/
-	uint16 		nLowVol;             	/**> ◊ÓµÕµÁ—π				*/
-	OOP_DATE_T 	stLowTime;	        	/**> ◊ÓµÕµÁ—π≥ˆœ÷ ±øÃ			*/
+	uint32 		nTotaltime;             /**> ÁîµÂéãÁõëÊµãÊó∂Èó¥ 			*/
+	uint32 		nSval;                  /**> ÁîµÂéãÂêàÊ†ºÁéá        		*/
+	uint32 		nOval;                  /**> ÁîµÂéãË∂äÈôêÁéá        		*/
+	uint32 		nOverTime;              /**> Ë∂Ö‰∏äÈôêÊó∂Èó¥        		*/
+	uint32 		nLowTime;               /**> Ë∂Ö‰∏ãÈôêÊó∂Èó¥        		*/
+	uint16 		nHighVol;               /**> ÊúÄÈ´òÁîµÂéã				*/
+	OOP_DATE_T 	stHighTime;          	/**> ÊúÄÈ´òÁîµÂéãÂá∫Áé∞Êó∂Âàª			*/
+	uint16 		nLowVol;             	/**> ÊúÄ‰ΩéÁîµÂéã				*/
+	OOP_DATE_T 	stLowTime;	        	/**> ÊúÄ‰ΩéÁîµÂéãÂá∫Áé∞Êó∂Âàª			*/
 }OOP_VOLTSTIC_T;
 
-/** @brief 2903-µÁ»›∆˜ ˝æ›*/
+/** @brief 2903-ÁîµÂÆπÂô®Êï∞ÊçÆ*/
 typedef struct tag_OOP_CAPSTATE
 {
-	OOP_WORD4V_T  vol;              /**> µÁ—π   */
-	OOP_INT4V_T   amp;              /**> µÁ¡˜ */   
-	OOP_INT4V_T   qpwr;             /**> Œﬁπ¶π¶¬       */
-	OOP_LONG4V_T  pwrf;             /**> π¶¬ “Ú ˝	*/
-	OOP_INT4V_T   ppwr;             /**> ”–π¶π¶¬  */
-	OOP_INT4V_T   camp;             /**> »›–‘µÁ¡˜ */
-	uint16        nInfo;            /**> ÷«ƒ‹µÁ»›◊¥Ã¨–≈œ¢ */
-	uint32        nVolume1;         /**> π≤≤πµÁ»›∆˜»›¡ø1 */
-	uint32        nVolume2;			/**> π≤≤πµÁ»›∆˜»›¡ø2 */
-	char          nTemp1;           /**> µÁ»›∆˜Œ¬∂»1 */
-	char          nTemp2;           /**> µÁ»›∆˜Œ¬∂»2 */
+	OOP_WORD4V_T  vol;              /**> ÁîµÂéã   */
+	OOP_INT4V_T   amp;              /**> ÁîµÊµÅ */   
+	OOP_INT4V_T   qpwr;             /**> Êó†ÂäüÂäüÁéá      */
+	OOP_LONG4V_T  pwrf;             /**> ÂäüÁéáÂõ†Êï∞	*/
+	OOP_INT4V_T   ppwr;             /**> ÊúâÂäüÂäüÁéá */
+	OOP_INT4V_T   camp;             /**> ÂÆπÊÄßÁîµÊµÅ */
+	uint16        nInfo;            /**> Êô∫ËÉΩÁîµÂÆπÁä∂ÊÄÅ‰ø°ÊÅØ */
+	uint32        nVolume1;         /**> ÂÖ±Ë°•ÁîµÂÆπÂô®ÂÆπÈáè1 */
+	uint32        nVolume2;			/**> ÂÖ±Ë°•ÁîµÂÆπÂô®ÂÆπÈáè2 */
+	char          nTemp1;           /**> ÁîµÂÆπÂô®Ê∏©Â∫¶1 */
+	char          nTemp2;           /**> ÁîµÂÆπÂô®Ê∏©Â∫¶2 */
 }OOP_CAPSTATE_T;
 
-/** @brief 4B00-∂œ¬∑∆˜‘À––◊¥Ã¨◊÷≤Œ ˝øÈ*/
+/** @brief 4B00-Êñ≠Ë∑ØÂô®ËøêË°åÁä∂ÊÄÅÂ≠óÂèÇÊï∞Âùó*/
 typedef struct tag_OOP_STATWORD
 {
-	uint8 nStatWord1;              /**> ∂œ¬∑∆˜◊¥Ã¨◊÷1 */
-	uint8 nStatWord2;              /**> ∂œ¬∑∆˜◊¥Ã¨◊÷2 */
+	uint8 nStatWord1;              /**> Êñ≠Ë∑ØÂô®Áä∂ÊÄÅÂ≠ó1 */
+	uint8 nStatWord2;              /**> Êñ≠Ë∑ØÂô®Áä∂ÊÄÅÂ≠ó2 */
 }OOP_STATWORD_T;
 
 /**
 ********************************************************
-* A.5  ¬º˛¿‡∂‘œÛ
+* A.5 ‰∫ã‰ª∂Á±ªÂØπË±°
 ********************************************************
 */
 
-#define OOP_MAX_CHANNEL	(4)		/**<  ¬º˛…œ±®◊Ó¥ÛÕ®µ¿ ˝			*/
+#define OOP_MAX_CHANNEL	(4)		/**< ‰∫ã‰ª∂‰∏äÊä•ÊúÄÂ§ßÈÄöÈÅìÊï∞			*/
 
-/** @brief 3000-µÁƒ‹±Ì ß—π ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 3000-ÁîµËÉΩË°®Â§±Âéã‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_3000
 {
-    uint16	        wVUp;       /**< µÁ—π¥•∑¢…œœﬁ	*/
-	uint16	        wVDown;     /**< µÁ—πª÷∏¥œ¬œﬁ	*/
-	int32		    nADown;     /**< µÁ¡˜¥•∑¢œ¬œﬁ	*/
-	uint8	        nDelay;     /**< ≈–∂®—” ± ±º‰	*/
+    uint16	        wVUp;       /**< ÁîµÂéãËß¶Âèë‰∏äÈôê	*/
+	uint16	        wVDown;     /**< ÁîµÂéãÊÅ¢Â§ç‰∏ãÈôê	*/
+	int32		    nADown;     /**< ÁîµÊµÅËß¶Âèë‰∏ãÈôê	*/
+	uint8	        nDelay;     /**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥	*/
 }OOP_EVTCFG_3000_T;
 
-/** @brief µÁƒ‹±Ì ß—πÕ≥º∆◊¥Ã¨	*/
+/** @brief ÁîµËÉΩË°®Â§±ÂéãÁªüËÆ°Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_LOSTVSTAT
 {
 	uint32				nCount;
@@ -2810,72 +2810,72 @@ typedef struct tag_OOP_LOSTVSTAT
 }OOP_LOSTVSTAT_T;
 
 /** 
-* @brief 	≈‰÷√≤Œ ˝-				\n
-*			3001-µÁƒ‹±Ì«∑—π ¬º˛		\n
-*			3002-µÁƒ‹±Ìπ˝—π ¬º˛
+* @brief 	ÈÖçÁΩÆÂèÇÊï∞-				\n
+*			3001-ÁîµËÉΩË°®Ê¨†Âéã‰∫ã‰ª∂		\n
+*			3002-ÁîµËÉΩË°®ËøáÂéã‰∫ã‰ª∂
 */
 typedef struct tag_OOP_EVTCFG_WD
 {
-	uint16          wValue;      /**< µÁ—π¥•∑¢…œœﬁ/µÁ—π¥•∑¢œ¬œﬁ	*/
-	uint8	        nDelay;      /**< ≈–∂®—” ± ±º‰				*/
+	uint16          wValue;      /**< ÁîµÂéãËß¶Âèë‰∏äÈôê/ÁîµÂéãËß¶Âèë‰∏ãÈôê	*/
+	uint8	        nDelay;      /**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥				*/
 }OOP_EVTCFG_WD_T;
 
-/** @brief 3003-µÁƒ‹±Ì∂œœ‡ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 3003-ÁîµËÉΩË°®Êñ≠Áõ∏‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_3003
 {
-	uint16	        wVUp;           /**< µÁ—π¥•∑¢…œœﬁ	*/
-	int32		    nAUp;           /**< µÁ¡˜¥•∑¢…œœﬁ	*/
-	uint8	        nDelay;         /**< ≈–∂®—” ± ±º‰	*/
+	uint16	        wVUp;           /**< ÁîµÂéãËß¶Âèë‰∏äÈôê	*/
+	int32		    nAUp;           /**< ÁîµÊµÅËß¶Âèë‰∏äÈôê	*/
+	uint8	        nDelay;         /**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥	*/
 }OOP_EVTCFG_3003_T;
 
-/** @brief 3004-µÁƒ‹±Ì ß¡˜ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 3004-ÁîµËÉΩË°®Â§±ÊµÅ‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_3004
 {
-	uint16	        wVDown;         /**< µÁ—π¥•∑¢œ¬œﬁ	*/
-	int32		        nAUp;           /**< µÁ¡˜¥•∑¢…œœﬁ	*/
-	int32		        nADown;         /**< µÁ¡˜¥•∑¢œ¬œﬁ	*/
-	uint8	        nDelay;         /**< ≈–∂®—” ± ±º‰	*/
+	uint16	        wVDown;         /**< ÁîµÂéãËß¶Âèë‰∏ãÈôê	*/
+	int32		        nAUp;           /**< ÁîµÊµÅËß¶Âèë‰∏äÈôê	*/
+	int32		        nADown;         /**< ÁîµÊµÅËß¶Âèë‰∏ãÈôê	*/
+	uint8	        nDelay;         /**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥	*/
 }OOP_EVTCFG_3004_T;
 
-/** @brief 3006-µÁƒ‹±Ì∂œ¡˜ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 3006-ÁîµËÉΩË°®Êñ≠ÊµÅ‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_3006
 {
-	uint16	        wVDown; /**< µÁ—π¥•∑¢œ¬œﬁ	*/
-	int32		        nAUp;   /**< µÁ¡˜¥•∑¢…œœﬁ	*/
-	uint8	        nDelay; /**< ≈–∂®—” ± ±º‰	*/
+	uint16	        wVDown; /**< ÁîµÂéãËß¶Âèë‰∏ãÈôê	*/
+	int32		        nAUp;   /**< ÁîµÊµÅËß¶Âèë‰∏äÈôê	*/
+	uint8	        nDelay; /**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥	*/
 }OOP_EVTCFG_3006_T;
 
 /** 
-* @brief	≈‰÷√≤Œ ˝-					\n
-*			3005-µÁƒ‹±Ìπ˝¡˜ ¬º˛			\n
-*			3007-µÁƒ‹±Ìπ¶¬ ∑¥œÚ ¬º˛		\n
-*			3008-µÁƒ‹±Ìπ˝‘ÿ ¬º˛
+* @brief	ÈÖçÁΩÆÂèÇÊï∞-					\n
+*			3005-ÁîµËÉΩË°®ËøáÊµÅ‰∫ã‰ª∂			\n
+*			3007-ÁîµËÉΩË°®ÂäüÁéáÂèçÂêë‰∫ã‰ª∂		\n
+*			3008-ÁîµËÉΩË°®ËøáËΩΩ‰∫ã‰ª∂
 */
 typedef struct tag_OOP_EVTCFG_ID
 {
-	int32		        nValue;         /**< µÁ¡˜¥•∑¢œ¬œﬁ°¢”–π¶π¶¬ ¥•∑¢œ¬œﬁ	*/
-	uint8	        nDelay;         /**< ≈–∂®—” ± ±º‰					*/
+	int32		        nValue;         /**< ÁîµÊµÅËß¶Âèë‰∏ãÈôê„ÄÅÊúâÂäüÂäüÁéáËß¶Âèë‰∏ãÈôê	*/
+	uint8	        nDelay;         /**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥					*/
 }OOP_EVTCFG_ID_T;
 
 /** 
-* @brief	≈‰÷√≤Œ ˝-							\n
-*			3009-µÁƒ‹±Ì’˝œÚ”–π¶–Ë¡ø≥¨œﬁ ¬º˛		\n
-*			300A-µÁƒ‹±Ì∑¥œÚ”–π¶–Ë¡ø≥¨œﬁ ¬º˛		\n
-*			300B-µÁƒ‹±ÌŒﬁπ¶–Ë¡ø≥¨œﬁ ¬º˛
+* @brief	ÈÖçÁΩÆÂèÇÊï∞-							\n
+*			3009-ÁîµËÉΩË°®Ê≠£ÂêëÊúâÂäüÈúÄÈáèË∂ÖÈôê‰∫ã‰ª∂		\n
+*			300A-ÁîµËÉΩË°®ÂèçÂêëÊúâÂäüÈúÄÈáèË∂ÖÈôê‰∫ã‰ª∂		\n
+*			300B-ÁîµËÉΩË°®Êó†ÂäüÈúÄÈáèË∂ÖÈôê‰∫ã‰ª∂
 */
 typedef struct tag_OOP_OOP_EVTCFG_DD
 {
-    uint32	        dwValue;		/**< ¥•∑¢œﬁ÷µ		*/
-	uint8	        nDelay;			/**< ≈–∂®—” ± ±º‰	*/
+    uint32	        dwValue;		/**< Ëß¶ÂèëÈôêÂÄº		*/
+	uint8	        nDelay;			/**< Âà§ÂÆöÂª∂Êó∂Êó∂Èó¥	*/
 }OOP_EVTCFG_DD_T;
 
 /** 
-* @brief	≈‰÷√≤Œ ˝-						\n
-*			300C-µÁƒ‹±Ìπ¶¬ “Ú ˝≥¨œ¬œﬁ ¬º˛	\n
-*			301D-µÁƒ‹±ÌµÁ—π≤ª∆Ω∫‚ ¬º˛		\n
-*			301E-µÁƒ‹±ÌµÁ¡˜≤ª∆Ω∫‚ ¬º˛		\n
-*			302D-µÁƒ‹±ÌµÁ¡˜—œ÷ÿ≤ª∆Ω∫‚ ¬º˛		\n
-*			3171-Œ¬∂»≥¨œﬁ ¬º˛
+* @brief	ÈÖçÁΩÆÂèÇÊï∞-						\n
+*			300C-ÁîµËÉΩË°®ÂäüÁéáÂõ†Êï∞Ë∂Ö‰∏ãÈôê‰∫ã‰ª∂	\n
+*			301D-ÁîµËÉΩË°®ÁîµÂéã‰∏çÂπ≥Ë°°‰∫ã‰ª∂		\n
+*			301E-ÁîµËÉΩË°®ÁîµÊµÅ‰∏çÂπ≥Ë°°‰∫ã‰ª∂		\n
+*			302D-ÁîµËÉΩË°®ÁîµÊµÅ‰∏•Èáç‰∏çÂπ≥Ë°°‰∫ã‰ª∂		\n
+*			3171-Ê∏©Â∫¶Ë∂ÖÈôê‰∫ã‰ª∂
 */
 typedef struct tag_OOP_CFG_LU
 {
@@ -2884,70 +2884,70 @@ typedef struct tag_OOP_CFG_LU
 }OOP_CFG_LU_T;
 
 /** 
-*@brief	≈‰÷√≤Œ ˝-						\n
-*		300E-µÁƒ‹±Ì∏®÷˙µÁ‘¥µÙµÁ ¬º˛		\n
-*		300F-µÁƒ‹±ÌµÁ—πƒÊœ‡–Ú ¬º˛		\n
-*		3010-µÁƒ‹±ÌµÁ¡˜ƒÊœ‡–Ú ¬º˛		\n
-*		3011-µÁƒ‹±ÌµÙµÁ ¬º˛				\n
-*		3030-Õ®–≈ƒ£øÈ±‰∏¸ ¬º˛
+*@brief	ÈÖçÁΩÆÂèÇÊï∞-						\n
+*		300E-ÁîµËÉΩË°®ËæÖÂä©ÁîµÊ∫êÊéâÁîµ‰∫ã‰ª∂		\n
+*		300F-ÁîµËÉΩË°®ÁîµÂéãÈÄÜÁõ∏Â∫è‰∫ã‰ª∂		\n
+*		3010-ÁîµËÉΩË°®ÁîµÊµÅÈÄÜÁõ∏Â∫è‰∫ã‰ª∂		\n
+*		3011-ÁîµËÉΩË°®ÊéâÁîµ‰∫ã‰ª∂				\n
+*		3030-ÈÄö‰ø°Ê®°ÂùóÂèòÊõ¥‰∫ã‰ª∂
 */
 typedef struct tag_OOP_EVTCFG_DELAY
 {
 	uint8	nDelay;
 }OOP_EVTCFG_DELAY_T;
 
-/** @brief 3105-µÁƒ‹±Ì ±÷”≥¨≤Ó ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 3105-ÁîµËÉΩË°®Êó∂ÈíüË∂ÖÂ∑Æ‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_3105
 {
-    uint16      nValue;     /**< “Ï≥£≈–±„–÷µ	*/
-	uint8		nTID;		/**< πÿ¡™»ŒŒÒ–Ú∫≈	*/
+    uint16      nValue;     /**< ÂºÇÂ∏∏Âà§Âà´ÈòàÂÄº	*/
+	uint8		nTID;		/**< ÂÖ≥ËÅî‰ªªÂä°Â∫èÂè∑	*/
 }OOP_EVTCFG_3105_T;
 
 //
-// 3106-÷’∂ÀÕ£/…œµÁ ¬º˛
+// 3106-ÁªàÁ´ØÂÅú/‰∏äÁîµ‰∫ã‰ª∂
 //
 
-#define OOP_MAX_POWERCUT_MET	(8)		/**< Õ£…œµÁ ¬º˛◊Ó¥Û≥≠∂¡µÁƒ‹±Ì∏ˆ ˝	*/
+#define OOP_MAX_POWERCUT_MET	(8)		/**< ÂÅú‰∏äÁîµ‰∫ã‰ª∂ÊúÄÂ§ßÊäÑËØªÁîµËÉΩË°®‰∏™Êï∞	*/
 
-/** @brief Õ£µÁ ˝æ›≤…ºØ≈‰÷√≤Œ ˝	*/
+/** @brief ÂÅúÁîµÊï∞ÊçÆÈááÈõÜÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_DATAACQUIRE
 {
-    uint8            flag;                               /**< ≤…ºØ±Í÷æ						*/
-    uint8            interval;                           /**< Õ£µÁ ¬º˛≥≠∂¡ ±º‰º‰∏Ù(–° ±)	*/
-    uint8            limit;                              /**< Õ£µÁ ¬º˛≥≠∂¡ ±º‰œﬁ÷µ(∑÷÷”)	*/
-    uint8            meterNum;                           /**< –Ë“™∂¡»°Õ£µÁ ¬º˛µÁƒ‹±Ì∏ˆ ˝	*/
-    OOP_TSA_T        meter[OOP_MAX_POWERCUT_MET];        /**< –Ë“™∂¡»°Õ£µÁ ¬º˛µÁƒ‹±Ì		*/
+    uint8            flag;                               /**< ÈááÈõÜÊ†áÂøó						*/
+    uint8            interval;                           /**< ÂÅúÁîµ‰∫ã‰ª∂ÊäÑËØªÊó∂Èó¥Èó¥Èöî(Â∞èÊó∂)	*/
+    uint8            limit;                              /**< ÂÅúÁîµ‰∫ã‰ª∂ÊäÑËØªÊó∂Èó¥ÈôêÂÄº(ÂàÜÈíü)	*/
+    uint8            meterNum;                           /**< ÈúÄË¶ÅËØªÂèñÂÅúÁîµ‰∫ã‰ª∂ÁîµËÉΩË°®‰∏™Êï∞	*/
+    OOP_TSA_T        meter[OOP_MAX_POWERCUT_MET];        /**< ÈúÄË¶ÅËØªÂèñÂÅúÁîµ‰∫ã‰ª∂ÁîµËÉΩË°®		*/
 }OOP_DATAACQUIRE_T;
 
-/** @brief Õ£µÁ ¬º˛’Á±œﬁ÷µ≤Œ ˝	*/
+/** @brief ÂÅúÁîµ‰∫ã‰ª∂ÁîÑÂà´ÈôêÂÄºÂèÇÊï∞	*/
 typedef struct tag_EVENTIDENTIFY
 {
-    uint16            minInterval;    /**< Õ£µÁ ±º‰◊Ó–°”––ßº‰∏Ù(∑÷÷”)		*/
-    uint16            maxInterval;    /**< Õ£µÁ ±º‰◊Ó¥Û”––ßº‰∏Ù(∑÷÷”)		*/
-    uint16            limit1;         /**< Õ£µÁ ¬º˛∆÷π ±º‰∆´≤Óœﬁ÷µ(∑÷÷”)	*/
-    uint16            limit2;         /**< Õ£µÁ ±º‰ ±º‰«¯∂Œ∆´≤Óœﬁ÷µ(∑÷÷”)	*/
-    uint16            occVolt;        /**< Õ£µÁ∑¢…˙µÁ—πœﬁ÷µ					*/
-    uint16            recVolt;        /**< Õ£µÁª÷∏¥µÁ—πœﬁ÷µ					*/
+    uint16            minInterval;    /**< ÂÅúÁîµÊó∂Èó¥ÊúÄÂ∞èÊúâÊïàÈó¥Èöî(ÂàÜÈíü)		*/
+    uint16            maxInterval;    /**< ÂÅúÁîµÊó∂Èó¥ÊúÄÂ§ßÊúâÊïàÈó¥Èöî(ÂàÜÈíü)		*/
+    uint16            limit1;         /**< ÂÅúÁîµ‰∫ã‰ª∂Ëµ∑Ê≠¢Êó∂Èó¥ÂÅèÂ∑ÆÈôêÂÄº(ÂàÜÈíü)	*/
+    uint16            limit2;         /**< ÂÅúÁîµÊó∂Èó¥Êó∂Èó¥Âå∫ÊÆµÂÅèÂ∑ÆÈôêÂÄº(ÂàÜÈíü)	*/
+    uint16            occVolt;        /**< ÂÅúÁîµÂèëÁîüÁîµÂéãÈôêÂÄº					*/
+    uint16            recVolt;        /**< ÂÅúÁîµÊÅ¢Â§çÁîµÂéãÈôêÂÄº					*/
 }OOP_EVENTIDENTIFY_T;
 
-/** @brief ÷’∂ÀÕ£/…œµÁ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief ÁªàÁ´ØÂÅú/‰∏äÁîµ‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_POWERONCUT
 {
-    OOP_DATAACQUIRE_T     cParam;          /**< Õ£µÁ ˝æ›≤…ºØ≈‰÷√≤Œ ˝	*/
-    OOP_EVENTIDENTIFY_T   lParam;          /**< Õ£µÁ ¬º˛’Á±œﬁ÷µ≤Œ ˝	*/
+    OOP_DATAACQUIRE_T     cParam;          /**< ÂÅúÁîµÊï∞ÊçÆÈááÈõÜÈÖçÁΩÆÂèÇÊï∞	*/
+    OOP_EVENTIDENTIFY_T   lParam;          /**< ÂÅúÁîµ‰∫ã‰ª∂ÁîÑÂà´ÈôêÂÄºÂèÇÊï∞	*/
 }OOP_POWERONCUT_T;
 
 /** 
-* @brief 	≈‰÷√≤Œ ˝-						\n
-*			3107-÷’∂À÷±¡˜ƒ£ƒ‚¡ø‘Ω…œœﬁ ¬º˛	\n
-*			3108-÷’∂À÷±¡˜ƒ£ƒ‚¡ø‘Ωœ¬œﬁ ¬º˛
+* @brief 	ÈÖçÁΩÆÂèÇÊï∞-						\n
+*			3107-ÁªàÁ´ØÁõ¥ÊµÅÊ®°ÊãüÈáèË∂ä‰∏äÈôê‰∫ã‰ª∂	\n
+*			3108-ÁªàÁ´ØÁõ¥ÊµÅÊ®°ÊãüÈáèË∂ä‰∏ãÈôê‰∫ã‰ª∂
 */
 typedef struct tag_OOP_EVTCFG_INT
 {
-    int32             limit;          /**< ÷±¡˜ƒ£ƒ‚¡ø…œœﬁ°¢œ¬œﬁ	*/
+    int32             limit;          /**< Áõ¥ÊµÅÊ®°ÊãüÈáè‰∏äÈôê„ÄÅ‰∏ãÈôê	*/
 }OOP_EVTCFG_INT_T;
 
-/** @brief 310A-…Ë±∏π ’œ¿‡–Õ∂®“Â	*/
+/** @brief 310A-ËÆæÂ§áÊïÖÈöúÁ±ªÂûãÂÆö‰πâ	*/
 typedef enum tag_OOP_DEVICEFAULT
 {
 	FAULT_MEMORY	= 0,
@@ -2961,9 +2961,9 @@ typedef enum tag_OOP_DEVICEFAULT
 }OOP_DEVICEFAULT_E;
 
 /** 
-* @brief	≈‰÷√≤Œ ˝-					\n
-*			310B-µÁƒ‹±Ì æ∂»œ¬Ωµ ¬º˛		\n
-*			311C-µÁƒ‹±Ì ˝æ›±‰∏¸º‡øÿº«¬º
+* @brief	ÈÖçÁΩÆÂèÇÊï∞-					\n
+*			310B-ÁîµËÉΩË°®Á§∫Â∫¶‰∏ãÈôç‰∫ã‰ª∂		\n
+*			311C-ÁîµËÉΩË°®Êï∞ÊçÆÂèòÊõ¥ÁõëÊéßËÆ∞ÂΩï
 */
 typedef struct tag_OOP_EVTCFG_310B
 {
@@ -2971,9 +2971,9 @@ typedef struct tag_OOP_EVTCFG_310B
 }OOP_EVTCFG_310B_T;
 
 /** 
-* @brief	≈‰÷√≤Œ ˝-				\n
-*			310C-µÁƒ‹±Ì≥¨≤Ó ¬º˛		\n
-*			310D-µÁƒ‹±Ì∑…◊ﬂ ¬º˛
+* @brief	ÈÖçÁΩÆÂèÇÊï∞-				\n
+*			310C-ÁîµËÉΩË°®Ë∂ÖÂ∑Æ‰∫ã‰ª∂		\n
+*			310D-ÁîµËÉΩË°®È£ûËµ∞‰∫ã‰ª∂
 */
 typedef struct tag_OOP_EVTCFG_310X
 {
@@ -2981,45 +2981,45 @@ typedef struct tag_OOP_EVTCFG_310X
 	uint8			nTID;
 }OOP_EVTCFG_310X_T;
 
-/** @brief 310E-µÁƒ‹±ÌÕ£◊ﬂ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 310E-ÁîµËÉΩË°®ÂÅúËµ∞‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_310E
 {
-    OOP_TI_T      threshold;        /**< „–÷µ	*/
+    OOP_TI_T      threshold;        /**< ÈòàÂÄº	*/
 	uint8		  nTID;
 }OOP_EVTCFG_310E_T;
 
-/** @brief 310F-÷’∂À≥≠±Ì ß∞‹ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 310F-ÁªàÁ´ØÊäÑË°®Â§±Ë¥•‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_310F
 {
     uint8		nTicks;
 	uint8		nTID;
 }OOP_EVTCFG_310F_T;
 
-/** @brief 3110-Õ®—∂¡˜¡ø≥¨œﬁ ¬º˛≈‰÷√≤Œ ˝			*/
+/** @brief 3110-ÈÄöËÆØÊµÅÈáèË∂ÖÈôê‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞			*/
 typedef struct tag_OOP_EVTCFG_3110
 {
     uint32            nValue;
 }OOP_EVTCFG_3110_T;
 
-/** @brief 3701-÷’∂ÀµÕµÁ—π ¬º˛*/
+/** @brief 3701-ÁªàÁ´Ø‰ΩéÁîµÂéã‰∫ã‰ª∂*/
 typedef struct tag_OOP_EVTCFG_3701
 {
-	uint16   ldVolt;            /**< µÕµÁ—π„–÷µ*/
-	uint16   ubVolt;            /**< »˝œ‡≤ª∆Ω∫‚„–÷µ*/
-	uint16   dutyVolt;          /**< ∏∫‘ÿ¬ „–÷µ */
+	uint16   ldVolt;            /**< ‰ΩéÁîµÂéãÈòàÂÄº*/
+	uint16   ubVolt;            /**< ‰∏âÁõ∏‰∏çÂπ≥Ë°°ÈòàÂÄº*/
+	uint16   dutyVolt;          /**< Ë¥üËΩΩÁéáÈòàÂÄº */
 }OOP_EVTCFG_3701_T;
 
-/**< µÁƒ‹÷ ¡ø∑÷Œˆ ¬º˛≤Œ ˝ */
+/**< ÁîµËÉΩË¥®ÈáèÂàÜÊûê‰∫ã‰ª∂ÂèÇÊï∞ */
 typedef struct tag_OOP_EVTCFG_PQA
 {
-	OOP_EVTCFG_3701_T       lowvol;                         // 3701-Ã®«¯µÕµÁ—π≤Œ ˝ 
-	OOP_CFG_LU_T            volunb;                         // 3702-Ã®«¯µÁ—π≤ª∆Ω∫‚≤Œ ˝ 
-	OOP_CFG_LU_T            ampunb;                         // 3703-Ã®«¯µÁ¡˜≤ª∆Ω∫‚≤Œ ˝ 
-	OOP_CFG_LU_T            overload;                       // 3704-Ã®«¯∏∫‘ÿ¬ œﬁ÷µ≤Œ ˝ 
-	OOP_CFG_LU_T            overfreq;                       // 3705-Ã®«¯∆µ¬ œﬁ÷µ≤Œ ˝ 
+	OOP_EVTCFG_3701_T       lowvol;                         // 3701-Âè∞Âå∫‰ΩéÁîµÂéãÂèÇÊï∞ 
+	OOP_CFG_LU_T            volunb;                         // 3702-Âè∞Âå∫ÁîµÂéã‰∏çÂπ≥Ë°°ÂèÇÊï∞ 
+	OOP_CFG_LU_T            ampunb;                         // 3703-Âè∞Âå∫ÁîµÊµÅ‰∏çÂπ≥Ë°°ÂèÇÊï∞ 
+	OOP_CFG_LU_T            overload;                       // 3704-Âè∞Âå∫Ë¥üËΩΩÁéáÈôêÂÄºÂèÇÊï∞ 
+	OOP_CFG_LU_T            overfreq;                       // 3705-Âè∞Âå∫È¢ëÁéáÈôêÂÄºÂèÇÊï∞ 
 }OOP_EVTCFG_PQA_T;
 
-/** @brief 3116-”–π¶◊‹µÁƒ‹¡ø≤Ó∂Ø‘Ωœﬁ ¬º˛≈‰÷√≤Œ ˝	*/
+/** @brief 3116-ÊúâÂäüÊÄªÁîµËÉΩÈáèÂ∑ÆÂä®Ë∂äÈôê‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOP_EVTCFG_3116
 {
 	uint8		nIndex;
@@ -3030,17 +3030,17 @@ typedef struct tag_OOP_EVTCFG_3116
 	int64		llValue;
 }OOP_EVTCFG_3116_T;
 
-/** @brief 311A-µÁƒ‹±Ì‘⁄Õ¯◊¥Ã¨«–ªª ¬º˛≈‰÷√≤Œ ˝		*/
+/** @brief 311A-ÁîµËÉΩË°®Âú®ÁΩëÁä∂ÊÄÅÂàáÊç¢‰∫ã‰ª∂ÈÖçÁΩÆÂèÇÊï∞		*/
 typedef struct tag_OOP_EVTCFG_311A
 {
     uint16        nDelay;
 }OOP_EVTCFG_311A_T;
 
 //
-// 3300-Õ®µ¿…œ±®◊¥Ã¨
+// 3300-ÈÄöÈÅì‰∏äÊä•Áä∂ÊÄÅ
 //
 
-/** @brief  ¬º˛πÃ∂®”Ú	*/
+/** @brief ‰∫ã‰ª∂Âõ∫ÂÆöÂüü	*/
 typedef struct tag_OOP_EVENTFIXED
 {
 	uint32				nIndex;
@@ -3051,10 +3051,10 @@ typedef struct tag_OOP_EVENTFIXED
 
 
 //
-// 3030-Õ®–≈ƒ£øÈ±‰∏¸ ¬º˛
+// 3030-ÈÄö‰ø°Ê®°ÂùóÂèòÊõ¥‰∫ã‰ª∂
 //
 
-/** @brief Õ®–≈ƒ£øÈ±‰∏¸ ¬º˛µ•‘™	*/
+/** @brief ÈÄö‰ø°Ê®°ÂùóÂèòÊõ¥‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_MODULELOG
 {
 	uint32				nIndex;
@@ -3069,10 +3069,10 @@ typedef struct tag_OOP_MODULELOG
 }OOP_MODULELOG_T;
 
 //
-// 3105-µÁƒ‹±Ì ±÷”≥¨≤Ó ¬º˛
+// 3105-ÁîµËÉΩË°®Êó∂ÈíüË∂ÖÂ∑Æ‰∫ã‰ª∂
 //
 
-/** @brief µÁƒ‹±Ì ±÷”≥¨≤Ó ¬º˛µ•‘™	*/
+/** @brief ÁîµËÉΩË°®Êó∂ÈíüË∂ÖÂ∑Æ‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_CLOCKFLYLOG
 {
 	uint32				nIndex;
@@ -3086,10 +3086,10 @@ typedef struct tag_OOP_CLOCKFLYLOG
 }OOP_CLOCKFLYLOG_T;
 
 //
-// 3302-±‡≥Ã ¬º˛º«¬ºµ•‘™
+// 3302-ÁºñÁ®ã‰∫ã‰ª∂ËÆ∞ÂΩïÂçïÂÖÉ
 //
 
-/** @brief ±‡≥Ã ¬º˛º«¬ºµ•‘™	*/
+/** @brief ÁºñÁ®ã‰∫ã‰ª∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_PROGRAMLOG
 {
 	uint32				nIndex;
@@ -3103,33 +3103,33 @@ typedef struct tag_OOP_PROGRAMLOG
 }OOP_PROGRAMLOG_T;
 
 //
-// 3303-∑¢œ÷Œ¥÷™µÁƒ‹±Ì ¬º˛µ•‘™
+// 3303-ÂèëÁé∞Êú™Áü•ÁîµËÉΩË°®‰∫ã‰ª∂ÂçïÂÖÉ
 //
 
-#define OOP_MAX_SMREPORT	(16)	/**< À—±Ì…œ±®◊Ó¥Û∏ˆ ˝		*/
-#define OOP_MAX_ADDEDINFO	(4)		/**< ◊Ó¥ÛÀ—µΩµƒ∏∂º”–≈œ¢∏ˆ ˝	*/
+#define OOP_MAX_SMREPORT	(16)	/**< ÊêúË°®‰∏äÊä•ÊúÄÂ§ß‰∏™Êï∞		*/
+#define OOP_MAX_ADDEDINFO	(4)		/**< ÊúÄÂ§ßÊêúÂà∞ÁöÑ‰ªòÂä†‰ø°ÊÅØ‰∏™Êï∞	*/
 
-/** @brief À—±Ìµÿ÷∑–≈œ¢”Ú	*/
+/** @brief ÊêúË°®Âú∞ÂùÄ‰ø°ÊÅØÂüü	*/
 typedef struct tag_ADDEDINFO
 {
-    OOP_OAD_U         oad;          /**< ∂‘œÛ Ù–‘√Ë ˆ∑˚	*/
-    OOP_VARIANT_T     value;      	/**<  Ù–‘÷µ			*/
+    OOP_OAD_U         oad;          /**< ÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶	*/
+    OOP_VARIANT_T     value;      	/**< Â±ûÊÄßÂÄº			*/
 }OOP_ADDEDINFO_T;
 
-/** @brief “ª∏ˆÀ—±ÌΩ·π˚	*/
+/** @brief ‰∏Ä‰∏™ÊêúË°®ÁªìÊûú	*/
 typedef struct tag_OOP_SEARCHMET_RES
 {
-    OOP_TSA_T			commAdd;                    /**< Õ®–≈µÿ÷∑						*/
-    OOP_TSA_T			collAdd;                    /**< ≤…ºØ∆˜µÿ÷∑						*/
-    uint8				proto;                      /**< πÊ‘º¿‡–Õ(enum)					*/
-    uint8				phase;                      /**< œ‡Œª(enum)					*/
-    uint8				quality;                    /**< –≈∫≈∆∑÷ 						*/
-    OOP_DATETIME_S_T	serchTime;                  /**< À—µΩµƒ ±º‰						*/
-	uint8				nAdded;						/**< ∏Ωº”–≈œ¢∏ˆ ˝						*/
-    OOP_ADDEDINFO_T		info[OOP_MAX_ADDEDINFO];    /**< À—µΩµƒ∏Ωº”–≈œ¢					*/
+    OOP_TSA_T			commAdd;                    /**< ÈÄö‰ø°Âú∞ÂùÄ						*/
+    OOP_TSA_T			collAdd;                    /**< ÈááÈõÜÂô®Âú∞ÂùÄ						*/
+    uint8				proto;                      /**< ËßÑÁ∫¶Á±ªÂûã(enum)					*/
+    uint8				phase;                      /**< Áõ∏‰Ωç(enum)					*/
+    uint8				quality;                    /**< ‰ø°Âè∑ÂìÅË¥®						*/
+    OOP_DATETIME_S_T	serchTime;                  /**< ÊêúÂà∞ÁöÑÊó∂Èó¥						*/
+	uint8				nAdded;						/**< ÈôÑÂä†‰ø°ÊÅØ‰∏™Êï∞						*/
+    OOP_ADDEDINFO_T		info[OOP_MAX_ADDEDINFO];    /**< ÊêúÂà∞ÁöÑÈôÑÂä†‰ø°ÊÅØ					*/
 }OOP_SEARCHMET_RES_T;
 
-/** @brief ∑¢œ÷Œ¥÷™µÁƒ‹±Ì ¬º˛µ•‘™	*/
+/** @brief ÂèëÁé∞Êú™Áü•ÁîµËÉΩË°®‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_SMLOG
 {
 	uint32				nIndex;
@@ -3142,18 +3142,18 @@ typedef struct tag_OOP_SMLOG
 }OOP_SMLOG_T;
 
 //
-// 3304-∑¢œ÷øÁÃ®«¯µÁƒ‹±Ì ¬º˛µ•‘™
+// 3304-ÂèëÁé∞Ë∑®Âè∞Âå∫ÁîµËÉΩË°®‰∫ã‰ª∂ÂçïÂÖÉ
 //
 
-/** @brief “ª∏ˆøÁÃ®«¯Ω·π˚	*/
+/** @brief ‰∏Ä‰∏™Ë∑®Âè∞Âå∫ÁªìÊûú	*/
 typedef struct tag_OOP_ACROSSAREA_RES
 {
-    OOP_TSA_T			commAdd;    /**< Õ®–≈µÿ÷∑	*/
-    OOP_TSA_T			netAdd;     /**< ÷˜Ω⁄µ„µÿ÷∑	*/
-    OOP_DATETIME_S_T	change;     /**< ±‰∏¸ ±º‰	*/
+    OOP_TSA_T			commAdd;    /**< ÈÄö‰ø°Âú∞ÂùÄ	*/
+    OOP_TSA_T			netAdd;     /**< ‰∏ªËäÇÁÇπÂú∞ÂùÄ	*/
+    OOP_DATETIME_S_T	change;     /**< ÂèòÊõ¥Êó∂Èó¥	*/
 }OOP_ACROSSAREA_RES_T;
 
-/** @brief ∑¢œ÷øÁÃ®«¯µÁƒ‹±Ì ¬º˛µ•‘™	*/
+/** @brief ÂèëÁé∞Ë∑®Âè∞Âå∫ÁîµËÉΩË°®‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_UNMETERLOG
 {
 	uint32					nIndex;
@@ -3167,10 +3167,10 @@ typedef struct tag_OOP_UNMETERLOG
 }OOP_UNMETERLOG_T;
 
 //
-// 3305-π¶øÿ ¬º˛º«¬º
+// 3305-ÂäüÊéß‰∫ã‰ª∂ËÆ∞ÂΩï
 //
 
-/** @brief π¶øÿ ¬º˛º«¬ºµ•‘™	*/
+/** @brief ÂäüÊéß‰∫ã‰ª∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_PCTRLLOG
 {
 	uint32				nIndex;
@@ -3186,7 +3186,7 @@ typedef struct tag_OOP_PCTRLLOG
 	int64				power;
 }OOP_PCTRLLOG_T;
 
-/** @brief 3306-µÁøÿ ¬º˛º«¬ºµ•‘™	*/
+/** @brief 3306-ÁîµÊéß‰∫ã‰ª∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_ECTRLLOG
 {
 	uint32				nIndex;
@@ -3201,7 +3201,7 @@ typedef struct tag_OOP_ECTRLLOG
 	int64				energy;
 }OOP_ECTRLLOG_T;
 
-/** @brief 3307-µÁøÿ∏ÊæØº«¬ºµ•‘™	*/
+/** @brief 3307-ÁîµÊéßÂëäË≠¶ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_EWARNLOG
 {
 	uint32				nIndex;
@@ -3214,7 +3214,7 @@ typedef struct tag_OOP_EWARNLOG
 	int64				llSetting;
 }OOP_EWARNLOG_T;
 
-/** @brief 3308-–Ë¡ø‘Ωœﬁº«¬º	*/
+/** @brief 3308-ÈúÄÈáèË∂äÈôêËÆ∞ÂΩï	*/
 typedef struct tag_OOP_DEMANDLOG
 {
 	uint32				nIndex;
@@ -3227,7 +3227,7 @@ typedef struct tag_OOP_DEMANDLOG
 	OOP_DATETIME_S_T	time;
 }OOP_DEMANDLOG_T;
 
-/** @brief 3309-Õ£…œµÁ ¬º˛µ•‘™	*/
+/** @brief 3309-ÂÅú‰∏äÁîµ‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_POWERLOG
 {
 	uint32				nIndex;
@@ -3239,7 +3239,7 @@ typedef struct tag_OOP_POWERLOG
 	OOP_BITSTR8_T		flag;
 }OOP_POWERLOG_T;
 
-/** @brief 330A-“£øÿº«¬ºµ•‘™	*/
+/** @brief 330A-ÈÅ•ÊéßËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_RCTRLLOG
 {
 	uint32				nIndex;
@@ -3251,7 +3251,7 @@ typedef struct tag_OOP_RCTRLLOG
 	uint8				cmd;
 }OOP_RCTRLLOG_T;
 
-/** @brief 330B-≤Ó∂Ø‘Ωœﬁº«¬ºµ•‘™	*/
+/** @brief 330B-Â∑ÆÂä®Ë∂äÈôêËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_DCLOG
 {
 	uint32				nIndex;
@@ -3266,12 +3266,12 @@ typedef struct tag_OOP_DCLOG
 }OOP_DCLOG_T;
 
 //
-// 330C- ¬º˛«Â¡„º«¬º
+// 330C-‰∫ã‰ª∂Ê∏ÖÈõ∂ËÆ∞ÂΩï
 //
 
-#define OOP_MAX_EVTRESETS	(8)		/**<  ¬º˛«Â¡„∑Ω∑®◊Ó¥Û∏ˆ ˝	*/
+#define OOP_MAX_EVTRESETS	(8)		/**< ‰∫ã‰ª∂Ê∏ÖÈõ∂ÊñπÊ≥ïÊúÄÂ§ß‰∏™Êï∞	*/
 
-/** @brief  ¬º˛«Â¡„º«¬ºµ•‘™	*/
+/** @brief ‰∫ã‰ª∂Ê∏ÖÈõ∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_EVENTRESETLOG
 {
 	uint32				nIndex;
@@ -3283,7 +3283,7 @@ typedef struct tag_OOP_EVENTRESETLOG
 	OOP_OMD_U			lstRst[OOP_MAX_EVTRESETS];
 }OOP_EVENTRESETLOG_T;
 
-/** @brief 330D-÷’∂À∂‘µÁ±Ì–£ ±º«¬ºµ•‘™	*/
+/** @brief 330D-ÁªàÁ´ØÂØπÁîµË°®Ê†°Êó∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_P2PCLOCKLOG
 {
 	uint32				nIndex;
@@ -3295,29 +3295,29 @@ typedef struct tag_OOP_P2PCLOCKLOG
 	char				offset;
 }OOP_P2PCLOCKLOG_T;
 
-/** @brief µÁ±Ì–£ ±–≈œ¢	*/
+/** @brief ÁîµË°®Ê†°Êó∂‰ø°ÊÅØ	*/
 typedef struct tag_OOP_CHK_TIMEINFO
 {
-	OOP_OCTETVAR16_T	add;            /**< µÁƒ‹±Ìµÿ÷∑		*/
-	OOP_DATETIME_S_T	chkTime;        /**< –£ ± ±º‰		*/
-	OOP_DATETIME_S_T	beforechkTime;  /**< –£ ±«∞ ±º‰	    */
-	int16				error;          /**< ŒÛ≤Ó			*/
+	OOP_OCTETVAR16_T	add;            /**< ÁîµËÉΩË°®Âú∞ÂùÄ		*/
+	OOP_DATETIME_S_T	chkTime;        /**< Ê†°Êó∂Êó∂Èó¥		*/
+	OOP_DATETIME_S_T	beforechkTime;  /**< Ê†°Êó∂ÂâçÊó∂Èó¥	    */
+	int16				error;          /**< ËØØÂ∑Æ			*/
 }OOP_CHK_TIMEINFO_T;
 
 //
-// 330E-µÁƒ‹±Ì‘⁄Õ¯◊¥Ã¨«–ªª
+// 330E-ÁîµËÉΩË°®Âú®ÁΩëÁä∂ÊÄÅÂàáÊç¢
 //
 
-#define OOP_MAX_METEROFF	(32)	/**< ◊Ó¥Ûº«¬ºµÁ±Ì◊¥Ã¨±‰ªØ ˝¡ø	*/
+#define OOP_MAX_METEROFF	(32)	/**< ÊúÄÂ§ßËÆ∞ÂΩïÁîµË°®Áä∂ÊÄÅÂèòÂåñÊï∞Èáè	*/
 
-/** @brief µÁƒ‹±Ì¿ÎÕ¯–≈œ¢	*/
+/** @brief ÁîµËÉΩË°®Á¶ªÁΩë‰ø°ÊÅØ	*/
 typedef struct tag_OOP_METEROFF
 {
 	OOP_TSA_T		add;
 	BOOLEAN			online;
 }OOP_METEROFF_T;
 
-/** @brief µÁƒ‹±Ì‘⁄Õ¯◊¥Ã¨«–ªª ¬º˛µ•‘™	*/
+/** @brief ÁîµËÉΩË°®Âú®ÁΩëÁä∂ÊÄÅÂàáÊç¢‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_METEROFFLOG
 {
 	uint32				nIndex;
@@ -3329,7 +3329,7 @@ typedef struct tag_OOP_METEROFFLOG
 	OOP_METEROFF_T		Res[32];
 }OOP_METEROFFLOG_T;
 
-/** @brief 330F-µÁƒ‹±Ì ˝æ›±‰∏¸º‡øÿº«¬ºµ•‘™	*/
+/** @brief 330F-ÁîµËÉΩË°®Êï∞ÊçÆÂèòÊõ¥ÁõëÊéßËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_METERDIRTYLOG
 {
 	uint32				nIndex;
@@ -3344,7 +3344,7 @@ typedef struct tag_OOP_METERDIRTYLOG
 	uint8				aft[64];
 }OOP_METERDIRTYLOG_T;
 
-/** @brief 3310-µÁƒ‹±Ì“Ï≥£≤Âø®º«¬ºµ•‘™	*/
+/** @brief 3310-ÁîµËÉΩË°®ÂºÇÂ∏∏ÊèíÂç°ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_ABNORMALCARD
 {
 	uint32				nIndex;
@@ -3359,7 +3359,7 @@ typedef struct tag_OOP_ABNORMALCARD
 	uint16				cardState;
 }OOP_ABNORMALCARD_T;
 
-/** @brief 3311-ÕÀ∑— ¬º˛º«¬ºµ•‘™	*/
+/** @brief 3311-ÈÄÄË¥π‰∫ã‰ª∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_REBATELOG
 {
 	uint32				nIndex;
@@ -3372,9 +3372,9 @@ typedef struct tag_OOP_REBATELOG
 }OOP_REBATELOG_T;
 
 //
-// 3314-µÁƒ‹±Ì ±∂Œ±Ì±‡≥Ã ¬º˛
+// 3314-ÁîµËÉΩË°®Êó∂ÊÆµË°®ÁºñÁ®ã‰∫ã‰ª∂
 //
-/** @brief 3706-∂œ¬∑∆˜◊‘ºÏµ•‘™	*/
+/** @brief 3706-Êñ≠Ë∑ØÂô®Ëá™Ê£ÄÂçïÂÖÉ	*/
 typedef struct tag_OOP_ResCheckSelf
 {
 	uint32				nIndex;
@@ -3387,18 +3387,18 @@ typedef struct tag_OOP_ResCheckSelf
 	OOP_BITSTR8_T		flag;
 }OOP_ResCheckSelf_T;
 
-/** @brief  ±∂Œµ•‘™	*/
+/** @brief Êó∂ÊÆµÂçïÂÖÉ	*/
 typedef struct tag_PERIOD
 {
-    uint8    hour;                /**<  ±		*/
-    uint8    min;                 /**< ∑÷		*/
-    uint8    rateNO;              /**< ∑—¬ ∫≈	*/
+    uint8    hour;                /**< Êó∂		*/
+    uint8    min;                 /**< ÂàÜ		*/
+    uint8    rateNO;              /**< Ë¥πÁéáÂè∑	*/
 }PERIOD;
 
-// »’ ±∂Œ ˝
+// Êó•Êó∂ÊÆµÊï∞
 #define OOP_MAX_DAYPERIOD		(14)
 
-/** @brief  ±∂Œ±Ì–≈œ¢µ•‘™	*/
+/** @brief Êó∂ÊÆµË°®‰ø°ÊÅØÂçïÂÖÉ	*/
 typedef struct tag_DAYPERIOD
 {
     uint32        nNum;
@@ -3408,7 +3408,7 @@ typedef struct tag_DAYPERIOD
 
 #define OOP_TTU_MAX_PERIOD		(48)
 
-/** @brief  ±∂Œ±Ì–≈œ¢µ•‘™	*/
+/** @brief Êó∂ÊÆµË°®‰ø°ÊÅØÂçïÂÖÉ	*/
 typedef struct tag_OOP_TTU_PERIOD_T
 {
     uint32        nNum;
@@ -3416,7 +3416,7 @@ typedef struct tag_OOP_TTU_PERIOD_T
     int32         nValue[OOP_TTU_MAX_PERIOD];  
 }OOP_TTU_PERIOD_T;
 
-/** @brief µÁƒ‹±Ì ±∂Œ±Ì±‡≥Ã ¬º˛µ•‘™	*/
+/** @brief ÁîµËÉΩË°®Êó∂ÊÆµË°®ÁºñÁ®ã‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_PROGPERIODLOG
 {
 	uint32				nIndex;
@@ -3430,17 +3430,17 @@ typedef struct tag_OOP_PROGPERIODLOG
 }OOP_PROGPERIODLOG_T;
 
 //
-// 3315-µÁƒ‹±ÌΩ⁄ºŸ»’±‡≥Ã ¬º˛
+// 3315-ÁîµËÉΩË°®ËäÇÂÅáÊó•ÁºñÁ®ã‰∫ã‰ª∂
 //
 
-/** @brief Ω⁄ºŸ»’–≈œ¢µ•‘™	*/
+/** @brief ËäÇÂÅáÊó•‰ø°ÊÅØÂçïÂÖÉ	*/
 typedef struct tag_PUBHOLIDAY
 {
     OOP_DATE_T		date;
-    uint8			meterNum;           /**< »’ ±∂Œ±Ì∫≈	*/
+    uint8			meterNum;           /**< Êó•Êó∂ÊÆµË°®Âè∑	*/
 }PUBHOLIDAY;
 
-/** @brief µÁƒ‹±ÌΩ⁄ºŸ»’±‡≥Ã ¬º˛µ•‘™	*/
+/** @brief ÁîµËÉΩË°®ËäÇÂÅáÊó•ÁºñÁ®ã‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_PROGHOLIDAYLOG
 {
 	uint32				nIndex;
@@ -3454,19 +3454,19 @@ typedef struct tag_OOP_PROGHOLIDAYLOG
 }OOP_PROGHOLIDAYLOG_T;
 
 //
-// 3316-∞≤»´±‰∏¸ ¬º˛
+// 3316-ÂÆâÂÖ®ÂèòÊõ¥‰∫ã‰ª∂
 //
 
-#define OOP_MAX_SECURITYCHGS	(8)	/** @brief ∞≤»´±‰∏¸µ•‘™◊Ó¥Û∏ˆ ˝	*/
+#define OOP_MAX_SECURITYCHGS	(8)	/** @brief ÂÆâÂÖ®ÂèòÊõ¥ÂçïÂÖÉÊúÄÂ§ß‰∏™Êï∞	*/
 
-/** @brief Õ‚¡¨–≈œ¢	*/
+/** @brief Â§ñËøû‰ø°ÊÅØ	*/
 typedef struct tag_OOP_CONNECTINFO
 {
 	OOP_OCTETVAR16_T		ip;
 	uint16					port;
 }OOP_CONNECTINFO_T;
 
-/** @brief ∞≤»´±‰∏¸ ¬º˛µ•‘™	*/
+/** @brief ÂÆâÂÖ®ÂèòÊõ¥‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_SECURITYLOG
 {
 	uint32					nIndex;
@@ -3494,17 +3494,17 @@ typedef struct tag_OOP_SECURITYLOG
 }OOP_SECURITYLOG_T;
 
 //
-// 3317-µÁƒ‹±Ì‘⁄œﬂ◊¥Ã¨±‰ªØ ¬º˛
+// 3317-ÁîµËÉΩË°®Âú®Á∫øÁä∂ÊÄÅÂèòÂåñ‰∫ã‰ª∂
 //
 
-/** @brief ¿Îœﬂ–≈œ¢”Ú	*/
+/** @brief Á¶ªÁ∫ø‰ø°ÊÅØÂüü	*/
 typedef struct tag_OFFLINEINFO
 {
-    uint32	nTime;				/**< ¿Îœﬂ ±≥£											*/
-    uint8	nReason;           	/**< ¿Îœﬂ‘≠“Ú enum{Œ¥÷™(0)£¨Õ£µÁ(1)£¨–≈µ¿±‰ªØ(2)}	*/
+    uint32	nTime;				/**< Á¶ªÁ∫øÊó∂Â∏∏											*/
+    uint8	nReason;           	/**< Á¶ªÁ∫øÂéüÂõ† enum{Êú™Áü•(0)ÔºåÂÅúÁîµ(1)Ôºå‰ø°ÈÅìÂèòÂåñ(2)}	*/
 }OFFLINEINFO;
 
-/** @brief µÁƒ‹±Ì‘⁄œﬂ◊¥Ã¨±‰ªØ ¬º˛µ•‘™	*/
+/** @brief ÁîµËÉΩË°®Âú®Á∫øÁä∂ÊÄÅÂèòÂåñ‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_METOFFLINELOG
 {
 	uint32				nIndex;
@@ -3512,17 +3512,17 @@ typedef struct tag_OOP_METOFFLINELOG
 	OOP_DATETIME_S_T	tmEnd;
 	OOP_REPORTS_T		evtState;
 	OOP_EVTSOURCE_T		source;
-	uint8				nState;		/**< ◊¥Ã¨±‰ªØ	enum{…œœﬂ(0)£¨ ¿Îœﬂ(1)}		*/
-	OFFLINEINFO			info;		/**< ¿Îœﬂ–≈œ¢	structure OPTIONAL			*/
+	uint8				nState;		/**< Áä∂ÊÄÅÂèòÂåñ	enum{‰∏äÁ∫ø(0)Ôºå Á¶ªÁ∫ø(1)}		*/
+	OFFLINEINFO			info;		/**< Á¶ªÁ∫ø‰ø°ÊÅØ	structure OPTIONAL			*/
 }OOP_METOFFLINELOG_T;
 
 //
-// 311F-æ‹æ¯¥”Ω⁄µ„»ÎÕ¯º«¬º
+// 311F-ÊãíÁªù‰ªéËäÇÁÇπÂÖ•ÁΩëËÆ∞ÂΩï
 //
 
-#define OOP_MAX_REFUSEADDRNUM		(32)		/**< Ω⁄µ„æ‹æ¯–≈œ¢÷˜∂Ø…œ±®◊Ó¥Û∏ˆ ˝	*/
+#define OOP_MAX_REFUSEADDRNUM		(32)		/**< ËäÇÁÇπÊãíÁªù‰ø°ÊÅØ‰∏ªÂä®‰∏äÊä•ÊúÄÂ§ß‰∏™Êï∞	*/
 
-/** @brief 332F-æ‹æ¯¥”Ω⁄µ„»ÎÕ¯º«¬ºµ•‘™ */
+/** @brief 332F-ÊãíÁªù‰ªéËäÇÁÇπÂÖ•ÁΩëËÆ∞ÂΩïÂçïÂÖÉ */
 typedef struct tag_OOP_REFUSESLAVE
 {
 	uint32				nNum;
@@ -3532,39 +3532,39 @@ typedef struct tag_OOP_REFUSESLAVE
 
 typedef struct tag_OOP_REFUSENODEACCESSLOG
 {
-	uint32				nIndex;		/**<  ¬º˛º«¬º–Ú∫≈	*/
-	OOP_DATETIME_S_T	tmStart;	/**<  ¬º˛∑¢…˙ ±º‰	*/
-	OOP_DATETIME_S_T	tmEnd;		/**<  ¬º˛Ω· ¯ ±º‰	*/
-	OOP_REPORTS_T		evtState;	/**<  ¬º˛…œ±®◊¥Ã¨array Õ®µ¿…œ±®◊¥Ã¨	*/
-	OOP_EVTSOURCE_T		source;		/**<  ¬º˛∑¢…˙‘¥	*/	
-	OOP_EVTBUF_T		data;		/**<  ¬º˛πÿ¡™ ˝æ›	*/	
-	OOP_REFUSESLAVE_T	info;		/**< æ‹æ¯¥”Ω⁄µ„¡–±Ì array octet-string	*/
+	uint32				nIndex;		/**< ‰∫ã‰ª∂ËÆ∞ÂΩïÂ∫èÂè∑	*/
+	OOP_DATETIME_S_T	tmStart;	/**< ‰∫ã‰ª∂ÂèëÁîüÊó∂Èó¥	*/
+	OOP_DATETIME_S_T	tmEnd;		/**< ‰∫ã‰ª∂ÁªìÊùüÊó∂Èó¥	*/
+	OOP_REPORTS_T		evtState;	/**< ‰∫ã‰ª∂‰∏äÊä•Áä∂ÊÄÅarray ÈÄöÈÅì‰∏äÊä•Áä∂ÊÄÅ	*/
+	OOP_EVTSOURCE_T		source;		/**< ‰∫ã‰ª∂ÂèëÁîüÊ∫ê	*/	
+	OOP_EVTBUF_T		data;		/**< ‰∫ã‰ª∂ÂÖ≥ËÅîÊï∞ÊçÆ	*/	
+	OOP_REFUSESLAVE_T	info;		/**< ÊãíÁªù‰ªéËäÇÁÇπÂàóË°® array octet-string	*/
 }OOP_REFUSENODEACCESSLOG_T;
 
 //
-// 311E-≤Œ ˝±‰∏¸º«¬º
+// 311E-ÂèÇÊï∞ÂèòÊõ¥ËÆ∞ÂΩï
 //
 
-/** @brief 331C-≤Œ ˝±‰∏¸º«¬ºµ•‘™	*/
+/** @brief 331C-ÂèÇÊï∞ÂèòÊõ¥ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_PARAMCHANGELOG
 {
-	uint32				nIndex;		/**<  ¬º˛º«¬º–Ú∫≈	*/
-	OOP_DATETIME_S_T	tmStart;	/**<  ¬º˛∑¢…˙ ±º‰	*/
-	OOP_DATETIME_S_T	tmEnd;		/**<  ¬º˛Ω· ¯ ±º‰	*/	
-	OOP_REPORTS_T		evtState;	/**<  ¬º˛…œ±®◊¥Ã¨array Õ®µ¿…œ±®◊¥Ã¨	*/	
-	OOP_EVTSOURCE_T		source;		/**<  ¬º˛∑¢…˙‘¥	*/	
-	OOP_EVTBUF_T		data;		/**<  ¬º˛πÿ¡™ ˝æ›	*/	
-	OOP_BUF1K_T			before;		/**< ≤Œ ˝±‰∏¸«∞÷µ	*/
-	OOP_BUF1K_T			after;		/**< ≤Œ ˝±‰∏¸∫Û÷µ	*/
+	uint32				nIndex;		/**< ‰∫ã‰ª∂ËÆ∞ÂΩïÂ∫èÂè∑	*/
+	OOP_DATETIME_S_T	tmStart;	/**< ‰∫ã‰ª∂ÂèëÁîüÊó∂Èó¥	*/
+	OOP_DATETIME_S_T	tmEnd;		/**< ‰∫ã‰ª∂ÁªìÊùüÊó∂Èó¥	*/	
+	OOP_REPORTS_T		evtState;	/**< ‰∫ã‰ª∂‰∏äÊä•Áä∂ÊÄÅarray ÈÄöÈÅì‰∏äÊä•Áä∂ÊÄÅ	*/	
+	OOP_EVTSOURCE_T		source;		/**< ‰∫ã‰ª∂ÂèëÁîüÊ∫ê	*/	
+	OOP_EVTBUF_T		data;		/**< ‰∫ã‰ª∂ÂÖ≥ËÅîÊï∞ÊçÆ	*/	
+	OOP_BUF1K_T			before;		/**< ÂèÇÊï∞ÂèòÊõ¥ÂâçÂÄº	*/
+	OOP_BUF1K_T			after;		/**< ÂèÇÊï∞ÂèòÊõ¥ÂêéÂÄº	*/
 }OOP_PARAMCHANGELOG_T;
 
 // 
-// 3120-µÁ¡˜ª•∏–∆˜“Ï≥£ ¬º˛
+// 3120-ÁîµÊµÅ‰∫íÊÑüÂô®ÂºÇÂ∏∏‰∫ã‰ª∂
 //
 #define OOP_LC_PHASE    (3)
 #define OOP_LC_GROUPNUM (3)
 
-/** @brief 4040- ◊Ëøπƒ£÷µ*/
+/** @brief 4040- ÈòªÊäóÊ®°ÂÄº*/
 typedef struct tag_OOP_IMPE_VAL
 {
 	uint32 nNum;
@@ -3572,7 +3572,7 @@ typedef struct tag_OOP_IMPE_VAL
 	uint32 impeval[OOP_LC_GROUPNUM];
 }OOP_IMPE_VAL_T;
 
-/** @brief 4040- ◊ËøπΩ«∂»*/
+/** @brief 4040- ÈòªÊäóËßíÂ∫¶*/
 typedef struct tag_OOP_IMPE_ANG
 {
 	uint32 nNum;
@@ -3580,7 +3580,7 @@ typedef struct tag_OOP_IMPE_ANG
 	uint32 impeang[OOP_LC_GROUPNUM];
 }OOP_IMPE_ANG_T;
 
-/** @brief 4040- ◊Ëøπ∆µ¬ */
+/** @brief 4040- ÈòªÊäóÈ¢ëÁéá*/
 typedef struct tag_OOP_IMPE_FREQ
 {
 	uint32 nNum;
@@ -3588,22 +3588,22 @@ typedef struct tag_OOP_IMPE_FREQ
 	uint32 impefreq[OOP_LC_GROUPNUM];
 }OOP_IMPE_FREQ_T;
 
-/** @brief π§øˆ–≈œ¢ */
+/** @brief Â∑•ÂÜµ‰ø°ÊÅØ */
 typedef struct tag_OOP_WORKCOND
 {
-	uint8				curloopstat;	/**< µÁ¡˜ªÿ¬∑◊¥Ã¨ */
-	uint32				temp;			/**< Œ¬∂» */
-	uint32				maxfreq;		/**< ∆µ¬ ◊Ó¥Û÷µ */
-	uint32				minfreq;		/**< ∆µ¬ ◊Ó–°÷µ */
-	uint32				curvalid;		/**< π§∆µµÁ¡˜”––ß÷µ */
-	OOP_IMPE_VAL_T		impval;			/**< ◊Ëøπƒ£÷µ */
-	OOP_IMPE_ANG_T		impang;			/**< ◊ËøπΩ«∂» */
-	OOP_IMPE_FREQ_T		impfrq;			/**< ◊Ëøπ∆µ¬  */
+	uint8				curloopstat;	/**< ÁîµÊµÅÂõûË∑ØÁä∂ÊÄÅ */
+	uint32				temp;			/**< Ê∏©Â∫¶ */
+	uint32				maxfreq;		/**< È¢ëÁéáÊúÄÂ§ßÂÄº */
+	uint32				minfreq;		/**< È¢ëÁéáÊúÄÂ∞èÂÄº */
+	uint32				curvalid;		/**< Â∑•È¢ëÁîµÊµÅÊúâÊïàÂÄº */
+	OOP_IMPE_VAL_T		impval;			/**< ÈòªÊäóÊ®°ÂÄº */
+	OOP_IMPE_ANG_T		impang;			/**< ÈòªÊäóËßíÂ∫¶ */
+	OOP_IMPE_FREQ_T		impfrq;			/**< ÈòªÊäóÈ¢ëÁéá */
 }OOP_WORKCOND_T;
 
-#define OOP_MAX_WORKIINFO	(3)		/**< ◊Ó¥Ûπ§øˆ–≈œ¢		*/
+#define OOP_MAX_WORKIINFO	(3)		/**< ÊúÄÂ§ßÂ∑•ÂÜµ‰ø°ÊÅØ		*/
 
-/** @brief π§øˆ–≈œ¢ºØ∫œ	*/
+/** @brief Â∑•ÂÜµ‰ø°ÊÅØÈõÜÂêà	*/
 typedef struct tag_OOP_WORKINFO
 {
 	uint32	        nNum;
@@ -3611,7 +3611,7 @@ typedef struct tag_OOP_WORKINFO
 	OOP_WORKCOND_T	item[OOP_MAX_WORKIINFO];
 }OOP_WORKINFO_T;
 
-/** @brief 3318-µÁ¡˜ª•∏–∆˜“Ï≥£ ¬º˛µ•‘™	*/
+/** @brief 3318-ÁîµÊµÅ‰∫íÊÑüÂô®ÂºÇÂ∏∏‰∫ã‰ª∂ÂçïÂÖÉ	*/
 typedef struct tag_OOP_ABNORMALCTLOG
 {
 	uint32				nIndex;
@@ -3624,15 +3624,15 @@ typedef struct tag_OOP_ABNORMALCTLOG
     OOP_WORKINFO_T      prelcWarn;
 }OOP_ABNORMALCTLOG_T;
 
-// 33F0-Ω⁄µ„œ‡Œª±‰∏¸º«¬ºµ•‘™
+// 33F0-ËäÇÁÇπÁõ∏‰ΩçÂèòÊõ¥ËÆ∞ÂΩïÂçïÂÖÉ
 
 #define OOP_MAX_CHGNUM	(31)
 
 typedef struct tag_PHASECHGINFO
 {
-	OOP_TSA_T		addr;			// Õ®–≈µÿ÷∑
-	OOP_BITSTR16_T	befphase;		// Ω⁄µ„œ‡Œª±‰∏¸–≈œ¢£∫bit-string(SIZE(16))
-	OOP_BITSTR16_T	aftphase;		// Ω⁄µ„œ‡Œª±‰∏¸–≈œ¢£∫bit-string(SIZE(16))
+	OOP_TSA_T		addr;			// ÈÄö‰ø°Âú∞ÂùÄ
+	OOP_BITSTR16_T	befphase;		// ËäÇÁÇπÁõ∏‰ΩçÂèòÊõ¥‰ø°ÊÅØÔºöbit-string(SIZE(16))
+	OOP_BITSTR16_T	aftphase;		// ËäÇÁÇπÁõ∏‰ΩçÂèòÊõ¥‰ø°ÊÅØÔºöbit-string(SIZE(16))
 }PHASECHGINFO;
 
 typedef struct tag_OOP_PHASECHGINFO
@@ -3652,13 +3652,13 @@ typedef struct tag_OOP_NODEPHASECHGLOG
 	OOP_PHASECHGINFO_T 	info;
 }OOP_NODEPHASECHGLOG_T;
 
-// 33F1-Ω⁄µ„∞Ê±æ±‰∏¸º«¬ºµ•‘™
+// 33F1-ËäÇÁÇπÁâàÊú¨ÂèòÊõ¥ËÆ∞ÂΩïÂçïÂÖÉ
 
 typedef struct tag_VERCHGINFO
 {
-	OOP_TSA_T			addr;			// Õ®–≈µÿ÷∑
-	OOP_OCTETSTR3_T	octVerBef;			// …˝º∂«∞∞Ê±æ£∫octet-string(SIZE(3))
-	OOP_OCTETSTR3_T	octVerAft;			// …˝º∂∫Û∞Ê±æ£∫octet-string(SIZE(3))
+	OOP_TSA_T			addr;			// ÈÄö‰ø°Âú∞ÂùÄ
+	OOP_OCTETSTR3_T	octVerBef;			// ÂçáÁ∫ßÂâçÁâàÊú¨Ôºöoctet-string(SIZE(3))
+	OOP_OCTETSTR3_T	octVerAft;			// ÂçáÁ∫ßÂêéÁâàÊú¨Ôºöoctet-string(SIZE(3))
 }VERCHGINFO;
 
 typedef struct tag_OOP_VERCHGINFO
@@ -3679,13 +3679,13 @@ typedef struct tag_OOP_NODEVERCHGLOG
 }OOP_NODEVERCHGLOG_T;
 
 //
-// 3320-–¬‘ˆ ¬º˛¡–±Ì
+// 3320-Êñ∞Â¢û‰∫ã‰ª∂ÂàóË°®
 //
 
-#define OOP_MAX_NEWEVENT	(64)	/**< ◊Ó¥Û–¬‘ˆ…œ±® ¬º˛∏ˆ ˝		*/
-#define OOP_MAX_REPORTEVENT	(32)	/**< ◊Ó¥Û…œ±® ¬º˛∏ˆ ˝			*/
+#define OOP_MAX_NEWEVENT	(64)	/**< ÊúÄÂ§ßÊñ∞Â¢û‰∏äÊä•‰∫ã‰ª∂‰∏™Êï∞		*/
+#define OOP_MAX_REPORTEVENT	(32)	/**< ÊúÄÂ§ß‰∏äÊä•‰∫ã‰ª∂‰∏™Êï∞			*/
 
-/** @brief –¬‘ˆ…œ±® ¬º˛¡–±Ì	*/
+/** @brief Êñ∞Â¢û‰∏äÊä•‰∫ã‰ª∂ÂàóË°®	*/
 typedef struct tag_OOP_NEWEVENT
 {
 	uint32				nNum;
@@ -3693,7 +3693,7 @@ typedef struct tag_OOP_NEWEVENT
 	OOP_OAD_U			item[OOP_MAX_NEWEVENT];
 }OOP_NEWEVENT_T;
 
-/** @brief …œ±® ¬º˛¡–±Ì	*/
+/** @brief ‰∏äÊä•‰∫ã‰ª∂ÂàóË°®	*/
 typedef struct tag_OOP_REPORTEVENT
 {
 	uint32				nNum;
@@ -3702,16 +3702,16 @@ typedef struct tag_OOP_REPORTEVENT
 }OOP_REPORTEVENT_T;
 
 //
-// 3402-≥‰µÁº∆ªÆ…œ±® ¬º˛
+// 3402-ÂÖÖÁîµËÆ°Âàí‰∏äÊä•‰∫ã‰ª∂
 //
 #define OOP_MAX_CHARGEPLAN       24
 #define OOP_MAX_CHARGE_PERIOD    24
 
 typedef struct tag_OOP_POWER_PERIOD
 {
-	OOP_DATETIME_S_T         tmStart;       /**>≥‰µÁø™ º ±º‰*/      
-	OOP_DATETIME_S_T         tmEnd;         /**>≥‰µÁΩ· ¯ ±º‰*/
-	int32                    nPower;        /**>≥‰µÁπ¶¬ */
+	OOP_DATETIME_S_T         tmStart;       /**>ÂÖÖÁîµÂºÄÂßãÊó∂Èó¥*/      
+	OOP_DATETIME_S_T         tmEnd;         /**>ÂÖÖÁîµÁªìÊùüÊó∂Èó¥*/
+	int32                    nPower;        /**>ÂÖÖÁîµÂäüÁéá*/
 }OOP_POWER_PERIOD_T;
 
 typedef struct tag_OOP_PERIOD_LIST
@@ -3720,52 +3720,52 @@ typedef struct tag_OOP_PERIOD_LIST
 	OOP_POWER_PERIOD_T  period[OOP_MAX_CHARGE_PERIOD];
 }OOP_PERIOD_LIST_T;
 
-/** @brief 3322-≥‰µÁº∆ªÆ…œ±®º«¬ºµ•‘™	*/
+/** @brief 3322-ÂÖÖÁîµËÆ°Âàí‰∏äÊä•ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_CHGPLANLOG
 {
-	uint32				     nIndex;                             /**> ¬º˛º«¬º–Ú∫≈*/
-	OOP_DATETIME_S_T	     tmStart;                            /**> ¬º˛∑¢…˙ ±º‰*/
-	OOP_DATETIME_S_T	     tmEnd;                              /**> ¬º˛Ω· ¯ ±º‰*/
-	OOP_REPORTS_T		     evtState;                           /**> ¬º˛∑¢…˙◊¥Ã¨*/
-	OOP_EVTSOURCE_T 	     source;                             /**> ¬º˛∑¢…˙‘¥*/
-	OOP_OCTETVAR64_T         reqForm;                            /**>…Í«Îµ•*/
-	OOP_VISIBLEVAR128_T      userId;                             /**>”√ªßID*/
-	uint8                    policyEle;                          /**>æˆ≤ﬂµ•‘™*/
-	uint8                    policyType;                         /**>æˆ≤ﬂ¿‡–Õ*/
-	OOP_DATETIME_S_T         policyTime;                         /**>æˆ≤ﬂ ±º‰*/
-	OOP_VISIBLEVAR32_T       routerAssetNum;                     /**>¬∑”…∆˜◊ ≤˙±‡∫≈*/ 
-	uint32                   energyNeed;                         /**>–Ë«ÛµÁ¡ø*/
-	int32                    nPower;                             /**>π¶¬ */
-	uint8                    nMode;                              /**>≥‰µÁƒ£ Ω*/
-	OOP_PERIOD_LIST_T        periodList;                         /**>≥‰µÁ ±∂Œ*/	
-	OOP_EVTBUF_T		     data;                               /**>πÿ¡™ ˝æ›*/
+	uint32				     nIndex;                             /**>‰∫ã‰ª∂ËÆ∞ÂΩïÂ∫èÂè∑*/
+	OOP_DATETIME_S_T	     tmStart;                            /**>‰∫ã‰ª∂ÂèëÁîüÊó∂Èó¥*/
+	OOP_DATETIME_S_T	     tmEnd;                              /**>‰∫ã‰ª∂ÁªìÊùüÊó∂Èó¥*/
+	OOP_REPORTS_T		     evtState;                           /**>‰∫ã‰ª∂ÂèëÁîüÁä∂ÊÄÅ*/
+	OOP_EVTSOURCE_T 	     source;                             /**>‰∫ã‰ª∂ÂèëÁîüÊ∫ê*/
+	OOP_OCTETVAR64_T         reqForm;                            /**>Áî≥ËØ∑Âçï*/
+	OOP_VISIBLEVAR128_T      userId;                             /**>Áî®Êà∑ID*/
+	uint8                    policyEle;                          /**>ÂÜ≥Á≠ñÂçïÂÖÉ*/
+	uint8                    policyType;                         /**>ÂÜ≥Á≠ñÁ±ªÂûã*/
+	OOP_DATETIME_S_T         policyTime;                         /**>ÂÜ≥Á≠ñÊó∂Èó¥*/
+	OOP_VISIBLEVAR32_T       routerAssetNum;                     /**>Ë∑ØÁî±Âô®ËµÑ‰∫ßÁºñÂè∑*/ 
+	uint32                   energyNeed;                         /**>ÈúÄÊ±ÇÁîµÈáè*/
+	int32                    nPower;                             /**>ÂäüÁéá*/
+	uint8                    nMode;                              /**>ÂÖÖÁîµÊ®°Âºè*/
+	OOP_PERIOD_LIST_T        periodList;                         /**>ÂÖÖÁîµÊó∂ÊÆµ*/	
+	OOP_EVTBUF_T		     data;                               /**>ÂÖ≥ËÅîÊï∞ÊçÆ*/
 }OOP_CHGPLANLOG_T;
 
 //
-// 3403-≥‰µÁ…Í«Î ¬º˛
+// 3403-ÂÖÖÁîµÁî≥ËØ∑‰∫ã‰ª∂
 //
 
-/** @brief 3323-≥‰µÁ…Í«Î ¬º˛º«¬ºµ•‘™	*/
+/** @brief 3323-ÂÖÖÁîµÁî≥ËØ∑‰∫ã‰ª∂ËÆ∞ÂΩïÂçïÂÖÉ	*/
 typedef struct tag_OOP_CHGREQLOG
 {
-	uint32					 nIndex;							 /**> ¬º˛º«¬º–Ú∫≈*/
-	OOP_DATETIME_S_T		 tmStart;							 /**> ¬º˛∑¢…˙ ±º‰*/
-	OOP_DATETIME_S_T		 tmEnd; 							 /**> ¬º˛Ω· ¯ ±º‰*/
-	OOP_REPORTS_T			 evtState;							 /**> ¬º˛∑¢…˙◊¥Ã¨*/
-	OOP_EVTSOURCE_T 		 source;							 /**> ¬º˛∑¢…˙‘¥*/
-	OOP_OCTETVAR64_T		 reqForm;							 /**>…Í«Îµ•*/
-	OOP_VISIBLEVAR128_T 	 userId;							 /**>”√ªßID*/	
-	OOP_VISIBLEVAR32_T		 routerAssetNum;					 /**>¬∑”…∆˜◊ ≤˙±‡∫≈*/ 
-	OOP_DATETIME_S_T         tmReq;                              /**>≥‰µÁ…Í«Î ±º‰*/
-	uint32					 energyNeed;						 /**>–Ë«ÛµÁ¡ø*/
-	OOP_DATETIME_S_T		 tmCarUsed;							 /**>º∆ªÆ”√≥µ ±º‰*/
-	uint8					 nMode; 							 /**>≥‰µÁƒ£ Ω*/
-	OOP_VISIBLEVAR32_T		 authIdentily;						 /**>…Ì∑›»œ÷§*/	
-	OOP_EVTBUF_T		     data;                               /**>πÿ¡™ ˝æ›*/
+	uint32					 nIndex;							 /**>‰∫ã‰ª∂ËÆ∞ÂΩïÂ∫èÂè∑*/
+	OOP_DATETIME_S_T		 tmStart;							 /**>‰∫ã‰ª∂ÂèëÁîüÊó∂Èó¥*/
+	OOP_DATETIME_S_T		 tmEnd; 							 /**>‰∫ã‰ª∂ÁªìÊùüÊó∂Èó¥*/
+	OOP_REPORTS_T			 evtState;							 /**>‰∫ã‰ª∂ÂèëÁîüÁä∂ÊÄÅ*/
+	OOP_EVTSOURCE_T 		 source;							 /**>‰∫ã‰ª∂ÂèëÁîüÊ∫ê*/
+	OOP_OCTETVAR64_T		 reqForm;							 /**>Áî≥ËØ∑Âçï*/
+	OOP_VISIBLEVAR128_T 	 userId;							 /**>Áî®Êà∑ID*/	
+	OOP_VISIBLEVAR32_T		 routerAssetNum;					 /**>Ë∑ØÁî±Âô®ËµÑ‰∫ßÁºñÂè∑*/ 
+	OOP_DATETIME_S_T         tmReq;                              /**>ÂÖÖÁîµÁî≥ËØ∑Êó∂Èó¥*/
+	uint32					 energyNeed;						 /**>ÈúÄÊ±ÇÁîµÈáè*/
+	OOP_DATETIME_S_T		 tmCarUsed;							 /**>ËÆ°ÂàíÁî®ËΩ¶Êó∂Èó¥*/
+	uint8					 nMode; 							 /**>ÂÖÖÁîµÊ®°Âºè*/
+	OOP_VISIBLEVAR32_T		 authIdentily;						 /**>Ë∫´‰ªΩËÆ§ËØÅ*/	
+	OOP_EVTBUF_T		     data;                               /**>ÂÖ≥ËÅîÊï∞ÊçÆ*/
 }OOP_CHGREQLOG_T;
 
 //
-// µÕµÁ—π ¬º˛
+// ‰ΩéÁîµÂéã‰∫ã‰ª∂
 //
 typedef struct tag_OOP_LOWVOLLOG_T
 {
@@ -3775,16 +3775,16 @@ typedef struct tag_OOP_LOWVOLLOG_T
 	OOP_REPORTS_T		   evtState;
 	OOP_EVTSOURCE_T		   source;
 	OOP_OCTETVAR8_T		   nState;
-	uint8                  nFlag;     /**<  Ù–‘±Í÷æ */
+	uint8                  nFlag;     /**< Â±ûÊÄßÊ†áÂøó */
 }OOP_LOWVOLLOG_T;
 
 /**
 ********************************************************
-* A.6 ≤Œ±‰¡ø¿‡∂‘œÛ
+* A.6 ÂèÇÂèòÈáèÁ±ªÂØπË±°
 ********************************************************
 */
 
-/** @brief  ±÷”Õ¨≤Ω¿‡–Õ	*/
+/** @brief Êó∂ÈíüÂêåÊ≠•Á±ªÂûã	*/
 typedef enum tag_OOP_SYNCTYPE
 {
 	SYNC_MASTER 	= 0,
@@ -3793,50 +3793,50 @@ typedef enum tag_OOP_SYNCTYPE
 	SYNC_OTHER		= 255
 }OOP_SYNCTYPE_E;
 
-/** @brief –ƒÃ¯–£ ±≤Œ ˝	*/
+/** @brief ÂøÉË∑≥Ê†°Êó∂ÂèÇÊï∞	*/
 typedef struct tag_OOP_SYNCCLOCK
 {
-	uint8	nSum;			/**< ◊ÓΩ¸–ƒÃ¯ ±º‰◊‹∏ˆ ˝	*/
-	uint8	nMaxDelNum;		/**< ◊Ó¥Û÷µÃﬁ≥˝∏ˆ ˝		*/
-	uint8	nMinDelNum;		/**< ◊Ó–°÷µÃﬁ≥˝∏ˆ ˝		*/
-	uint8	nDelay;			/**< Õ®—∂—” ±„–÷µ		*/
-	uint8	nValidNum;		/**< ◊Ó…Ÿ”––ß∏ˆ ˝		*/
+	uint8	nSum;			/**< ÊúÄËøëÂøÉË∑≥Êó∂Èó¥ÊÄª‰∏™Êï∞	*/
+	uint8	nMaxDelNum;		/**< ÊúÄÂ§ßÂÄºÂâîÈô§‰∏™Êï∞		*/
+	uint8	nMinDelNum;		/**< ÊúÄÂ∞èÂÄºÂâîÈô§‰∏™Êï∞		*/
+	uint8	nDelay;			/**< ÈÄöËÆØÂª∂Êó∂ÈòàÂÄº		*/
+	uint8	nValidNum;		/**< ÊúÄÂ∞ëÊúâÊïà‰∏™Êï∞		*/
 }OOP_SYNCCLOCK_T;
 
-/** @brief π„≤•–£ ±≤Œ ˝	*/
+/** @brief ÂπøÊí≠Ê†°Êó∂ÂèÇÊï∞	*/
 typedef struct tag_OOP_BROADCASTCLOCK
 {
-	uint16	nMinDeviate;		/**< ◊Ó–°–£ ±∆´≤Ó 	*/
-	uint16	nMaxDeviate;		/**< ◊Ó¥Û–£ ±∆´≤Ó 	*/
+	uint16	nMinDeviate;		/**< ÊúÄÂ∞èÊ†°Êó∂ÂÅèÂ∑Æ 	*/
+	uint16	nMaxDeviate;		/**< ÊúÄÂ§ßÊ†°Êó∂ÂÅèÂ∑Æ 	*/
 }OOP_BROADCASTCLOCK_T;
 
-/** @brief  ±º‰Õ¨≤Ω÷‹∆⁄			*/
+/** @brief Êó∂Èó¥ÂêåÊ≠•Âë®Êúü			*/
 typedef struct tag_OOP_SYNCCYCLE
 {
-	uint32	norperiod;		/**< ±±œÚÕ¨≤Ω÷‹∆⁄	*/
-	uint32	souperiod;		/**< ƒœœÚÕ¨≤Ω÷‹∆⁄	*/
+	uint32	norperiod;		/**< ÂåóÂêëÂêåÊ≠•Âë®Êúü	*/
+	uint32	souperiod;		/**< ÂçóÂêëÂêåÊ≠•Âë®Êúü	*/
 }OOP_SYNCCYCLE_T;
 
-/** @brief µÿ¿ÌŒª÷√–≈œ¢			*/
+/** @brief Âú∞ÁêÜ‰ΩçÁΩÆ‰ø°ÊÅØ			*/
 typedef struct tag_POSITION_
 {
-	uint8	    position;		/**< ∑ΩŒª     æ≠∂»:{0£∫E,1£∫W}   Œ≥∂»:{0£∫S,1£∫N}	*/
-	uint8 	    degre;			/**< ∂»	*/
-	uint8	    branch;			/**< ∑÷	*/
-	uint8 	    second;			/**< √Î	*/
+	uint8	    position;		/**< Êñπ‰Ωç     ÁªèÂ∫¶:{0ÔºöE,1ÔºöW}   Á∫¨Â∫¶:{0ÔºöS,1ÔºöN}	*/
+	uint8 	    degre;			/**< Â∫¶	*/
+	uint8	    branch;			/**< ÂàÜ	*/
+	uint8 	    second;			/**< Áßí	*/
 }POSITION_;
 
-/** @brief 4004-…Ë±∏µÿ¿ÌŒª÷√	*/
+/** @brief 4004-ËÆæÂ§áÂú∞ÁêÜ‰ΩçÁΩÆ	*/
 typedef struct tag_OOP_GEOGADD
 {
-	POSITION_		longitude;		/**< æ≠∂»	*/
-	POSITION_ 		latitude;		/**< Œ≥∂»	*/
-	uint32  		height;   		/**< ∏ﬂ∂»	*/
+	POSITION_		longitude;		/**< ÁªèÂ∫¶	*/
+	POSITION_ 		latitude;		/**< Á∫¨Â∫¶	*/
+	uint32  		height;   		/**< È´òÂ∫¶	*/
 }OOP_GEOGADD_T;
 
-#define OOP_MAX_GROUPADD		(8)		/**< ◊Ó∂‡◊Èµÿ÷∑∏ˆ ˝	*/
+#define OOP_MAX_GROUPADD		(8)		/**< ÊúÄÂ§öÁªÑÂú∞ÂùÄ‰∏™Êï∞	*/
 
-/** @brief 4005-◊Èµÿ÷∑	*/
+/** @brief 4005-ÁªÑÂú∞ÂùÄ	*/
 typedef struct tag_OOP_GRPADDR
 {
 	uint32		nNum;
@@ -3844,38 +3844,38 @@ typedef struct tag_OOP_GRPADDR
 	OOP_SA_T 	sa[OOP_MAX_GROUPADD];
 }OOP_GRPADDR_T;
 
-/** @brief 4006- ±÷”‘¥	*/
+/** @brief 4006-Êó∂ÈíüÊ∫ê	*/
 typedef struct tag_OOP_CLOCK
 {
-	uint8	clock;      /**<  ±÷”‘¥(enum)	*/
-	uint8 	state;      /**< ◊¥Ã¨(enum)		*/
+	uint8	clock;      /**< Êó∂ÈíüÊ∫ê(enum)	*/
+	uint8 	state;      /**< Áä∂ÊÄÅ(enum)		*/
 }OOP_CLOCK_T;
 
 /** @brief 4007-LCD	*/
 typedef struct tag_OOP_LCD
 {
-	uint8		disTime;                /**< …œµÁ»´œ‘ ±º‰														*/
-	uint16 		lightTime;              /**< ±≥π‚µ„¡¡ ±º‰														*/
-	uint16		reTime;                 /**< œ‘ æ≤Èø¥±≥π‚µ„¡¡ ±º‰												*/
-	uint16		noPow;                  /**< ŒﬁµÁ∞¥º¸∆¡ƒª◊§¡Ù◊Ó¥Û ±º‰											*/
-	uint8		eDotNum;                /**< œ‘ æµÁƒ‹–° ˝Œª ˝ 													*/
-	uint8		pDotNum;                /**< œ‘ æπ¶¬ (◊Ó¥Û–Ë¡ø)–° ˝Œª ˝   										*/
-	uint8		nFlag;					/**<  “∫æß¢Ÿ¢⁄◊÷—˘“‚“Â 0œ‘ æµ±«∞Ã◊°¢±∏”√Ã◊ ±∂Œ£¨1œ‘ æµ±«∞Ã◊°¢±∏”√Ã◊∑—¬ 	*/
+	uint8		disTime;                /**< ‰∏äÁîµÂÖ®ÊòæÊó∂Èó¥														*/
+	uint16 		lightTime;              /**< ËÉåÂÖâÁÇπ‰∫ÆÊó∂Èó¥														*/
+	uint16		reTime;                 /**< ÊòæÁ§∫Êü•ÁúãËÉåÂÖâÁÇπ‰∫ÆÊó∂Èó¥												*/
+	uint16		noPow;                  /**< Êó†ÁîµÊåâÈîÆÂ±èÂπïÈ©ªÁïôÊúÄÂ§ßÊó∂Èó¥											*/
+	uint8		eDotNum;                /**< ÊòæÁ§∫ÁîµËÉΩÂ∞èÊï∞‰ΩçÊï∞ 													*/
+	uint8		pDotNum;                /**< ÊòæÁ§∫ÂäüÁéá(ÊúÄÂ§ßÈúÄÈáè)Â∞èÊï∞‰ΩçÊï∞   										*/
+	uint8		nFlag;					/**<  Ê∂≤Êô∂‚ë†‚ë°Â≠óÊ†∑ÊÑè‰πâ 0ÊòæÁ§∫ÂΩìÂâçÂ•ó„ÄÅÂ§áÁî®Â•óÊó∂ÊÆµÔºå1ÊòæÁ§∫ÂΩìÂâçÂ•ó„ÄÅÂ§áÁî®Â•óË¥πÁéá	*/
 }OOP_LCD_T;
 
-/** @brief 400C- ±«¯ ±∂Œ ˝	*/
+/** @brief 400C-Êó∂Âå∫Êó∂ÊÆµÊï∞	*/
 typedef struct tag_OOP_PERIOD
 {
-    uint8    yPeriod;            /**< ƒÍ ±«¯ ˝		*/
-    uint8    dPeriodMet;         /**< »’ ±∂Œ±Ì ˝	*/
-    uint8    dPeriod;            /**< »’ ±∂Œ ˝		*/
-    uint8    rate;               /**< ∑—¬  ˝		*/
-    uint8    pubHoliday;         /**< π´π≤ºŸ»’ ˝	*/
+    uint8    yPeriod;            /**< Âπ¥Êó∂Âå∫Êï∞		*/
+    uint8    dPeriodMet;         /**< Êó•Êó∂ÊÆµË°®Êï∞	*/
+    uint8    dPeriod;            /**< Êó•Êó∂ÊÆµÊï∞		*/
+    uint8    rate;               /**< Ë¥πÁéáÊï∞		*/
+    uint8    pubHoliday;         /**< ÂÖ¨ÂÖ±ÂÅáÊó•Êï∞	*/
 }OOP_PERIOD_T;
 
-#define OOP_MAX_PUBHOLIDAY		(20)	/**< ◊Ó¥Ûπ´π≤ºŸ»’∏ˆ ˝	*/
+#define OOP_MAX_PUBHOLIDAY		(20)	/**< ÊúÄÂ§ßÂÖ¨ÂÖ±ÂÅáÊó•‰∏™Êï∞	*/
 
-/** @brief 4011-π´π≤ºŸ»’	*/
+/** @brief 4011-ÂÖ¨ÂÖ±ÂÅáÊó•	*/
 typedef struct tag_OOP_PUBHOLIDAY
 {
     uint32          nNum;
@@ -3883,20 +3883,20 @@ typedef struct tag_OOP_PUBHOLIDAY
     PUBHOLIDAY      holiday[OOP_MAX_PUBHOLIDAY];    
 }OOP_PUBHOLIDAY_T;
 
-#define OOP_MAX_TIMEZONE		(14)	/**< ƒÍ ±«¯ ˝		*/
+#define OOP_MAX_TIMEZONE		(14)	/**< Âπ¥Êó∂Âå∫Êï∞		*/
 
-/** @brief  ±«¯∂®“Â	*/
+/** @brief Êó∂Âå∫ÂÆö‰πâ	*/
 typedef struct tag_TIMEZONE
 {
-    uint8    mon;                /**< ‘¬					*/
-    uint8    day;                /**< »’					*/
-    uint8    meterNum;           /**< »’ ±∂Œ±Ì∫≈°¢∑—¬ ∫≈	*/
+    uint8    mon;                /**< Êúà					*/
+    uint8    day;                /**< Êó•					*/
+    uint8    meterNum;           /**< Êó•Êó∂ÊÆµË°®Âè∑„ÄÅË¥πÁéáÂè∑	*/
 }TIMEZONE;
 
 /** 
-* @brief	 ±«¯±Ì				\n
-*			4014-µ±«∞Ã◊ ±«¯±Ì	\n
-*			4015-±∏”√Ã◊ ±«¯±Ì
+* @brief	Êó∂Âå∫Ë°®				\n
+*			4014-ÂΩìÂâçÂ•óÊó∂Âå∫Ë°®	\n
+*			4015-Â§áÁî®Â•óÊó∂Âå∫Ë°®
 */
 typedef struct tag_OOP_TIMEZONE
 {
@@ -3905,12 +3905,12 @@ typedef struct tag_OOP_TIMEZONE
     TIMEZONE		period[OOP_MAX_TIMEZONE];
 }OOP_TIMEZONE_T;
 
-#define OOP_MAX_DAYPERIODS		(8)    /**< ◊Ó¥Û»’ ±∂Œ±Ì ˝		*/
+#define OOP_MAX_DAYPERIODS		(8)    /**< ÊúÄÂ§ßÊó•Êó∂ÊÆµË°®Êï∞		*/
 
 /** 
-* @brief	 ±∂Œ±Ì				\n
-*			4016-µ±«∞Ã◊»’ ±∂Œ±Ì	\n
-*			4017-±∏”√Ã◊»’ ±∂Œ±Ì
+* @brief	Êó∂ÊÆµË°®				\n
+*			4016-ÂΩìÂâçÂ•óÊó•Êó∂ÊÆµË°®	\n
+*			4017-Â§áÁî®Â•óÊó•Êó∂ÊÆµË°®
 */
 typedef struct tag_OOP_DAYPERIOD
 {
@@ -3920,9 +3920,9 @@ typedef struct tag_OOP_DAYPERIOD
 }OOP_DAYPERIOD_T;
 
 /** 
-* @brief	∑—¬ µÁº€			\n
-*			4018-µ±«∞Ã◊∑—¬ µÁº€	\n
-*			4019-±∏”√Ã◊∑—¬ µÁº€
+* @brief	Ë¥πÁéáÁîµ‰ª∑			\n
+*			4018-ÂΩìÂâçÂ•óË¥πÁéáÁîµ‰ª∑	\n
+*			4019-Â§áÁî®Â•óË¥πÁéáÁîµ‰ª∑
 */
 typedef struct tag_OOP_RATETARIFF
 {
@@ -3931,14 +3931,14 @@ typedef struct tag_OOP_RATETARIFF
 	uint32		nValue[OOP_MAX_RATES];
 }OOP_RATETARIFF_T;
 
-/** @brief 401E-±®æØΩ∂Óœﬁ÷µ	*/
+/** @brief 401E-Êä•Ë≠¶ÈáëÈ¢ùÈôêÂÄº	*/
 typedef struct tag_OOP_LIMITCHARGE
 {
     uint32 charge1;
     uint32 charge2;
 }OOP_LIMITCHARGE_T;
 
-/** @brief 401F-∆‰À¸Ω∂Óœﬁ÷µ	*/
+/** @brief 401F-ÂÖ∂ÂÆÉÈáëÈ¢ùÈôêÂÄº	*/
 typedef struct tag_OOP_OTHERLIMIT
 {
     uint32 overChar;
@@ -3946,14 +3946,14 @@ typedef struct tag_OOP_OTHERLIMIT
     uint32 switchChar;
 }OOP_OTHERLIMIT_T;
 
-/** @brief 4020-±®æØµÁ¡øœﬁ÷µ	*/
+/** @brief 4020-Êä•Ë≠¶ÁîµÈáèÈôêÂÄº	*/
 typedef struct tag_OOP_POWERLIMIT
 {
     uint32 power1;
     uint32 power2;
 }OOP_POWERLIMIT_T;
 
-/** @brief 4021-∆‰À¸µÁ¡øœﬁ÷µ	*/
+/** @brief 4021-ÂÖ∂ÂÆÉÁîµÈáèÈôêÂÄº	*/
 typedef struct tag_OOP_OTHERPOWERLIMIT
 {
     uint32 overPow;
@@ -3962,15 +3962,15 @@ typedef struct tag_OOP_OTHERPOWERLIMIT
 }OOP_OTHERPOWERLIMIT_T;
 
 /** 
-* @brief	ƒÍΩ·À„»’			\n
-*			401A-µ±«∞Ã◊Ω◊Ã›µÁº€	\n
-*			401B-±∏”√Ã◊Ω◊Ã›µÁº€
+* @brief	Âπ¥ÁªìÁÆóÊó•			\n
+*			401A-ÂΩìÂâçÂ•óÈò∂Ê¢ØÁîµ‰ª∑	\n
+*			401B-Â§áÁî®Â•óÈò∂Ê¢ØÁîµ‰ª∑
 */
 
-#define OOP_MAX_YEARACCDAY      (12)    /**< ◊Ó¥ÛƒÍΩ·À„»’		*/
-#define OOP_MAX_STEPS			(12)	/**< ◊Ó¥ÛΩ◊Ã› ˝			*/
+#define OOP_MAX_YEARACCDAY      (12)    /**< ÊúÄÂ§ßÂπ¥ÁªìÁÆóÊó•		*/
+#define OOP_MAX_STEPS			(12)	/**< ÊúÄÂ§ßÈò∂Ê¢ØÊï∞			*/
 
-/** @brief Ω·À„»’	*/
+/** @brief ÁªìÁÆóÊó•	*/
 typedef struct tag_YEARACCDAY
 {
     uint8        mon;
@@ -3978,24 +3978,24 @@ typedef struct tag_YEARACCDAY
     uint8        hour;
 }YEARACCDAY;
 
-/** @brief Ω◊Ã›µÁº€	*/
+/** @brief Èò∂Ê¢ØÁîµ‰ª∑	*/
 typedef struct tag_OOP_STEPPRICE
 {
     uint32          nNum1;
-	uint32          sValue[OOP_MAX_STEPS];	                /**< Ω◊Ã›÷µ		*/
+	uint32          sValue[OOP_MAX_STEPS];	                /**< Èò∂Ê¢ØÂÄº		*/
 	uint32			nNum2;
-    uint32          sPrice[OOP_MAX_STEPS];					/**< Ω◊Ã›µÁº€	*/
+    uint32          sPrice[OOP_MAX_STEPS];					/**< Èò∂Ê¢ØÁîµ‰ª∑	*/
     uint32          nNum3;
-    YEARACCDAY      yAccDay[OOP_MAX_YEARACCDAY];            /**< ƒÍΩ·À„»’	*/
+    YEARACCDAY      yAccDay[OOP_MAX_YEARACCDAY];            /**< Âπ¥ÁªìÁÆóÊó•	*/
 }OOP_STEPPRICE_T;
 
 //
-// 4025-≤…ºØ∆˜…˝º∂Ω·π˚¡–±Ì
+// 4025-ÈááÈõÜÂô®ÂçáÁ∫ßÁªìÊûúÂàóË°®
 //
 
-#define OOP_MAX_DCU		512			/**< ◊Ó¥Û≤…ºØ∆˜∏ˆ ˝		*/
+#define OOP_MAX_DCU		512			/**< ÊúÄÂ§ßÈááÈõÜÂô®‰∏™Êï∞		*/
 
-/** @brief …˝º∂Ω·π˚	*/
+/** @brief ÂçáÁ∫ßÁªìÊûú	*/
 typedef struct tag_DC_UPGRADE
 {
 	uint16				nIndex;
@@ -4009,7 +4009,7 @@ typedef struct tag_DC_UPGRADE
 	OOP_VERSION_T		aftVer;
 }DC_UPGRADE_T;
 
-/** @brief “ª◊È…˝º∂Ω·π˚	*/
+/** @brief ‰∏ÄÁªÑÂçáÁ∫ßÁªìÊûú	*/
 typedef struct tag_OOP_DC_UPDATE
 {
 	uint32	       nNum;
@@ -4017,14 +4017,14 @@ typedef struct tag_OOP_DC_UPDATE
 	DC_UPGRADE_T   DcUpGrade[OOP_MAX_DCU];
 }OOP_DC_UPDATE_T;
 
-/** @brief ≤…ºØ∆˜…˝º∂≤Œ ˝≈‰÷√	*/
+/** @brief ÈááÈõÜÂô®ÂçáÁ∫ßÂèÇÊï∞ÈÖçÁΩÆ	*/
 typedef struct tag_OOP_DCU_CONFIG
 {
 	uint8	nBroadCount;
 	uint8	nRetryDays;
 }OOP_DCU_CONFIG_T;
 
-/** @brief 4030-µÁ—π∫œ∏Ò¬ ≤Œ ˝	*/
+/** @brief 4030-ÁîµÂéãÂêàÊ†ºÁéáÂèÇÊï∞	*/
 typedef struct tag_OOP_VOLTPARAM
 {
 	uint16	uupVolt;
@@ -4033,15 +4033,15 @@ typedef struct tag_OOP_VOLTPARAM
 	uint16	ldVolt;
 }OOP_VOLTPARAM_T;
 
-/** @brief 4031-µÁƒ‹±Ìƒ£◊È¡–±Ì	*/
+/** @brief 4031-ÁîµËÉΩË°®Ê®°ÁªÑÂàóË°®	*/
 #define OOP_MAX_METER_MOD	(4)
 
 typedef struct tag_OOP_METERMOD_UNIT
 {
-	OOP_VISIBLEVAR128_T szName;			/**< ƒ£◊È√Ë ˆ∑˚ */
-	uint8               nVxd;			/**< ¬ﬂº≠µÿ÷∑ */
-	OOP_BITSTRV32_T     modType;		/**< ƒ£◊È¿‡± */
-	OOP_OCTETVAR64_T    serialNum;		/**< ƒ£◊È–Ú¡–∫≈ */
+	OOP_VISIBLEVAR128_T szName;			/**< Ê®°ÁªÑÊèèËø∞Á¨¶ */
+	uint8               nVxd;			/**< ÈÄªËæëÂú∞ÂùÄ */
+	OOP_BITSTRV32_T     modType;		/**< Ê®°ÁªÑÁ±ªÂà´ */
+	OOP_OCTETVAR64_T    serialNum;		/**< Ê®°ÁªÑÂ∫èÂàóÂè∑ */
 }OOP_METERMOD_UNIT_T;
 
 typedef struct tag_OOP_METERMOD_LIST
@@ -4051,33 +4051,33 @@ typedef struct tag_OOP_METERMOD_LIST
 	OOP_METERMOD_UNIT_T info[OOP_MAX_METER_MOD];
 }OOP_METERMOD_LIST;
 
-/** @brief 4040-ƒ£øÈ–≈œ¢ */
+/** @brief 4040-Ê®°Âùó‰ø°ÊÅØ */
 typedef struct tag_OOP_TASPCUSEMOD
 {
-	OOP_OCTETSTR8_T		modID;			/**< ƒ£øÈID */
-	OOP_VISIBLESTR4_T	manufcode;		/**< ≥ß…Ã¥˙∫≈ */
-	OOP_VISIBLESTR8_T	devcode;		/**< …Ë±∏±‡∫≈ */
-	OOP_VISIBLESTR4_T	runsoftver;		/**< ‘À––«¯»Ìº˛∞Ê±æ∫≈ */
-	OOP_DATE_T			runsoftdate;	/**< ‘À––«¯»Ìº˛∑¢≤º»’∆⁄ */
-	OOP_VISIBLESTR4_T	baksoftver;		/**< ±∏∑›«¯»Ìº˛∞Ê±æ∫≈ */
-	OOP_DATE_T			baksoftdate;	/**< ±∏∑›«¯»Ìº˛∑¢≤º»’∆⁄ */
-	OOP_VISIBLESTR11_T	cfgcapinfo;		/**< ≈‰÷√»›¡ø–≈œ¢¬Î */
-	OOP_VISIBLESTR4_T	protover;		/**< Õ®–≈–≠“È∞Ê±æ∫≈ */
-	OOP_VISIBLESTR4_T	hardver;		/**< ”≤º˛∞Ê±æ∫≈ */
-	OOP_DATE_T			harddate;		/**< ”≤º˛∑¢≤º»’∆⁄ */
+	OOP_OCTETSTR8_T		modID;			/**< Ê®°ÂùóID */
+	OOP_VISIBLESTR4_T	manufcode;		/**< ÂéÇÂïÜ‰ª£Âè∑ */
+	OOP_VISIBLESTR8_T	devcode;		/**< ËÆæÂ§áÁºñÂè∑ */
+	OOP_VISIBLESTR4_T	runsoftver;		/**< ËøêË°åÂå∫ËΩØ‰ª∂ÁâàÊú¨Âè∑ */
+	OOP_DATE_T			runsoftdate;	/**< ËøêË°åÂå∫ËΩØ‰ª∂ÂèëÂ∏ÉÊó•Êúü */
+	OOP_VISIBLESTR4_T	baksoftver;		/**< Â§á‰ªΩÂå∫ËΩØ‰ª∂ÁâàÊú¨Âè∑ */
+	OOP_DATE_T			baksoftdate;	/**< Â§á‰ªΩÂå∫ËΩØ‰ª∂ÂèëÂ∏ÉÊó•Êúü */
+	OOP_VISIBLESTR11_T	cfgcapinfo;		/**< ÈÖçÁΩÆÂÆπÈáè‰ø°ÊÅØÁ†Å */
+	OOP_VISIBLESTR4_T	protover;		/**< ÈÄö‰ø°ÂçèËÆÆÁâàÊú¨Âè∑ */
+	OOP_VISIBLESTR4_T	hardver;		/**< Á°¨‰ª∂ÁâàÊú¨Âè∑ */
+	OOP_DATE_T			harddate;		/**< Á°¨‰ª∂ÂèëÂ∏ÉÊó•Êúü */
 }OOP_TASPCUSEMOD_T;
 
-/** @brief 4040-∞≤»´»œ÷§–≈œ¢ */
+/** @brief 4040-ÂÆâÂÖ®ËÆ§ËØÅ‰ø°ÊÅØ */
 typedef struct tag_OOP_SAFEAUTHINFO
 {
-	OOP_OCTETSTR8_T		safemodserial;	/**< ∞≤»´ƒ£øÈ–Ú¡–∫≈ */
-	OOP_OCTETSTR4_T		cursecuritysta;	/**< µ±«∞√ÿ‘ø◊¥Ã¨ */
-	OOP_OCTETSTR4_T		dblauthstate;	/**< À´œÚ»œ÷§◊¥Ã¨ */
+	OOP_OCTETSTR8_T		safemodserial;	/**< ÂÆâÂÖ®Ê®°ÂùóÂ∫èÂàóÂè∑ */
+	OOP_OCTETSTR4_T		cursecuritysta;	/**< ÂΩìÂâçÁßòÈí•Áä∂ÊÄÅ */
+	OOP_OCTETSTR4_T		dblauthstate;	/**< ÂèåÂêëËÆ§ËØÅÁä∂ÊÄÅ */
 }OOP_SAFEAUTHINFO_T;
 
 #define OOP_TA_NUM (3)
 
-/** @brief 4040-∆µ¬ ”––ß÷µ */
+/** @brief 4040-È¢ëÁéáÊúâÊïàÂÄº */
 typedef struct tag_OOP_FREQVAL
 {
 	uint32 nNum;
@@ -4085,7 +4085,7 @@ typedef struct tag_OOP_FREQVAL
 	uint32 freq[OOP_TA_NUM];
 }OOP_FREQVAL_T;
 
-/** @brief 4040-π§∆µµÁ¡˜”––ß÷µ */
+/** @brief 4040-Â∑•È¢ëÁîµÊµÅÊúâÊïàÂÄº */
 typedef struct tag_OOP_WORKCUR_VALID
 {
 	uint32 nNum;
@@ -4093,14 +4093,14 @@ typedef struct tag_OOP_WORKCUR_VALID
 	uint32 curval[OOP_TA_NUM];
 }OOP_WORKCUR_VALID_T;
 
-/** @brief 4040-√ÿ‘ø∏¸–¬ */
+/** @brief 4040-ÁßòÈí•Êõ¥Êñ∞ */
 typedef struct tag_OOP_SECURITYUPDATE
 {
 	uint8				num;
 	OOP_OCTETVAR2K_T 	securityfile;
 }OOP_SECURITYUPDATE_T;
 
-/** @brief 4040-ªªÀ„º∞µ•Œª */
+/** @brief 4040-Êç¢ÁÆóÂèäÂçï‰Ωç */
 typedef struct tag_OOP_TAUNIT
 {
 	OOP_SCALER_UNIT_T		unit1;
@@ -4110,7 +4110,7 @@ typedef struct tag_OOP_TAUNIT
 	OOP_SCALER_UNIT_T		unit5;
 }OOP_TAUNIT_T;
 
-/** @brief 4041-µÁ¡˜ªÿ¬∑º‡≤‚ πƒ‹ */
+/** @brief 4041-ÁîµÊµÅÂõûË∑ØÁõëÊµã‰ΩøËÉΩ */
 typedef struct tag_OOP_CURLOOPCKENABLE
 {
 	BOOLEAN					phaseA;
@@ -4119,32 +4119,32 @@ typedef struct tag_OOP_CURLOOPCKENABLE
 }OOP_CURLOOPCKENABLE_T;
 
 /** 
-* @brief	410C-µÁµºœµ ˝	\n
-*			410D-µÁøπœµ ˝	\n
-*			410E-µÁ◊Ëœµ ˝	\n
-*			410F-µÁƒ…œµ ˝
+* @brief	410C-ÁîµÂØºÁ≥ªÊï∞	\n
+*			410D-ÁîµÊäóÁ≥ªÊï∞	\n
+*			410E-ÁîµÈòªÁ≥ªÊï∞	\n
+*			410F-ÁîµÁ∫≥Á≥ªÊï∞
 */
 typedef struct tag_OOP_COEFFICIENT
 {
-    int16   valueA;     /**< Aœ‡	*/
-    int16   valueB;     /**< Bœ‡	*/
-    int16   valueC;     /**< Cœ‡	*/
+    int16   valueA;     /**< AÁõ∏	*/
+    int16   valueB;     /**< BÁõ∏	*/
+    int16   valueC;     /**< CÁõ∏	*/
 }OOP_COEFFICIENT_T;
 
 //
-// 4116 -Ω·À„»’
+// 4116 -ÁªìÁÆóÊó•
 //
 
-#define OOP_MAX_PAYDAY	(8)	/**< ◊Ó¥ÛƒÍΩ·À„»’∏ˆ ˝	*/
+#define OOP_MAX_PAYDAY	(8)	/**< ÊúÄÂ§ßÂπ¥ÁªìÁÆóÊó•‰∏™Êï∞	*/
 
-/** @brief Ω·À„»’∂®“Â	*/
+/** @brief ÁªìÁÆóÊó•ÂÆö‰πâ	*/
 typedef struct tag_OOP_PAYDAY
 {
 	uint8	day;
 	uint8	hour;
 }OOP_PAYDAY_T;
 
-/** @brief Ω·À„»’ ˝◊È	*/
+/** @brief ÁªìÁÆóÊó•Êï∞ÁªÑ	*/
 typedef struct tag_OOP_PAYDAYS
 {
 	uint32			nNum;
@@ -4152,40 +4152,40 @@ typedef struct tag_OOP_PAYDAYS
 	OOP_PAYDAY_T	cols[OOP_MAX_PAYDAY];
 }OOP_PAYDAYS_T;
 
-#define OOP_MAX_CASCADE		(32)		/**< ◊Ó¥Ûº∂¡™µÿ÷∑ ˝¡ø	*/
+#define OOP_MAX_CASCADE		(32)		/**< ÊúÄÂ§ßÁ∫ßËÅîÂú∞ÂùÄÊï∞Èáè	*/
 
-/** @brief 4202-º∂¡™Õ®—∂ ˝æ›	*/
+/** @brief 4202-Á∫ßËÅîÈÄöËÆØÊï∞ÊçÆ	*/
 typedef struct tag_OOP_CASCADE
 {
-	BOOLEAN		flag;						/**< º∂¡™±Í÷æ			*/
-	OOP_OAD_U	port;						/**< º∂¡™Õ®–≈∂Àø⁄∫≈		*/
-	uint16		tdelay;						/**< ◊‹µ»¥˝≥¨ ±(100)	*/
-	uint16		bdelay;						/**< ◊÷Ω⁄≥¨ ±(10)		*/
-	uint8		retry;						/**< ÷ÿ∑¢¥Œ ˝			*/
-	uint8		cycle;						/**< —≤≤‚÷‹∆⁄			*/
-	uint8		casnum;						/**< º∂¡™(±ª)∂Àø⁄ ˝	*/
-	OOP_TSA_T	addr[OOP_MAX_CASCADE];		/**< º∂¡™(±ª)÷’∂Àµÿ÷∑	*/
+	BOOLEAN		flag;						/**< Á∫ßËÅîÊ†áÂøó			*/
+	OOP_OAD_U	port;						/**< Á∫ßËÅîÈÄö‰ø°Á´ØÂè£Âè∑		*/
+	uint16		tdelay;						/**< ÊÄªÁ≠âÂæÖË∂ÖÊó∂(100)	*/
+	uint16		bdelay;						/**< Â≠óËäÇË∂ÖÊó∂(10)		*/
+	uint8		retry;						/**< ÈáçÂèëÊ¨°Êï∞			*/
+	uint8		cycle;						/**< Â∑°ÊµãÂë®Êúü			*/
+	uint8		casnum;						/**< Á∫ßËÅî(Ë¢´)Á´ØÂè£Êï∞	*/
+	OOP_TSA_T	addr[OOP_MAX_CASCADE];		/**< Á∫ßËÅî(Ë¢´)ÁªàÁ´ØÂú∞ÂùÄ	*/
 }OOP_CASCADE_T;
 
-/** @brief 4203-÷’∂À…œ––Õ®–≈◊¥Ã¨≤Œ ˝	*/
+/** @brief 4203-ÁªàÁ´Ø‰∏äË°åÈÄö‰ø°Áä∂ÊÄÅÂèÇÊï∞	*/
 typedef struct tag_OOP_UPLINKCOMMSTATE
 {
-    BOOLEAN    call;               /**< ‘ –Ì÷’∂À”Î÷˜’æÕ®ª∞	*/
-    BOOLEAN    report;             /**< ‘ –Ì÷˜∂Ø…œ±®		*/
+    BOOLEAN    call;               /**< ÂÖÅËÆ∏ÁªàÁ´Ø‰∏é‰∏ªÁ´ôÈÄöËØù	*/
+    BOOLEAN    report;             /**< ÂÖÅËÆ∏‰∏ªÂä®‰∏äÊä•		*/
 }OOP_UPLINKCOMMSTATE_T;
 
 //
-// 4204-÷’∂Àπ„≤•–£ ±
+// 4204-ÁªàÁ´ØÂπøÊí≠Ê†°Êó∂
 //
 
-/** @brief π„≤•–£ ±≤Œ ˝	*/
+/** @brief ÂπøÊí≠Ê†°Êó∂ÂèÇÊï∞	*/
 typedef struct tag_OOP_SYNCTIME
 {
 	OOP_TIME_T	time;
 	BOOLEAN		bValid;
 }OOP_SYNCTIME_T;
 
-/** @brief µ„∂‘µ„–£ ±≤Œ ˝	*/
+/** @brief ÁÇπÂØπÁÇπÊ†°Êó∂ÂèÇÊï∞	*/
 typedef struct tag_OOP_P2PSYNCTIME
 {
 	char		offset;
@@ -4194,16 +4194,16 @@ typedef struct tag_OOP_P2PSYNCTIME
 }OOP_P2PSYNCTIME_T;
 
 //
-// 4800-∑«ΩÈ»Î Ω∏∫∫…∏–÷™ƒ£øÈ
+// 4800-Èùû‰ªãÂÖ•ÂºèË¥üËç∑ÊÑüÁü•Ê®°Âùó
 //
 
-/** @brief µÁ∆˜…Ë±∏≈‰÷√	*/
+/** @brief ÁîµÂô®ËÆæÂ§áÈÖçÁΩÆ	*/
 #define    OOP_MAX_DEV            15
 
 typedef struct tag_OOP_ELECDEV
 {
-	uint16        nClsNum;          /**> …Ë±∏¿‡∫≈ */
-	OOP_VARIANT_T devPro;           /**> …Ë±∏Ãÿ’˜ */
+	uint16        nClsNum;          /**> ËÆæÂ§áÁ±ªÂè∑ */
+	OOP_VARIANT_T devPro;           /**> ËÆæÂ§áÁâπÂæÅ */
 }OOP_ELECDEV_T;
 
 typedef struct tag_OOP_DEVLIST
@@ -4213,11 +4213,11 @@ typedef struct tag_OOP_DEVLIST
 	OOP_ELECDEV_T dev[OOP_MAX_DEV];
 }OOP_ELECDEV_LIST_T;
 
-/** @brief µÁ∆˜…Ë±∏∂≥Ω· ˝æ›ºØ	*/
+/** @brief ÁîµÂô®ËÆæÂ§áÂÜªÁªìÊï∞ÊçÆÈõÜ	*/
 typedef struct tag_OOP_DEVFREZDATA
 {
-	uint16 devClsID;                /**< …Ë±∏¿‡∫≈ */
-	uint32 nEnergy;                 /**< µÁ¡ø       */
+	uint16 devClsID;                /**< ËÆæÂ§áÁ±ªÂè∑ */
+	uint32 nEnergy;                 /**< ÁîµÈáè       */
 }OOP_DEVFREZDATA_T;
 
 typedef struct tag_OOP_DEVFREZDATAS
@@ -4229,74 +4229,74 @@ typedef struct tag_OOP_DEVFREZDATAS
 
 /**
 ********************************************************
-* A.8 ≤…ºØº‡øÿ¿‡∂‘œÛ
+* A.8 ÈááÈõÜÁõëÊéßÁ±ªÂØπË±°
 ********************************************************
 */
 
-#define OOP_MAX_TASK		(256)		/**< ◊Ó¥Û»ŒŒÒ ˝			*/
-#define OOP_MAX_NTASK		(256)		/**< ◊Ó¥Û∆’Õ®»ŒŒÒ ˝		*/
-#define OOP_MAX_ETASK		(256)		/**< ◊Ó¥Û ¬º˛»ŒŒÒ ˝		*/
-#define OOP_MAX_TTASK		(256)		/**< ◊Ó¥ÛÕ∏√˜»ŒŒÒ ˝		*/
-#define OOP_MAX_RTASK		(256)		/**< ◊Ó¥Û…œ±®»ŒŒÒ ˝		*/
-#define OOP_MAX_TTASKRES	(256)		/**< ◊Ó¥ÛÕ∏√˜»ŒŒÒΩ·π˚ ˝	*/
-#define OOP_TASK_PRIO 		(256)		/**< ◊Ó¥Û»ŒŒÒ”≈œ»º∂		*/
-#define OOP_MAX_ACQ			(512)		/**< ◊Ó¥Û≤…ºØº‡øÿ ˝		*/
+#define OOP_MAX_TASK		(256)		/**< ÊúÄÂ§ß‰ªªÂä°Êï∞			*/
+#define OOP_MAX_NTASK		(256)		/**< ÊúÄÂ§ßÊôÆÈÄö‰ªªÂä°Êï∞		*/
+#define OOP_MAX_ETASK		(256)		/**< ÊúÄÂ§ß‰∫ã‰ª∂‰ªªÂä°Êï∞		*/
+#define OOP_MAX_TTASK		(256)		/**< ÊúÄÂ§ßÈÄèÊòé‰ªªÂä°Êï∞		*/
+#define OOP_MAX_RTASK		(256)		/**< ÊúÄÂ§ß‰∏äÊä•‰ªªÂä°Êï∞		*/
+#define OOP_MAX_TTASKRES	(256)		/**< ÊúÄÂ§ßÈÄèÊòé‰ªªÂä°ÁªìÊûúÊï∞	*/
+#define OOP_TASK_PRIO 		(256)		/**< ÊúÄÂ§ß‰ªªÂä°‰ºòÂÖàÁ∫ß		*/
+#define OOP_MAX_ACQ			(512)		/**< ÊúÄÂ§ßÈááÈõÜÁõëÊéßÊï∞		*/
 
 //
-// 6001-≤…ºØµµ∞∏≈‰÷√µ•‘™
+// 6001-ÈááÈõÜÊ°£Ê°àÈÖçÁΩÆÂçïÂÖÉ
 //
 
-#define OOP_MAX_ANNEX_LEN	(16)		/**< ◊Ó¥Û∏Ωº”–≈œ¢”Ú≥§∂»	*/
-#define OOP_MAX_ANNEX_NUM	(6)			/**< ◊Ó¥Û∏Ωº”–≈œ¢”Ú ˝¡ø	*/
+#define OOP_MAX_ANNEX_LEN	(16)		/**< ÊúÄÂ§ßÈôÑÂä†‰ø°ÊÅØÂüüÈïøÂ∫¶	*/
+#define OOP_MAX_ANNEX_NUM	(6)			/**< ÊúÄÂ§ßÈôÑÂä†‰ø°ÊÅØÂüüÊï∞Èáè	*/
 
-/** @brief –≠“È¿‡–Õ√∂æŸ	*/
+/** @brief ÂçèËÆÆÁ±ªÂûãÊûö‰∏æ	*/
 typedef enum tag_METER_PROTO
 {
 	PROTO_UNKNOW = 0,
 	PROTO_97,
 	PROTO_07,
-	PROTO_698,			/**< ±æ–≠“È			*/
+	PROTO_698,			/**< Êú¨ÂçèËÆÆ			*/
 	PROTO_188,			/**< CJ/T 188-2004	*/
-	PROTO_PDLOT,          /**>Œ¬ ™∂»¥´∏–∆˜πÊ‘º*/
+	PROTO_PDLOT,          /**>Ê∏©ÊπøÂ∫¶‰º†ÊÑüÂô®ËßÑÁ∫¶*/
 	PROTO_INVALID
 }OOP_METER_PROTO_E;
 
-/** @brief µÁƒ‹±ÌΩ”œﬂ∑Ω Ω√∂æŸ	*/
+/** @brief ÁîµËÉΩË°®Êé•Á∫øÊñπÂºèÊûö‰∏æ	*/
 typedef enum tag_METER_PWRTYPE
 {
-	PWRTYPE_UNKNOWN	 = 0,		/**< Œ¥÷™(0)		*/
-	PWRTYPE_SINGLE	 = 1,		/**< µ•œ‡(1)		*/
-	PWRTYPE_3PHASE3  = 2,		/**< »˝œ‡»˝œﬂ(2)	*/
-	PWRTYPE_3PHASE4  = 3		/**< »˝œ‡Àƒœﬂ(3)	*/
+	PWRTYPE_UNKNOWN	 = 0,		/**< Êú™Áü•(0)		*/
+	PWRTYPE_SINGLE	 = 1,		/**< ÂçïÁõ∏(1)		*/
+	PWRTYPE_3PHASE3  = 2,		/**< ‰∏âÁõ∏‰∏âÁ∫ø(2)	*/
+	PWRTYPE_3PHASE4  = 3		/**< ‰∏âÁõ∏ÂõõÁ∫ø(3)	*/
 }OOP_METER_PWRTYPE_E;
 
-/** @brief ±Ìº∆ª˘±æ–≈œ¢	*/
+/** @brief Ë°®ËÆ°Âü∫Êú¨‰ø°ÊÅØ	*/
 typedef struct tag_Meter_Basic
 {
-	OOP_TSA_T		tsa;						/**< ±Ìº∆µÿ÷∑	*/
-	uint8			baud;						/**< ≤®Ãÿ¬ 		*/
-	uint8			protocol;					/**< πÊ‘º¿‡–Õ	*/
-	OOP_OAD_U		port;						/**< ∂Àø⁄		*/
-	char			password[OOP_PWD_LEN];		/**< Õ®–≈√‹¬Î	*/
-	uint8			pwdLen;						/**< √‹¬Î≥§∂»	*/
-	uint8			rateNum;					/**< ∑—¬ ∏ˆ ˝	*/
-	uint8			userType;					/**< ”√ªß¿‡–Õ	*/
-	uint8			pwrType;					/**< Ω”œﬂ∑Ω Ω	*/
-	uint16			stVolt;						/**< ∂Ó∂®µÁ—π	*/
-	uint16			stAmp;						/**< ∂Ó∂®µÁ¡˜	*/
+	OOP_TSA_T		tsa;						/**< Ë°®ËÆ°Âú∞ÂùÄ	*/
+	uint8			baud;						/**< Ê≥¢ÁâπÁéá		*/
+	uint8			protocol;					/**< ËßÑÁ∫¶Á±ªÂûã	*/
+	OOP_OAD_U		port;						/**< Á´ØÂè£		*/
+	char			password[OOP_PWD_LEN];		/**< ÈÄö‰ø°ÂØÜÁ†Å	*/
+	uint8			pwdLen;						/**< ÂØÜÁ†ÅÈïøÂ∫¶	*/
+	uint8			rateNum;					/**< Ë¥πÁéá‰∏™Êï∞	*/
+	uint8			userType;					/**< Áî®Êà∑Á±ªÂûã	*/
+	uint8			pwrType;					/**< Êé•Á∫øÊñπÂºè	*/
+	uint16			stVolt;						/**< È¢ùÂÆöÁîµÂéã	*/
+	uint16			stAmp;						/**< È¢ùÂÆöÁîµÊµÅ	*/
 }OOP_METER_BASIC_T;
 
-/** @brief ±Ìº∆¿©’π–≈œ¢	*/
+/** @brief Ë°®ËÆ°Êâ©Â±ï‰ø°ÊÅØ	*/
 typedef struct tag_Meter_Extended
 {
-	OOP_TSA_T		 add;			    /**< ≤…ºØ∆˜µÿ÷∑	*/
+	OOP_TSA_T		 add;			    /**< ÈááÈõÜÂô®Âú∞ÂùÄ	*/
 	uint8			 astLen;
-	uint8			 assetNo[32];		/**< ◊ ≤˙∫≈		*/
+	uint8			 assetNo[32];		/**< ËµÑ‰∫ßÂè∑		*/
 	uint16	         PT;				/**< PT			*/
 	uint16	         CT;				/**< CT			*/
 }OOP_METER_EXTENDED_T;
 
-/** @brief ∏Ωº”–≈œ¢µ•‘™	*/
+/** @brief ÈôÑÂä†‰ø°ÊÅØÂçïÂÖÉ	*/
 typedef struct tag_AnnexObject
 {
 	OOP_OAD_U 	oad;
@@ -4304,7 +4304,7 @@ typedef struct tag_AnnexObject
 	uint8		value[OOP_MAX_ANNEX_LEN];
 }OOP_ANNEXOBJECT_T;
 
-/** @brief ∏Ωº˛–≈œ¢ºØ∫œ	*/
+/** @brief ÈôÑ‰ª∂‰ø°ÊÅØÈõÜÂêà	*/
 typedef struct tag_Meter_Annex
 {
 	uint32				nNum;
@@ -4312,23 +4312,23 @@ typedef struct tag_Meter_Annex
 	OOP_ANNEXOBJECT_T	annexObj[OOP_MAX_ANNEX_NUM];
 }OOP_METER_ANNEX_T;
 
-/** @brief µÁƒ‹±Ìµµ∞∏	*/
+/** @brief ÁîµËÉΩË°®Ê°£Ê°à	*/
 typedef struct tag_OOP_METER
 {
-	uint16					nIndex;		/**< ≈‰÷√–Ú∫≈	*/
-	OOP_METER_BASIC_T		basic;		/**< ª˘±æ–≈œ¢	*/
-	OOP_METER_EXTENDED_T	extend;		/**< ¿©’π–≈œ¢	*/
-	OOP_METER_ANNEX_T		annex;		/**< ∏Ω Ù–≈œ¢	*/
+	uint16					nIndex;		/**< ÈÖçÁΩÆÂ∫èÂè∑	*/
+	OOP_METER_BASIC_T		basic;		/**< Âü∫Êú¨‰ø°ÊÅØ	*/
+	OOP_METER_EXTENDED_T	extend;		/**< Êâ©Â±ï‰ø°ÊÅØ	*/
+	OOP_METER_ANNEX_T		annex;		/**< ÈôÑÂ±û‰ø°ÊÅØ	*/
 }OOP_METER_T;
 
-/** @brief ∏¸–¬µÁƒ‹±Ìª˘±æ–≈œ¢	*/
+/** @brief Êõ¥Êñ∞ÁîµËÉΩË°®Âü∫Êú¨‰ø°ÊÅØ	*/
 typedef struct tag_OOPM_METER_129
 {
 	uint16				index;
 	OOP_METER_BASIC_T	basic;
 }OOPM_METER_129_T;
 
-/** @brief ∏¸–¬µÁƒ‹±Ì¿©’π–≈œ¢	*/
+/** @brief Êõ¥Êñ∞ÁîµËÉΩË°®Êâ©Â±ï‰ø°ÊÅØ	*/
 typedef struct tag_OOPM_METER_130
 {
 	uint16					index;
@@ -4336,14 +4336,14 @@ typedef struct tag_OOPM_METER_130
 	OOP_METER_ANNEX_T		annex;
 }OOPM_METER_130_T;
 
-/** @brief …æ≥˝µÁƒ‹±Ìµµ∞∏	*/
+/** @brief Âà†Èô§ÁîµËÉΩË°®Ê°£Ê°à	*/
 typedef struct tag_OOPM_METER_133
 {
 	OOP_TSA_T		add;
 	OOP_OAD_U		port;
 }OOP_METER_M133_T;
 
-/** @brief ∏¸–¬µµ∞∏∏Ω Ù–≈œ¢∑Ω∑®	*/
+/** @brief Êõ¥Êñ∞Ê°£Ê°àÈôÑÂ±û‰ø°ÊÅØÊñπÊ≥ï	*/
 typedef struct tag_OOPM_METER_135
 {
 	OOP_TSA_T			add;
@@ -4351,29 +4351,29 @@ typedef struct tag_OOPM_METER_135
 }OOPM_METER_135_T;
 
 //
-// 6002-À—±Ì
+// 6002-ÊêúË°®
 //
 
-#define OOP_MAX_TIMINGSEARCH	(8)		/**< ∂® ±À—±Ì ˝¡ø	*/
-#define OOC_MAX_CROSSMETERS		(64)	/**< øÁÃ®«¯µÁ±Ì ˝¡ø	*/
+#define OOP_MAX_TIMINGSEARCH	(8)		/**< ÂÆöÊó∂ÊêúË°®Êï∞Èáè	*/
+#define OOC_MAX_CROSSMETERS		(64)	/**< Ë∑®Âè∞Âå∫ÁîµË°®Êï∞Èáè	*/
 
-/** @brief À—±Ì≤Œ ˝	*/
+/** @brief ÊêúË°®ÂèÇÊï∞	*/
 typedef struct tag_OOP_SEARCHPARAM
 {
-    BOOLEAN 	periodSearch;			/**<  «∑Ò∆Ù”√√øÃÏ÷‹∆⁄À—±Ì	*/
-    BOOLEAN 	atuoUpdate;				/**< ◊‘∂Ø∏¸–¬≤…ºØµµ∞∏		*/
-	BOOLEAN		touchEvent;				/**<  «∑Ò≤˙…˙À—±Ì ¬º˛		*/
-    uint8   	clearChoice;			/**< «Âø’À—±ÌΩ·π˚—°œÓ(enum)	*/
+    BOOLEAN 	periodSearch;			/**< ÊòØÂê¶ÂêØÁî®ÊØèÂ§©Âë®ÊúüÊêúË°®	*/
+    BOOLEAN 	atuoUpdate;				/**< Ëá™Âä®Êõ¥Êñ∞ÈááÈõÜÊ°£Ê°à		*/
+	BOOLEAN		touchEvent;				/**< ÊòØÂê¶‰∫ßÁîüÊêúË°®‰∫ã‰ª∂		*/
+    uint8   	clearChoice;			/**< Ê∏ÖÁ©∫ÊêúË°®ÁªìÊûúÈÄâÈ°π(enum)	*/
 }OOP_SEARCHPARAM_T;
 
-/** @brief ∂® ±À—±Ì≤Œ ˝	*/
+/** @brief ÂÆöÊó∂ÊêúË°®ÂèÇÊï∞	*/
 typedef struct tag_OOP_TIMINGSEARPARAM
 {
-    OOP_TIME_T    start;			/**< ø™ º ±º‰		*/
-    uint16        time;				/**< À—±Ì ±≥§(min)	*/
+    OOP_TIME_T    start;			/**< ÂºÄÂßãÊó∂Èó¥		*/
+    uint16        time;				/**< ÊêúË°®Êó∂Èïø(min)	*/
 }OOP_TIMINGSEARPARAM_T;
 
-/** @brief ∂® ±À—±Ì≤Œ ˝ºØ∫œ	*/
+/** @brief ÂÆöÊó∂ÊêúË°®ÂèÇÊï∞ÈõÜÂêà	*/
 typedef struct tag_OOP_TIMINGSEARCH
 {
 	uint32					nNum;
@@ -4382,70 +4382,70 @@ typedef struct tag_OOP_TIMINGSEARCH
 }OOP_TIMINGSEARCH_T;
 
 //
-// 6013-»ŒŒÒ≈‰÷√µ•‘™
+// 6013-‰ªªÂä°ÈÖçÁΩÆÂçïÂÖÉ
 //
 
-#define	OOP_MAX_WORKPERIOD	(16)			/**< ◊Ó∂‡π§◊˜ ±∂Œ ˝	*/		
+#define	OOP_MAX_WORKPERIOD	(16)			/**< ÊúÄÂ§öÂ∑•‰ΩúÊó∂ÊÆµÊï∞	*/		
 
-/** @brief »ŒŒÒ¿‡–Õ	*/
+/** @brief ‰ªªÂä°Á±ªÂûã	*/
 typedef enum tag_Plan_Type
 {
-	PLAN_NORMAL = 1,			/**< ∆’Õ®≤…ºØ∑Ω∞∏	*/
-	PLAN_EVENT,					/**<  ¬º˛≤…ºØ∑Ω∞∏	*/
-	PLAN_FORWARD,				/**< Õ∏√˜∑Ω∞∏		*/
-	PLAN_REPORT,				/**< …œ±®∑Ω∞∏		*/
-	PLAN_SCRIPT,				/**< Ω≈±æ∑Ω∞∏		*/
+	PLAN_NORMAL = 1,			/**< ÊôÆÈÄöÈááÈõÜÊñπÊ°à	*/
+	PLAN_EVENT,					/**< ‰∫ã‰ª∂ÈááÈõÜÊñπÊ°à	*/
+	PLAN_FORWARD,				/**< ÈÄèÊòéÊñπÊ°à		*/
+	PLAN_REPORT,				/**< ‰∏äÊä•ÊñπÊ°à		*/
+	PLAN_SCRIPT,				/**< ËÑöÊú¨ÊñπÊ°à		*/
 }OOP_PLAN_TYPE_E;
 
-/** @brief »ŒŒÒ◊¥Ã¨	*/
+/** @brief ‰ªªÂä°Áä∂ÊÄÅ	*/
 typedef enum tag_Plan_State
 {
-	STATE_NORMAL = 1,			/**< ’˝≥£	*/
-	STATE_DISABLE,				/**< Õ£”√	*/
+	STATE_NORMAL = 1,			/**< Ê≠£Â∏∏	*/
+	STATE_DISABLE,				/**< ÂÅúÁî®	*/
 }OOP_PLAN_STATE_E;
 
-/** @brief »ŒŒÒ÷¥––÷‹∆⁄	*/
+/** @brief ‰ªªÂä°ÊâßË°åÂë®Êúü	*/
 typedef struct tag_TASKPERIOD
 {
-    uint8    startHour;      /**< ∆ º–° ±	*/
-    uint8    startMin;       /**< ∆ º∑÷÷”	*/
-    uint8    endHour;        /**< Ω· ¯–° ±	*/
-    uint8    endMin;         /**< Ω· ¯∑÷÷”	*/
+    uint8    startHour;      /**< Ëµ∑ÂßãÂ∞èÊó∂	*/
+    uint8    startMin;       /**< Ëµ∑ÂßãÂàÜÈíü	*/
+    uint8    endHour;        /**< ÁªìÊùüÂ∞èÊó∂	*/
+    uint8    endMin;         /**< ÁªìÊùüÂàÜÈíü	*/
 }TASKPERIOD;
 
-/** @brief »ŒŒÒ÷¥––÷‹∆⁄ºØ∫œ	*/
+/** @brief ‰ªªÂä°ÊâßË°åÂë®ÊúüÈõÜÂêà	*/
 typedef struct tag_WORKPERIOD
 {
-    uint8		type;                       /**< ¿‡–Õ		*/
+    uint8		type;                       /**< Á±ªÂûã		*/
 	uint32		nNum;
-    TASKPERIOD  period[OOP_MAX_WORKPERIOD];	/**<  ±∂Œ±Ì 	*/
+    TASKPERIOD  period[OOP_MAX_WORKPERIOD];	/**< Êó∂ÊÆµË°® 	*/
 }WORKPERIOD;
 
-/** @brief »ŒŒÒ≤Œ ˝	*/
+/** @brief ‰ªªÂä°ÂèÇÊï∞	*/
 typedef struct tag_OOP_TASK
 {
-    uint8				id;             /**< »ŒŒÒID								*/
-	OOP_TI_T			acqFreq;		/**< ÷¥––∆µ¬ 							*/
-	uint8				planType;		/**< ∑Ω∞∏¿‡–Õ							*/
-	uint8				planID;			/**< ∑Ω∞∏±‡∫≈							*/
-	OOP_DATETIME_S_T	startTime;		/**< ø™ º ±º‰(»ŒŒÒµ⁄“ª¥Œø™ º÷¥–– ±º‰)	*/
-	OOP_DATETIME_S_T	endTime;		/**< Ω· ¯ ±º‰(ø…“‘Œ™ø’)					*/
-	OOP_TI_T			acqDelay;		/**< —” ±								*/
-	uint8				priority;		/**< ÷¥––”≈œ»º∂							*/
-	uint8				state;			/**< ◊¥Ã¨1:’˝≥£,2:Õ£”√					*/
-	uint16				startScriptID;	/**< »ŒŒÒø™ º«∞Ω≈±æID					*/
-	uint16				endScriptID;	/**< »ŒŒÒΩ· ¯∫ÛΩ≈±æID					*/
-	WORKPERIOD			workPeriod;     /**< »ŒŒÒ‘À–– ±∂Œ						*/
+    uint8				id;             /**< ‰ªªÂä°ID								*/
+	OOP_TI_T			acqFreq;		/**< ÊâßË°åÈ¢ëÁéá							*/
+	uint8				planType;		/**< ÊñπÊ°àÁ±ªÂûã							*/
+	uint8				planID;			/**< ÊñπÊ°àÁºñÂè∑							*/
+	OOP_DATETIME_S_T	startTime;		/**< ÂºÄÂßãÊó∂Èó¥(‰ªªÂä°Á¨¨‰∏ÄÊ¨°ÂºÄÂßãÊâßË°åÊó∂Èó¥)	*/
+	OOP_DATETIME_S_T	endTime;		/**< ÁªìÊùüÊó∂Èó¥(ÂèØ‰ª•‰∏∫Á©∫)					*/
+	OOP_TI_T			acqDelay;		/**< Âª∂Êó∂								*/
+	uint8				priority;		/**< ÊâßË°å‰ºòÂÖàÁ∫ß							*/
+	uint8				state;			/**< Áä∂ÊÄÅ1:Ê≠£Â∏∏,2:ÂÅúÁî®					*/
+	uint16				startScriptID;	/**< ‰ªªÂä°ÂºÄÂßãÂâçËÑöÊú¨ID					*/
+	uint16				endScriptID;	/**< ‰ªªÂä°ÁªìÊùüÂêéËÑöÊú¨ID					*/
+	WORKPERIOD			workPeriod;     /**< ‰ªªÂä°ËøêË°åÊó∂ÊÆµ						*/
 }OOP_TASK_T;
 
-/** @brief –ﬁ∏ƒ»ŒŒÒ◊¥Ã¨	*/
+/** @brief ‰øÆÊîπ‰ªªÂä°Áä∂ÊÄÅ	*/
 typedef struct tag_OOPM_TASK_130
 {
 	uint8		index;
 	uint8		state;
 }OOPM_TASK_130_T;
 
-/** @brief ≤π≥≠	*/
+/** @brief Ë°•ÊäÑ	*/
 typedef struct tag_RetryMetering
 {
 	OOP_TI_T	ti;
@@ -4453,53 +4453,53 @@ typedef struct tag_RetryMetering
 }OOP_RETRYMETERING_T;
 
 //
-// 6015-∆’Õ®≤…ºØ∑Ω∞∏
+// 6015-ÊôÆÈÄöÈááÈõÜÊñπÊ°à
 //
 typedef enum tag_NORMAL_ROW_TYPE
 {
-	ROW_CURRENT = 0,		/**< ≤…ºØµ±«∞ ˝æ›					*/
-	ROW_LAST,				/**< ≤…ºØ…œµ⁄N¥Œ					*/
-	ROW_FROZEN,				/**< ∞¥∂≥Ω· ±±Í≤…ºØ					*/
-	ROW_TI,					/**< ∞¥ ±±Íº‰∏Ù≤…ºØ					*/
-	ROW_RETRY,				/**< ≤π≥≠							*/
+	ROW_CURRENT = 0,		/**< ÈááÈõÜÂΩìÂâçÊï∞ÊçÆ					*/
+	ROW_LAST,				/**< ÈááÈõÜ‰∏äÁ¨¨NÊ¨°					*/
+	ROW_FROZEN,				/**< ÊåâÂÜªÁªìÊó∂Ê†áÈááÈõÜ					*/
+	ROW_TI,					/**< ÊåâÊó∂Ê†áÈó¥ÈöîÈááÈõÜ					*/
+	ROW_RETRY,				/**< Ë°•ÊäÑ							*/
 }NORMAL_ROW_TYPE_E;
 
 typedef enum tag_Normal_TM_TYPE
 {
-	TM_UDF = 0,				/**< Œ¥∂®“Â					*/
-	TM_START,				/**< »ŒŒÒø™ º ±º‰				*/
-	TM_DAYSTART,			/**< œ‡∂‘µ±»’0µ„0∑÷				*/
-	TM_LDAYEND,				/**< œ‡∂‘…œ»’23µ„59∑÷				*/
-	TM_LDAYSTART,			/**< œ‡∂‘…œ»’0µ„0∑÷				*/
-	TM_MONSTART,			/**< œ‡∂‘µ±‘¬1»’0µ„0∑÷			*/
-	TM_FROZEN,				/**<  ˝æ›∂≥Ω· ±±Í				*/
-	TM_LMONEND,				/**< œ‡∂‘…œ‘¬‘¬ƒ©23µ„59∑÷			*/
+	TM_UDF = 0,				/**< Êú™ÂÆö‰πâ					*/
+	TM_START,				/**< ‰ªªÂä°ÂºÄÂßãÊó∂Èó¥				*/
+	TM_DAYSTART,			/**< Áõ∏ÂØπÂΩìÊó•0ÁÇπ0ÂàÜ				*/
+	TM_LDAYEND,				/**< Áõ∏ÂØπ‰∏äÊó•23ÁÇπ59ÂàÜ				*/
+	TM_LDAYSTART,			/**< Áõ∏ÂØπ‰∏äÊó•0ÁÇπ0ÂàÜ				*/
+	TM_MONSTART,			/**< Áõ∏ÂØπÂΩìÊúà1Êó•0ÁÇπ0ÂàÜ			*/
+	TM_FROZEN,				/**< Êï∞ÊçÆÂÜªÁªìÊó∂Ê†á				*/
+	TM_LMONEND,				/**< Áõ∏ÂØπ‰∏äÊúàÊúàÊú´23ÁÇπ59ÂàÜ			*/
 }Normal_TM_TYPE_E;
 
 typedef struct tag_Record_Row
 {
-	uint8	choice;				/**< ¿‡–Õ±Í ∂	*/
+	uint8	choice;				/**< Á±ªÂûãÊ†áËØÜ	*/
 
 	union
 	{
-		// ≤…ºØµ±«∞ ˝æ›
+		// ÈááÈõÜÂΩìÂâçÊï∞ÊçÆ
 		// NULL
 		
-		// ∞¥…œN¥Œ≤…ºØ
+		// Êåâ‰∏äNÊ¨°ÈááÈõÜ
 		uint8					num;
 
-		// ∞¥ ˝æ›∂≥Ω· ±±Í≤…ºØ
+		// ÊåâÊï∞ÊçÆÂÜªÁªìÊó∂Ê†áÈááÈõÜ
 		// NULL
 
-		// ‘⁄◊ÓΩ¸“ª¥Œ≤…ºØ÷‹∆⁄∑∂Œßƒ⁄∞¥ ±±Íº‰∏Ù≤…ºØ
+		// Âú®ÊúÄËøë‰∏ÄÊ¨°ÈááÈõÜÂë®ÊúüËåÉÂõ¥ÂÜÖÊåâÊó∂Ê†áÈó¥ÈöîÈááÈõÜ
 		OOP_TI_T				ti;
 
-		// ≤π≥≠
+		// Ë°•ÊäÑ
 		OOP_RETRYMETERING_T		rd;
 	};
 }OOP_RECORD_ROW_T;
 
-/** @brief ¡–…∏—°∑Ω∞∏	*/
+/** @brief ÂàóÁ≠õÈÄâÊñπÊ°à	*/
 typedef struct tag_Record_Col_Del
 {
 	uint8		num;
@@ -4512,35 +4512,35 @@ typedef struct tag_Record_Col
 	OOP_CSD_T	csd[OOP_MAX_CSDS];
 }OOP_RECORD_COL_T;
 
-/** @brief ∆’Õ®≤…ºØ∑Ω∞∏	*/
+/** @brief ÊôÆÈÄöÈááÈõÜÊñπÊ°à	*/
 typedef struct tag_OOP_PLAN_NORMAL_DEL
 {
-	uint8					planID;			/**< ∑Ω∞∏±‡∫≈		*/
-	uint16					memDepth;		/**< ¥Ê¥¢…Ó∂»		*/
-	OOP_RECORD_ROW_T		recdRow;		/**< ≤…ºØ∑Ω Ω		*/
-	OOP_RECORD_COL_DEL_T	recdCol;		/**< º«¬º¡–—°‘Ò		*/
-	OOP_MSP_T				ms;				/**< µÁ±ÌºØ∫œ		*/
-	uint8					tmFlag;			/**< ¥Ê¥¢ ±±Í—°‘Ò	*/
+	uint8					planID;			/**< ÊñπÊ°àÁºñÂè∑		*/
+	uint16					memDepth;		/**< Â≠òÂÇ®Ê∑±Â∫¶		*/
+	OOP_RECORD_ROW_T		recdRow;		/**< ÈááÈõÜÊñπÂºè		*/
+	OOP_RECORD_COL_DEL_T	recdCol;		/**< ËÆ∞ÂΩïÂàóÈÄâÊã©		*/
+	OOP_MSP_T				ms;				/**< ÁîµË°®ÈõÜÂêà		*/
+	uint8					tmFlag;			/**< Â≠òÂÇ®Êó∂Ê†áÈÄâÊã©	*/
 }OOP_PLAN_NORMAL_DEL_T;
 
 typedef struct tag_OOP_PLAN_NORMAL
 {
-	uint8				planID;			/**< ∑Ω∞∏±‡∫≈		*/
-	uint16				memDepth;		/**< ¥Ê¥¢…Ó∂»		*/
-	OOP_RECORD_ROW_T	recdRow;		/**< ≤…ºØ∑Ω Ω		*/
-	OOP_RECORD_COL_T	recdCol;		/**< º«¬º¡–—°‘Ò		*/
-	OOP_MSP_T			ms;				/**< µÁ±ÌºØ∫œ		*/
-	uint8				tmFlag;			/**< ¥Ê¥¢ ±±Í—°‘Ò	*/
+	uint8				planID;			/**< ÊñπÊ°àÁºñÂè∑		*/
+	uint16				memDepth;		/**< Â≠òÂÇ®Ê∑±Â∫¶		*/
+	OOP_RECORD_ROW_T	recdRow;		/**< ÈááÈõÜÊñπÂºè		*/
+	OOP_RECORD_COL_T	recdCol;		/**< ËÆ∞ÂΩïÂàóÈÄâÊã©		*/
+	OOP_MSP_T			ms;				/**< ÁîµË°®ÈõÜÂêà		*/
+	uint8				tmFlag;			/**< Â≠òÂÇ®Êó∂Ê†áÈÄâÊã©	*/
 }OOP_PLAN_NORMAL_T;
 
-/** @brief –ﬁ∏ƒ∆’Õ®∑Ω∞∏µƒ¡–…∏—°	*/
+/** @brief ‰øÆÊîπÊôÆÈÄöÊñπÊ°àÁöÑÂàóÁ≠õÈÄâ	*/
 typedef struct tag_OOPM_NTASK_130
 {
 	uint8				index;
 	OOP_RECORD_COL_T	col;
 }OOPM_NTASK_130_T;
 
-/** @brief –ﬁ∏ƒ∆’Õ®∑Ω∞∏µƒ¡–…∏—°	*/
+/** @brief ‰øÆÊîπÊôÆÈÄöÊñπÊ°àÁöÑÂàóÁ≠õÈÄâ	*/
 typedef struct tag_OOPM_NTASK_200
 {
 	uint8				index;
@@ -4548,122 +4548,122 @@ typedef struct tag_OOPM_NTASK_200
 }OOPM_NTASK_200_T;
 
 //
-// 6016- ¬º˛≤…ºØ∑Ω∞∏
+// 6016-‰∫ã‰ª∂ÈááÈõÜÊñπÊ°à
 //
 
-#define OOP_MAX_EVENT	(32)				/**< ◊Ó¥Û ¬º˛≤…ºØ∏ˆ ˝	*/
+#define OOP_MAX_EVENT	(32)				/**< ÊúÄÂ§ß‰∫ã‰ª∂ÈááÈõÜ‰∏™Êï∞	*/
 
 typedef enum tag_Event_Row_Type
 {
-	ROWE_CYCLE = 0,		// ÷‹∆⁄≤…ºØ ¬º˛ ˝æ›
-	ROWE_ALL,			// ∏˘æ›Õ®÷™≤…ºØÀ˘”– ¬º˛ ˝æ›
-	ROWE_APPOINT,		// ∏˘æ›Õ®÷™≤…ºØ÷∏∂® ¬º˛ ˝æ›
-	ROWE_STORAGE,		// ∏˘æ›Õ®÷™¥Ê¥¢…˙≥…µƒ ¬º˛ ˝æ›
+	ROWE_CYCLE = 0,		// Âë®ÊúüÈááÈõÜ‰∫ã‰ª∂Êï∞ÊçÆ
+	ROWE_ALL,			// Ê†πÊçÆÈÄöÁü•ÈááÈõÜÊâÄÊúâ‰∫ã‰ª∂Êï∞ÊçÆ
+	ROWE_APPOINT,		// Ê†πÊçÆÈÄöÁü•ÈááÈõÜÊåáÂÆö‰∫ã‰ª∂Êï∞ÊçÆ
+	ROWE_STORAGE,		// Ê†πÊçÆÈÄöÁü•Â≠òÂÇ®ÁîüÊàêÁöÑ‰∫ã‰ª∂Êï∞ÊçÆ
 }Event_Row_Type;
 
-/** @brief  ¬º˛≤…ºØ¡–—°‘Ò	*/
+/** @brief ‰∫ã‰ª∂ÈááÈõÜÂàóÈÄâÊã©	*/
 typedef struct tag_EVENTSELECT
 {
-	uint32		nNum;						/**< ≤…ºØµƒ ¬º˛∏ˆ ˝		*/
-	OOP_ROAD_T	cols[OOP_MAX_EVENT];		/**< ≤…ºØµƒ ¬º˛ ˝æ›		*/
+	uint32		nNum;						/**< ÈááÈõÜÁöÑ‰∫ã‰ª∂‰∏™Êï∞		*/
+	OOP_ROAD_T	cols[OOP_MAX_EVENT];		/**< ÈááÈõÜÁöÑ‰∫ã‰ª∂Êï∞ÊçÆ		*/
 }OOP_EVENTSELECT_T;
 
-/** @brief  ¬º˛∑Ω∞∏	*/
+/** @brief ‰∫ã‰ª∂ÊñπÊ°à	*/
 typedef struct tag_OOP_PLAN_EVENT
 {
-	uint8				planID;				/**< ∑Ω∞∏±‡∫≈		*/
-	OOP_EVENTSELECT_T	events;				/**< –Ë≥≠∂¡µƒ ¬º˛	*/
-	OOP_MSP_T			ms;					/**< µÁ±ÌºØ∫œ		*/
-	uint8				bReport;			/**< …œ±®±Í÷æ(BOOL)	*/
-	uint16				nDepth;				/**< ¥Ê¥¢…Ó∂»		*/
-	uint8				nType;				/**< ≤…ºØ¿‡–Õ		*/
+	uint8				planID;				/**< ÊñπÊ°àÁºñÂè∑		*/
+	OOP_EVENTSELECT_T	events;				/**< ÈúÄÊäÑËØªÁöÑ‰∫ã‰ª∂	*/
+	OOP_MSP_T			ms;					/**< ÁîµË°®ÈõÜÂêà		*/
+	uint8				bReport;			/**< ‰∏äÊä•Ê†áÂøó(BOOL)	*/
+	uint16				nDepth;				/**< Â≠òÂÇ®Ê∑±Â∫¶		*/
+	uint8				nType;				/**< ÈááÈõÜÁ±ªÂûã		*/
 }OOP_PLAN_EVENT_T;
 
-/** @brief –ﬁ∏ƒ ¬º˛∑Ω∞∏…œ±®±Í÷æ	*/
+/** @brief ‰øÆÊîπ‰∫ã‰ª∂ÊñπÊ°à‰∏äÊä•Ê†áÂøó	*/
 typedef struct tag_OOPM_REPORT_130
 {
 	uint8	plan;
 	uint8	bReport;			/**< BOOL	*/
 }OOPM_REPORT_130_T;
 
-/** @brief  ¬º˛≤…ºØ∑Ω∞∏…œ±®Õ®µ¿	*/
+/** @brief ‰∫ã‰ª∂ÈááÈõÜÊñπÊ°à‰∏äÊä•ÈÄöÈÅì	*/
 typedef struct tag_OOP_PLAN_EVENT_CHANNEL
 {
-	uint8				planID;				/**< ∑Ω∞∏±‡∫≈		*/
-	OOP_OADS_T			channel;			/**< …œ±®Õ®µ¿		*/
+	uint8				planID;				/**< ÊñπÊ°àÁºñÂè∑		*/
+	OOP_OADS_T			channel;			/**< ‰∏äÊä•ÈÄöÈÅì		*/
 }OOP_PLAN_EVENT_CHANNEL_T;
 
 //
-// 6018-Õ∏√˜∑Ω∞∏ºØ
+// 6018-ÈÄèÊòéÊñπÊ°àÈõÜ
 //
 
-#define OOP_MAX_TRANS_NUM	(3)			/**< ◊Ó∂‡Õ∏√˜±®Œƒ ˝¡ø		*/
-#define OOP_MAX_TRANS_INFO	(4)			/**< ◊Ó∂‡Õ∏√˜∑Ω∞∏ƒ⁄»›◊È ˝	*/
+#define OOP_MAX_TRANS_NUM	(3)			/**< ÊúÄÂ§öÈÄèÊòéÊä•ÊñáÊï∞Èáè		*/
+#define OOP_MAX_TRANS_INFO	(4)			/**< ÊúÄÂ§öÈÄèÊòéÊñπÊ°àÂÜÖÂÆπÁªÑÊï∞	*/
 
-/** @brief Õ∏√˜◊™∑¢√¸¡Ó	*/
+/** @brief ÈÄèÊòéËΩ¨ÂèëÂëΩ‰ª§	*/
 typedef struct tag_TRANS_CMD
 {
-	uint8				nIndex;			/**< ±®Œƒ–Ú∫≈	*/
-	OOP_OCTETVAR256_T	data;			/**< ±®Œƒƒ⁄»›	*/
+	uint8				nIndex;			/**< Êä•ÊñáÂ∫èÂè∑	*/
+	OOP_OCTETVAR256_T	data;			/**< Êä•ÊñáÂÜÖÂÆπ	*/
 }OOP_TRANS_CMD_T;
 
-/** @brief Õ∏√˜◊™∑¢√¸¡ÓºØ∫œ	*/
+/** @brief ÈÄèÊòéËΩ¨ÂèëÂëΩ‰ª§ÈõÜÂêà	*/
 typedef struct tag_CMD_ARRAY
 {
 	uint8				nNum;
 	OOP_TRANS_CMD_T		value[OOP_MAX_TRANS_NUM];
 }OOP_CMD_ARRAY_T;
 
-/** @brief Õ∏√˜∑Ω∞∏øÿ÷∆±Í÷æ	*/
+/** @brief ÈÄèÊòéÊñπÊ°àÊéßÂà∂Ê†áÂøó	*/
 typedef struct tag_TRANS_FLAG
 {
-	uint8		bReport;	/**< …œ±®Õ∏√˜∑Ω∞∏Ω·π˚≤¢µ»¥˝∫Û–¯±®Œƒ	*/
-	uint16		nDelay;		/**< µ»¥˝∫Û–¯±®Œƒ≥¨ ± ±º‰(√Î)		*/
-	uint8		nCompare;	/**< Ω·π˚±»∂‘±Í ∂					*/
+	uint8		bReport;	/**< ‰∏äÊä•ÈÄèÊòéÊñπÊ°àÁªìÊûúÂπ∂Á≠âÂæÖÂêéÁª≠Êä•Êñá	*/
+	uint16		nDelay;		/**< Á≠âÂæÖÂêéÁª≠Êä•ÊñáË∂ÖÊó∂Êó∂Èó¥(Áßí)		*/
+	uint8		nCompare;	/**< ÁªìÊûúÊØîÂØπÊ†áËØÜ					*/
 	struct
 	{
-		uint8	flag;		/**< Ãÿ’˜◊÷Ω⁄		*/
-		uint16	start;		/**< Ωÿ»°ø™ º		*/
-		uint16	len;		/**< Ωÿ»°≥§∂»		*/
-	}cmpParm;				/**< Ω·π˚±»∂‘≤Œ ˝	*/
+		uint8	flag;		/**< ÁâπÂæÅÂ≠óËäÇ		*/
+		uint16	start;		/**< Êà™ÂèñÂºÄÂßã		*/
+		uint16	len;		/**< Êà™ÂèñÈïøÂ∫¶		*/
+	}cmpParm;				/**< ÁªìÊûúÊØîÂØπÂèÇÊï∞	*/
 }OOP_TRANS_FLAG_T;
 
-/** @brief Õ∏√˜∑Ω∞∏ƒ⁄»›	*/
+/** @brief ÈÄèÊòéÊñπÊ°àÂÜÖÂÆπ	*/
 typedef struct tag_TRANS_INFO
 {
-	uint16				nIndex;				/**< –Ú∫≈			*/
-	OOP_TSA_T			addr;				/**< Õ®–≈µÿ÷∑		*/
-	uint16				startid;			/**< ø™ º«∞Ω≈±æid	*/
-	uint16				endid;				/**< ÕÍ≥…∫ÛΩ≈±æid	*/
-	OOP_TRANS_FLAG_T	flag;				/**< ∑Ω∞∏øÿ÷∆±Í÷æ	*/
-	OOP_CMD_ARRAY_T		cmd;				/**< ∑Ω∞∏±®ŒƒºØ		*/
+	uint16				nIndex;				/**< Â∫èÂè∑			*/
+	OOP_TSA_T			addr;				/**< ÈÄö‰ø°Âú∞ÂùÄ		*/
+	uint16				startid;			/**< ÂºÄÂßãÂâçËÑöÊú¨id	*/
+	uint16				endid;				/**< ÂÆåÊàêÂêéËÑöÊú¨id	*/
+	OOP_TRANS_FLAG_T	flag;				/**< ÊñπÊ°àÊéßÂà∂Ê†áÂøó	*/
+	OOP_CMD_ARRAY_T		cmd;				/**< ÊñπÊ°àÊä•ÊñáÈõÜ		*/
 }OOP_TRANS_INFO_T;
 
-/** @brief Õ∏√˜∑Ω∞∏ƒ⁄»›ºØ∫œ	*/
+/** @brief ÈÄèÊòéÊñπÊ°àÂÜÖÂÆπÈõÜÂêà	*/
 typedef struct tag_TRANS_ARRAY
 {
 	uint8				nNum;
 	OOP_TRANS_INFO_T	info[OOP_MAX_TRANS_INFO];
 }OOP_TRANS_ARRAY_T;
 
-/** @brief Õ∏√˜∑Ω∞∏∂®“Â	*/
+/** @brief ÈÄèÊòéÊñπÊ°àÂÆö‰πâ	*/
 typedef struct tag_OOP_PLAN_TRANS
 {
-	uint8				planID;			/**< ∑Ω∞∏±‡∫≈	*/
-	OOP_TRANS_ARRAY_T	value;			/**< ∑Ω∞∏ƒ⁄»›	*/
-	uint16				nSaveCount;		/**< ¥Ê¥¢…Ó∂»	*/
+	uint8				planID;			/**< ÊñπÊ°àÁºñÂè∑	*/
+	OOP_TRANS_ARRAY_T	value;			/**< ÊñπÊ°àÂÜÖÂÆπ	*/
+	uint16				nSaveCount;		/**< Â≠òÂÇ®Ê∑±Â∫¶	*/
 }OOP_PLAN_TRANS_T;
 
-/** @brief ÃÌº”“ª◊È±®Œƒ	*/
+/** @brief Ê∑ªÂä†‰∏ÄÁªÑÊä•Êñá	*/
 typedef struct tag_OOPM_TTASK_128
 {
-	uint8				index;				/**< ∑Ω∞∏±‡∫≈		*/
-	OOP_TSA_T			addr;				/**< Õ®–≈µÿ÷∑		*/
-	OOP_TRANS_FLAG_T	flag;				/**< ∑Ω∞∏øÿ÷∆±Í÷æ	*/
-	OOP_CMD_ARRAY_T		cmd;				/**< ∑Ω∞∏±®ŒƒºØ		*/
+	uint8				index;				/**< ÊñπÊ°àÁºñÂè∑		*/
+	OOP_TSA_T			addr;				/**< ÈÄö‰ø°Âú∞ÂùÄ		*/
+	OOP_TRANS_FLAG_T	flag;				/**< ÊñπÊ°àÊéßÂà∂Ê†áÂøó	*/
+	OOP_CMD_ARRAY_T		cmd;				/**< ÊñπÊ°àÊä•ÊñáÈõÜ		*/
 }OOPM_TTASK_128_T;
 
-/** @brief …æ≥˝“ª∏ˆ∑Ω∞∏“ª◊Èƒ⁄»›	*/
+/** @brief Âà†Èô§‰∏Ä‰∏™ÊñπÊ°à‰∏ÄÁªÑÂÜÖÂÆπ	*/
 typedef struct tag_OOPM_TTASK_129
 {
 	uint8		index;
@@ -4672,83 +4672,83 @@ typedef struct tag_OOPM_TTASK_129
 }OOPM_TTASK_129_T;
 
 //
-// 601B-Õ∏√˜∑Ω∞∏Ω·π˚ºØ
+// 601B-ÈÄèÊòéÊñπÊ°àÁªìÊûúÈõÜ
 //
 
-/** @brief Õ∏√˜∑Ω∞∏Ω·π˚µ•‘™	*/
+/** @brief ÈÄèÊòéÊñπÊ°àÁªìÊûúÂçïÂÖÉ	*/
 typedef struct tag_TRANS_RESULT
 {
-    uint8				nIndex;         	/**< ±®Œƒ–Ú∫≈		*/
-    OOP_DATETIME_S_T    aTime;              /**< ±®ŒƒœÏ”¶ ±º‰	*/
-	OOP_OCTETVAR256_T	data;				/**< √¸¡ÓΩ·π˚		*/
+    uint8				nIndex;         	/**< Êä•ÊñáÂ∫èÂè∑		*/
+    OOP_DATETIME_S_T    aTime;              /**< Êä•ÊñáÂìçÂ∫îÊó∂Èó¥	*/
+	OOP_OCTETVAR256_T	data;				/**< ÂëΩ‰ª§ÁªìÊûú		*/
 }TRANS_RESULT;
 
-/** @brief Õ∏√˜∑Ω∞∏Ω·π˚ºØ∫œ	*/
+/** @brief ÈÄèÊòéÊñπÊ°àÁªìÊûúÈõÜÂêà	*/
 typedef struct tag_TRANSPARENT_RES
 {
 	uint8			nNum;
-	TRANS_RESULT	result[OOP_MAX_TRANS_NUM];	/**< Ω·π˚		*/
+	TRANS_RESULT	result[OOP_MAX_TRANS_NUM];	/**< ÁªìÊûú		*/
 }TRANS_RESULTS;
 
-/** @brief “ª∏ˆÕ∏√˜∑Ω∞∏÷¥––Ω·π˚	*/
+/** @brief ‰∏Ä‰∏™ÈÄèÊòéÊñπÊ°àÊâßË°åÁªìÊûú	*/
 typedef struct tag_OOP_TRANSRES
 {   
-    uint8				planID;						/**< ∑Ω∞∏±‡∫≈	*/
-    OOP_DATETIME_S_T    eTime;						/**< ÷¥–– ±º‰	*/
-    OOP_TSA_T           addr;						/**< Õ®–≈µÿ÷∑   */    
-    TRANS_RESULTS		res;						/**< Ω·π˚ºØ		*/
+    uint8				planID;						/**< ÊñπÊ°àÁºñÂè∑	*/
+    OOP_DATETIME_S_T    eTime;						/**< ÊâßË°åÊó∂Èó¥	*/
+    OOP_TSA_T           addr;						/**< ÈÄö‰ø°Âú∞ÂùÄ   */    
+    TRANS_RESULTS		res;						/**< ÁªìÊûúÈõÜ		*/
 }OOP_TRANSRES_T;
 
 typedef struct tag_OOP_TRANS_RESULT
 {
-	uint16			nIndex;		// Ω·π˚ºØ–Ú∫≈£¨ƒ⁄≤øŒ¨ª§”√
-	uint8 			flag;		// 0-Œ¥ π”√£¨1-’˝‘⁄∏¸–¬÷–, 2-∏¸–¬ÕÍ≥…
-	uint8			bReport;	// 0-Ω˚÷π…œ±®£¨1-‘ –Ìµ´Œ¥…œ±®£¨2-…œ±®≥…π¶
-	uint8			nDelay;		// µ»¥˝—” ±
+	uint16			nIndex;		// ÁªìÊûúÈõÜÂ∫èÂè∑ÔºåÂÜÖÈÉ®Áª¥Êä§Áî®
+	uint8 			flag;		// 0-Êú™‰ΩøÁî®Ôºå1-Ê≠£Âú®Êõ¥Êñ∞‰∏≠, 2-Êõ¥Êñ∞ÂÆåÊàê
+	uint8			bReport;	// 0-Á¶ÅÊ≠¢‰∏äÊä•Ôºå1-ÂÖÅËÆ∏‰ΩÜÊú™‰∏äÊä•Ôºå2-‰∏äÊä•ÊàêÂäü
+	uint8			nDelay;		// Á≠âÂæÖÂª∂Êó∂
 	OOP_TRANSRES_T	res;
 }OOP_TRANS_RESULT;
 
 //
-// 601D-…œ±®∑Ω∞∏ºØ
+// 601D-‰∏äÊä•ÊñπÊ°àÈõÜ
 //
 
-/** @brief …œ±®º«¬º–Õ∂‘œÛ	*/
+/** @brief ‰∏äÊä•ËÆ∞ÂΩïÂûãÂØπË±°	*/
 typedef struct tag_RecordData
 {
-	OOP_OAD_U		oad;		/**< ÷˜∂‘œÛ Ù–‘√Ë ˆ∑˚	*/
-	OOP_PCSD_T		tRCSD;		/**< ¥”∂‘œÛ Ù–‘√Ë ˆ∑˚	*/
-	OOP_PRSD_T		tRSD;		/**< …œ±® ˝æ›––—°‘Ò		*/
+	OOP_OAD_U		oad;		/**< ‰∏ªÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶	*/
+	OOP_PCSD_T		tRCSD;		/**< ‰ªéÂØπË±°Â±ûÊÄßÊèèËø∞Á¨¶	*/
+	OOP_PRSD_T		tRSD;		/**< ‰∏äÊä•Êï∞ÊçÆË°åÈÄâÊã©		*/
 }RECORDDATA;
 
-/** @brief …œ±®∂‘œÛ	*/
+/** @brief ‰∏äÊä•ÂØπË±°	*/
 typedef struct tag_REPORT_CONTEXT
 {
-	uint8	choice;					/**< ¿‡–Õ±Í ∂		*/
+	uint8	choice;					/**< Á±ªÂûãÊ†áËØÜ		*/
 
 	union
 	{
-		OOP_OAD_U		oad;		/**< [0]º«¬º–Õ∂‘œÛ Ù–‘	*/
-		RECORDDATA		record;		/**< [1]º«¬º–Õ∂‘œÛ Ù–‘	*/
+		OOP_OAD_U		oad;		/**< [0]ËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄß	*/
+		RECORDDATA		record;		/**< [1]ËÆ∞ÂΩïÂûãÂØπË±°Â±ûÊÄß	*/
 	};		
 }REPORT_CONTEXT;
 
-/** @brief …œ±®∑Ω∞∏	*/
+/** @brief ‰∏äÊä•ÊñπÊ°à	*/
 typedef struct tag_OOP_PLAN_REPORT
 {
-	uint8				planID;		/**< ∑Ω∞∏±‡∫≈				*/
-	OOP_OADS_T			channel;	/**< …œ±®Õ®µ¿				*/
-    OOP_TI_T            timeout;    /**< …œ±®œÏ”¶≥¨ ± ±º‰			*/
-    uint8				retry;		/**< ◊Ó¥Û…œ±®¥Œ ˝				*/
-	REPORT_CONTEXT		data;		/**< …œ±®ƒ⁄»›				*/
+	uint8				planID;		/**< ÊñπÊ°àÁºñÂè∑				*/
+	OOP_OADS_T			channel;	/**< ‰∏äÊä•ÈÄöÈÅì				*/
+    OOP_TI_T            timeout;    /**< ‰∏äÊä•ÂìçÂ∫îË∂ÖÊó∂Êó∂Èó¥			*/
+    uint8				retry;		/**< ÊúÄÂ§ß‰∏äÊä•Ê¨°Êï∞				*/
+	REPORT_CONTEXT		data;		/**< ‰∏äÊä•ÂÜÖÂÆπ				*/
 }OOP_PLAN_REPORT_T;
 
 //
-// 601F-≤…ºØπÊ‘Ú
+// 601F-ÈááÈõÜËßÑÂàô
 //
 
-#define OOP_MAX_ACQRULE	(4)			/**< ◊Ó¥Û≤…ºØπÊ‘Ú ˝¡ø	*/
+#define OOP_MAX_ACQRULE	(4)			/**< ÊúÄÂ§ßÈááÈõÜËßÑÂàôÊï∞Èáè	*/
 
-/** @brief DL/T645-2007≤…ºØπÊ‘Ú∂®“Â	*/
+/** @brief DL/T645-2007ÈááÈõÜËßÑÂàôÂÆö‰πâ	*/
 typedef struct tag_AcqCmd_2007
 {
 	uint8			nMainLen;
@@ -4757,7 +4757,7 @@ typedef struct tag_AcqCmd_2007
 	uint32			backupId[OOP_MAX_ACQRULE];
 }ACQCMD_2007;
 
-/** @brief DL/T645-1997≤…ºØπÊ‘Ú∂®“Â	*/
+/** @brief DL/T645-1997ÈááÈõÜËßÑÂàôÂÆö‰πâ	*/
 typedef struct tag_AcqCmd_1997
 {
 	uint32			nMainLen;
@@ -4766,59 +4766,59 @@ typedef struct tag_AcqCmd_1997
 	uint16			backupId[OOP_MAX_ACQRULE];
 }ACQCMD_1997;
 
-/** @brief ≤…ºØπÊ‘Ú	*/
+/** @brief ÈááÈõÜËßÑÂàô	*/
 typedef struct tag_AcqCmd
 {
-	ACQCMD_2007			acqCmd07;		/**< 07≤…ºØ ˝æ›±Í ∂	*/
-	ACQCMD_1997			acqCmd97;		/**< 97≤…ºØ ˝æ›±Í ∂	*/
-	OOP_OCTETVAR256_T	acqCmdTrs;		/**< Õ∏√˜√¸¡Ó		*/
+	ACQCMD_2007			acqCmd07;		/**< 07ÈááÈõÜÊï∞ÊçÆÊ†áËØÜ	*/
+	ACQCMD_1997			acqCmd97;		/**< 97ÈááÈõÜÊï∞ÊçÆÊ†áËØÜ	*/
+	OOP_OCTETVAR256_T	acqCmdTrs;		/**< ÈÄèÊòéÂëΩ‰ª§		*/
 }ACQCMD;
 
-/** @brief 698.45µƒ≤…ºØπÊ‘Ú	*/
+/** @brief 698.45ÁöÑÈááÈõÜËßÑÂàô	*/
 typedef struct tag_OOP_ACQRULE
 {
-	OOP_CSD_T		csd;			/**<  ˝æ› Ù–‘√Ë ˆ∑˚		*/
-	ACQCMD			acqCmd;			/**< ≤…ºØπÊ‘Ú			*/
+	OOP_CSD_T		csd;			/**< Êï∞ÊçÆÂ±ûÊÄßÊèèËø∞Á¨¶		*/
+	ACQCMD			acqCmd;			/**< ÈááÈõÜËßÑÂàô			*/
 }OOP_ACQRULE_T;
 
-/** @brief 6033-≤…ºØ◊¥Ã¨ºØ	*/
+/** @brief 6033-ÈááÈõÜÁä∂ÊÄÅÈõÜ	*/
 typedef struct tag_OOP_ACQ_RLUESTATE
 {
-    OOP_TSA_T           add;                /**< Õ®–≈µÿ÷∑				*/
-	uint8				relayLevel;			/**< ÷–ºÃº∂±				*/
-    OOP_TSA_T           relayAdd;           /**< ÷–ºÃµÿ÷∑				*/
-    OOP_OAD_U           port;               /**< ∂Àø⁄					*/
-    OOP_DATETIME_S_T    time;               /**< ◊Ó∫Û“ª¥Œ≤…ºØ≥…π¶ ±º‰	*/
-    uint8				failTimes;          /**< ≤…ºØ ß∞‹¥Œ ˝			*/
-    uint8				phase;              /**< œ‡Œª					*/
-    uint8				phaseSeq;           /**< œ‡–Ú“Ï≥£				*/
+    OOP_TSA_T           add;                /**< ÈÄö‰ø°Âú∞ÂùÄ				*/
+	uint8				relayLevel;			/**< ‰∏≠ÁªßÁ∫ßÂà´				*/
+    OOP_TSA_T           relayAdd;           /**< ‰∏≠ÁªßÂú∞ÂùÄ				*/
+    OOP_OAD_U           port;               /**< Á´ØÂè£					*/
+    OOP_DATETIME_S_T    time;               /**< ÊúÄÂêé‰∏ÄÊ¨°ÈááÈõÜÊàêÂäüÊó∂Èó¥	*/
+    uint8				failTimes;          /**< ÈááÈõÜÂ§±Ë¥•Ê¨°Êï∞			*/
+    uint8				phase;              /**< Áõ∏‰Ωç					*/
+    uint8				phaseSeq;           /**< Áõ∏Â∫èÂºÇÂ∏∏				*/
 }OOP_ACQ_RLUESTATE_T;
 
-/** @brief 6035-≤…ºØ»ŒŒÒº‡øÿ	*/
+/** @brief 6035-ÈááÈõÜ‰ªªÂä°ÁõëÊéß	*/
 typedef struct tag_OOP_ACQ_MONITOR
 {
      uint8				id;
-     uint8				taskState;  /**< »ŒŒÒ◊¥Ã¨(enum)		*/
-     OOP_DATETIME_S_T   startTime;  /**< »ŒŒÒ÷¥––ø™ º ±º‰	*/
-     OOP_DATETIME_S_T   endTime;    /**< »ŒŒÒ÷¥––Ω· ¯ ±º‰	*/
-     uint16				sum;        /**< ≤…ºØ◊‹ ˝¡ø			*/
-     uint16				success;    /**< ≤…ºØ≥…π¶ ˝¡ø		*/
-     uint16				send;       /**< “—∑¢ÀÕ±®ŒƒÃı ˝		*/
-     uint16				receive;    /**< “—Ω” ’±®ŒƒÃı ˝		*/
-     BOOLEAN			bValid;		/**< ”––ß±Íº«			*/
+     uint8				taskState;  /**< ‰ªªÂä°Áä∂ÊÄÅ(enum)		*/
+     OOP_DATETIME_S_T   startTime;  /**< ‰ªªÂä°ÊâßË°åÂºÄÂßãÊó∂Èó¥	*/
+     OOP_DATETIME_S_T   endTime;    /**< ‰ªªÂä°ÊâßË°åÁªìÊùüÊó∂Èó¥	*/
+     uint16				sum;        /**< ÈááÈõÜÊÄªÊï∞Èáè			*/
+     uint16				success;    /**< ÈááÈõÜÊàêÂäüÊï∞Èáè		*/
+     uint16				send;       /**< Â∑≤ÂèëÈÄÅÊä•ÊñáÊù°Êï∞		*/
+     uint16				receive;    /**< Â∑≤Êé•Êî∂Êä•ÊñáÊù°Êï∞		*/
+     BOOLEAN			bValid;		/**< ÊúâÊïàÊ†áËÆ∞			*/
 }OOP_ACQ_MONITOR_T;
 
 #define OOP_MAX_LNLS    4
 
-/** @brief 6051( Ù–‘2)-œﬂÀº∆À„ ˝æ›*/
+/** @brief 6051(Â±ûÊÄß2)-Á∫øÊçüËÆ°ÁÆóÊï∞ÊçÆ*/
 typedef struct tag_OOP_LNLS_UNIT
 {
-	uint32	eneSup;			/**< π©µÁ¡ø*/
-	uint32	eneSal;			/**<  €µÁ¡ø*/
-	uint32	eneDeliv;		/**< µπÀÕµÁ¡ø*/
-	uint32	eneDistrpwrnet; /**< ∑÷≤º ΩµÁ‘¥…œÕ¯µÁ¡ø*/
-	int16	nRatio;			/**< œﬂÀ¬ */
-	uint8   abnorFlag;		/**< “Ï≥£±Íº«(enum)*/
+	uint32	eneSup;			/**< ‰æõÁîµÈáè*/
+	uint32	eneSal;			/**< ÂîÆÁîµÈáè*/
+	uint32	eneDeliv;		/**< ÂÄíÈÄÅÁîµÈáè*/
+	uint32	eneDistrpwrnet; /**< ÂàÜÂ∏ÉÂºèÁîµÊ∫ê‰∏äÁΩëÁîµÈáè*/
+	int16	nRatio;			/**< Á∫øÊçüÁéá*/
+	uint8   abnorFlag;		/**< ÂºÇÂ∏∏Ê†áËÆ∞(enum)*/
 }OOP_LNLS_UNIT_T;
 
 typedef struct tag_OOP_LNLS_STATISVAL
@@ -4828,75 +4828,75 @@ typedef struct tag_OOP_LNLS_STATISVAL
 	OOP_LNLS_UNIT_T nVal[OOP_MAX_LNLS];
 }OOP_LNLS_STATISVAL_T;
 
-/** @brief 6051( Ù–‘4)-œﬂÀÕ≥º∆÷‹∆⁄*/
+/** @brief 6051(Â±ûÊÄß4)-Á∫øÊçüÁªüËÆ°Âë®Êúü*/
 typedef struct tag_OOP_LNLSPER
 {
-	OOP_TI_T statime;	/**< Õ≥º∆÷‹∆⁄*/
+	OOP_TI_T statime;	/**< ÁªüËÆ°Âë®Êúü*/
 }OOP_LNLSPER_T;
 
 //
-// 6062-≤…ºØµµ∞∏√˚µ•µ•‘™
+// 6062-ÈááÈõÜÊ°£Ê°àÂêçÂçïÂçïÂÖÉ
 //
 
 typedef struct tag_OOP_METER_LIST
 {
-	OOP_TSA_T			add;		/**< Õ®–≈µÿ÷∑			*/
-	uint8				nUserType;	/**< ”√ªß¿‡–Õ			*/
-	uint8				nProtocol;	/**< πÊ‘º¿‡–Õ			*/
+	OOP_TSA_T			add;		/**< ÈÄö‰ø°Âú∞ÂùÄ			*/
+	uint8				nUserType;	/**< Áî®Êà∑Á±ªÂûã			*/
+	uint8				nProtocol;	/**< ËßÑÁ∫¶Á±ªÂûã			*/
 }OOP_METER_LIST_T;
 
 //
-// 7200- ≥‰µÁº∆ªÆµ•
+// 7200- ÂÖÖÁîµËÆ°ÂàíÂçï
 //
 
-/** @brief 4708-≥‰µÁº∆ªÆµ•µ•‘™*/
+/** @brief 4708-ÂÖÖÁîµËÆ°ÂàíÂçïÂçïÂÖÉ*/
 typedef struct tag_OOP_ORDCHARGE_PLAN
 {
-	OOP_OCTETVAR256_T        reqForm;                            /**>≥‰µÁ…Í«Îµ•*/
-	OOP_VISIBLEVAR128_T      userId;                             /**>”√ªßID*/
-	uint8                    policyEle;                          /**>æˆ≤ﬂµ•‘™*/
-	uint8                    policyType;                         /**>æˆ≤ﬂ¿‡–Õ*/
-	OOP_DATETIME_S_T         policyTime;                         /**>æˆ≤ﬂ ±º‰*/
-	OOP_VISIBLEVAR32_T       routerAssetNum;                     /**>¬∑”…∆˜◊ ≤˙±‡∫≈*/ 
-	uint32                   energyNeed;                         /**>–Ë«ÛµÁ¡ø*/
-	int32                    nPower;                             /**>π¶¬ */
-	uint8                    nMode;                              /**>≥‰µÁƒ£ Ω*/
-	OOP_PERIOD_LIST_T        periodList;                         /**>≥‰µÁ ±∂Œ*/
+	OOP_OCTETVAR256_T        reqForm;                            /**>ÂÖÖÁîµÁî≥ËØ∑Âçï*/
+	OOP_VISIBLEVAR128_T      userId;                             /**>Áî®Êà∑ID*/
+	uint8                    policyEle;                          /**>ÂÜ≥Á≠ñÂçïÂÖÉ*/
+	uint8                    policyType;                         /**>ÂÜ≥Á≠ñÁ±ªÂûã*/
+	OOP_DATETIME_S_T         policyTime;                         /**>ÂÜ≥Á≠ñÊó∂Èó¥*/
+	OOP_VISIBLEVAR32_T       routerAssetNum;                     /**>Ë∑ØÁî±Âô®ËµÑ‰∫ßÁºñÂè∑*/ 
+	uint32                   energyNeed;                         /**>ÈúÄÊ±ÇÁîµÈáè*/
+	int32                    nPower;                             /**>ÂäüÁéá*/
+	uint8                    nMode;                              /**>ÂÖÖÁîµÊ®°Âºè*/
+	OOP_PERIOD_LIST_T        periodList;                         /**>ÂÖÖÁîµÊó∂ÊÆµ*/
 }OOP_ORDCHARGE_PLAN_T;
 
-// ÃÌº”≥‰µÁµ•∑µªÿΩ·π˚
+// Ê∑ªÂä†ÂÖÖÁîµÂçïËøîÂõûÁªìÊûú
 typedef struct tag_OOP_ADDCHGPLAN_RST
 {
-	OOP_OCTETVAR256_T        reqForm;                            /**>…Í«Îµ•*/
-	OOP_VISIBLEVAR_T         routerAssetNum;                     /**>¬∑”…∆˜◊ ≤˙±‡∫≈*/ 
+	OOP_OCTETVAR256_T        reqForm;                            /**>Áî≥ËØ∑Âçï*/
+	OOP_VISIBLEVAR_T         routerAssetNum;                     /**>Ë∑ØÁî±Âô®ËµÑ‰∫ßÁºñÂè∑*/ 
 }OOP_ADDCHGPLAN_RST_T;
 
 //
-// 7300-»›∆˜ºØ∫œ
+// 7300-ÂÆπÂô®ÈõÜÂêà
 //
 
 #define OOP_MAX_CONTAINER	(16)
 
-/** @brief F401-»›∆˜µ•‘™	*/
+/** @brief F401-ÂÆπÂô®ÂçïÂÖÉ	*/
 typedef struct tag_OOP_CONTAINER_UNIT
 {
-	uint8               nId;			/**< »›∆˜ID */
-	OOP_VISIBLEVAR128_T name;			/**< »›∆˜√˚≥∆ */
-	OOP_VISIBLEVAR_T    state;			/**< »›∆˜◊¥Ã¨ */
-	uint8               nCpu;			/**< CPU∫À ˝ */
-	OOP_VISIBLEVAR_T    ramLimit;		/**< ƒ⁄¥Êœﬁ÷µ */
-	OOP_VISIBLEVAR_T    memoryLimit;	/**< ¥Ê¥¢œﬁ÷µ */
-	OOP_VISIBLEVAR128_T hostFolder;		/**< π“‘ÿµƒÀﬁ÷˜ª˙Œƒº˛º– */
-	OOP_VISIBLEVAR128_T hwItf;			/**< ”≥…‰µƒ”≤º˛Ω”ø⁄ */
-	OOP_VISIBLEVAR128_T appDownLoad;	/**< ”¶”√œ¬‘ÿŒƒº˛º∞¬∑æ∂ */
-	uint16              nCpuUsage;		/**< »›∆˜CPU π”√¬  */
-	uint16              nRamUsage;		/**< »›∆˜ƒ⁄¥Ê π”√¬  */	
-	uint16              nMemUsage;		/**< »›∆˜¥Ê¥¢ π”√¬  */
-	OOP_OCTETVAR16_T    ip;				/**< »›∆˜IPµÿ÷∑ */
-	OOP_VISIBLEVAR128_T image;			/**< »›∆˜æµœÒ√˚≥∆ */
-	OOP_DATETIME_S_T    dtCreate;		/**< »›∆˜¥¥Ω® ±º‰ */
-	OOP_DATETIME_S_T    dtStart;		/**< »›∆˜∆Ù∂Ø ±º‰ */
-	uint32              nRunTime;		/**< »›∆˜‘À–– ±º‰ */
+	uint8               nId;			/**< ÂÆπÂô®ID */
+	OOP_VISIBLEVAR128_T name;			/**< ÂÆπÂô®ÂêçÁß∞ */
+	OOP_VISIBLEVAR_T    state;			/**< ÂÆπÂô®Áä∂ÊÄÅ */
+	uint8               nCpu;			/**< CPUÊ†∏Êï∞ */
+	OOP_VISIBLEVAR_T    ramLimit;		/**< ÂÜÖÂ≠òÈôêÂÄº */
+	OOP_VISIBLEVAR_T    memoryLimit;	/**< Â≠òÂÇ®ÈôêÂÄº */
+	OOP_VISIBLEVAR128_T hostFolder;		/**< ÊåÇËΩΩÁöÑÂÆø‰∏ªÊú∫Êñá‰ª∂Â§π */
+	OOP_VISIBLEVAR128_T hwItf;			/**< Êò†Â∞ÑÁöÑÁ°¨‰ª∂Êé•Âè£ */
+	OOP_VISIBLEVAR128_T appDownLoad;	/**< Â∫îÁî®‰∏ãËΩΩÊñá‰ª∂ÂèäË∑ØÂæÑ */
+	uint16              nCpuUsage;		/**< ÂÆπÂô®CPU‰ΩøÁî®Áéá */
+	uint16              nRamUsage;		/**< ÂÆπÂô®ÂÜÖÂ≠ò‰ΩøÁî®Áéá */	
+	uint16              nMemUsage;		/**< ÂÆπÂô®Â≠òÂÇ®‰ΩøÁî®Áéá */
+	OOP_OCTETVAR16_T    ip;				/**< ÂÆπÂô®IPÂú∞ÂùÄ */
+	OOP_VISIBLEVAR128_T image;			/**< ÂÆπÂô®ÈïúÂÉèÂêçÁß∞ */
+	OOP_DATETIME_S_T    dtCreate;		/**< ÂÆπÂô®ÂàõÂª∫Êó∂Èó¥ */
+	OOP_DATETIME_S_T    dtStart;		/**< ÂÆπÂô®ÂêØÂä®Êó∂Èó¥ */
+	uint32              nRunTime;		/**< ÂÆπÂô®ËøêË°åÊó∂Èó¥ */
 }OOP_CONTAINER_UNIT_T;
 
 typedef struct tag_OOP_CONTAINER_LIST
@@ -4907,7 +4907,7 @@ typedef struct tag_OOP_CONTAINER_LIST
 }OOP_CONTAINER_LIST_T;
 
 //
-// 7301-”¶”√ºØ∫œ
+// 7301-Â∫îÁî®ÈõÜÂêà
 //
 
 #define OOP_MAX_APP				(64)
@@ -4915,26 +4915,26 @@ typedef struct tag_OOP_CONTAINER_LIST
 
 typedef struct tag_OOP_APP_SERVER_INFO
 {
-	uint8               nIndex;			/**< ∑˛ŒÒÀ˜“˝ */
-	OOP_VISIBLEVAR128_T name;			/**< ∑˛ŒÒ√˚≥∆ */
-	BOOLEAN             bEnable;		/**< ∑˛ŒÒ «∑Ò πƒ‹ */
-	uint8               nState;			/**< ∑˛ŒÒ◊¥Ã¨ */
-	uint16              nCpuUsageLimit;	/**< CPU π”√¬ œﬁ÷µ */
-	uint16              nCpuUsage;		/**< CPU µº  π”√¬  */	
-	uint16              nRamUsage;		/**< ƒ⁄¥Ê µº  π”√¬  */	
-	OOP_DATETIME_S_T    dtStart;		/**< ∆Ù∂Ø ±º‰ */
+	uint8               nIndex;			/**< ÊúçÂä°Á¥¢Âºï */
+	OOP_VISIBLEVAR128_T name;			/**< ÊúçÂä°ÂêçÁß∞ */
+	BOOLEAN             bEnable;		/**< ÊúçÂä°ÊòØÂê¶‰ΩøËÉΩ */
+	uint8               nState;			/**< ÊúçÂä°Áä∂ÊÄÅ */
+	uint16              nCpuUsageLimit;	/**< CPU‰ΩøÁî®ÁéáÈôêÂÄº */
+	uint16              nCpuUsage;		/**< CPUÂÆûÈôÖ‰ΩøÁî®Áéá */	
+	uint16              nRamUsage;		/**< ÂÜÖÂ≠òÂÆûÈôÖ‰ΩøÁî®Áéá */	
+	OOP_DATETIME_S_T    dtStart;		/**< ÂêØÂä®Êó∂Èó¥ */
 }OOP_APP_SERVER_INFO_T;
 
-/** @brief F402-”¶”√µ•‘™	*/
+/** @brief F402-Â∫îÁî®ÂçïÂÖÉ	*/
 typedef struct tag_OOP_APP_UNIT
 {
-	uint8                 nId;								/**< ”¶”√–Ú∫≈ */
-	OOP_VISIBLEVAR128_T   nameApp;							/**< ”¶”√√˚≥∆ */
-	OOP_VISIBLEVAR128_T   nameContainer;					/**< »›∆˜√˚≥∆ */
-	OOP_VISIBLEVAR_T      version;							/**< ”¶”√∞Ê±æ */
-	OOP_VISIBLEVAR_T      hash;								/**< ”¶”√π˛œ£÷µ */
-	uint32                nServerNum;						/**< ”¶”√∑˛ŒÒ∏ˆ ˝ */
-	OOP_APP_SERVER_INFO_T serverInfo[OOP_MAX_APP_SERVER];	/**< ”¶”√∑˛ŒÒ¡–±Ì */
+	uint8                 nId;								/**< Â∫îÁî®Â∫èÂè∑ */
+	OOP_VISIBLEVAR128_T   nameApp;							/**< Â∫îÁî®ÂêçÁß∞ */
+	OOP_VISIBLEVAR128_T   nameContainer;					/**< ÂÆπÂô®ÂêçÁß∞ */
+	OOP_VISIBLEVAR_T      version;							/**< Â∫îÁî®ÁâàÊú¨ */
+	OOP_VISIBLEVAR_T      hash;								/**< Â∫îÁî®ÂìàÂ∏åÂÄº */
+	uint32                nServerNum;						/**< Â∫îÁî®ÊúçÂä°‰∏™Êï∞ */
+	OOP_APP_SERVER_INFO_T serverInfo[OOP_MAX_APP_SERVER];	/**< Â∫îÁî®ÊúçÂä°ÂàóË°® */
 }OOP_APP_UNIT_T;
 
 typedef struct tag_OOP_APP_LIST
@@ -4946,44 +4946,44 @@ typedef struct tag_OOP_APP_LIST
 
 /**
 ********************************************************
-* A.10 øÿ÷∆¿‡∂‘œÛ
+* A.10 ÊéßÂà∂Á±ªÂØπË±°
 ********************************************************
 */
 
-#define OOP_MAX_TURN		(8)				/**< ◊Ó¥Ûøÿ÷∆¬÷¥Œ		*/
-#define OOP_MAX_CHINESEINFO	(11)			/**< ◊Ó¥Û÷–Œƒ–≈œ¢ ˝¡ø	*/
+#define OOP_MAX_TURN		(8)				/**< ÊúÄÂ§ßÊéßÂà∂ËΩÆÊ¨°		*/
+#define OOP_MAX_CHINESEINFO	(11)			/**< ÊúÄÂ§ß‰∏≠Êñá‰ø°ÊÅØÊï∞Èáè	*/
 
 //
-// 8000-“£øÿ
+// 8000-ÈÅ•Êéß
 //
 
-/** @brief “£øÿ≤Œ ˝…Ë∂®	*/
+/** @brief ÈÅ•ÊéßÂèÇÊï∞ËÆæÂÆö	*/
 typedef struct tag_OOP_TELECON_PARAM
 {
-    int32       limit;                      /**< ºÃµÁ∆˜¿≠’¢µÁ¡˜√≈œﬁ÷µ	*/
-    uint16      delay;                      /**< ≥¨µÁ¡˜√≈œﬁ±£ª§—” ± ±º‰	*/
+    int32       limit;                      /**< ÁªßÁîµÂô®ÊãâÈó∏ÁîµÊµÅÈó®ÈôêÂÄº	*/
+    uint16      delay;                      /**< Ë∂ÖÁîµÊµÅÈó®Èôê‰øùÊä§Âª∂Êó∂Êó∂Èó¥	*/
 }OOP_TELECON_PARAM_T;
 
-/** @brief “£øÿ√¸¡Ó◊¥Ã¨	*/
+/** @brief ÈÅ•ÊéßÂëΩ‰ª§Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_TELECON_STATE
 {
     uint32      nNum;
 	uint32		rsv;
-    uint8       comState[OOP_MAX_TURN];			/**< √¸¡Ó◊¥Ã¨	*/
+    uint8       comState[OOP_MAX_TURN];			/**< ÂëΩ‰ª§Áä∂ÊÄÅ	*/
 }OOP_TELECON_STATE_T;
 
-#define OOP_MAX_TRIP    (8)						/**< ◊Ó¥Û¬÷¥Œ ˝	*/
+#define OOP_MAX_TRIP    (8)						/**< ÊúÄÂ§ßËΩÆÊ¨°Êï∞	*/
 
-/** @brief “£øÿÃ¯’¢µ•‘™	*/
+/** @brief ÈÅ•ÊéßË∑≥Èó∏ÂçïÂÖÉ	*/
 typedef struct tag_TELECON_TRIP
 {
-    OOP_OAD_U	nRelayIdx;						/**< ºÃµÁ∆˜–Ú∫≈										*/
-	uint8		nWarnDelay;						/**< ∏ÊæØ—” ±(µ•Œª£∫∑÷÷”£¨ªªÀ„£∫0)				*/
-	uint16		nTripTime;						/**< œﬁµÁ ±º‰(µ•Œª£∫∑÷÷”£¨ªªÀ„£∫0)				*/
-	uint8		bAutoClose;						/**< ◊‘∂Ø∫œ’¢(TRUE£∫◊‘∂Ø∫œ’¢£ªFALSE£∫∑«◊‘∂Ø∫œ’¢)	*/
+    OOP_OAD_U	nRelayIdx;						/**< ÁªßÁîµÂô®Â∫èÂè∑										*/
+	uint8		nWarnDelay;						/**< ÂëäË≠¶Âª∂Êó∂(Âçï‰ΩçÔºöÂàÜÈíüÔºåÊç¢ÁÆóÔºö0)				*/
+	uint16		nTripTime;						/**< ÈôêÁîµÊó∂Èó¥(Âçï‰ΩçÔºöÂàÜÈíüÔºåÊç¢ÁÆóÔºö0)				*/
+	uint8		bAutoClose;						/**< Ëá™Âä®ÂêàÈó∏(TRUEÔºöËá™Âä®ÂêàÈó∏ÔºõFALSEÔºöÈùûËá™Âä®ÂêàÈó∏)	*/
 }TELECON_TRIP;
 
-/** @brief “£øÿ-∑Ω∑®129(Ã¯’¢)	*/
+/** @brief ÈÅ•Êéß-ÊñπÊ≥ï129(Ë∑≥Èó∏)	*/
 typedef struct tag_OOP_TELECON_TRIP
 {
     uint32          nNum;
@@ -4991,14 +4991,14 @@ typedef struct tag_OOP_TELECON_TRIP
     TELECON_TRIP    trip[OOP_MAX_TRIP];
 }OOP_TELECON_TRIP_T;
 
-/** @brief “£øÿ∫œ’¢µ•‘™	*/
+/** @brief ÈÅ•ÊéßÂêàÈó∏ÂçïÂÖÉ	*/
 typedef struct tag_TELECON_CLOSE
 {
 	OOP_OAD_U		nRelayIdx;
 	uint8			nState;
 }TELECON_CLOSE;
 
-/** @brief “£øÿ-∑Ω∑®130(∫œ’¢)	*/
+/** @brief ÈÅ•Êéß-ÊñπÊ≥ï130(ÂêàÈó∏)	*/
 typedef struct tag_OOP_TELECON_CLOSE
 {
 	uint32			nNum;
@@ -5007,18 +5007,18 @@ typedef struct tag_OOP_TELECON_CLOSE
 }OOP_TELECON_CLOSE_T;
 
 //
-// 8001-±£µÁ
+// 8001-‰øùÁîµ
 //
-#define OOP_MAX_PRTTIME	(4)		/**< ◊Ó¥Û±£µÁ ±∂Œ		*/
+#define OOP_MAX_PRTTIME	(4)		/**< ÊúÄÂ§ß‰øùÁîµÊó∂ÊÆµ		*/
 
-/** @brief ±£µÁ ±∂Œ	*/
+/** @brief ‰øùÁîµÊó∂ÊÆµ	*/
 typedef struct tag_PRTTIME
 {
 	uint8	start;
 	uint8	end;
 }PRTTIME;
 
-/** @brief ±£µÁ ±∂ŒºØ∫œ	*/
+/** @brief ‰øùÁîµÊó∂ÊÆµÈõÜÂêà	*/
 typedef struct tag_OOP_PRTTIME
 {
 	uint32	nNum;
@@ -5026,7 +5026,7 @@ typedef struct tag_OOP_PRTTIME
 	PRTTIME	item[OOP_MAX_PRTTIME];
 }OOP_PRTTIME_T;
 
-/** @brief 8002-¥ﬂ∑—∏ÊæØ	*/
+/** @brief 8002-ÂÇ¨Ë¥πÂëäË≠¶	*/
 typedef struct tag_OOP_CALLFEE
 {
 	uint8	period[3];
@@ -5035,9 +5035,9 @@ typedef struct tag_OOP_CALLFEE
 }OOP_CALLFEE_T;
 
 /** 
-* @brief	÷–Œƒ–≈œ¢			\n
-*			8003-“ª∞„÷–Œƒ–≈œ¢	\n
-*			8004-÷ÿ“™÷–Œƒ–≈œ¢
+* @brief	‰∏≠Êñá‰ø°ÊÅØ			\n
+*			8003-‰∏ÄËà¨‰∏≠Êñá‰ø°ÊÅØ	\n
+*			8004-ÈáçË¶Å‰∏≠Êñá‰ø°ÊÅØ
 */
 typedef struct tag_CHINESEINFO
 {
@@ -5047,7 +5047,7 @@ typedef struct tag_CHINESEINFO
 	OOP_OCTETVAR256_T	info;
 }CHINESEINFO;
 
-/** @brief ÷–Œƒ–≈œ¢ºØ∫œ	*/
+/** @brief ‰∏≠Êñá‰ø°ÊÅØÈõÜÂêà	*/
 typedef struct tag_OOP_CHINESEINFOS
 {
 	uint32		nNum;
@@ -5055,7 +5055,7 @@ typedef struct tag_OOP_CHINESEINFOS
 	CHINESEINFO	item[OOP_MAX_CHINESEINFO];
 }OOP_CHINESEINFOS_T;
 
-/** @brief ÃÌº”÷–Œƒ–≈œ¢	*/
+/** @brief Ê∑ªÂä†‰∏≠Êñá‰ø°ÊÅØ	*/
 typedef struct tag_OOPM_ADD_CHINESEINFO
 {
 	uint8				index;  /**<0-invalid, 1-valid	*/
@@ -5063,13 +5063,13 @@ typedef struct tag_OOPM_ADD_CHINESEINFO
 	OOP_OCTETVAR256_T	info;
 }OOPM_ADD_CHINESEINFO_T;
 
-/** @brief 8101-÷’∂Àπ¶øÿ ±∂Œ	*/
+/** @brief 8101-ÁªàÁ´ØÂäüÊéßÊó∂ÊÆµ	*/
 typedef struct tag_OOP_POWCON_TIME
 {
     uint8        period[12]; 
 }OOP_POWCON_TIME_T;
 
-/** @brief 8102-π¶øÿ∏ÊæØ ±º‰	*/
+/** @brief 8102-ÂäüÊéßÂëäË≠¶Êó∂Èó¥	*/
 typedef struct tag_OOP_POWCON_WARNING
 {
     uint32      nNum;
@@ -5077,56 +5077,56 @@ typedef struct tag_OOP_POWCON_WARNING
     uint8       time[OOP_MAX_TURN];
 }OOP_POWCON_WARNING_T;
 
-/** @brief  ±∂Œøÿ∑Ω∞∏	*/
+/** @brief Êó∂ÊÆµÊéßÊñπÊ°à	*/
 typedef struct tag_PERIODPLAN
 {
 	OOP_BITSTR8_T		flag;
 	uint8				planID;
 }PERIODPLAN;
 
-/** @brief 8103- ±∂Œπ¶øÿ	*/
+/** @brief 8103-Êó∂ÊÆµÂäüÊéß	*/
 typedef struct tag_OOP_POWCON_PERIOD
 {
 	OI			object;
 	PERIODPLAN	plan;
 }OOP_POWCON_PERIOD_T;
 
-/** @brief œ¬∏°øÿøÿ÷∆∑Ω∞∏	*/
+/** @brief ‰∏ãÊµÆÊéßÊéßÂà∂ÊñπÊ°à	*/
 typedef struct tag_LCONSCHEME
 {
-    uint8       slipTime;					/**< µ±«∞π¶¬ œ¬∏°ø’∂®÷µª¨≤Ó ±º‰		*/
-    char		floatCoefficient;			/**< µ±«∞π¶¬ œ¬∏°øÿ∂®÷µ∏°∂Øœµ ˝		*/
-    uint8       delayTime;					/**< øÿ∫Û◊‹º””–π¶π¶¬ ∂≥Ω·—” ± ±º‰	*/
-    uint8       conTime;					/**< µ±«∞π¶¬ œ¬∏°øÿµƒøÿ÷∆ ±º‰		*/
-    uint8       waringTime[OOP_MAX_TURN];   /**< µ±«∞π¶¬ œ¬∏°øÿ∏ÊæØ ±º‰			*/
+    uint8       slipTime;					/**< ÂΩìÂâçÂäüÁéá‰∏ãÊµÆÁ©∫ÂÆöÂÄºÊªëÂ∑ÆÊó∂Èó¥		*/
+    char		floatCoefficient;			/**< ÂΩìÂâçÂäüÁéá‰∏ãÊµÆÊéßÂÆöÂÄºÊµÆÂä®Á≥ªÊï∞		*/
+    uint8       delayTime;					/**< ÊéßÂêéÊÄªÂä†ÊúâÂäüÂäüÁéáÂÜªÁªìÂª∂Êó∂Êó∂Èó¥	*/
+    uint8       conTime;					/**< ÂΩìÂâçÂäüÁéá‰∏ãÊµÆÊéßÁöÑÊéßÂà∂Êó∂Èó¥		*/
+    uint8       waringTime[OOP_MAX_TURN];   /**< ÂΩìÂâçÂäüÁéá‰∏ãÊµÆÊéßÂëäË≠¶Êó∂Èó¥			*/
 }LCONSCHEME;
 
-/** @brief 8106-µ±«∞π¶¬ œ¬∏°øÿ	*/
+/** @brief 8106-ÂΩìÂâçÂäüÁéá‰∏ãÊµÆÊéß	*/
 typedef struct tag_OOP_POWCON_LOW
 {
-    OI			 object;                /**< ◊‹º”◊È∂‘œÛ	*/
-    LCONSCHEME   scheme;                /**< øÿ÷∆∑Ω∞∏	*/
+    OI			 object;                /**< ÊÄªÂä†ÁªÑÂØπË±°	*/
+    LCONSCHEME   scheme;                /**< ÊéßÂà∂ÊñπÊ°à	*/
 }OOP_POWCON_LOW_T;
 
-/** @brief  ±∂Œøÿ∂®÷µ≤Œ ˝	*/
+/** @brief Êó∂ÊÆµÊéßÂÆöÂÄºÂèÇÊï∞	*/
 typedef struct OOP_POWERCTRLPARAM
 {
-    uint8    valid;						/**<  ±∂Œ∫≈				*/
-	int64	 defValue[OOP_MAX_TURN];	/**<  ±∂Œπ¶øÿ∂®÷µ		*/
+    uint8    valid;						/**< Êó∂ÊÆµÂè∑				*/
+	int64	 defValue[OOP_MAX_TURN];	/**< Êó∂ÊÆµÂäüÊéßÂÆöÂÄº		*/
 }POWERCTRLPARAM;
 
-#define OOP_MAX_PCPLAN	(3)				/**< ◊Ó¥Û ±∂Œøÿ∑Ω∞∏ ˝	*/
+#define OOP_MAX_PCPLAN	(3)				/**< ÊúÄÂ§ßÊó∂ÊÆµÊéßÊñπÊ°àÊï∞	*/
 
-/** @brief 8109- ±∂Œπ¶øÿ≈‰÷√µ•‘™	*/
+/** @brief 8109-Êó∂ÊÆµÂäüÊéßÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OOP_CFGUNIT_8109
 {
-    uint16				object;                 /**< ◊‹º”◊È∂‘œÛ				*/
-    uint8				plan;                   /**< ∑Ω∞∏±Í ∂				*/
-    POWERCTRLPARAM		value[3];               /**< »˝Ã◊∑Ω∞∏∂®÷µ			*/
-    char				floatCoe;               /**<  ±∂Œπ¶øÿ∂®÷µ∏°∂Øœµ ˝	*/
+    uint16				object;                 /**< ÊÄªÂä†ÁªÑÂØπË±°				*/
+    uint8				plan;                   /**< ÊñπÊ°àÊ†áËØÜ				*/
+    POWERCTRLPARAM		value[3];               /**< ‰∏âÂ•óÊñπÊ°àÂÆöÂÄº			*/
+    char				floatCoe;               /**< Êó∂ÊÆµÂäüÊéßÂÆöÂÄºÊµÆÂä®Á≥ªÊï∞	*/
 }OOP_CFGUNIT_8109_T;
 
-/** @brief  ±∂Œøÿ	*/
+/** @brief Êó∂ÊÆµÊéß	*/
 typedef struct tag_OOP_8103_CONFIG
 {
 	uint32				nNum;
@@ -5134,17 +5134,17 @@ typedef struct tag_OOP_8103_CONFIG
 	OOP_CFGUNIT_8109_T	item[OOP_MAX_TG];
 }OOP_8103_CONFIG_T;
 
-/** @brief 810A-≥ß–›øÿ≈‰÷√µ•‘™	*/
+/** @brief 810A-ÂéÇ‰ºëÊéßÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OOP_CFGUNIT_810A
 {
-    OI					object;                 /**< ◊‹º”◊È∂‘œÛ		*/
-    int64				defValue;               /**< ≥ß–›øÿ∂®÷µ		*/
-    OOP_DATETIME_S_T	startTime;              /**< œﬁµÁ∆ º ±º‰	*/
-    uint16				duration;               /**< œﬁµÁ—”–¯ ±º‰	*/
-    OOP_BITSTR8_T		powLimit;               /**< √ø÷‹œﬁµÁ»’		*/
+    OI					object;                 /**< ÊÄªÂä†ÁªÑÂØπË±°		*/
+    int64				defValue;               /**< ÂéÇ‰ºëÊéßÂÆöÂÄº		*/
+    OOP_DATETIME_S_T	startTime;              /**< ÈôêÁîµËµ∑ÂßãÊó∂Èó¥	*/
+    uint16				duration;               /**< ÈôêÁîµÂª∂Áª≠Êó∂Èó¥	*/
+    OOP_BITSTR8_T		powLimit;               /**< ÊØèÂë®ÈôêÁîµÊó•		*/
 }OOP_CFGUNIT_810A_T;
 
-/** @brief ≥ß–›øÿ	*/
+/** @brief ÂéÇ‰ºëÊéß	*/
 typedef struct tag_OOP_8104_CONFIG
 {
 	uint32				nNum;
@@ -5152,16 +5152,16 @@ typedef struct tag_OOP_8104_CONFIG
 	OOP_CFGUNIT_810A_T	item[OOP_MAX_TG];
 }OOP_8104_CONFIG_T;
 
-/** @brief 810B-”™“µ±®Õ£øÿ≈‰÷√µ•‘™	*/
+/** @brief 810B-Ëê•‰∏öÊä•ÂÅúÊéßÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OOP_CFGUNIT_810B
 {
-    uint16					object;                 /**< ◊‹º”◊È∂‘œÛ		*/
-    OOP_DATETIME_S_T		startTime;              /**< ±®Õ£∆ º ±º‰	*/
-    OOP_DATETIME_S_T		endTime;                /**< ±®Õ£Ω· ¯ ±º‰	*/
-    int64					defValue;               /**< ±®Õ£øÿπ¶¬ ∂®÷µ	*/
+    uint16					object;                 /**< ÊÄªÂä†ÁªÑÂØπË±°		*/
+    OOP_DATETIME_S_T		startTime;              /**< Êä•ÂÅúËµ∑ÂßãÊó∂Èó¥	*/
+    OOP_DATETIME_S_T		endTime;                /**< Êä•ÂÅúÁªìÊùüÊó∂Èó¥	*/
+    int64					defValue;               /**< Êä•ÂÅúÊéßÂäüÁéáÂÆöÂÄº	*/
 }OOP_CFGUNIT_810B_T;
 
-/** @brief ”™“µ±®Õ£øÿ	*/
+/** @brief Ëê•‰∏öÊä•ÂÅúÊéß	*/
 typedef struct tag_OOP_8105_CONFIG
 {
 	uint32				nNum;
@@ -5169,20 +5169,20 @@ typedef struct tag_OOP_8105_CONFIG
 	OOP_CFGUNIT_810B_T	item[OOP_MAX_TG];
 }OOP_8105_CONFIG_T;
 
-/** @brief 810C-π∫µÁøÿ≈‰÷√µ•‘™	*/
+/** @brief 810C-Ë¥≠ÁîµÊéßÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OOP_CFGUNIT_810C
 {
-    uint16      object;                 /**< ◊‹º”◊È∂‘œÛ		*/
-    uint32      number;                 /**< π∫µÁµ•∫≈		*/
-    uint8       flag;                   /**< ◊∑º”/À¢–¬±Í ∂	*/
-    uint8		type;					/**< π∫µÁ¿‡–Õ		*/
-    int64       purElectricity;         /**< π∫µÁ¡ø(∑—)÷µ	*/
-    int64       alarmLimit;             /**< ±®æØ√≈œﬁ÷µ		*/
-    int64       tripLimit;              /**< Ã¯’¢√≈œﬁ÷µ		*/
-    uint8		mode;					/**< π∫µÁøÿƒ£ Ω		*/
+    uint16      object;                 /**< ÊÄªÂä†ÁªÑÂØπË±°		*/
+    uint32      number;                 /**< Ë¥≠ÁîµÂçïÂè∑		*/
+    uint8       flag;                   /**< ËøΩÂä†/Âà∑Êñ∞Ê†áËØÜ	*/
+    uint8		type;					/**< Ë¥≠ÁîµÁ±ªÂûã		*/
+    int64       purElectricity;         /**< Ë¥≠ÁîµÈáè(Ë¥π)ÂÄº	*/
+    int64       alarmLimit;             /**< Êä•Ë≠¶Èó®ÈôêÂÄº		*/
+    int64       tripLimit;              /**< Ë∑≥Èó∏Èó®ÈôêÂÄº		*/
+    uint8		mode;					/**< Ë¥≠ÁîµÊéßÊ®°Âºè		*/
 }OOP_CFGUNIT_810C_T;
 
-/** @brief π∫µÁøÿ	*/
+/** @brief Ë¥≠ÁîµÊéß	*/
 typedef struct tag_OOP_8107_CONFIG
 {
 	uint32				nNum;
@@ -5190,16 +5190,16 @@ typedef struct tag_OOP_8107_CONFIG
 	OOP_CFGUNIT_810C_T	item[OOP_MAX_TG];
 }OOP_8107_CONFIG_T;
 
-/** @brief 810D-‘¬µÁøÿ≈‰÷√µ•‘™	*/
+/** @brief 810D-ÊúàÁîµÊéßÈÖçÁΩÆÂçïÂÖÉ	*/
 typedef struct tag_OOP_CFGUNIT_810D
 {
-    uint16       object;                 /**< ◊‹º”◊È∂‘œÛ			*/
-    int64        defValue;               /**< ‘¬µÁ¡øøÿ∂®÷µ			*/
-    uint8        limitCoe;               /**< ±®æØ√≈œﬁ÷µœµ ˝		*/
-    char         floatCoe;               /**< ‘¬µÁøÿ∂®÷µ∏°∂Øœµ ˝	*/
+    uint16       object;                 /**< ÊÄªÂä†ÁªÑÂØπË±°			*/
+    int64        defValue;               /**< ÊúàÁîµÈáèÊéßÂÆöÂÄº			*/
+    uint8        limitCoe;               /**< Êä•Ë≠¶Èó®ÈôêÂÄºÁ≥ªÊï∞		*/
+    char         floatCoe;               /**< ÊúàÁîµÊéßÂÆöÂÄºÊµÆÂä®Á≥ªÊï∞	*/
 }OOP_CFGUNIT_810D_T;
 
-/** @brief ‘¬µÁøÿ	*/
+/** @brief ÊúàÁîµÊéß	*/
 typedef struct tag_OOP_8108_CONFIG
 {
 	uint32				nNum;
@@ -5209,19 +5209,19 @@ typedef struct tag_OOP_8108_CONFIG
 
 /**
 ********************************************************
-* A.11 Œƒº˛¥´ ‰¿‡∂‘œÛ
+* A.11 Êñá‰ª∂‰º†ËæìÁ±ªÂØπË±°
 ********************************************************
 */
 
-/** @brief F000-Œƒº˛∑÷÷°¥´ ‰π‹¿Ì	*/
+/** @brief F000-Êñá‰ª∂ÂàÜÂ∏ß‰º†ËæìÁÆ°ÁêÜ	*/
 typedef struct tag_OOPM_DOWNLOADFILE
 {
-	OOP_VISIBLEVAR128_T	file;		/**< Œƒº˛¬∑æ∂			*/
-	uint32				nOffset;	/**< ∆´“∆Œª÷√			*/
-	uint32				nLen;		/**< ∂¡»°≥§∂»			*/
+	OOP_VISIBLEVAR128_T	file;		/**< Êñá‰ª∂Ë∑ØÂæÑ			*/
+	uint32				nOffset;	/**< ÂÅèÁßª‰ΩçÁΩÆ			*/
+	uint32				nLen;		/**< ËØªÂèñÈïøÂ∫¶			*/
 }OOPM_DOWNLOADFILE_T;
 
-/** @brief Œƒº˛¥´ ‰–≠“È¿‡–Õ	*/
+/** @brief Êñá‰ª∂‰º†ËæìÂçèËÆÆÁ±ªÂûã	*/
 typedef enum tag_OOP_FTP
 {
 	telnet	= 0,
@@ -5231,7 +5231,7 @@ typedef enum tag_OOP_FTP
 	https	= 4
 }OOP_FTP_E;
 
-/** @brief FTP∑˛ŒÒ∆˜–≈œ¢	*/
+/** @brief FTPÊúçÂä°Âô®‰ø°ÊÅØ	*/
 typedef struct tag_OOP_FTPSERVER
 {
 	OOP_IP_T			ip;
@@ -5240,18 +5240,18 @@ typedef struct tag_OOP_FTPSERVER
 	OOP_VISIBLEVAR_T	pwd;
 }OOP_FTPSERVER_T;
 
-/** @brief Œƒº˛¿‡±	*/
+/** @brief Êñá‰ª∂Á±ªÂà´	*/
 typedef enum tag_OOP_FILETYPE
 {
-	FT_TERM		= 0,	/**< ÷’∂ÀŒƒº˛			*/
-	FT_LOCAL	= 1,	/**< ±æµÿÕ®–≈ƒ£øÈŒƒº˛	*/
-	FT_REMOTE	= 2,	/**< ‘∂≥ÃÕ®–≈ƒ£øÈŒƒº˛	*/
-	FT_COLL		= 3,	/**< ≤…ºØ∆˜Œƒº˛			*/
-	FT_NODE		= 4,	/**< ¥”Ω⁄µ„Õ®–≈ƒ£øÈŒƒº˛	*/
-	FT_OTHER	= 255,	/**< ∆‰À¸Œƒº˛			*/
+	FT_TERM		= 0,	/**< ÁªàÁ´ØÊñá‰ª∂			*/
+	FT_LOCAL	= 1,	/**< Êú¨Âú∞ÈÄö‰ø°Ê®°ÂùóÊñá‰ª∂	*/
+	FT_REMOTE	= 2,	/**< ËøúÁ®ãÈÄö‰ø°Ê®°ÂùóÊñá‰ª∂	*/
+	FT_COLL		= 3,	/**< ÈááÈõÜÂô®Êñá‰ª∂			*/
+	FT_NODE		= 4,	/**< ‰ªéËäÇÁÇπÈÄö‰ø°Ê®°ÂùóÊñá‰ª∂	*/
+	FT_OTHER	= 255,	/**< ÂÖ∂ÂÆÉÊñá‰ª∂			*/
 }OOP_FILETYPE_E;
 
-/** @brief Œƒº˛–≈œ¢	*/
+/** @brief Êñá‰ª∂‰ø°ÊÅØ	*/
 typedef struct tag_OOP_FILE
 {
 	OOP_VISIBLEVAR_T	srceFile;
@@ -5262,10 +5262,10 @@ typedef struct tag_OOP_FILE
 	uint8				filetype;
 }OOP_FILE_T;
 
-/** @brief ¥˙∑¢	*/
+/** @brief ‰ª£Âèë	*/
 typedef struct tag_OOPM_FILEPROXY
 {
-	uint8					type;		/**<  ˝æ›¿‡–Õ						*/
+	uint8					type;		/**< Êï∞ÊçÆÁ±ªÂûã						*/
 	union
 	{
 		OOP_OAD_U			oad;		/**< DT_OAD						*/
@@ -5275,21 +5275,21 @@ typedef struct tag_OOPM_FILEPROXY
 	};
 }OOPM_FILEPROXY_T;
 
-/** @brief ∆Ù∂ØFTP¥´ ‰	*/
+/** @brief ÂêØÂä®FTP‰º†Ëæì	*/
 typedef struct tag_OOPM_FTP
 {
 	OOP_FILE_T	file;
 	uint8		proto;
 }OOPM_FTP_T;
 
-/** @brief Œƒº˛–£—È–≈œ¢	*/
+/** @brief Êñá‰ª∂Ê†°È™å‰ø°ÊÅØ	*/
 typedef struct tag_OOP_FILEVC
 {
 	uint8				type;
 	OOP_OCTETVAR16_T	content;
 }OOP_FILEVC_T;
 
-/** @brief ∆Ù∂ØøÈ¥´ ‰	*/
+/** @brief ÂêØÂä®Âùó‰º†Ëæì	*/
 typedef struct tag_OOPM_BLOCKTRANS
 {
 	OOP_FILE_T		file;
@@ -5297,26 +5297,26 @@ typedef struct tag_OOPM_BLOCKTRANS
 	OOP_FILEVC_T	crc;
 }OOPM_BLOCKTRANS_T;
 
-/** @brief –¥ ˝æ›øÈ	*/
+/** @brief ÂÜôÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOPM_WRITEBLOCK
 {
 	uint16				nBlock;
 	OOP_OCTETVAR_T		data;
 }OOPM_WRITEBLOCK_T;
 
-/** @brief ∂¡ ˝æ›øÈ	*/
+/** @brief ËØªÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOPM_READBLOCK
 {
 	uint16	nBlock;
 }OOPM_READBLOCK_T;
 
-/** @brief ∂¡ ˝æ›øÈ∑µªÿ	*/
+/** @brief ËØªÊï∞ÊçÆÂùóËøîÂõû	*/
 typedef struct tag_OOPM_READRET
 {
 	OOP_OCTETVAR2K_T	data;
 }OOPM_READRET_T;
 
-/** @brief »Ìº˛±»∂‘	*/
+/** @brief ËΩØ‰ª∂ÊØîÂØπ	*/
 typedef struct tag_OOP_SOFTCOMPARE
 {
     uint8	cpu;
@@ -5326,96 +5326,96 @@ typedef struct tag_OOP_SOFTCOMPARE
     uint16	unencrypt;    
 }OOP_SOFTCOMPARE_T;
 
-/** @brief Œƒº˛÷¥––√¸¡ÓΩ·π˚	*/
+/** @brief Êñá‰ª∂ÊâßË°åÂëΩ‰ª§ÁªìÊûú	*/
 typedef enum
 {
-	TRANS_SUCC = 100,		/**< ¥´ ‰ªÚ÷¥––≤Ÿ◊˜≥…π¶					*/
-	CONNECTING,				/**< ’˝‘⁄Ω®¡¢¡¨Ω”(¿©’π¥´ ‰)				*/
-	LOGINING,				/**< ’˝‘⁄‘∂≥Ãµ«¬º						*/
-	EXECING	,				/**< ’˝‘⁄÷¥––Œƒº˛						*/
-	FILENOTEXIST,			/**< Œƒº˛ªÚƒø¬º≤ª¥Ê‘⁄					*/
-	OPER_REJECT,			/**< ≤Ÿ◊˜≤ª‘ –Ì(¥¥Ω®/…æ≥˝/∂¡–¥/÷¥––)	*/
-	TRANS_INTER,			/**< Œƒº˛¥´ ‰÷–∂œ						*/
-	FILECRC_FAIL,			/**< Œƒº˛–£—È ß∞‹						*/
-	FORWD_FAIL,				/**< ◊™∑¢ ß∞‹							*/
-	POXTRY_FAIL,			/**< ¥˙ ’ ß∞‹							*/
-	CONNECT_FAIL,			/**< Ω®¡¢¡¨Ω” ß∞‹(¿©’π¥´ ‰)			*/
-	LOGIN_FAIL,				/**< ‘∂≥Ãµ«¬º ß∞‹(¿©’π¥´ ‰)			*/
-	SPACE_UNENOUGH,			/**< ¥Ê¥¢ø’º‰≤ª◊„						*/
-	RESET_DEFAULT = 255,	/**< ∏¥Œª∫Ûƒ¨»œ÷µ						*/
+	TRANS_SUCC = 100,		/**< ‰º†ËæìÊàñÊâßË°åÊìç‰ΩúÊàêÂäü					*/
+	CONNECTING,				/**< Ê≠£Âú®Âª∫Á´ãËøûÊé•(Êâ©Â±ï‰º†Ëæì)				*/
+	LOGINING,				/**< Ê≠£Âú®ËøúÁ®ãÁôªÂΩï						*/
+	EXECING	,				/**< Ê≠£Âú®ÊâßË°åÊñá‰ª∂						*/
+	FILENOTEXIST,			/**< Êñá‰ª∂ÊàñÁõÆÂΩï‰∏çÂ≠òÂú®					*/
+	OPER_REJECT,			/**< Êìç‰Ωú‰∏çÂÖÅËÆ∏(ÂàõÂª∫/Âà†Èô§/ËØªÂÜô/ÊâßË°å)	*/
+	TRANS_INTER,			/**< Êñá‰ª∂‰º†Ëæì‰∏≠Êñ≠						*/
+	FILECRC_FAIL,			/**< Êñá‰ª∂Ê†°È™åÂ§±Ë¥•						*/
+	FORWD_FAIL,				/**< ËΩ¨ÂèëÂ§±Ë¥•							*/
+	POXTRY_FAIL,			/**< ‰ª£Êî∂Â§±Ë¥•							*/
+	CONNECT_FAIL,			/**< Âª∫Á´ãËøûÊé•Â§±Ë¥•(Êâ©Â±ï‰º†Ëæì)			*/
+	LOGIN_FAIL,				/**< ËøúÁ®ãÁôªÂΩïÂ§±Ë¥•(Êâ©Â±ï‰º†Ëæì)			*/
+	SPACE_UNENOUGH,			/**< Â≠òÂÇ®Á©∫Èó¥‰∏çË∂≥						*/
+	RESET_DEFAULT = 255,	/**< Â§ç‰ΩçÂêéÈªòËÆ§ÂÄº						*/
 }OOP_FILEEXC_RST_E;
 
 /**
 ********************************************************
-* A.12 ESAMΩ”ø⁄¿‡∂‘œÛ
+* A.12 ESAMÊé•Âè£Á±ªÂØπË±°
 ********************************************************
 */
 
-#define OOP_MAX_SECURITYOBJ		(64)				/**< ◊Ó¥Û∞≤»´ƒ£ Ω∂‘œÛ¡–±Ì ˝¡ø	*/
+#define OOP_MAX_SECURITYOBJ		(64)				/**< ÊúÄÂ§ßÂÆâÂÖ®Ê®°ÂºèÂØπË±°ÂàóË°®Êï∞Èáè	*/
 
 //
-// F101-∞≤»´ƒ£ Ω
+// F101-ÂÆâÂÖ®Ê®°Âºè
 //
 
-/** @brief ∞≤»´ƒ£ Ωø™πÿ	*/
+/** @brief ÂÆâÂÖ®Ê®°ÂºèÂºÄÂÖ≥	*/
 typedef enum tag_SECURITYFLAG
 {
-	SECURITY_OFF = 0,								/**< ≤ª∆Ù”√∞≤»´ƒ£ Ω≤Œ ˝	*/
-	SECURITY_ON,									/**< ∆Ù”√∞≤»´ƒ£ Ω≤Œ ˝		*/
+	SECURITY_OFF = 0,								/**< ‰∏çÂêØÁî®ÂÆâÂÖ®Ê®°ÂºèÂèÇÊï∞	*/
+	SECURITY_ON,									/**< ÂêØÁî®ÂÆâÂÖ®Ê®°ÂºèÂèÇÊï∞		*/
 }OOP_SECURITYFLAG_E;
 
-/** @brief ∂‘œÛ∑√Œ »®œﬁ	*/
+/** @brief ÂØπË±°ËÆøÈóÆÊùÉÈôê	*/
 typedef struct tag_SECURITYMODE
 {
-    OI			object;								/**< ∂‘œÛ±Í ∂	*/
-    uint16		access;								/**< »®œﬁ		*/
+    OI			object;								/**< ÂØπË±°Ê†áËØÜ	*/
+    uint16		access;								/**< ÊùÉÈôê		*/
 }SECURITYMODE;
 
-/** @brief ∞≤»´ƒ£ Ω≤Œ ˝¡–±Ì	*/
+/** @brief ÂÆâÂÖ®Ê®°ÂºèÂèÇÊï∞ÂàóË°®	*/
 typedef struct tag_OOP_SCURITYMODE
 {
-    uint32          nNum;							/**< ∞≤»´ƒ£ Ω∂‘œÛ∏ˆ ˝	*/
+    uint32          nNum;							/**< ÂÆâÂÖ®Ê®°ÂºèÂØπË±°‰∏™Êï∞	*/
 	uint32			rsv;
-    SECURITYMODE    mode[OOP_MAX_SECURITYOBJ];		/**< ∞≤»´ƒ£ Ω∂‘œÛ¡–±Ì	*/
+    SECURITYMODE    mode[OOP_MAX_SECURITYOBJ];		/**< ÂÆâÂÖ®Ê®°ÂºèÂØπË±°ÂàóË°®	*/
 }OOP_SCURITYMODE_T;
 
 /**
 ********************************************************
-* A.13  ‰»Î ‰≥ˆ…Ë±∏Ω”ø⁄¿‡∂‘œÛ
+* A.13 ËæìÂÖ•ËæìÂá∫ËÆæÂ§áÊé•Âè£Á±ªÂØπË±°
 ********************************************************
 */
 
-#define OOP_MAX_RS232			(1)		/**< ◊Ó¥ÛRS232 ˝¡ø						*/
-#define OOP_MAX_RS485			(8)		/**< ◊Ó¥ÛRS485 ˝¡ø						*/
-#define OOP_MAX_IR				(1)		/**< ◊Ó¥Û∫ÏÕ‚ ˝¡ø						*/
-#define OOP_MAX_SWITCHIN		(8)		/**< ◊Ó¥Ûø™»Î ˝¡ø						*/
-#define OOP_MAX_SWITCHOUT		(8)		/**< ◊Ó¥Ûø™≥ˆ ˝¡ø						*/
-#define OOP_MAX_WARNINGOUT		(1)		/**< ◊Ó¥Û∏ÊæØ ‰≥ˆ ˝¡ø					*/
-#define OOP_MAX_DCANALOG		(2)		/**< ◊Ó¥Û÷±¡˜ƒ£ƒ‚¡ø¬∑ ˝					*/
-#define OOP_MAX_MUTITERMINAL	(1)		/**< ◊Ó¥Û∂‡π¶ƒ‹∂À◊” ˝¡ø					*/
-#define OOP_MAX_PULSE			(8)		/**< ◊Ó¥Û¬ˆ≥Â ‰»Î¬∑ ˝					*/
-#define OOP_MAX_ROUTEMODULE		(1)		/**< ◊Ó¥Û‘ÿ≤®/Œ¢π¶¬ Œﬁœﬂ¬∑”…ƒ£øÈ ˝¡ø	*/
-#define OOP_MAX_BLUETOOTH		(1)		/**< ¿∂—¿ ˝¡ø							*/
-#define OOP_MAX_WANRINGOUT		(1)		/**< ◊Ó¥Û∏ÊæØ ‰≥ˆ¬∑ ˝					*/
-#define OOP_MAX_WARINGTIME		(12)	/**< ‘ –Ì∏ÊæØ ±∂Œ						*/
+#define OOP_MAX_RS232			(1)		/**< ÊúÄÂ§ßRS232Êï∞Èáè						*/
+#define OOP_MAX_RS485			(8)		/**< ÊúÄÂ§ßRS485Êï∞Èáè						*/
+#define OOP_MAX_IR				(1)		/**< ÊúÄÂ§ßÁ∫¢Â§ñÊï∞Èáè						*/
+#define OOP_MAX_SWITCHIN		(8)		/**< ÊúÄÂ§ßÂºÄÂÖ•Êï∞Èáè						*/
+#define OOP_MAX_SWITCHOUT		(8)		/**< ÊúÄÂ§ßÂºÄÂá∫Êï∞Èáè						*/
+#define OOP_MAX_WARNINGOUT		(1)		/**< ÊúÄÂ§ßÂëäË≠¶ËæìÂá∫Êï∞Èáè					*/
+#define OOP_MAX_DCANALOG		(2)		/**< ÊúÄÂ§ßÁõ¥ÊµÅÊ®°ÊãüÈáèË∑ØÊï∞					*/
+#define OOP_MAX_MUTITERMINAL	(1)		/**< ÊúÄÂ§ßÂ§öÂäüËÉΩÁ´ØÂ≠êÊï∞Èáè					*/
+#define OOP_MAX_PULSE			(8)		/**< ÊúÄÂ§ßËÑâÂÜ≤ËæìÂÖ•Ë∑ØÊï∞					*/
+#define OOP_MAX_ROUTEMODULE		(1)		/**< ÊúÄÂ§ßËΩΩÊ≥¢/ÂæÆÂäüÁéáÊó†Á∫øË∑ØÁî±Ê®°ÂùóÊï∞Èáè	*/
+#define OOP_MAX_BLUETOOTH		(1)		/**< ËìùÁâôÊï∞Èáè							*/
+#define OOP_MAX_WANRINGOUT		(1)		/**< ÊúÄÂ§ßÂëäË≠¶ËæìÂá∫Ë∑ØÊï∞					*/
+#define OOP_MAX_WARINGTIME		(12)	/**< ÂÖÅËÆ∏ÂëäË≠¶Êó∂ÊÆµ						*/
 
-/** @brief ¥Æø⁄∂®“Â	*/
+/** @brief ‰∏≤Âè£ÂÆö‰πâ	*/
 typedef struct tag_SERIALPORT
 {
 	OOP_VISIBLEVAR_T	name;
-    OOP_COMDCB_T		param;      /**< ∂Àø⁄≤Œ ˝	*/
-    uint8				func;       /**< ∂Àø⁄π¶ƒ‹	*/
+    OOP_COMDCB_T		param;      /**< Á´ØÂè£ÂèÇÊï∞	*/
+    uint8				func;       /**< Á´ØÂè£ÂäüËÉΩ	*/
 }SERIALPORT;
 
-/** @brief F200-¥Æø⁄	*/
+/** @brief F200-‰∏≤Âè£	*/
 typedef struct tag_OOP_SERIALPORT
 {
     uint32          nNum;
 	uint32			rsv;
-    SERIALPORT      com[OOP_MAX_COM];       /**< ¥Æø⁄¡–±Ì	*/
+    SERIALPORT      com[OOP_MAX_COM];       /**< ‰∏≤Âè£ÂàóË°®	*/
 }OOP_SERIALPORT_T;
 
-/** @brief ¥Æø⁄≈‰÷√	*/
+/** @brief ‰∏≤Âè£ÈÖçÁΩÆ	*/
 typedef struct tag_SERIALPORT_CONFIG
 {
 	OOP_OAD_U		port;
@@ -5428,32 +5428,32 @@ typedef struct tag_OOP_RS485_DEL
 {
     uint32          nNum;
 	uint32			rsv;
-    SERIALPORT		rs485[3];   	/**< RS485¡–±Ì	*/
+    SERIALPORT		rs485[3];   	/**< RS485ÂàóË°®	*/
 }OOP_RS485_DEL_T;
 
 typedef struct tag_OOP_RS485
 {
     uint32          nNum;
 	uint32			rsv;
-    SERIALPORT		rs485[OOP_MAX_RS485];   /**< RS485¡–±Ì	*/
+    SERIALPORT		rs485[OOP_MAX_RS485];   /**< RS485ÂàóË°®	*/
 }OOP_RS485_T;
 
-/** @brief ±Í◊º¥Æ––∂Àø⁄∂®“Â	*/
+/** @brief Ê†áÂáÜ‰∏≤Ë°åÁ´ØÂè£ÂÆö‰πâ	*/
 typedef struct tag_PORTCFG
 {
 	OOP_VISIBLEVAR_T	name;
-    OOP_COMDCB_T		param;				/**< ∂Àø⁄≤Œ ˝	*/
+    OOP_COMDCB_T		param;				/**< Á´ØÂè£ÂèÇÊï∞	*/
 }OOP_PORTCFG_T;
 
-/** @brief F202-∫ÏÕ‚	*/
+/** @brief F202-Á∫¢Â§ñ	*/
 typedef struct tag_OOP_IR
 {
     uint32			nNum;
 	uint32			rsv;
-    OOP_PORTCFG_T   ir[OOP_MAX_IR];			/**< ∫ÏÕ‚¡–±Ì	*/
+    OOP_PORTCFG_T   ir[OOP_MAX_IR];			/**< Á∫¢Â§ñÂàóË°®	*/
 }OOP_IR_T;
 
-/** @brief ∫ÏÕ‚≈‰÷√	*/
+/** @brief Á∫¢Â§ñÈÖçÁΩÆ	*/
 typedef struct tag_IR_CONFIG
 {
 	OOP_OAD_U		oad;
@@ -5461,17 +5461,17 @@ typedef struct tag_IR_CONFIG
 }OOPM_IR_CONFIG_T;
 
 //
-// F203-ø™πÿ¡ø ‰»Î
+// F203-ÂºÄÂÖ≥ÈáèËæìÂÖ•
 //
 
-/** @brief –≈∫≈¡ø ‰»Î◊¥Ã¨	*/
+/** @brief ‰ø°Âè∑ÈáèËæìÂÖ•Áä∂ÊÄÅ	*/
 typedef struct tag_INPUTSTATE
 {
-    uint8            st;		/**< ◊¥Ã¨ST	*/
-    uint8            cd;		/**< ±‰ŒªCD	*/
+    uint8            st;		/**< Áä∂ÊÄÅST	*/
+    uint8            cd;		/**< Âèò‰ΩçCD	*/
 }INPUTSTATE;
 
-/** @brief “ª◊È–≈∫≈¡ø ‰»Î◊¥Ã¨	*/
+/** @brief ‰∏ÄÁªÑ‰ø°Âè∑ÈáèËæìÂÖ•Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_SWITCHIN_STATE
 {
     uint32          nNum;   
@@ -5479,26 +5479,26 @@ typedef struct tag_OOP_SWITCHIN_STATE
     INPUTSTATE      state[OOP_MAX_SWITCHIN];
 }OOP_SWITCHIN_STATE_T;
 
-/** @brief –≈∫≈¡øΩ”»Î◊¥Ã¨	*/
+/** @brief ‰ø°Âè∑ÈáèÊé•ÂÖ•Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_SWITCHIN_FLAG
 {
-    OOP_BITSTR8_T     inputFlag;    /**< ø™πÿ¡øΩ”»Î±Í÷æ		*/
-    OOP_BITSTR8_T     attrFlag;     /**< ø™πÿ¡ø Ù–‘±Í÷æ  	*/  
+    OOP_BITSTR8_T     inputFlag;    /**< ÂºÄÂÖ≥ÈáèÊé•ÂÖ•Ê†áÂøó		*/
+    OOP_BITSTR8_T     attrFlag;     /**< ÂºÄÂÖ≥ÈáèÂ±ûÊÄßÊ†áÂøó  	*/  
 }OOP_SWITCHIN_FLAG_T;
 
 //
-// F204-÷±¡˜ƒ£ƒ‚¡ø 
+// F204-Áõ¥ÊµÅÊ®°ÊãüÈáè 
 //
 
-/** @brief ÷±¡˜ƒ£ƒ‚¡ø≤Œ ˝∂®“Â	*/
+/** @brief Áõ¥ÊµÅÊ®°ÊãüÈáèÂèÇÊï∞ÂÆö‰πâ	*/
 typedef struct tag_DCCFGPARAM
 {
-    int32				startValue;     /**< ¡ø≥Ã∆ º÷µ	*/
-    int32				endValue;       /**< ¡ø≥ÃΩ· ¯÷µ	*/
-    OOP_SCALER_UNIT_T   value;			/**< ªªÀ„º∞µ•Œª	*/
+    int32				startValue;     /**< ÈáèÁ®ãËµ∑ÂßãÂÄº	*/
+    int32				endValue;       /**< ÈáèÁ®ãÁªìÊùüÂÄº	*/
+    OOP_SCALER_UNIT_T   value;			/**< Êç¢ÁÆóÂèäÂçï‰Ωç	*/
 }DCCFGPARAM;
 
-/** @brief “ª◊È÷±¡˜ƒ£ƒ‚¡ø≈‰÷√	*/
+/** @brief ‰∏ÄÁªÑÁõ¥ÊµÅÊ®°ÊãüÈáèÈÖçÁΩÆ	*/
 typedef struct tag_OOP_ANALOG_CONFIG
 {
     uint32          nNum;
@@ -5506,7 +5506,7 @@ typedef struct tag_OOP_ANALOG_CONFIG
     DCCFGPARAM      param[OOP_MAX_DCANALOG];
 }OOP_ANALOG_CONFIG_T;
 
-/** @brief “ª◊È÷±¡˜ƒ£ƒ‚¡ø	*/
+/** @brief ‰∏ÄÁªÑÁõ¥ÊµÅÊ®°ÊãüÈáè	*/
 typedef struct tag_OOP_ANALOG
 {
 	uint32	nNum;
@@ -5515,20 +5515,20 @@ typedef struct tag_OOP_ANALOG
 }OOP_ANALOG_T;
 
 //
-// F205-ø™πÿ¡ø ‰≥ˆ
+// F205-ÂºÄÂÖ≥ÈáèËæìÂá∫
 //
 
-/** @brief ø™πÿ¡ø◊¥Ã¨∂®“Â	*/
+/** @brief ÂºÄÂÖ≥ÈáèÁä∂ÊÄÅÂÆö‰πâ	*/
 typedef struct tag_SWITCHOUT
 {
-	OOP_VISIBLEVAR_T	name;			/**< √Ë ˆ∑˚			*/
-    uint8				current;        /**< µ±«∞◊¥Ã¨(enum)	*/
-    uint8				attribute;      /**< ø™πÿ Ù–‘(enum)	*/
-	uint8				input;			/**< Ω”œﬂ◊¥Ã¨		*/
+	OOP_VISIBLEVAR_T	name;			/**< ÊèèËø∞Á¨¶			*/
+    uint8				current;        /**< ÂΩìÂâçÁä∂ÊÄÅ(enum)	*/
+    uint8				attribute;      /**< ÂºÄÂÖ≥Â±ûÊÄß(enum)	*/
+	uint8				input;			/**< Êé•Á∫øÁä∂ÊÄÅ		*/
 }SWITCHOUT;
 
-/** @brief “ª◊Èø™πÿ¡ø	*/
-/** ±£¡Ù ˝æ›Ω·ππºÊ»›2018-6-21*/
+/** @brief ‰∏ÄÁªÑÂºÄÂÖ≥Èáè	*/
+/** ‰øùÁïôÊï∞ÊçÆÁªìÊûÑÂÖºÂÆπ2018-6-21*/
 typedef struct tag_OOP_SWITCHOUT_DEL
 {
     uint32            nNum;
@@ -5543,7 +5543,7 @@ typedef struct tag_OOP_SWITCHOUT
     SWITCHOUT        value[OOP_MAX_SWITCHOUT]; 
 }OOP_SWITCHOUT_T;
 
-/** @brief ø™πÿ¡ø≈‰÷√≤Œ ˝	*/
+/** @brief ÂºÄÂÖ≥ÈáèÈÖçÁΩÆÂèÇÊï∞	*/
 typedef struct tag_OOPM_SWITCHOUT_127
 {
 	OOP_OAD_U		idx;
@@ -5551,10 +5551,10 @@ typedef struct tag_OOPM_SWITCHOUT_127
 }OOPM_SWITCHOUT_127_T;
 
 //
-// F206-∏ÊæØ ‰≥ˆ
+// F206-ÂëäË≠¶ËæìÂá∫
 //
 
-/** @brief “ª◊È∏ÊæØ ‰≥ˆ◊¥Ã¨	*/
+/** @brief ‰∏ÄÁªÑÂëäË≠¶ËæìÂá∫Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_WARNINGOUT
 {
 	uint32		nNum;
@@ -5562,14 +5562,14 @@ typedef struct tag_OOP_WARNINGOUT
 	uint8		state[OOP_MAX_WARNINGOUT];
 }OOP_WARNINGOUT_T;
 
-/** @brief ∏ÊæØ ±∂Œ∂®“Â		*/
+/** @brief ÂëäË≠¶Êó∂ÊÆµÂÆö‰πâ		*/
 typedef struct tag_WARNINGPERIOD
 {
-    OOP_TIME_T        startTime;      /**< ∆ º ±º‰	*/
-    OOP_TIME_T        endTime;        /**< Ω· ¯ ±º‰	*/
+    OOP_TIME_T        startTime;      /**< Ëµ∑ÂßãÊó∂Èó¥	*/
+    OOP_TIME_T        endTime;        /**< ÁªìÊùüÊó∂Èó¥	*/
 }WARNINGPERIOD;
 
-/** @brief “ª◊È∏ÊæØ ±∂Œ		*/
+/** @brief ‰∏ÄÁªÑÂëäË≠¶Êó∂ÊÆµ		*/
 typedef struct tag_OOP_WARNINGTIME
 {
     uint32          nNum;   
@@ -5577,7 +5577,7 @@ typedef struct tag_OOP_WARNINGTIME
     WARNINGPERIOD   period[OOP_MAX_WARINGTIME];
 }OOP_WARNINGTIME_T;
 
-/** @brief “ª◊È∏ÊæØ◊¥Ã¨	*/
+/** @brief ‰∏ÄÁªÑÂëäË≠¶Áä∂ÊÄÅ	*/
 typedef struct tag_OOP_WARNINGSTATE
 {
 	uint32			nNum;
@@ -5586,23 +5586,23 @@ typedef struct tag_OOP_WARNINGSTATE
 }OOP_WARNINGSTATE_T;
 
 //
-// F207-∂‡π¶ƒ‹∂À◊”
+// F207-Â§öÂäüËÉΩÁ´ØÂ≠ê
 //
 
-/** @brief ∂‡π¶ƒ‹∂À◊”π§◊˜ƒ£ Ω	*/
+/** @brief Â§öÂäüËÉΩÁ´ØÂ≠êÂ∑•‰ΩúÊ®°Âºè	*/
 typedef struct tag_OOP_MULTIOUT
 {
 	uint8	workMode;
 }MULTIOUT;
 
-/** @brief ∂‡π¶ƒ‹∂À◊”ƒ£ Ω≈‰÷√	*/
+/** @brief Â§öÂäüËÉΩÁ´ØÂ≠êÊ®°ÂºèÈÖçÁΩÆ	*/
 typedef struct tag_MULTIOUT_CONFIG
 {
 	OOP_OAD_U		oad;
 	uint8			workMode;
 }OOPM_MULTIOUT_CONFIG_T;
 
-/** @brief “ª◊È∂‡π¶ƒ‹∂À◊”	*/
+/** @brief ‰∏ÄÁªÑÂ§öÂäüËÉΩÁ´ØÂ≠ê	*/
 typedef struct tag_OOP_MUTIFUNCTERMINAL
 {
     uint32		nNum;
@@ -5611,18 +5611,18 @@ typedef struct tag_OOP_MUTIFUNCTERMINAL
 }OOP_MUTIFUNCTERMINAL_T;
 
 //
-// F208-Ωª≤…Ω”ø⁄
+// F208-‰∫§ÈááÊé•Âè£
 //
 
-#define OOP_MAX_AC				(1)		/**< Ωª¡˜≤…—˘Ω”ø⁄∏ˆ ˝				*/
+#define OOP_MAX_AC				(1)		/**< ‰∫§ÊµÅÈááÊ†∑Êé•Âè£‰∏™Êï∞				*/
 
-/** @brief Ωª≤…√Ë ˆ∑˚	*/
+/** @brief ‰∫§ÈááÊèèËø∞Á¨¶	*/
 typedef struct tag_AC
 {
 	OOP_VISIBLEVAR_T	name;
 }AC;
 
-/** @brief Ωª≤……Ë±∏ºØ∫œ	*/
+/** @brief ‰∫§ÈááËÆæÂ§áÈõÜÂêà	*/
 typedef struct tag_OOP_AC
 {
 	uint32			nNum;
@@ -5631,16 +5631,16 @@ typedef struct tag_OOP_AC
 }OOP_AC_T;
 
 //
-// F20A-¬ˆ≥Â ‰»Î…Ë±∏
+// F20A-ËÑâÂÜ≤ËæìÂÖ•ËÆæÂ§á
 //
 
-/** @brief ¬ˆ≥Â∂Àø⁄√Ë ˆ∑˚	*/
+/** @brief ËÑâÂÜ≤Á´ØÂè£ÊèèËø∞Á¨¶	*/
 typedef struct tag_PULSE
 {
 	OOP_VISIBLEVAR_T	name;
 }PULSE;
 
-/** @brief ¬ˆ≥Â∂Àø⁄ºØ∫œ	*/
+/** @brief ËÑâÂÜ≤Á´ØÂè£ÈõÜÂêà	*/
 typedef struct tag_OOP_PULSE
 {
     uint32          nNum;
@@ -5649,13 +5649,13 @@ typedef struct tag_OOP_PULSE
 }OOP_PULSE_T;
 
 //
-// F209-‘ÿ≤®/Œ¢π¶¬ Œﬁœﬂ¬∑”…ƒ£øÈ
+// F209-ËΩΩÊ≥¢/ÂæÆÂäüÁéáÊó†Á∫øË∑ØÁî±Ê®°Âùó
 //
 
-#define OOP_TRANSCMD_SIZE	(256)		/**< ◊Ó¥ÛÕ∏√˜◊™∑¢◊÷Ω⁄ ˝			*/
-#define OOP_TRANSRET_SIZE	(512)		/**< ◊Ó¥ÛÕ∏√˜◊™∑¢”¶¥◊÷Ω⁄ ˝		*/
+#define OOP_TRANSCMD_SIZE	(256)		/**< ÊúÄÂ§ßÈÄèÊòéËΩ¨ÂèëÂ≠óËäÇÊï∞			*/
+#define OOP_TRANSRET_SIZE	(512)		/**< ÊúÄÂ§ßÈÄèÊòéËΩ¨ÂèëÂ∫îÁ≠îÂ≠óËäÇÊï∞		*/
 
-/** @brief ¬∑”…∞Ê±æ–≈œ¢	*/
+/** @brief Ë∑ØÁî±ÁâàÊú¨‰ø°ÊÅØ	*/
 typedef struct tag_RouteVersion
 {
 	OOP_VISIBLEVAR_T	factory;
@@ -5664,22 +5664,22 @@ typedef struct tag_RouteVersion
 	uint16				wVer;
 }ROUTE_VERSION;
 
-/** @brief ¬∑”…ƒ£øÈµ•‘™	*/
+/** @brief Ë∑ØÁî±Ê®°ÂùóÂçïÂÖÉ	*/
 typedef struct tag_ROUTEMODULE_DEL
 {
-	OOP_VISIBLEVAR_T	name;			// √Ë ˆ∑˚
-	OOP_COMDCB_T		dcb;			// Õ®—∂≤Œ ˝
-	ROUTE_VERSION		verInfo;		// ∞Ê±æ–≈œ¢
+	OOP_VISIBLEVAR_T	name;			// ÊèèËø∞Á¨¶
+	OOP_COMDCB_T		dcb;			// ÈÄöËÆØÂèÇÊï∞
+	ROUTE_VERSION		verInfo;		// ÁâàÊú¨‰ø°ÊÅØ
 }ROUTEMODULE_DEL;
 
 typedef struct tag_ROUTEMODULE
 {
-	OOP_VISIBLEVAR256_T	name;			/**< √Ë ˆ∑˚		*/
-	OOP_COMDCB_T		dcb;			/**< Õ®—∂≤Œ ˝	*/
-	ROUTE_VERSION		verInfo;		/**< ∞Ê±æ–≈œ¢	*/
+	OOP_VISIBLEVAR256_T	name;			/**< ÊèèËø∞Á¨¶		*/
+	OOP_COMDCB_T		dcb;			/**< ÈÄöËÆØÂèÇÊï∞	*/
+	ROUTE_VERSION		verInfo;		/**< ÁâàÊú¨‰ø°ÊÅØ	*/
 }ROUTEMODULE;
 
-/** @brief Õ∏√˜◊™∑¢√¸¡Ó	*/
+/** @brief ÈÄèÊòéËΩ¨ÂèëÂëΩ‰ª§	*/
 typedef struct tag_OOPM_TRANSCMD
 {
 	OOP_TSA_T		add;
@@ -5688,28 +5688,28 @@ typedef struct tag_OOPM_TRANSCMD
 	uint8			cmd[OOP_TRANSCMD_SIZE];
 }OOPM_TRANSCMD_T;
 
-/** @brief ≈‰÷√∂Àø⁄≤Œ ˝	*/
+/** @brief ÈÖçÁΩÆÁ´ØÂè£ÂèÇÊï∞	*/
 typedef struct tag_OOPM_PORTPARAM
 {
 	OOP_OAD_U		idx;
 	OOP_COMDCB_T	dcb;
 }OOPM_PORTPARAM_T;
 
-#define OOP_MAX_PLNODE (1024)	/**< ◊Ó¥Û◊”Ω⁄µ„∏ˆ ˝			*/
+#define OOP_MAX_PLNODE (1024)	/**< ÊúÄÂ§ßÂ≠êËäÇÁÇπ‰∏™Êï∞			*/
 
-/** @brief ◊”Ω⁄µ„–≈œ¢	*/
+/** @brief Â≠êËäÇÁÇπ‰ø°ÊÅØ	*/
 typedef struct tag_OOP_CHILDNODE
 {
-	uint16				index;		// ¥”Ω⁄µ„–Ú∫≈
-	OOP_SA_T			add;		// ¥”Ω⁄µ„Õ®–≈µÿ÷∑
-	OOP_VISIBLEVAR256_T	id;			// ¥”Ω⁄µ„√Ë ˆ∑˚
+	uint16				index;		// ‰ªéËäÇÁÇπÂ∫èÂè∑
+	OOP_SA_T			add;		// ‰ªéËäÇÁÇπÈÄö‰ø°Âú∞ÂùÄ
+	OOP_VISIBLEVAR256_T	id;			// ‰ªéËäÇÁÇπÊèèËø∞Á¨¶
 	#if 0
-	uint16				wResponse;	// ¥”Ω⁄µ„œÏ”¶ ±≥§
-	OOP_DATETIME_S_T	dtLastOk;	// ¥”Ω⁄µ„◊ÓΩ¸“ª¥ŒÕ®–≈≥…π¶ ±º‰
+	uint16				wResponse;	// ‰ªéËäÇÁÇπÂìçÂ∫îÊó∂Èïø
+	OOP_DATETIME_S_T	dtLastOk;	// ‰ªéËäÇÁÇπÊúÄËøë‰∏ÄÊ¨°ÈÄö‰ø°ÊàêÂäüÊó∂Èó¥
 	#endif
 }OOP_CHILDNODE_T;
 
-/** @brief Õ¯¬ÁÕÿ∆Àµ•‘™	*/
+/** @brief ÁΩëÁªúÊãìÊâëÂçïÂÖÉ	*/
 typedef struct tag_OOP_NETTOPOLOGYINFO
 {
 	OOP_OCTETSTR6_T		addr;
@@ -5719,9 +5719,9 @@ typedef struct tag_OOP_NETTOPOLOGYINFO
 	uint8				info;
 }OOP_NETTOPOLOGYINFO_T;
 
-#define OOP_MAX_NEIGHBOUR (255)	/**< ◊Ó¥Û¡⁄æ”Ω⁄µ„ ˝¡ø			*/
+#define OOP_MAX_NEIGHBOUR (255)	/**< ÊúÄÂ§ßÈÇªÂ±ÖËäÇÁÇπÊï∞Èáè			*/
 
-/** @brief ¡⁄æ”Ω⁄µ„–≈œ¢	*/
+/** @brief ÈÇªÂ±ÖËäÇÁÇπ‰ø°ÊÅØ	*/
 typedef struct tag_OOP_NETSINFO
 {
 	OOP_OCTETSTR3_T		nodenid;
@@ -5730,9 +5730,9 @@ typedef struct tag_OOP_NETSINFO
 	OOP_OCTETSTR3_T		neighbour[OOP_MAX_NEIGHBOUR];
 }OOP_NETSINFO_T;
 
-#define OOP_MAX_PLC		(1)		/**< ◊Ó¥Û¬∑”…ƒ£øÈ∏ˆ ˝			*/
+#define OOP_MAX_PLC		(1)		/**< ÊúÄÂ§ßË∑ØÁî±Ê®°Âùó‰∏™Êï∞			*/
 
-/** @brief “ª◊È¬∑”…ƒ£øÈ	*/
+/** @brief ‰∏ÄÁªÑË∑ØÁî±Ê®°Âùó	*/
 typedef struct tag_OOP_ROUTEMODULE_DEL
 {
 	uint32				nNum;
@@ -5747,7 +5747,7 @@ typedef struct tag_OOP_ROUTEMODULE
 	ROUTEMODULE		item[OOP_MAX_PLC];
 }OOP_ROUTEMODULE_T;
 
-/** @brief  Ù–‘10:œ‡Œª–≈œ¢	*/
+/** @brief Â±ûÊÄß10:Áõ∏‰Ωç‰ø°ÊÅØ	*/
 typedef struct tag_OOP_NODEPHASEINFO
 {
 	uint16				index;
@@ -5755,7 +5755,7 @@ typedef struct tag_OOP_NODEPHASEINFO
 	uint16				info;
 }OOP_NODEPHASEINFO_T;
 
-// F209  Ù–‘12:∞Ê±æ–≈œ¢
+// F209 Â±ûÊÄß12:ÁâàÊú¨‰ø°ÊÅØ
 typedef struct tag_OOP_NODEVERSIONINFO
 {
 	OOP_OCTETSTR6_T	    addr;
@@ -5766,76 +5766,76 @@ typedef struct tag_OOP_NODEVERSIONINFO
 	OOP_VISIBLEVAR_T	ic;
 }OOP_NODEVERSIONINFO_T;	
 
-// F209  Ù–‘30 Õ¯¬Áª˘±æ–≈œ¢
+// F209 Â±ûÊÄß30 ÁΩëÁªúÂü∫Êú¨‰ø°ÊÅØ
 #define OOP_MAX_LEVELNUM	(64)
 
 typedef struct tag_OOP_LEVELINFO
 {
-	uint8	nLevel;		// À˘‘⁄≤„º∂
-	uint16	wLevelNum;	// ¥À≤„º∂Ω⁄µ„∏ˆ ˝
+	uint8	nLevel;		// ÊâÄÂú®Â±ÇÁ∫ß
+	uint16	wLevelNum;	// Ê≠§Â±ÇÁ∫ßËäÇÁÇπ‰∏™Êï∞
 }OOP_LEVELINFO;
 
 typedef struct tag_OOP_NETBASEINFO
 {
-	uint16			wNetNum;						// Õ¯¬ÁΩ⁄µ„◊‹ ˝
-	uint16			wOnLineNum;						// ‘⁄œﬂ’æµ„∏ˆ ˝
-	uint32			dwStartTime;					// Õ¯¬Á∆Ù∂Ø◊ÈÕ¯ ±≥§
-	uint16			wNetTime;						// ◊ÈÕ¯ ±≥§
-	uint8			nBeacon;						// –≈±Í÷‹∆⁄
-	uint16			wRoute;							// ¬∑”…÷‹∆⁄
-	uint16			wTopCnt;						// Õÿ∆À±‰∏¸¥Œ ˝
-	uint32			nLevelNum;						// ≤„º∂∏ˆ ˝
-	OOP_LEVELINFO	levelInfo[OOP_MAX_LEVELNUM];	// ≤„º∂–≈œ¢
+	uint16			wNetNum;						// ÁΩëÁªúËäÇÁÇπÊÄªÊï∞
+	uint16			wOnLineNum;						// Âú®Á∫øÁ´ôÁÇπ‰∏™Êï∞
+	uint32			dwStartTime;					// ÁΩëÁªúÂêØÂä®ÁªÑÁΩëÊó∂Èïø
+	uint16			wNetTime;						// ÁªÑÁΩëÊó∂Èïø
+	uint8			nBeacon;						// ‰ø°Ê†áÂë®Êúü
+	uint16			wRoute;							// Ë∑ØÁî±Âë®Êúü
+	uint16			wTopCnt;						// ÊãìÊâëÂèòÊõ¥Ê¨°Êï∞
+	uint32			nLevelNum;						// Â±ÇÁ∫ß‰∏™Êï∞
+	OOP_LEVELINFO	levelInfo[OOP_MAX_LEVELNUM];	// Â±ÇÁ∫ß‰ø°ÊÅØ
 }OOP_NETBASEINFO_T;
 
-// F209  Ù–‘31 Õ¯¬ÁΩ⁄µ„–≈œ¢
+// F209 Â±ûÊÄß31 ÁΩëÁªúËäÇÁÇπ‰ø°ÊÅØ
 #define OOP_MAX_DWNODENUM	(12)
 
 typedef struct tag_OOP_NODETOPINFO
 {
-	uint16			nid;		// Ω⁄µ„±Í ∂
-	uint16			proxynid;	// ¥˙¿ÌΩ⁄µ„±Í ∂
-	OOP_BITSTR8_T	info;		// Ω⁄µ„–≈œ¢: bit-string(SIZE(8))
+	uint16			nid;		// ËäÇÁÇπÊ†áËØÜ
+	uint16			proxynid;	// ‰ª£ÁêÜËäÇÁÇπÊ†áËØÜ
+	OOP_BITSTR8_T	info;		// ËäÇÁÇπ‰ø°ÊÅØ: bit-string(SIZE(8))
 }OOP_NODETOPINFO_T;
 
 typedef struct tag_OOP_DWNODEINFO
 {
-	OOP_OCTETSTR6_T		addr;		// œ¬Ω”¥”Ω⁄µ„µÿ÷∑£∫octet-string(SIZE(6))
-	uint8				nProtocol;	// œ¬Ω”¥”Ω⁄µ„Õ®–≈–≠“È¿‡–Õ
-	uint8				nDevice;	// œ¬Ω”¥”Ω⁄µ„…Ë±∏¿‡–Õ
+	OOP_OCTETSTR6_T		addr;		// ‰∏ãÊé•‰ªéËäÇÁÇπÂú∞ÂùÄÔºöoctet-string(SIZE(6))
+	uint8				nProtocol;	// ‰∏ãÊé•‰ªéËäÇÁÇπÈÄö‰ø°ÂçèËÆÆÁ±ªÂûã
+	uint8				nDevice;	// ‰∏ãÊé•‰ªéËäÇÁÇπËÆæÂ§áÁ±ªÂûã
 }OOP_DWNODEINFO_T;
 
 typedef struct tag_OOP_NETNODEINFO
 {
-	uint16					wIndex;							// Ω⁄µ„–Ú∫≈
-	OOP_OCTETSTR6_T			nodeAddr;						// Ω⁄µ„µÿ÷∑£∫octet-string(SIZE(6))
-	OOP_NODETOPINFO_T		topInfo;						// Ω⁄µ„Õÿ∆À–≈œ¢
-	OOP_BITSTR8_T			netInfo;						// Õ¯¬Á–≈œ¢£∫bit-string(SIZE(8))
-	OOP_BITSTR16_T			device;							// …Ë±∏¿‡–Õ£∫bit-string(SIZE(16))
-	OOP_BITSTR8_T			phase;							// œ‡Œª–≈œ¢£∫bit-string(SIZE(8))
-	uint16					wProxyCnt;						// ¥˙¿Ì±‰∏¸¥Œ ˝
-	uint16					wOffLineCnt;					// ’æµ„¿Îœﬂ¥Œ ˝
-	uint32					dwOffLineTime;					// ’æµ„¿Îœﬂ ±º‰
-	uint32					dwMaxOffLine;					// ’æµ„¿Îœﬂ◊Ó¥Û ±º‰
-	uint32					dwSuccessRateUp;				// …œ––Õ®–≈≥…π¶¬ 
-	uint32					dwSuccessRateDw;				// œ¬––Õ®–≈≥…π¶¬ 
-	OOP_OCTETSTR3_T			mainVer;						// ÷˜∞Ê±æ∫≈: octet-string(SIZE (3))
-	OOP_OCTETSTR2_T			subVer;							// ¥Œ∞Ê±æ£∫octet-string(SIZE (2))
-	uint16					wSkipInfo;						// œ¬“ªÃ¯–≈œ¢
-	OOP_BITSTR16_T			channel;						// –≈µ¿¿‡–Õ£∫bit-string(SIZE(16))
-	uint8					nProtocol;						// πÊ‘º¿‡–Õ
-	uint8					nAreaState;						// Ã®«¯◊¥Ã¨
-	OOP_OCTETSTR6_T			areaAddr;						// Ã®«¯∫≈µÿ÷∑£∫octet-string(SIZE(6))
-	uint32					nDownNum;						// ¥”Ω⁄µ„œ¬Ω”¥”Ω⁄µ„ ˝¡ø
-	OOP_DWNODEINFO_T		downInfo[OOP_MAX_DWNODENUM];	// œ¬Ω”Ω⁄µ„–≈œ¢
+	uint16					wIndex;							// ËäÇÁÇπÂ∫èÂè∑
+	OOP_OCTETSTR6_T			nodeAddr;						// ËäÇÁÇπÂú∞ÂùÄÔºöoctet-string(SIZE(6))
+	OOP_NODETOPINFO_T		topInfo;						// ËäÇÁÇπÊãìÊâë‰ø°ÊÅØ
+	OOP_BITSTR8_T			netInfo;						// ÁΩëÁªú‰ø°ÊÅØÔºöbit-string(SIZE(8))
+	OOP_BITSTR16_T			device;							// ËÆæÂ§áÁ±ªÂûãÔºöbit-string(SIZE(16))
+	OOP_BITSTR8_T			phase;							// Áõ∏‰Ωç‰ø°ÊÅØÔºöbit-string(SIZE(8))
+	uint16					wProxyCnt;						// ‰ª£ÁêÜÂèòÊõ¥Ê¨°Êï∞
+	uint16					wOffLineCnt;					// Á´ôÁÇπÁ¶ªÁ∫øÊ¨°Êï∞
+	uint32					dwOffLineTime;					// Á´ôÁÇπÁ¶ªÁ∫øÊó∂Èó¥
+	uint32					dwMaxOffLine;					// Á´ôÁÇπÁ¶ªÁ∫øÊúÄÂ§ßÊó∂Èó¥
+	uint32					dwSuccessRateUp;				// ‰∏äË°åÈÄö‰ø°ÊàêÂäüÁéá
+	uint32					dwSuccessRateDw;				// ‰∏ãË°åÈÄö‰ø°ÊàêÂäüÁéá
+	OOP_OCTETSTR3_T			mainVer;						// ‰∏ªÁâàÊú¨Âè∑: octet-string(SIZE (3))
+	OOP_OCTETSTR2_T			subVer;							// Ê¨°ÁâàÊú¨Ôºöoctet-string(SIZE (2))
+	uint16					wSkipInfo;						// ‰∏ã‰∏ÄË∑≥‰ø°ÊÅØ
+	OOP_BITSTR16_T			channel;						// ‰ø°ÈÅìÁ±ªÂûãÔºöbit-string(SIZE(16))
+	uint8					nProtocol;						// ËßÑÁ∫¶Á±ªÂûã
+	uint8					nAreaState;						// Âè∞Âå∫Áä∂ÊÄÅ
+	OOP_OCTETSTR6_T			areaAddr;						// Âè∞Âå∫Âè∑Âú∞ÂùÄÔºöoctet-string(SIZE(6))
+	uint32					nDownNum;						// ‰ªéËäÇÁÇπ‰∏ãÊé•‰ªéËäÇÁÇπÊï∞Èáè
+	OOP_DWNODEINFO_T		downInfo[OOP_MAX_DWNODENUM];	// ‰∏ãÊé•ËäÇÁÇπ‰ø°ÊÅØ
 }OOP_NETNODEINFO_T;
 
 //
-// F20B-¿∂—¿
+// F20B-ËìùÁâô
 //
 #define		OOP_MAX_BTMOD		(8)
 
-/** @brief ≈‰∂‘ƒ£ Ω	*/
+/** @brief ÈÖçÂØπÊ®°Âºè	*/
 typedef enum
 {
 	MOD_NC = 0,		/**< Numeric Comparison	*/
@@ -5844,63 +5844,63 @@ typedef enum
 	MOD_OOB,		/**< Out of Band		*/
 }OOP_PAIRMODE_E;
 
-/** @brief ¬ˆ≥Â¿‡–Õ	*/
+/** @brief ËÑâÂÜ≤Á±ªÂûã	*/
 typedef enum
 {
-	TP_ENEA = 0,		/**< ”–π¶			*/
-	TP_ENEI,			/**< Œﬁπ¶			*/
-	TP_HARMP,			/**< ’˝œÚ–≥≤®		*/
-	TP_HARMN,			/**< ∑¥œÚ–≥≤®		*/
-	TP_CLK,				/**<  ±÷”			*/
+	TP_ENEA = 0,		/**< ÊúâÂäü			*/
+	TP_ENEI,			/**< Êó†Âäü			*/
+	TP_HARMP,			/**< Ê≠£ÂêëË∞êÊ≥¢		*/
+	TP_HARMN,			/**< ÂèçÂêëË∞êÊ≥¢		*/
+	TP_CLK,				/**< Êó∂Èíü			*/
 }OOP_PULSETYPE_E;
 
-/** @brief √¸¡Ó¿‡–Õ	*/
+/** @brief ÂëΩ‰ª§Á±ªÂûã	*/
 typedef enum
 {
-	CMD_OPEN = 0,		/**< ¥Úø™		*/
-	CMD_CLOSE,			/**< πÿ±’		*/
+	CMD_OPEN = 0,		/**< ÊâìÂºÄ		*/
+	CMD_CLOSE,			/**< ÂÖ≥Èó≠		*/
 }OOP_ERRCHKCMD_E;
 
-/** @brief ¿∂—¿–≈œ¢	*/
+/** @brief ËìùÁâô‰ø°ÊÅØ	*/
 typedef struct tag_OOP_BLUETOOTHINFO
 {
-	OOP_VISIBLEVAR256_T	info;		/**< ¿∂—¿√Ë ˆ∑˚ */
-	OOP_OCTETVAR16_T	mac;		/**< MACµÿ÷∑      */
+	OOP_VISIBLEVAR256_T	info;		/**< ËìùÁâôÊèèËø∞Á¨¶ */
+	OOP_OCTETVAR16_T	mac;		/**< MACÂú∞ÂùÄ      */
 }OOP_BLUETOOTHINFO_T;
 
-/** @brief ¿∂—¿¥”…Ë±∏	*/
+/** @brief ËìùÁâô‰ªéËÆæÂ§á	*/
 typedef struct tag_OOP_BLUETOOTHSLAVE
 {
-	OOP_OCTETVAR16_T	mac;		/**< MACµÿ÷∑ */
-	OOP_OCTETVAR64_T	assetNo;	/**< ◊ ≤˙∫≈     */
+	OOP_OCTETVAR16_T	mac;		/**< MACÂú∞ÂùÄ */
+	OOP_OCTETVAR64_T	assetNo;	/**< ËµÑ‰∫ßÂè∑     */
 }OOP_BLUETOOTHSLAVE_T;
 
-/** @brief ¿∂—¿ƒ£øÈ	*/
+/** @brief ËìùÁâôÊ®°Âùó	*/
 typedef struct tag_OOP_BLUETOOTHMOD
 {
-	uint8				nIdx;		/**< ƒ£øÈ–Ú∫≈ */
-	OOP_BLUETOOTHINFO_T	info;		/**< ¿∂—¿–≈œ¢     */
-	OOP_VISIBLEVAR_T	pass;		/**< ≈‰∂‘√‹¬Î     */
-	uint8				nMod;		/**< ≈‰∂‘ƒ£ Ω     */
+	uint8				nIdx;		/**< Ê®°ÂùóÂ∫èÂè∑ */
+	OOP_BLUETOOTHINFO_T	info;		/**< ËìùÁâô‰ø°ÊÅØ     */
+	OOP_VISIBLEVAR_T	pass;		/**< ÈÖçÂØπÂØÜÁ†Å     */
+	uint8				nMod;		/**< ÈÖçÂØπÊ®°Âºè     */
 }OOP_BLUETOOTHMOD_T;
 
-/** @brief ¡¨Ω”–≈œ¢	*/
+/** @brief ËøûÊé•‰ø°ÊÅØ	*/
 typedef struct tag_OOP_BTCONNECTINFO
 {
-	OOP_OAD_U			oad;						/**< ∂Àø⁄∫≈ */
+	OOP_OAD_U			oad;						/**< Á´ØÂè£Âè∑ */
 	uint32				nMasterNum;
-	OOP_BLUETOOTHINFO_T	master[OOP_MAX_BTMOD];		/**< ¡¨Ω”µƒ÷˜…Ë±∏     */	
+	OOP_BLUETOOTHINFO_T	master[OOP_MAX_BTMOD];		/**< ËøûÊé•ÁöÑ‰∏ªËÆæÂ§á     */	
 	uint32				nSlaveNum;
-	OOP_BLUETOOTHINFO_T	slave[OOP_MAX_BTMOD];		/**< ¡¨Ω”µƒ¥”…Ë±∏     */
+	OOP_BLUETOOTHINFO_T	slave[OOP_MAX_BTMOD];		/**< ËøûÊé•ÁöÑ‰ªéËÆæÂ§á     */
 }OOP_BTCONNECTINFO_T;
 
-/** @brief π§◊˜≤Œ ˝	*/
+/** @brief Â∑•‰ΩúÂèÇÊï∞	*/
 typedef struct tag_OOP_BTWORKPARAM
 {
-	OOP_OAD_U			oad;						/**< ∂Àø⁄∫≈ */
-	uint8				nPowerLevel;				/**< ∑¢…‰π¶¬ µµ */
-	uint16				nBroadCastInterval;			/**< π„≤•º‰∏Ù     */	
-	uint16				nScanPeriod;				/**< …®√Ëº‰∏Ù     */
+	OOP_OAD_U			oad;						/**< Á´ØÂè£Âè∑ */
+	uint8				nPowerLevel;				/**< ÂèëÂ∞ÑÂäüÁéáÊ°£ */
+	uint16				nBroadCastInterval;			/**< ÂπøÊí≠Èó¥Èöî     */	
+	uint16				nScanPeriod;				/**< Êâ´ÊèèÈó¥Èöî     */
 }OOP_BTWORKPARAM_T;
 
 typedef struct tag_OOP_BLUETOOTHMODS
@@ -5917,42 +5917,42 @@ typedef struct tag_OOP_BTWORKPARAMS
 	OOP_BTWORKPARAM_T param[OOP_MAX_BLUETOOTH];
 }OOP_BTWORKPARAMS_T;
 
-/** @brief ≈‰÷√∂Àø⁄	*/
+/** @brief ÈÖçÁΩÆÁ´ØÂè£	*/
 typedef struct tag_OOPM_BLUETOOTHCFG
 {
-	OOP_OAD_U		oad;			/**< ∂Àø⁄∫≈ */
-	OOP_BLUETOOTHINFO_T info;		/**< ¿∂—¿–≈œ¢ */
+	OOP_OAD_U		oad;			/**< Á´ØÂè£Âè∑ */
+	OOP_BLUETOOTHINFO_T info;		/**< ËìùÁâô‰ø°ÊÅØ */
 }OOPM_BLUETOOTHCFG_T;
 
-/** @brief ŒÛ≤ÓºÏ∂®	*/
+/** @brief ËØØÂ∑ÆÊ£ÄÂÆö	*/
 typedef struct tag_OOPM_BLUETOOTHERRCHK
 {
-	OOP_OAD_U		oad;			/**< ∂Àø⁄∫≈ */
-	uint8			nCmd;			/**< √¸¡Ó¿‡–Õ    enum{¥Úø™£®0£©£¨πÿ±’£®1£©} */
-	uint8			nType;			/**< ¬ˆ≥Â¿‡–Õenum{”–π¶£®0£©£¨Œﬁπ¶£®1£©£¨’˝œÚ–≥≤®£®2£©£¨∑¥œÚ–≥≤®£®3£©£¨ ±÷”£®4£©} */
-	uint16			nFreq;			/**< ∑¢…‰∆µ¬ £¨µ•Œª£∫MHz£¨ŒﬁªªÀ„ */
+	OOP_OAD_U		oad;			/**< Á´ØÂè£Âè∑ */
+	uint8			nCmd;			/**< ÂëΩ‰ª§Á±ªÂûã    enum{ÊâìÂºÄÔºà0ÔºâÔºåÂÖ≥Èó≠Ôºà1Ôºâ} */
+	uint8			nType;			/**< ËÑâÂÜ≤Á±ªÂûãenum{ÊúâÂäüÔºà0ÔºâÔºåÊó†ÂäüÔºà1ÔºâÔºåÊ≠£ÂêëË∞êÊ≥¢Ôºà2ÔºâÔºåÂèçÂêëË∞êÊ≥¢Ôºà3ÔºâÔºåÊó∂ÈíüÔºà4Ôºâ} */
+	uint16			nFreq;			/**< ÂèëÂ∞ÑÈ¢ëÁéáÔºåÂçï‰ΩçÔºöMHzÔºåÊó†Êç¢ÁÆó */
 }OOPM_BLUETOOTHERRCHK_T;
 
 //
-// F20C-µÁÃ®
+// F20C-ÁîµÂè∞
 //
 
-#define OOP_MAX_RADIO		(1)	/**< ◊Ó¥ÛµÁÃ®…Ë±∏∏ˆ ˝	*/
+#define OOP_MAX_RADIO		(1)	/**< ÊúÄÂ§ßÁîµÂè∞ËÆæÂ§á‰∏™Êï∞	*/
 
-/** @brief µÁÃ®∞Ê±æ–≈œ¢	*/
+/** @brief ÁîµÂè∞ÁâàÊú¨‰ø°ÊÅØ	*/
 typedef struct tag_OOP_HSVERSION
 {
-	OOP_VISIBLESTR20_T	szSoftVer;	// »Ìº˛∞Ê±æ∫≈
-	OOP_VISIBLESTR20_T	szHardVer;	// ”≤º˛∞Ê±æ∫≈
+	OOP_VISIBLESTR20_T	szSoftVer;	// ËΩØ‰ª∂ÁâàÊú¨Âè∑
+	OOP_VISIBLESTR20_T	szHardVer;	// Á°¨‰ª∂ÁâàÊú¨Âè∑
 }OOP_HSVERSION_T;
 
-/** @brief µÁÃ®µ•‘™	*/
+/** @brief ÁîµÂè∞ÂçïÂÖÉ	*/
 typedef struct tag_RADIO
 {
 	OOP_VISIBLEVAR_T	name;
 }RADIO;
 
-/** @brief “ª◊ÈµÁÃ®…Ë±∏	*/
+/** @brief ‰∏ÄÁªÑÁîµÂè∞ËÆæÂ§á	*/
 typedef struct tag_OOP_RADIO
 {
 	uint32			nNum;
@@ -5960,7 +5960,7 @@ typedef struct tag_OOP_RADIO
 	RADIO			port[OOP_MAX_RADIO];
 }OOP_RADIO_T;
 
-/** @brief µÁÃ®∆µµ¿	*/
+/** @brief ÁîµÂè∞È¢ëÈÅì	*/
 typedef struct tag_OOP_RADIO_CHS
 {
 	uint32			nNum;
@@ -5968,7 +5968,7 @@ typedef struct tag_OOP_RADIO_CHS
 	uint8			item[OOP_MAX_RADIO];
 }OOP_RADIO_CHS_T;
 
-/** @brief µÁÃ®–≈∫≈«·∂»	*/
+/** @brief ÁîµÂè∞‰ø°Âè∑ËΩªÂ∫¶	*/
 typedef struct tag_OOP_RADIO_SIGS
 {
 	uint32			nNum;
@@ -5977,35 +5977,35 @@ typedef struct tag_OOP_RADIO_SIGS
 }OOP_RADIO_SIGS_T;
 
 //
-// F20D-ƒ£◊È
+// F20D-Ê®°ÁªÑ
 //
 
 #define OOP_MAX_MODULE_CHANNEL	(8)
 #define OOP_MAX_MODULE	(5)
 
-/** @brief Õ®µ¿–≈œ¢	*/
+/** @brief ÈÄöÈÅì‰ø°ÊÅØ	*/
 typedef struct tag_OOP_MODULE_CHANNEL_INFO
 {
-	uint8					nType;					/**< Ω”ø⁄¿‡–Õ */	
-	uint8					nFunc;					/**< π¶ƒ‹≈‰÷√ */
+	uint8					nType;					/**< Êé•Âè£Á±ªÂûã */	
+	uint8					nFunc;					/**< ÂäüËÉΩÈÖçÁΩÆ */
 }OOP_MODULE_CHANNEL_INFO;
 
-/** @brief ƒ£◊È–≈œ¢	*/
+/** @brief Ê®°ÁªÑ‰ø°ÊÅØ	*/
 typedef struct tag_OOP_MODULE_UINT
 {
-	uint8					nSlot;							/**< ≤€Œª∫≈ */
-	OOP_VISIBLEVAR128_T		modType;						/**< ƒ£øÈ…Ë±∏–Õ∫≈ */
-	OOP_VISIBLEVAR128_T		modId;							/**< ƒ£øÈ…Ë±∏ID */
-	int32					nSoftVer;						/**< »Ìº˛∞Ê±æ */
-	OOP_VISIBLEVAR_T		softDate;						/**< »Ìº˛∑¢≤º»’∆⁄ */
-	int32					nHardVer;						/**< ”≤º˛∞Ê±æ */
-	OOP_VISIBLEVAR_T		hardDate;						/**< ”≤º˛∑¢≤º»’∆⁄ */
-	OOP_VISIBLEVAR128_T		manuf;							/**< ≥ß…Ã±‡¬Î */
-	uint32					nChNum;							/**< Õ®µ¿–≈œ¢∏ˆ ˝ */
-	OOP_MODULE_CHANNEL_INFO	chInfo[OOP_MAX_MODULE_CHANNEL];	/**< Õ®µ¿–≈œ¢ */
+	uint8					nSlot;							/**< ÊßΩ‰ΩçÂè∑ */
+	OOP_VISIBLEVAR128_T		modType;						/**< Ê®°ÂùóËÆæÂ§áÂûãÂè∑ */
+	OOP_VISIBLEVAR128_T		modId;							/**< Ê®°ÂùóËÆæÂ§áID */
+	int32					nSoftVer;						/**< ËΩØ‰ª∂ÁâàÊú¨ */
+	OOP_VISIBLEVAR_T		softDate;						/**< ËΩØ‰ª∂ÂèëÂ∏ÉÊó•Êúü */
+	int32					nHardVer;						/**< Á°¨‰ª∂ÁâàÊú¨ */
+	OOP_VISIBLEVAR_T		hardDate;						/**< Á°¨‰ª∂ÂèëÂ∏ÉÊó•Êúü */
+	OOP_VISIBLEVAR128_T		manuf;							/**< ÂéÇÂïÜÁºñÁ†Å */
+	uint32					nChNum;							/**< ÈÄöÈÅì‰ø°ÊÅØ‰∏™Êï∞ */
+	OOP_MODULE_CHANNEL_INFO	chInfo[OOP_MAX_MODULE_CHANNEL];	/**< ÈÄöÈÅì‰ø°ÊÅØ */
 }OOP_MODULE_UINT_T;
 
-/** @brief ƒ£◊È	*/
+/** @brief Ê®°ÁªÑ	*/
 typedef struct tag_OOP_MODULE_INFO
 {
 	uint32				nNum;
@@ -6017,15 +6017,15 @@ typedef struct tag_OOP_MODULE_INFO
 // F20E-USB
 //
 
-#define OOP_MAX_USB	(1)		/**< ◊Ó¥ÛUSB…Ë±∏∏ˆ ˝	*/
+#define OOP_MAX_USB	(1)		/**< ÊúÄÂ§ßUSBËÆæÂ§á‰∏™Êï∞	*/
 
-/** @brief USBµ•‘™	*/
+/** @brief USBÂçïÂÖÉ	*/
 typedef struct tag_USB
 {
 	OOP_VISIBLEVAR_T	name;
 }USB;
 
-/** @brief “ª◊ÈUSB…Ë±∏	*/
+/** @brief ‰∏ÄÁªÑUSBËÆæÂ§á	*/
 typedef struct tag_OOP_USB
 {
 	uint32	nNum;
@@ -6034,20 +6034,20 @@ typedef struct tag_OOP_USB
 }OOP_USB_T;
 
 //
-// F20F-∑˛ŒÒ◊Èº˛
+// F20F-ÊúçÂä°ÁªÑ‰ª∂
 //
 
 #define OOP_MAX_PLUGIN	(32)
 
-/** @brief ◊Èº˛–≈œ¢	*/
+/** @brief ÁªÑ‰ª∂‰ø°ÊÅØ	*/
 typedef struct tag_OOP_PLUGIN_UINT
 {
-	OOP_VISIBLEVAR128_T		name;						/**< ◊Èº˛√˚≥∆ */
-	uint32					nSoftVer;					/**< Õ®µ¿–≈œ¢∏ˆ ˝ */
-	OOP_DATETIME_S_T		dtSoft;						/**< ∑¢≤º»’∆⁄ */
+	OOP_VISIBLEVAR128_T		name;						/**< ÁªÑ‰ª∂ÂêçÁß∞ */
+	uint32					nSoftVer;					/**< ÈÄöÈÅì‰ø°ÊÅØ‰∏™Êï∞ */
+	OOP_DATETIME_S_T		dtSoft;						/**< ÂèëÂ∏ÉÊó•Êúü */
 }OOP_PLUGIN_UINT_T;
 
-/** @brief ◊Èº˛	*/
+/** @brief ÁªÑ‰ª∂	*/
 typedef struct tag_OOP_PLUGIN_INFO
 {
 	uint32				nNum;
@@ -6056,13 +6056,13 @@ typedef struct tag_OOP_PLUGIN_INFO
 }OOP_PLUGIN_INFO_T;
 
 //
-// F213-»›∆˜ºØ∫œ
+// F213-ÂÆπÂô®ÈõÜÂêà
 //
 
 #define OOP_MAX_CONTAINER_OAD	(64)
 #define OOP_MAX_CONTAINER_NUM	(10)
 
-/** @brief ∂‘œÛ»›∆˜*/
+/** @brief ÂØπË±°ÂÆπÂô®*/
 typedef struct tag_OOP_CONTAINER_CFG
 {
 	uint32 		nNum;
@@ -6070,7 +6070,7 @@ typedef struct tag_OOP_CONTAINER_CFG
 	OOP_OAD_U 	oad[OOP_MAX_CONTAINER_OAD];
 }OOP_CONTAINER_CFG_T;
 
-/** @brief ∂‘œÛ»›∆˜ºØ∫œ*/
+/** @brief ÂØπË±°ÂÆπÂô®ÈõÜÂêà*/
 typedef struct tag_OOP_CONTAINER_CFGS
 {
 	uint32 				nNum;
@@ -6078,14 +6078,14 @@ typedef struct tag_OOP_CONTAINER_CFGS
 	OOP_CONTAINER_CFG_T cfg[OOP_MAX_CONTAINER_NUM];
 }OOP_CONTAINER_CFGS_T;
 
-/** @brief ∂‘œÛ»›∆˜≤Ÿ◊˜≤Œ ˝*/
+/** @brief ÂØπË±°ÂÆπÂô®Êìç‰ΩúÂèÇÊï∞*/
 typedef struct tag_OOPM_CONTAINER_PARAM
 {	
 	OOP_OAD_U 			oad;
 	OOP_CONTAINER_CFG_T cfg;
 }OOPM_CONTAINER_PARAM_T;
 
-/** @brief ∂‘œÛ»›∆˜÷µ”Ú*/
+/** @brief ÂØπË±°ÂÆπÂô®ÂÄºÂüü*/
 typedef struct tag_OOP_CONTAINER_VAL
 {
 	OOP_CONTAINER_CFG_T		cfg;
@@ -6099,252 +6099,252 @@ typedef struct tag_OOP_CONTAINER_VALS
 	OOP_CONTAINER_VAL	item[OOP_MAX_CONTAINER_NUM];
 }OOP_CONTAINER_VALS;
 
-/** @brief À¿«¯≤Œ ˝	*/
+/** @brief Ê≠ªÂå∫ÂèÇÊï∞	*/
 typedef struct tag_OOP_DEADAREA
 {
 	int32		ampda;	
 	uint32		acvolda;
 	uint32		dcvolda;
 	int32		pwrda;
-	int16		freda;	/**< ∆µ¬ À¿«¯	*/
+	int16		freda;	/**< È¢ëÁéáÊ≠ªÂå∫	*/
 }OOP_DEADAREA_T;
 
-/** @brief À¿«¯≤Œ ˝	*/
+/** @brief Ê≠ªÂå∫ÂèÇÊï∞	*/
 typedef struct tag_OOP_PT_PARA
 {
-	int32		ptrat_1;	/**< “ª¥Œ∂Ó∂®÷µ	uint16*/
-	int32		ptrat_2;	/**< ∂˛¥Œ∂Ó∂®÷µ	uint16*/
+	int32		ptrat_1;	/**< ‰∏ÄÊ¨°È¢ùÂÆöÂÄº	uint16*/
+	int32		ptrat_2;	/**< ‰∫åÊ¨°È¢ùÂÆöÂÄº	uint16*/
 }OOP_PT_PARA_T;
 
 
-/** @brief π˝‘ÿ°¢÷ÿ‘ÿ≤Œ ˝	*/
+/** @brief ËøáËΩΩ„ÄÅÈáçËΩΩÂèÇÊï∞	*/
 typedef struct tag_OOP_LOAD_PARA
 {
-	uint32		limit;	    /**< µÁ¡˜„–÷µ*/
-	int16		delay;	    /**< ∏ÊæØ—” ±*/
+	uint32		limit;	    /**< ÁîµÊµÅÈòàÂÄº*/
+	int16		delay;	    /**< ÂëäË≠¶Âª∂Êó∂*/
 }OOP_LOAD_PARA_T;
 
 typedef struct tag_OOP_TTU_MIX
 {
-	int32 	trans_cap;          /**< ≈‰±‰»›¡ø	>*/
-	float 	i_unbalance;        /**< µÁ¡˜≤ª∆Ω∫‚∂®÷µ>*/
-	float 	u_unbalance;        /**< µÁ—π≤ª∆Ω∫‚∂®÷µ>*/
-	int32 	chktime_ti;         /**< ø™πÿ∂‘ ±÷‹∆⁄>*/
-	float32 volharm_da;         /**< µÁ—π–≥≤®À¿«¯>*/	
-	float32 ampharm_da;         /**< µÁ¡˜–≥≤®À¿«¯>*/	
-	float32 unbanl_da;          /**< ≤ª∆Ω∫‚∂»À¿«¯>*/	
-	float32 loadrate_da;        /**< ∏∫‘ÿ¬ À¿«¯>*/	
+	int32 	trans_cap;          /**< ÈÖçÂèòÂÆπÈáè	>*/
+	float 	i_unbalance;        /**< ÁîµÊµÅ‰∏çÂπ≥Ë°°ÂÆöÂÄº>*/
+	float 	u_unbalance;        /**< ÁîµÂéã‰∏çÂπ≥Ë°°ÂÆöÂÄº>*/
+	int32 	chktime_ti;         /**< ÂºÄÂÖ≥ÂØπÊó∂Âë®Êúü>*/
+	float32 volharm_da;         /**< ÁîµÂéãË∞êÊ≥¢Ê≠ªÂå∫>*/	
+	float32 ampharm_da;         /**< ÁîµÊµÅË∞êÊ≥¢Ê≠ªÂå∫>*/	
+	float32 unbanl_da;          /**< ‰∏çÂπ≥Ë°°Â∫¶Ê≠ªÂå∫>*/	
+	float32 loadrate_da;        /**< Ë¥üËΩΩÁéáÊ≠ªÂå∫>*/	
 	
-	float32 transshort_cap;     /**< ◊Ó–°∂Ã¬∑»›¡ø>*/	
+	float32 transshort_cap;     /**< ÊúÄÂ∞èÁü≠Ë∑ØÂÆπÈáè>*/	
 
-	float32 pf_da;              /**< π¶¬ “ÚÀÿÀ¿«¯>*/
-	int32  	ctrat_1;            /**< CT“ª¥Œ∂®÷µ>*/          
-	int32  	ctrat_2;            /**< CT∂˛¥Œ∂®÷µ>*/
+	float32 pf_da;              /**< ÂäüÁéáÂõ†Á¥†Ê≠ªÂå∫>*/
+	int32  	ctrat_1;            /**< CT‰∏ÄÊ¨°ÂÆöÂÄº>*/          
+	int32  	ctrat_2;            /**< CT‰∫åÊ¨°ÂÆöÂÄº>*/
 	
-	float32 volover_val;        /**< π˝—π∂®÷µ>*/	
-	int32  	volover_time;       /**< ≥÷–¯ ±º‰>*/
-	float32 vollow_val;         /**< µÕ—π∂®÷µ>*/	
-	int32  	vollow_time;        /**< ≥÷–¯ ±º‰>*/
-	float32 loadover_val;       /**< π˝‘ÿ∂®÷µ>*/	
-	int32  	loadover_time;      /**< ≥÷–¯ ±º‰>*/
-	float32 loadheavy_val;      /**< ÷ÿ‘ÿ∂®÷µ>*/	
-	int32  	loadheavy_time;     /**< ≥÷–¯ ±º‰>*/
-	int32  	filter_time;		/**< ø™»Î»•∂∂∂Ø ±º‰>*/
+	float32 volover_val;        /**< ËøáÂéãÂÆöÂÄº>*/	
+	int32  	volover_time;       /**< ÊåÅÁª≠Êó∂Èó¥>*/
+	float32 vollow_val;         /**< ‰ΩéÂéãÂÆöÂÄº>*/	
+	int32  	vollow_time;        /**< ÊåÅÁª≠Êó∂Èó¥>*/
+	float32 loadover_val;       /**< ËøáËΩΩÂÆöÂÄº>*/	
+	int32  	loadover_time;      /**< ÊåÅÁª≠Êó∂Èó¥>*/
+	float32 loadheavy_val;      /**< ÈáçËΩΩÂÆöÂÄº>*/	
+	int32  	loadheavy_time;     /**< ÊåÅÁª≠Êó∂Èó¥>*/
+	int32  	filter_time;		/**< ÂºÄÂÖ•ÂéªÊäñÂä®Êó∂Èó¥>*/
 }OOP_TTU_MIX_T;
 
 /*
 *********************************************************************
-* ◊‘∂®“ÂΩ·ππÃÂ
+* Ëá™ÂÆö‰πâÁªìÊûÑ‰Ωì
 *********************************************************************
 */
 
-/** @brief Ωª≤…µÁ¡ø ˝æ›øÈ	*/
+/** @brief ‰∫§ÈááÁîµÈáèÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOP_ENERGY_BLOCK
 {
-	OOP_ENERGYS_T enepa_z;	/**< ◊È∫œ”–π¶µÁƒ‹¡ø>*/
+	OOP_ENERGYS_T enepa_z;	/**< ÁªÑÂêàÊúâÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T enepaT;	/**< ’˝œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepaA;	/**< Aœ‡’˝œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepaB;	/**< Bœ‡’˝œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepaC;	/**< Cœ‡’˝œÚ”–π¶µÁƒ‹¡ø>*/
+	OOP_ENERGY_T enepaT;	/**< Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepaA;	/**< AÁõ∏Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepaB;	/**< BÁõ∏Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepaC;	/**< CÁõ∏Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T enenaT;	/**< ∑¥œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enenaA;	/**< Aœ‡∑¥œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enenaB;	/**< Bœ‡∑¥œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enenaC;	/**< Cœ‡∑¥œÚ”–π¶µÁƒ‹¡ø>*/
+	OOP_ENERGY_T enenaT;	/**< ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enenaA;	/**< AÁõ∏ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enenaB;	/**< BÁõ∏ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enenaC;	/**< CÁõ∏ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGYS_T enepiT;	/**< ’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGYS_T enepiA;	/**< Aœ‡’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGYS_T enepiB;	/**< Bœ‡’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGYS_T enepiC;	/**< Cœ‡’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_ENERGYS_T enepiT;	/**< Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGYS_T enepiA;	/**< AÁõ∏Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGYS_T enepiB;	/**< BÁõ∏Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGYS_T enepiC;	/**< CÁõ∏Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGYS_T eneniT;	/**< ∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGYS_T eneniA;	/**< Aœ‡∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGYS_T eneniB;	/**< Bœ‡∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGYS_T eneniC;	/**< Cœ‡∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_ENERGYS_T eneniT;	/**< ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGYS_T eneniA;	/**< AÁõ∏ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGYS_T eneniB;	/**< BÁõ∏ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGYS_T eneniC;	/**< CÁõ∏ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T enepi1T;	/**< 1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepi1A;	/**< Aœ‡1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepi1B;	/**< Bœ‡1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepi1C;	/**< Cœ‡1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_ENERGY_T enepi1T;	/**< 1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepi1A;	/**< AÁõ∏1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepi1B;	/**< BÁõ∏1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepi1C;	/**< CÁõ∏1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T eneni2T;	/**< 2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T eneni2A;	/**< Aœ‡2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T eneni2B;	/**< Bœ‡2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T eneni2C;	/**< Cœ‡2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_ENERGY_T eneni2T;	/**< 2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T eneni2A;	/**< AÁõ∏2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T eneni2B;	/**< BÁõ∏2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T eneni2C;	/**< CÁõ∏2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T eneni3T;	/**< 3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T eneni3A;	/**< Aœ‡3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T eneni3B;	/**< Bœ‡3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T eneni3C;	/**< Cœ‡3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_ENERGY_T eneni3T;	/**< 3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T eneni3A;	/**< AÁõ∏3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T eneni3B;	/**< BÁõ∏3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T eneni3C;	/**< CÁõ∏3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T enepi4T;	/**< 4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepi4A;	/**< Aœ‡4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepi4B;	/**< Bœ‡4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enepi4C;	/**< Cœ‡4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_ENERGY_T enepi4T;	/**< 4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepi4A;	/**< AÁõ∏4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepi4B;	/**< BÁõ∏4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enepi4C;	/**< CÁõ∏4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_ENERGY_T enepsT;	/**< ’˝œÚ ”‘⁄µÁƒ‹>*/
-	OOP_ENERGY_T enepsA;	/**< Aœ‡’˝œÚ ”‘⁄µÁƒ‹>*/
-	OOP_ENERGY_T enepsB;	/**< Bœ‡’˝œÚ ”‘⁄µÁƒ‹>*/
-	OOP_ENERGY_T enepsC;	/**< Cœ‡’˝œÚ ”‘⁄µÁƒ‹>*/
+	OOP_ENERGY_T enepsT;	/**< Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_ENERGY_T enepsA;	/**< AÁõ∏Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_ENERGY_T enepsB;	/**< BÁõ∏Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_ENERGY_T enepsC;	/**< CÁõ∏Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
 
-	OOP_ENERGY_T enensT;	/**< ∑¥œÚ ”‘⁄µÁƒ‹>*/
-	OOP_ENERGY_T enensA;	/**< Aœ‡∑¥œÚ ”‘⁄µÁƒ‹¡ø>*/
-	OOP_ENERGY_T enensB;	/**< Bœ‡∑¥œÚ ”‘⁄µÁƒ‹>*/
-	OOP_ENERGY_T enensC;	/**< Cœ‡∑¥œÚ ”‘⁄µÁƒ‹>*/
+	OOP_ENERGY_T enensT;	/**< ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_ENERGY_T enensA;	/**< AÁõ∏ÂèçÂêëËßÜÂú®ÁîµËÉΩÈáè>*/
+	OOP_ENERGY_T enensB;	/**< BÁõ∏ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_ENERGY_T enensC;	/**< CÁõ∏ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
 }OOP_ENERGY_BLOCK_T;
 
-/** @brief Ωª≤…∏ﬂæ´∂»µÁ¡ø ˝æ›øÈ	*/
+/** @brief ‰∫§ÈááÈ´òÁ≤æÂ∫¶ÁîµÈáèÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOP_HENERGY_BLOCK 
 {
-	OOP_HENERGYS_T enepa_z; /**< ◊È∫œ”–π¶µÁƒ‹¡ø>*/
+	OOP_HENERGYS_T enepa_z; /**< ÁªÑÂêàÊúâÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T enepaT;   /**< ’˝œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepaA;   /**< Aœ‡’˝œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepaB;   /**< Bœ‡’˝œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepaC;   /**< Cœ‡’˝œÚ”–π¶µÁƒ‹¡ø>*/
+	OOP_HENERGY_T enepaT;   /**< Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepaA;   /**< AÁõ∏Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepaB;   /**< BÁõ∏Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepaC;   /**< CÁõ∏Ê≠£ÂêëÊúâÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T enenaT;   /**< ∑¥œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enenaA;   /**< Aœ‡∑¥œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enenaB;   /**< Bœ‡∑¥œÚ”–π¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enenaC;   /**< Cœ‡∑¥œÚ”–π¶µÁƒ‹¡ø>*/
+	OOP_HENERGY_T enenaT;   /**< ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enenaA;   /**< AÁõ∏ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enenaB;   /**< BÁõ∏ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enenaC;   /**< CÁõ∏ÂèçÂêëÊúâÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGYS_T enepiT;   /**< ’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGYS_T enepiA;   /**< Aœ‡’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGYS_T enepiB;   /**< Bœ‡’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGYS_T enepiC;   /**< Cœ‡’˝œÚŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_HENERGYS_T enepiT;   /**< Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGYS_T enepiA;   /**< AÁõ∏Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGYS_T enepiB;   /**< BÁõ∏Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGYS_T enepiC;   /**< CÁõ∏Ê≠£ÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGYS_T eneniT;   /**< ∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGYS_T eneniA;   /**< Aœ‡∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGYS_T eneniB;   /**< Bœ‡∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGYS_T eneniC;   /**< Cœ‡∑¥œÚŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_HENERGYS_T eneniT;   /**< ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGYS_T eneniA;   /**< AÁõ∏ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGYS_T eneniB;   /**< BÁõ∏ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGYS_T eneniC;   /**< CÁõ∏ÂèçÂêëÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T enepi1T;   /**< 1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepi1A;   /**< Aœ‡1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepi1B;   /**< Bœ‡1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepi1C;   /**< Cœ‡1œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_HENERGY_T enepi1T;   /**< 1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepi1A;   /**< AÁõ∏1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepi1B;   /**< BÁõ∏1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepi1C;   /**< CÁõ∏1Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T eneni2T;   /**< 2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T eneni2A;   /**< Aœ‡2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T eneni2B;   /**< Bœ‡2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T eneni2C;   /**< Cœ‡2œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_HENERGY_T eneni2T;   /**< 2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T eneni2A;   /**< AÁõ∏2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T eneni2B;   /**< BÁõ∏2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T eneni2C;   /**< CÁõ∏2Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T eneni3T;   /**< 3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T eneni3A;   /**< Aœ‡3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T eneni3B;   /**< Bœ‡3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T eneni3C;   /**< Cœ‡3œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_HENERGY_T eneni3T;   /**< 3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T eneni3A;   /**< AÁõ∏3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T eneni3B;   /**< BÁõ∏3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T eneni3C;   /**< CÁõ∏3Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T enepi4T;   /**< 4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepi4A;   /**< Aœ‡4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepi4B;   /**< Bœ‡4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
-	OOP_HENERGY_T enepi4C;   /**< Cœ‡4œÛœﬁŒﬁπ¶µÁƒ‹¡ø>*/
+	OOP_HENERGY_T enepi4T;   /**< 4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepi4A;   /**< AÁõ∏4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepi4B;   /**< BÁõ∏4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
+	OOP_HENERGY_T enepi4C;   /**< CÁõ∏4Ë±°ÈôêÊó†ÂäüÁîµËÉΩÈáè>*/
 
-	OOP_HENERGY_T enepsT;   /**< ’˝œÚ ”‘⁄µÁƒ‹>*/
-	OOP_HENERGY_T enepsA;   /**< Aœ‡’˝œÚ ”‘⁄µÁƒ‹>*/
-	OOP_HENERGY_T enepsB;   /**< Bœ‡’˝œÚ ”‘⁄µÁƒ‹>*/
-	OOP_HENERGY_T enepsC;   /**< Cœ‡’˝œÚ ”‘⁄µÁƒ‹>*/
+	OOP_HENERGY_T enepsT;   /**< Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_HENERGY_T enepsA;   /**< AÁõ∏Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_HENERGY_T enepsB;   /**< BÁõ∏Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_HENERGY_T enepsC;   /**< CÁõ∏Ê≠£ÂêëËßÜÂú®ÁîµËÉΩ>*/
 
-	OOP_HENERGY_T enensT;   /**< ∑¥œÚ ”‘⁄µÁƒ‹>*/
-	OOP_HENERGY_T enensA;   /**< Aœ‡∑¥œÚ ”‘⁄µÁƒ‹>*/
-	OOP_HENERGY_T enensB;   /**< Bœ‡∑¥œÚ ”‘⁄µÁƒ‹>*/
-	OOP_HENERGY_T enensC;   /**< Cœ‡∑¥œÚ ”‘⁄µÁƒ‹>*/
+	OOP_HENERGY_T enensT;   /**< ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_HENERGY_T enensA;   /**< AÁõ∏ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_HENERGY_T enensB;   /**< BÁõ∏ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
+	OOP_HENERGY_T enensC;   /**< CÁõ∏ÂèçÂêëËßÜÂú®ÁîµËÉΩ>*/
 }OOP_HENERGY_BLOCK_T;
 
-/** @brief Ωª≤…–Ë¡ø ˝æ›øÈ	*/
+/** @brief ‰∫§ÈááÈúÄÈáèÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOP_DEMAND_BLOCK
 {
-	OOP_DEMAND_T dmnpaT;  /**< ’˝œÚ”–π¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpaA;  /**< ’˝œÚ”–π¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpaB;  /**< ’˝œÚ”–π¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpaC;  /**< ’˝œÚ”–π¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnpaT;  /**< Ê≠£ÂêëÊúâÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpaA;  /**< Ê≠£ÂêëÊúâÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpaB;  /**< Ê≠£ÂêëÊúâÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpaC;  /**< Ê≠£ÂêëÊúâÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnnaT;  /**< ∑¥œÚ”–π¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnnaA;  /**< ∑¥œÚ”–π¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnnaB;  /**< ∑¥œÚ”–π¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnnaC;  /**< ∑¥œÚ”–π¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnnaT;  /**< ÂèçÂêëÊúâÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnnaA;  /**< ÂèçÂêëÊúâÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnnaB;  /**< ÂèçÂêëÊúâÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnnaC;  /**< ÂèçÂêëÊúâÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMANDS_T dmnpiT;  /**< ’˝œÚŒﬁπ¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMANDS_T dmnpiA;  /**< ’˝œÚŒﬁπ¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMANDS_T dmnpiB;  /**< ’˝œÚŒﬁπ¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMANDS_T dmnpiC;  /**< ’˝œÚŒﬁπ¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMANDS_T dmnpiT;  /**< Ê≠£ÂêëÊó†ÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMANDS_T dmnpiA;  /**< Ê≠£ÂêëÊó†ÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMANDS_T dmnpiB;  /**< Ê≠£ÂêëÊó†ÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMANDS_T dmnpiC;  /**< Ê≠£ÂêëÊó†ÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMANDS_T dmnniT;  /**< ∑¥œÚŒﬁπ¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMANDS_T dmnniA;  /**< ∑¥œÚŒﬁπ¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMANDS_T dmnniB;  /**< ∑¥œÚŒﬁπ¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMANDS_T dmnniC;  /**< ∑¥œÚŒﬁπ¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMANDS_T dmnniT;  /**< ÂèçÂêëÊó†ÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMANDS_T dmnniA;  /**< ÂèçÂêëÊó†ÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMANDS_T dmnniB;  /**< ÂèçÂêëÊó†ÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMANDS_T dmnniC;  /**< ÂèçÂêëÊó†ÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnpi1T;  /**< œÛœﬁ1Œﬁπ¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpi1A;  /**< œÛœﬁ1Œﬁπ¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpi1B;  /**< œÛœﬁ1Œﬁπ¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpi1C;  /**< œÛœﬁ1Œﬁπ¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnpi1T;  /**< Ë±°Èôê1Êó†ÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpi1A;  /**< Ë±°Èôê1Êó†ÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpi1B;  /**< Ë±°Èôê1Êó†ÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpi1C;  /**< Ë±°Èôê1Êó†ÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnni2T;  /**< œÛœﬁ2Œﬁπ¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnni2A;  /**< œÛœﬁ2Œﬁπ¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnni2B;  /**< œÛœﬁ2Œﬁπ¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnni2C;  /**< œÛœﬁ2Œﬁπ¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnni2T;  /**< Ë±°Èôê2Êó†ÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnni2A;  /**< Ë±°Èôê2Êó†ÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnni2B;  /**< Ë±°Èôê2Êó†ÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnni2C;  /**< Ë±°Èôê2Êó†ÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnni3T;  /**< œÛœﬁ3Œﬁπ¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnni3A;  /**< œÛœﬁ3Œﬁπ¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnni3B;  /**< œÛœﬁ3Œﬁπ¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnni3C;  /**< œÛœﬁ3Œﬁπ¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnni3T;  /**< Ë±°Èôê3Êó†ÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnni3A;  /**< Ë±°Èôê3Êó†ÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnni3B;  /**< Ë±°Èôê3Êó†ÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnni3C;  /**< Ë±°Èôê3Êó†ÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnpi4T;  /**< œÛœﬁ4Œﬁπ¶◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpi4A;  /**< œÛœﬁ4Œﬁπ¶Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpi4B;  /**< œÛœﬁ4Œﬁπ¶Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpi4C;  /**< œÛœﬁ4Œﬁπ¶Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnpi4T;  /**< Ë±°Èôê4Êó†ÂäüÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpi4A;  /**< Ë±°Èôê4Êó†ÂäüAÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpi4B;  /**< Ë±°Èôê4Êó†ÂäüBÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpi4C;  /**< Ë±°Èôê4Êó†ÂäüCÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnpsT;   /**< ’˝œÚ ”‘⁄◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpsA;   /**< ’˝œÚ ”‘⁄Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpsB;   /**< ’˝œÚ ”‘⁄Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnpsC;   /**< ’˝œÚ ”‘⁄Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnpsT;   /**< Ê≠£ÂêëËßÜÂú®ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpsA;   /**< Ê≠£ÂêëËßÜÂú®AÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpsB;   /**< Ê≠£ÂêëËßÜÂú®BÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnpsC;   /**< Ê≠£ÂêëËßÜÂú®CÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 
-	OOP_DEMAND_T dmnnsT;   /**< ∑¥œÚ ”‘⁄◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnnsA;   /**< ∑¥œÚ ”‘⁄Aœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnnsB;   /**< ∑¥œÚ ”‘⁄Bœ‡◊Ó¥Û–Ë¡ø>*/
-	OOP_DEMAND_T dmnnsC;   /**< ∑¥œÚ ”‘⁄Cœ‡◊Ó¥Û–Ë¡ø>*/
+	OOP_DEMAND_T dmnnsT;   /**< ÂèçÂêëËßÜÂú®ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnnsA;   /**< ÂèçÂêëËßÜÂú®AÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnnsB;   /**< ÂèçÂêëËßÜÂú®BÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
+	OOP_DEMAND_T dmnnsC;   /**< ÂèçÂêëËßÜÂú®CÁõ∏ÊúÄÂ§ßÈúÄÈáè>*/
 }OOP_DEMAND_BLOCK_T;
 
-/** @brief Ωª≤…À≤ ±÷µ ˝æ›øÈ	*/
+/** @brief ‰∫§ÈááÁû¨Êó∂ÂÄºÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOP_INS_BLOCK
 {
-	OOP_WORD4V_T 	vol;			/**< µÁ—π>*/
-	OOP_INT4V_T 	amp;			/**< µÁ¡˜>*/
-	int32 			ampn;			/**< µÁ¡˜¡„œﬂ>*/
-	OOP_WORD4V_T 	phu;			/**< µÁ—πœ‡Ω«>*/
-	OOP_WORD4V_T 	phi;			/**< µÁ¡˜œ‡Ω«>*/
-	OOP_INT4V_T 	ppwr;			/**< ”–π¶π¶¬ >*/
-	OOP_INT4V_T 	qpwr;			/**< Œﬁπ¶π¶¬ >*/
-	OOP_INT4V_T 	spwr;			/**<  ”‘⁄π¶¬ >*/
-	OOP_LONG4V_T 	pwrf;			/**< π¶¬ “Ú ˝>*/
-	uint16 			frequency;		/**< µÁÕ¯∆µ¬ >*/
-	OOP_METWORD_T 	MetStatus; 		/**< µÁƒ‹±Ì◊¥Ã¨◊÷>*/
-	uint16 			volUnbd;		/**< µÁ—π≤ª∆Ω∫‚>*/
-	uint16 			ampUnbd;		/**< µÁ¡˜≤ª∆Ω∫‚>*/
-	OOP_WORD4V_T 	linevol;		/**< œﬂµÁ—π>*/
+	OOP_WORD4V_T 	vol;			/**< ÁîµÂéã>*/
+	OOP_INT4V_T 	amp;			/**< ÁîµÊµÅ>*/
+	int32 			ampn;			/**< ÁîµÊµÅÈõ∂Á∫ø>*/
+	OOP_WORD4V_T 	phu;			/**< ÁîµÂéãÁõ∏Ëßí>*/
+	OOP_WORD4V_T 	phi;			/**< ÁîµÊµÅÁõ∏Ëßí>*/
+	OOP_INT4V_T 	ppwr;			/**< ÊúâÂäüÂäüÁéá>*/
+	OOP_INT4V_T 	qpwr;			/**< Êó†ÂäüÂäüÁéá>*/
+	OOP_INT4V_T 	spwr;			/**< ËßÜÂú®ÂäüÁéá>*/
+	OOP_LONG4V_T 	pwrf;			/**< ÂäüÁéáÂõ†Êï∞>*/
+	uint16 			frequency;		/**< ÁîµÁΩëÈ¢ëÁéá>*/
+	OOP_METWORD_T 	MetStatus; 		/**< ÁîµËÉΩË°®Áä∂ÊÄÅÂ≠ó>*/
+	uint16 			volUnbd;		/**< ÁîµÂéã‰∏çÂπ≥Ë°°>*/
+	uint16 			ampUnbd;		/**< ÁîµÊµÅ‰∏çÂπ≥Ë°°>*/
+	OOP_WORD4V_T 	linevol;		/**< Á∫øÁîµÂéã>*/
 }OOP_INS_BLOCK_T;
 
-/** @brief Ωª≤…–≥≤® ˝æ›øÈ	*/
-/** @brief Ωª≤…–≥≤® ˝æ›øÈ	*/
+/** @brief ‰∫§ÈááË∞êÊ≥¢Êï∞ÊçÆÂùó	*/
+/** @brief ‰∫§ÈááË∞êÊ≥¢Êï∞ÊçÆÂùó	*/
 typedef struct tag_OOP_HARMONIC_BLOCK
 {
 	OOP_HARMONIC_T volharmrat[3];
@@ -6353,15 +6353,15 @@ typedef struct tag_OOP_HARMONIC_BLOCK
 	OOP_HARMONIC_AMP_T ampharmval[3];
 }OOP_HARMONIC_BLOCK_T;
 
-/** @brief Ωª≤…µÁƒ‹÷ ¡ø ˝æ›øÈ	*/
+/** @brief ‰∫§ÈááÁîµËÉΩË¥®ÈáèÊï∞ÊçÆÂùó	*/
 typedef struct tag_OOP_QUALITY_BLOCK
 {
-	uint16			zerovol;		/**< ¡„–ÚµÁ—π>*/
-	int32 			zeroamp;		/**< ¡„–ÚµÁ¡˜>*/
-	uint16 			volUnbd_v;		/**< µÁ—π≤ª∆Ω∫‚£® ∏¡ø∫Õ∑®£©>*/
-	uint16 			ampUnbd_v;		/**< µÁ¡˜≤ª∆Ω∫‚£® ∏¡ø∫Õ∑®£©>*/
-	uint16			zerovol_v;		/**< ¡„–ÚµÁ—π>£® ∏¡ø∫Õ∑®£©*/
-	int32 			zeroamp_v;		/**< ¡„–ÚµÁ¡˜>£® ∏¡ø∫Õ∑®£©*/
+	uint16			zerovol;		/**< Èõ∂Â∫èÁîµÂéã>*/
+	int32 			zeroamp;		/**< Èõ∂Â∫èÁîµÊµÅ>*/
+	uint16 			volUnbd_v;		/**< ÁîµÂéã‰∏çÂπ≥Ë°°ÔºàÁü¢ÈáèÂíåÊ≥ïÔºâ>*/
+	uint16 			ampUnbd_v;		/**< ÁîµÊµÅ‰∏çÂπ≥Ë°°ÔºàÁü¢ÈáèÂíåÊ≥ïÔºâ>*/
+	uint16			zerovol_v;		/**< Èõ∂Â∫èÁîµÂéã>ÔºàÁü¢ÈáèÂíåÊ≥ïÔºâ*/
+	int32 			zeroamp_v;		/**< Èõ∂Â∫èÁîµÊµÅ>ÔºàÁü¢ÈáèÂíåÊ≥ïÔºâ*/
 }OOP_QUALITY_BLOCK_T;
 
 #ifdef __cplusplus
