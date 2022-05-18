@@ -29,14 +29,14 @@ int getLocalInfo(void)
 	ifc.ifc_buf = (caddr_t) buf;
 	if (!ioctl(fd, SIOCGIFCONF, (char*) &ifc)) {
 		interfaceNum = ifc.ifc_len / sizeof(struct ifreq);
-		printf("interface num = %dn", interfaceNum);
+		printf("interface num = %d\n", interfaceNum);
 		while (interfaceNum-- > 0) {
-			printf("ndevice name: %sn", buf[interfaceNum].ifr_name);
+			printf("\ndevice name: %s\n", buf[interfaceNum].ifr_name);
 
 			//ignore the interface that not up or not runing
 			ifrcopy = buf[interfaceNum];
 			if (ioctl(fd, SIOCGIFFLAGS, &ifrcopy)) {
-				printf("ioctl: %s [%s:%d]n", strerror(errno), __FILE__,
+				printf("ioctl: %s [%s:%d]\n", strerror(errno), __FILE__,
 						__LINE__);
 
 				close(fd);
@@ -54,9 +54,9 @@ int getLocalInfo(void)
 						(unsigned char) buf[interfaceNum].ifr_hwaddr.sa_data[3],
 						(unsigned char) buf[interfaceNum].ifr_hwaddr.sa_data[4],
 						(unsigned char) buf[interfaceNum].ifr_hwaddr.sa_data[5]);
-				printf("device mac: %sn", mac);
+				printf("device mac: %s\n", mac);
 			} else {
-				printf("ioctl: %s [%s:%d]n", strerror(errno), __FILE__,
+				printf("ioctl: %s [%s:%d]\n", strerror(errno), __FILE__,
 						__LINE__);
 				close(fd);
 				return -1;
@@ -68,9 +68,9 @@ int getLocalInfo(void)
 				snprintf(ip, sizeof(ip), "%s",
 						(char*) inet_ntoa(
 								((struct sockaddr_in*) &(buf[interfaceNum].ifr_addr))->sin_addr));
-				printf("device ip: %sn", ip);
+				printf("device ip: %s\n", ip);
 			} else {
-				printf("ioctl: %s [%s:%d]n", strerror(errno), __FILE__,
+				printf("ioctl: %s [%s:%d]\n", strerror(errno), __FILE__,
 						__LINE__);
 				close(fd);
 				return -1;
@@ -82,9 +82,9 @@ int getLocalInfo(void)
 				snprintf(broadAddr, sizeof(broadAddr), "%s",
 						(char*) inet_ntoa(
 								((struct sockaddr_in*) &(buf[interfaceNum].ifr_broadaddr))->sin_addr));
-				printf("device broadAddr: %sn", broadAddr);
+				printf("device broadAddr: %s\n", broadAddr);
 			} else {
-				printf("ioctl: %s [%s:%d]n", strerror(errno), __FILE__,
+				printf("ioctl: %s [%s:%d]\n", strerror(errno), __FILE__,
 						__LINE__);
 				close(fd);
 				return -1;
@@ -95,9 +95,9 @@ int getLocalInfo(void)
 				snprintf(subnetMask, sizeof(subnetMask), "%s",
 						(char*) inet_ntoa(
 								((struct sockaddr_in*) &(buf[interfaceNum].ifr_netmask))->sin_addr));
-				printf("device subnetMask: %sn", subnetMask);
+				printf("device subnetMask: %s\n", subnetMask);
 			} else {
-				printf("ioctl: %s [%s:%d]n", strerror(errno), __FILE__,
+				printf("ioctl: %s [%s:%d]\n", strerror(errno), __FILE__,
 						__LINE__);
 				close(fd);
 				return -1;
@@ -105,7 +105,7 @@ int getLocalInfo(void)
 			}
 		}
 	} else {
-		printf("ioctl: %s [%s:%d]n", strerror(errno), __FILE__, __LINE__);
+		printf("ioctl: %s [%s:%d]\n", strerror(errno), __FILE__, __LINE__);
 		close(fd);
 		return -1;
 	}
@@ -121,7 +121,7 @@ void rebuildlimits()
 	if (getrlimit(RLIMIT_MSGQUEUE, &limit) != 0) {
 		printf("重建系统限制时，获取系统参数失败...\n");
 	} else {
-		printf("重建系统限制，系统参数[%d-%d]\n", limit.rlim_cur, limit.rlim_max);
+		printf("重建系统限制，系统参数[%ld-%ld]\n", limit.rlim_cur, limit.rlim_max);
 		limit.rlim_cur = 1024000;
 		limit.rlim_max = 1024000;
 		if(setrlimit(RLIMIT_MSGQUEUE, &limit)<0)

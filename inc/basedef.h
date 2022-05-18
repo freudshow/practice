@@ -110,11 +110,9 @@ typedef double fp64;
  * if a == b, then this macro do not swap them.
  * ***********************************************************/
 #define SWAP(a, b)		do{\
-							if((a) ^ (b)) {\
-								(a) = (a)^(b);\
-								(b) = (a)^(b);\
-								(a) = (a)^(b);\
-							}\
+                            typeof(x) tmp = x;\
+                            x = y;\
+                            y = tmp;\
 						}while(0)
 
 #define min(X, Y)  ((X) < (Y) ? (X) : (Y))
