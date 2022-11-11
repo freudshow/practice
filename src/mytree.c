@@ -97,11 +97,20 @@ void list_dir(tree_ptr t, unsigned int depth)
 {
 	tree_ptr p = NULL;
 
-	if (isLeaf(t))
-		print_name(t, depth);
+	int i = 0;
+//	printf("|-");
+	for(i = 0; i < depth; i++)
+	{
+		printf("|-");
+	}
 
-	if (!isLeaf(t)) {
-		print_name(t, depth);
+	printf("/%s\n", t->e);
+	if (isLeaf(t))
+	{
+//		print_name(t, depth);
+	}
+	else if (!isLeaf(t)) {
+//		print_name(t, depth);
 		p = t->child;
 		while (NULL != p) {
 			list_dir(p, depth + 1);
