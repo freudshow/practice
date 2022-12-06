@@ -127,14 +127,20 @@ void debugBufFormat2fp(FILE *fp, const char *file, const char *func, int line,
 	}
 }
 
-void insertSort(int *array, int len)
+void insertionSort(int *array, int len)
 {
+	if (len <= 1)
+	{
+		return;
+	}
+
 	int i = 0;
 	int j = 0;
 	int key = 0;
 	for (i = 1; i < len; i++)
 	{
 		key = array[i];
+		DEBUG_TIME_LINE("key: %d", key);
 
 		// Insert array[i] into the sorted subarray array[1: i-1]
 		j = i - 1;
@@ -146,6 +152,8 @@ void insertSort(int *array, int len)
 		}
 
 		array[j + 1] = key;
+
+		DEBUG_BUFF_FORMAT(array, len, "step{-%d-}: ", i);
 	}
 }
 
