@@ -220,8 +220,8 @@ void usage()
 	fprintf(stderr,
 			"-i,    --inv       发送报文后, 读取串口数据的时间间隔, 单位毫秒, 默认50毫秒, 最大1024毫秒;\n");
 	fprintf(stderr,
-			"-c,    --com       向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号(" ")封闭,\n");
-	fprintf(stderr, "                        默认\"/dev/ttySA1\", 即RS-485 I;\n");
+			"-c,    --com       向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号(\"\")封闭,\n");
+	fprintf(stderr, "                        默认\"%s\", 即RS-485 I;\n", S4851);
 	fprintf(stderr, "-b,    --baud      设置串口波特率, 默认2400;\n");
 	fprintf(stderr,
 			"-d,    --data      设置串口数据位, 6, 7, 8为有效值, 其他值视为使用默认值, 默认值8;\n");
@@ -233,7 +233,7 @@ void usage()
 	fprintf(stderr,
 			"                        默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".\n");
 	fprintf(stderr, "-h,	--help      打印本帮助\n");
-	fprintf(stderr, "如果任何参数都不传入, 程序使用默认参数来监听\"/dev/ttySA1\".\n");
+	fprintf(stderr, "如果任何参数都不传入, 程序使用默认参数来监听\"%s\".\n", S4851);
 }
 
 s8 getComConfig(option_p pOpt, comConfig_p pConfig)

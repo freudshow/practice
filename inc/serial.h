@@ -51,6 +51,12 @@ extern "C" {
 #define S4853   		"/dev/ttySZ5"
 #define S4854   		"/dev/ttySZ6"
 #define SPLC            "/dev/ttyS7"
+#elif defined (E9361_C0)
+#define S4851           "/dev/ttymxc2"
+#define S4852           "/dev/ttymxc3"
+#define S4853           "/dev/ttymxc4"
+#define S4854           "/dev/ttymxc5"
+#define SPLC            "/dev/ttymxc7"
 #endif
 
 #define PIN_BASE 32

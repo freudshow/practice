@@ -6,11 +6,13 @@ MKCCTII			=jzqii
 MKZBIII			=zbiii
 MKCJQIII		=cjqiii
 MKTTU 			=ttu
+MKE9361C0		=e9361c0
 DEFINCCTI		=-DCCTI
 DEFINCCTII		=-DCCTII
 DEFINCCTIII		=-DCCTIII
 DEFINCJQIII		=-DCJQIII
 DEFINETTU		=-DTTU
+DEFINEE9361C0	=-DE9361_C0
 BIN				=./bin/$(TARGET)
 SRC				=./src/serial.c ./src/lib.c
 INC				=-I ./inc
@@ -35,6 +37,9 @@ $(MKCJQIII): $(SRC)
 $(MKTTU): $(SRC)
 	$(CC) $(OBJ) $(CFLAS) $(SRC) $(INC) $(DEFINETTU)
 	scp -P 8888  ${BIN} sysadm@192.168.31.101:/home/sysadm/bin/
+
+$(MKE9361C0): $(SRC)
+	$(CC) $(OBJ) $(CFLAS) $(SRC) $(INC) $(DEFINEE9361C0)
 
 $(DEFINCJQIII): $(SRC)
 	$(CC) $(MKCJQIIILISTEN) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII)
