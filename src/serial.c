@@ -211,29 +211,29 @@ int open_tty(comConfig_p pConfig)
 
 void usage()
 {
-	fprintf(stderr, "功能: 向串口发送报文, 并监听应答报文\n");
-	fprintf(stderr, "用法: serial [选项]\n");
-	fprintf(stderr,
+	fprintf(stdout, "功能: 向串口发送报文, 并监听应答报文\n");
+	fprintf(stdout, "用法: serial [选项]\n");
+	fprintf(stdout,
 			"-l,    --listen    监听开关, 0-发送报文并等待应答; 1-一直监听一个串口不发送报文, 默认0;\n");
-	fprintf(stderr, "-t,    --times     发送并监听次数, 默认0, 无限次, 最大值1024;\n");
-	fprintf(stderr, "-w,    --wait      发送报文后, 读取串口数据的次数, 默认20次, 最多1024次;\n");
-	fprintf(stderr,
+	fprintf(stdout, "-t,    --times     发送并监听次数, 默认0, 无限次, 最大值1024;\n");
+	fprintf(stdout, "-w,    --wait      发送报文后, 读取串口数据的次数, 默认20次, 最多1024次;\n");
+	fprintf(stdout,
 			"-i,    --inv       发送报文后, 读取串口数据的时间间隔, 单位毫秒, 默认50毫秒, 最大1024毫秒;\n");
-	fprintf(stderr,
+	fprintf(stdout,
 			"-c,    --com       向哪个串口发送并监听数据, 必须是完整路径且必须以半角引号(\"\")封闭,\n");
-	fprintf(stderr, "                        默认\"%s\", 即RS-485 I;\n", S4851);
-	fprintf(stderr, "-b,    --baud      设置串口波特率, 默认2400;\n");
-	fprintf(stderr,
+	fprintf(stdout, "                        默认\"%s\", 即RS-485 I;\n", S4851);
+	fprintf(stdout, "-b,    --baud      设置串口波特率, 默认2400;\n");
+	fprintf(stdout,
 			"-d,    --data      设置串口数据位, 6, 7, 8为有效值, 其他值视为使用默认值, 默认值8;\n");
-	fprintf(stderr,
+	fprintf(stdout,
 			"-s,    --stop      设置串口停止位, 1, 2为有效值, 其他值视为使用默认值, 默认值1;\n");
-	fprintf(stderr,
+	fprintf(stdout,
 			"-p,    --par            设置串口校验位, 0-偶, 1-奇, 2-无, 其他值视为使用默认值, 默认值0;\n");
-	fprintf(stderr, "-f,    --frame     传入的报文, 必须以半角引号(\"\")封闭.\n");
-	fprintf(stderr,
+	fprintf(stdout, "-f,    --frame     传入的报文, 必须以半角引号(\"\")封闭.\n");
+	fprintf(stdout,
 			"                        默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".\n");
-	fprintf(stderr, "-h,	--help      打印本帮助\n");
-	fprintf(stderr, "如果任何参数都不传入, 程序使用默认参数来监听\"%s\".\n", S4851);
+	fprintf(stdout, "-h,	--help      打印本帮助\n");
+	fprintf(stdout, "如果任何参数都不传入, 程序使用默认参数来监听\"%s\".\n", S4851);
 }
 
 s8 getComConfig(option_p pOpt, comConfig_p pConfig)
@@ -378,7 +378,7 @@ void getOptions(int argc, char *argv[], option_p pOpt)
 	while ((ch = getopt_long(argc, argv, optString, longOpts, &longIndex)) != -1) {
 		switch (ch) {
 		case 'l':
-			fprintf(stderr, "option -l: %s\n", optarg);
+			fprintf(stdout, "option -l: %s\n", optarg);
 			pOpt->listen = atoi(optarg);
 			if (0 != pOpt->listen && 1 != pOpt->listen) {
 				pOpt->listen = 0;
@@ -391,65 +391,65 @@ void getOptions(int argc, char *argv[], option_p pOpt)
 			}
 			break;
 		case 't':
-			fprintf(stderr, "option -t: %s\n", optarg);
+			fprintf(stdout, "option -t: %s\n", optarg);
 			pOpt->times = atoi(optarg);
 			if (pOpt->times > 1024) {
 				pOpt->times = 1024;
 			}
 			break;
 		case 'w':
-			fprintf(stderr, "option -w: %s\n", optarg);
+			fprintf(stdout, "option -w: %s\n", optarg);
 			pOpt->wait = atoi(optarg);
 			if (pOpt->wait > 1024) {
 				pOpt->wait = 1024;
 			}
 			break;
 		case 'i':
-			fprintf(stderr, "option -i: %s\n", optarg);
+			fprintf(stdout, "option -i: %s\n", optarg);
 			pOpt->inv = atoi(optarg);
 			if (pOpt->inv > 2048) {
 				pOpt->inv = 2048;
 			}
 			break;
 		case 'c':
-			fprintf(stderr, "option -c: %s\n", optarg);
+			fprintf(stdout, "option -c: %s\n", optarg);
 			bzero(pOpt->com, sizeof(pOpt->com));
 			strcpy(pOpt->com, optarg);
 			break;
 		case 'b':
-			fprintf(stderr, "option -b: %s\n", optarg);
+			fprintf(stdout, "option -b: %s\n", optarg);
 			pOpt->baud = atoi(optarg);
 			if (baudValid(pOpt->baud) == FALSE) {
-				fprintf(stderr, "invalid baud\n");
+				fprintf(stdout, "invalid baud\n");
 				exit(0);
 			}
 			break;
 		case 'd':
-			fprintf(stderr, "option -d: %s\n", optarg);
+			fprintf(stdout, "option -d: %s\n", optarg);
 			pOpt->data = atoi(optarg);
 			if (pOpt->data != 8 && pOpt->data != 7 && pOpt->data != 6) {
-				fprintf(stderr, "invalid databits, use 8 databits\n");
+				fprintf(stdout, "invalid databits, use 8 databits\n");
 				pOpt->data = 8;
 			}
 			break;
 		case 's':
-			fprintf(stderr, "option -s: %s\n", optarg);
+			fprintf(stdout, "option -s: %s\n", optarg);
 			pOpt->stop = atoi(optarg);
 			if (pOpt->stop != 1 && pOpt->stop != 2) {
-				fprintf(stderr, "invalid stopbits, use 1 stopbits\n");
+				fprintf(stdout, "invalid stopbits, use 1 stopbits\n");
 				pOpt->stop = 1;
 			}
 			break;
 		case 'p':
-			fprintf(stderr, "option -p: %s\n", optarg);
+			fprintf(stdout, "option -p: %s\n", optarg);
 			pOpt->par = atoi(optarg);
 			if (pOpt->par != 0 && pOpt->par != 1 && pOpt->par != 2) {
-				fprintf(stderr, "invalid parity, use 0(even) parity\n");
+				fprintf(stdout, "invalid parity, use 0(even) parity\n");
 				pOpt->par = 0;
 			}
 			break;
 		case 'f':
-			fprintf(stderr, "option -f: %s\n", optarg);
+			fprintf(stdout, "option -f: %s\n", optarg);
 			bzero(pOpt->frame, sizeof(pOpt->frame));
 			strcpy(pOpt->frame, optarg);
 			break;
@@ -464,16 +464,16 @@ void getOptions(int argc, char *argv[], option_p pOpt)
 
 void printOpt(option_p pOpt)
 {
-	fprintf(stderr, "listen: %u\n", pOpt->listen);
-	fprintf(stderr, "times: %u\n", pOpt->times);
-	fprintf(stderr, "wait: %u\n", pOpt->wait);
-	fprintf(stderr, "inv: %u\n", pOpt->inv);
-	fprintf(stderr, "com: %s\n", pOpt->com);
-	fprintf(stderr, "baud: %u\n", pOpt->baud);
-	fprintf(stderr, "data: %u\n", pOpt->data);
-	fprintf(stderr, "stop: %u\n", pOpt->stop);
-	fprintf(stderr, "par: %u\n", pOpt->par);
-	fprintf(stderr, "frame: %s\n", pOpt->frame);
+	fprintf(stdout, "listen: %u\n", pOpt->listen);
+	fprintf(stdout, "times: %u\n", pOpt->times);
+	fprintf(stdout, "wait: %u\n", pOpt->wait);
+	fprintf(stdout, "inv: %u\n", pOpt->inv);
+	fprintf(stdout, "com: %s\n", pOpt->com);
+	fprintf(stdout, "baud: %u\n", pOpt->baud);
+	fprintf(stdout, "data: %u\n", pOpt->data);
+	fprintf(stdout, "stop: %u\n", pOpt->stop);
+	fprintf(stdout, "par: %u\n", pOpt->par);
+	fprintf(stdout, "frame: %s\n", pOpt->frame);
 }
 
 int main(int argc, char *argv[])

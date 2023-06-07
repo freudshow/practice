@@ -143,9 +143,9 @@ void printBuf(u8* buf, u32 bufSize)
 	}
 
 	for (i=0; i < (bufSize-1); i++) {
-		fprintf(stderr, "%02X ", buf[i]);
+		fprintf(stdout, "%02X ", buf[i]);
 	}
-	fprintf(stderr, "%02X\n", buf[i]);
+	fprintf(stdout, "%02X\n", buf[i]);
 }
 
 int arrayCmp(int a, int b)
