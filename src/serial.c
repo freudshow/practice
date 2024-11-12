@@ -301,8 +301,8 @@ s8 sendcom(int fd, u8 *buf, u32 bufSize)
 		DEBUG_TIME_LINE("send error!\n");
 		return FALSE;
 	}
-	DEBUG_OUT("[send]bufSize:%d; ", bufSize);
-	printBuf(buf, bufSize);
+
+	DEBUG_BUFF_FORMAT(buf, bufSize, "send[%u]:--->>> ", bufSize);
 
 	return TRUE;
 }
@@ -315,8 +315,7 @@ void readcom(int fd, u8 *buf, u32 bufSize)
 	int ret = read(fd, buf, bufSize);
 
 	if (ret > 0) {
-		DEBUG_OUT("[read]bufSize: %d; ", ret);
-		printBuf(buf, ret);
+		DEBUG_BUFF_FORMAT(buf, bufSize, "read[%d]<<<--- ", ret);
 	}
 }
 
@@ -509,7 +508,8 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	if (readFrm(options.frame, sbuf, &sbufSize) == FALSE) {
+	int sendlen = readFrame(options.frame, sizeof(sbuf), sbuf);
+	if (sendlen < 0) {
 		goto ret;
 	}
 
@@ -522,13 +522,13 @@ int main(int argc, char *argv[])
 	} else if (MASTER_DEV == options.master) { //主机, 发送报文并监听串口
 		sendcnt = 0;
 		while ((options.times > 0) ? (sendcnt < options.times) : 1) {
-			usleep(options.inv * 1000);
-			if (sendcom(fd, sbuf, sbufSize) == FALSE) {
+			if (sendcom(fd, sbuf, sendlen) == FALSE) {
 				goto ret;
 			}
 
-			cnt = 0;
+			usleep(options.inv * 1000);
 
+			cnt = 0;
 			while (cnt < options.wait) {
 				usleep(50 * 1000);
 				readcom(fd, rbuf, rbufSize);
@@ -546,6 +546,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	ret: close(fd);
+ret:
+	close(fd);
 	exit(0);
 }
