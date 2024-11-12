@@ -13,15 +13,21 @@
 #include "serial.h"
 
 static const char *optString = "l:t:w:i:c:b:d:s:p:f:m:h";
-static const struct option longOpts[] = { { "listen", required_argument, NULL,
-		'l' }, { "times", required_argument, NULL, 't' }, { "wait",
-		required_argument, NULL, 'w' }, { "inv", required_argument, NULL, 'i' },
-		{ "com", required_argument, NULL, 'c' }, { "baud", required_argument,
-				NULL, 'b' }, { "data", required_argument, NULL, 'd' }, { "stop",
-				required_argument, NULL, 's' }, { "par", required_argument,
-				NULL, 'p' }, { "frame", required_argument, NULL, 'f' }, {
-				"master", no_argument, NULL, 'm' }, { "help", no_argument, NULL,
-				'h' }, { NULL, no_argument, NULL, 0 } };
+static const struct option longOpts[] = {
+                                                { "listen", required_argument, NULL, 'l' },
+                                                { "times", required_argument, NULL, 't' },
+                                                { "wait", required_argument, NULL, 'w' },
+                                                { "inv", required_argument, NULL, 'i' },
+                                                { "com", required_argument, NULL, 'c' },
+                                                { "baud", required_argument, NULL, 'b' },
+                                                { "data", required_argument, NULL, 'd' },
+                                                { "stop", required_argument, NULL, 's' },
+                                                { "par", required_argument, NULL, 'p' },
+                                                { "frame", required_argument, NULL, 'f' },
+                                                {"master", no_argument, NULL, 'm' },
+                                                { "help", no_argument, NULL, 'h' },
+                                                { NULL, no_argument, NULL, 0 }
+                                        };
 
 void set_baudrate(struct termios *opt, unsigned int baudrate)
 {
@@ -481,7 +487,6 @@ int main(int argc, char *argv[])
 	option_s options = { };
 	u8 rbuf[2048] = { 0 };
 	u8 sbuf[2048] = { 0 };
-	u32 sbufSize = sizeof(sbuf);
 	u32 rbufSize = sizeof(rbuf);
 	int fd = -1;
 	u32 sendcnt = 0;
@@ -517,7 +522,6 @@ int main(int argc, char *argv[])
 		while (1) {
 			usleep(50 * 1000);
 			readcom(fd, rbuf, rbufSize);
-
 		}
 	} else if (MASTER_DEV == options.master) { //主机, 发送报文并监听串口
 		sendcnt = 0;
@@ -542,7 +546,7 @@ int main(int argc, char *argv[])
 			usleep(50 * 1000);
 			readcom(fd, rbuf, rbufSize);
 			usleep(options.inv * 1000);
-			sendcom(fd, sbuf, sbufSize);
+			sendcom(fd, sbuf, sendlen);
 		}
 	}
 
