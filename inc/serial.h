@@ -105,6 +105,9 @@ typedef struct {
 	u8 data;
 	u8 stop;
 	u8 par;
+#define NO_ASCII	0
+#define ASCII		1
+    u8 ascii;
 	char frame[2048];
 } option_s;
 typedef option_s* option_p;

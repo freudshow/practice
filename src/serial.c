@@ -12,7 +12,7 @@
 #include "lib.h"
 #include "serial.h"
 
-static const char *optString = "l:t:w:i:c:b:d:s:p:f:m:h";
+static const char *optString = "l:t:w:i:c:b:d:s:p:f:m:h:a";
 static const struct option longOpts[] = {
                                                 { "listen", required_argument, NULL, 'l' },
                                                 { "times", required_argument, NULL, 't' },
@@ -26,6 +26,7 @@ static const struct option longOpts[] = {
                                                 { "frame", required_argument, NULL, 'f' },
                                                 {"master", no_argument, NULL, 'm' },
                                                 { "help", no_argument, NULL, 'h' },
+                                                { "ascii", no_argument, NULL, 'a' },
                                                 { NULL, no_argument, NULL, 0 }
                                         };
 
@@ -236,6 +237,7 @@ void usage()
 	fprintf(stdout,
 			"-p,    --par            设置串口校验位, 0-偶, 1-奇, 2-无, 其他值视为使用默认值, 默认值0;\n");
 	fprintf(stdout, "-f,    --frame     传入的报文, 必须以半角引号(\"\")封闭.\n");
+	fprintf(stdout, "-a,    --ascii     传入的报文是否是ascii码, 0-不是, 1-是, 默认0.\n");
 	fprintf(stdout,
 			"                        默认发送\"FE FE FE FE 68 12 34 56 78 90 16\".\n");
 	fprintf(stdout, "-h,	--help      打印本帮助\n");
@@ -298,19 +300,23 @@ s8 getComConfig(option_p pOpt, comConfig_p pConfig)
 	return TRUE;
 }
 
-s8 sendcom(int fd, u8 *buf, u32 bufSize)
+s8 sendcom(int fd, u8 *buf, u32 bufSize, u8 ascii)
 {
-	if (0 == bufSize || NULL == buf)
-		return FALSE;
+    if (0 == bufSize || NULL == buf)
+        return FALSE;
 
-	if (write(fd, buf, bufSize) < 0) {
-		DEBUG_TIME_LINE("send error!\n");
-		return FALSE;
-	}
+    if (write(fd, buf, bufSize) < 0) {
+        DEBUG_TIME_LINE("send error!\n");
+        return FALSE;
+    }
 
-	DEBUG_BUFF_FORMAT(buf, bufSize, "send[%u]:--->>> ", bufSize);
+    if (ascii == 0) {
+        DEBUG_BUFF_FORMAT(buf, bufSize, "send[%u]:--->>> ", bufSize);
+    } else {
+        DEBUG_TIME_LINE("send[%u]:--->>> %s", bufSize, (char*)buf);
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 void readcom(int fd, u8 *buf, u32 bufSize)
@@ -458,6 +464,14 @@ void getOptions(int argc, char *argv[], option_p pOpt)
 			bzero(pOpt->frame, sizeof(pOpt->frame));
 			strcpy(pOpt->frame, optarg);
 			break;
+        case 'a':
+            fprintf(stdout, "option -a: %s\n", optarg);
+            pOpt->ascii = atoi(optarg);
+            if (pOpt->ascii!= 0 && pOpt->ascii!= 1) {
+                fprintf(stdout, "invalid ascii, use 0(no ascii)\n");
+                pOpt->ascii = 0;
+            }
+            break;
 		case 'h':
 		default:
 			usage();
@@ -492,8 +506,6 @@ int main(int argc, char *argv[])
 	u32 sendcnt = 0;
 	int cnt = 0;
 	fd_set fds = { };
-	struct timeval timeout = { };
-	int nready = 0;
 
 	setDefaultOpt(&options);
 	setDefaultPara(&config);
@@ -513,7 +525,15 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	int sendlen = readFrame(options.frame, sizeof(sbuf), sbuf);
+	int sendlen = 0;
+    
+    if (options.ascii == 1) {
+        sendlen = strlen(options.frame);
+        snprintf(sbuf, sizeof(sbuf), "%s", options.frame);
+    } else {
+        sendlen = readFrame(options.frame, sizeof(sbuf), sbuf);
+    }
+
 	if (sendlen < 0) {
 		goto ret;
 	}
@@ -526,7 +546,7 @@ int main(int argc, char *argv[])
 	} else if (MASTER_DEV == options.master) { //主机, 发送报文并监听串口
 		sendcnt = 0;
 		while ((options.times > 0) ? (sendcnt < options.times) : 1) {
-			if (sendcom(fd, sbuf, sendlen) == FALSE) {
+			if (sendcom(fd, sbuf, sendlen, options.ascii) == FALSE) {
 				goto ret;
 			}
 
@@ -546,7 +566,7 @@ int main(int argc, char *argv[])
 			usleep(50 * 1000);
 			readcom(fd, rbuf, rbufSize);
 			usleep(options.inv * 1000);
-			sendcom(fd, sbuf, sendlen);
+			sendcom(fd, sbuf, sendlen, options.ascii);
 		}
 	}
 

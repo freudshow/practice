@@ -1,5 +1,6 @@
 CROSS			=arm-linux-gnueabihf-
 CC				=$(CROSS)gcc
+RKCC			=aarch64-none-linux-gnu-gcc
 TARGET			=serial
 MKCCTI			=jzqi
 MKCCTII			=jzqii
@@ -7,6 +8,7 @@ MKZBIII			=zbiii
 MKCJQIII		=cjqiii
 MKTTU 			=ttu
 MKE9361C0		=e9361c0
+MKE9361RK		=e9361rk
 DEFINCCTI		=-DCCTI
 DEFINCCTII		=-DCCTII
 DEFINCCTIII		=-DCCTIII
@@ -43,6 +45,9 @@ $(MKE9361C0): $(SRC)
 
 $(DEFINCJQIII): $(SRC)
 	$(CC) $(MKCJQIIILISTEN) $(CFLAGS) $(SRC) $(INC) $(DEFINCJQIII)
+
+$(MKE9361RK): $(SRC)
+	$(RKCC) $(OBJ) $(CFLAGS) $(SRC) $(INC) $(DEFINEE9361C0)
 
 stack: DSAAC2eCode/stackli.c DSAAC2eCode/teststkl.c
 	$(CC) -o ./bin/stack $(CFLAGS) DSAAC2eCode/stackli.c DSAAC2eCode/teststkl.c  $(INC)
